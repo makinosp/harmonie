@@ -15,7 +15,13 @@ struct ContentView: View {
     var body: some View {
         if let isValidToken = isValidToken {
             if isValidToken {
-                FriendsView()
+                TabView {
+                    FriendsView()
+                        .tabItem {
+                            Image(systemName: "person.2.fill")
+                            Text("Friends")
+                        }
+                }
             } else {
                 LoginView()
             }
