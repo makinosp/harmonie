@@ -72,6 +72,7 @@ struct FriendsView: View {
     }
 }
 
-//#Preview {
-//    FriendsView(client: APIClientAsync())
-//}
+#Preview {
+    FriendsView()
+        .environmentObject(UserData())
+}
