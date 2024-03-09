@@ -9,22 +9,22 @@ import SwiftUI
 import VRCKit
 
 struct ContentView: View {
+    @EnvironmentObject var userData: UserData
     @State var isValidToken: Bool?
-    @State var client = APIClientAsync()
 
     var body: some View {
         if let isValidToken = isValidToken {
             if isValidToken {
-                FriendsView(client: client)
+                FriendsView()
             } else {
-                LoginView(client: $client)
+                LoginView()
             }
         } else {
             ProgressView()
                 .task {
-                    client.updateCookies()
+                    userData.client.updateCookies()
                     do {
-                        isValidToken = try await AuthenticationService.verifyAuthToken(client)
+                        isValidToken = try await AuthenticationService.verifyAuthToken(userData.client)
                     } catch {
                         print(error)
                     }

@@ -10,7 +10,6 @@
 		201E40E52B9B55E300321521 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201E40E42B9B55E300321521 /* LoginView.swift */; };
 		20395D952B945CD700003921 /* friendplusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395D942B945CD700003921 /* friendplusApp.swift */; };
 		20395D972B945CD700003921 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395D962B945CD700003921 /* ContentView.swift */; };
-		20395D992B945CD700003921 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395D982B945CD700003921 /* Item.swift */; };
 		20395D9B2B945CD800003921 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20395D9A2B945CD800003921 /* Assets.xcassets */; };
 		20395D9E2B945CD800003921 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20395D9D2B945CD800003921 /* Preview Assets.xcassets */; };
 		20395DA82B945CD900003921 /* friendplusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DA72B945CD900003921 /* friendplusTests.swift */; };
@@ -18,6 +17,7 @@
 		20395DB42B945CD900003921 /* friendplusUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DB32B945CD900003921 /* friendplusUITestsLaunchTests.swift */; };
 		20395DC22B945EEF00003921 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20395DC12B945EEF00003921 /* VRCKit */; };
 		20395DC42B94653100003921 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DC32B94653100003921 /* FriendsView.swift */; };
+		208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AD2A32B9C17BB00F66ED3 /* UserData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +42,6 @@
 		20395D912B945CD700003921 /* friendplus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = friendplus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20395D942B945CD700003921 /* friendplusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = friendplusApp.swift; sourceTree = "<group>"; };
 		20395D962B945CD700003921 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		20395D982B945CD700003921 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		20395D9A2B945CD800003921 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20395D9D2B945CD800003921 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		20395DA32B945CD900003921 /* friendplusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = friendplusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +50,7 @@
 		20395DB12B945CD900003921 /* friendplusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = friendplusUITests.swift; sourceTree = "<group>"; };
 		20395DB32B945CD900003921 /* friendplusUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = friendplusUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		20395DC32B94653100003921 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		208AD2A32B9C17BB00F66ED3 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +79,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2019D1E92B9C1BAE0094E358 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				20395D962B945CD700003921 /* ContentView.swift */,
+				20395DC32B94653100003921 /* FriendsView.swift */,
+				201E40E42B9B55E300321521 /* LoginView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2019D1EA2B9C1BDD0094E358 /* EnvironmentObjects */ = {
+			isa = PBXGroup;
+			children = (
+				208AD2A32B9C17BB00F66ED3 /* UserData.swift */,
+			);
+			path = EnvironmentObjects;
+			sourceTree = "<group>";
+		};
 		20395D882B945CD700003921 = {
 			isa = PBXGroup;
 			children = (
@@ -102,13 +120,11 @@
 		20395D932B945CD700003921 /* friendplus */ = {
 			isa = PBXGroup;
 			children = (
+				2019D1EA2B9C1BDD0094E358 /* EnvironmentObjects */,
+				2019D1E92B9C1BAE0094E358 /* Views */,
 				20395D942B945CD700003921 /* friendplusApp.swift */,
-				20395D962B945CD700003921 /* ContentView.swift */,
-				20395D982B945CD700003921 /* Item.swift */,
 				20395D9A2B945CD800003921 /* Assets.xcassets */,
 				20395D9C2B945CD800003921 /* Preview Content */,
-				20395DC32B94653100003921 /* FriendsView.swift */,
-				201E40E42B9B55E300321521 /* LoginView.swift */,
 			);
 			path = friendplus;
 			sourceTree = "<group>";
@@ -274,8 +290,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */,
 				20395D972B945CD700003921 /* ContentView.swift in Sources */,
-				20395D992B945CD700003921 /* Item.swift in Sources */,
 				20395DC42B94653100003921 /* FriendsView.swift in Sources */,
 				201E40E52B9B55E300321521 /* LoginView.swift in Sources */,
 				20395D952B945CD700003921 /* friendplusApp.swift in Sources */,

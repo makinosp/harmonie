@@ -9,20 +9,17 @@ import SwiftUI
 import VRCKit
 
 struct LoginView: View {
-    @Binding var client: APIClientAsync
+    @EnvironmentObject var userData: UserData
     @State var requiresTwoFactorAuth: [String] = []
     @State var username: String = ""
     @State var password: String = ""
     @State var code: String = ""
-    @State var user: User?
 
     var body: some View {
-        Form {
-            if requiresTwoFactorAuth.isEmpty {
-                usernamePasswordFields
-            } else {
-                otpField
-            }
+        if requiresTwoFactorAuth.isEmpty {
+            usernamePasswordFields
+        } else {
+            otpField
         }
     }
 
@@ -31,13 +28,12 @@ struct LoginView: View {
             TextField("UserName", text: $username)
             SecureField("Password", text: $password)
             Button("Login") {
-                client = APIClientAsync(
+                userData.client = APIClientAsync(
                     username: username,
                     password: password
                 )
                 Task {
-                    let wrappedUser = try await AuthenticationService.loginUserInfo(client)
-                    self.user = wrappedUser.user
+                    let wrappedUser = try await AuthenticationService.loginUserInfo(userData.client)
                     self.requiresTwoFactorAuth = wrappedUser.requiresTwoFactorAuth
                 }
             }
@@ -46,7 +42,7 @@ struct LoginView: View {
     }
 
     var otpField: some View {
-        Group {
+        Form {
             TextField("Code", text: $code)
             Button("OK") {
                 Task {
@@ -57,14 +53,11 @@ struct LoginView: View {
                         verifyType = TwoFactorAuthType.emailotp.rawValue
                     }
                     guard let verifyType = verifyType else { return }
-                    let isSucceeded = try await AuthenticationService.verify2FA(
-                        client,
+                    let _ = try await AuthenticationService.verify2FA(
+                        userData.client,
                         verifyType: verifyType,
                         code: code
                     )
-                    if isSucceeded {
-                        self.user = try await AuthenticationService.loginUserInfo(client).user
-                    }
                 }
             }
             .frame(maxWidth: .infinity)
