@@ -9,12 +9,8 @@ import SwiftUI
 import VRCKit
 
 struct FriendsView: View {
+    @EnvironmentObject var userData: UserData
     @State var friends: [Friend] = []
-    var client: APIClientAsync
-
-    init(client: APIClientAsync) {
-        self.client = client
-    }
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -68,9 +64,9 @@ struct FriendsView: View {
         .padding()
         .task {
             do {
-                friends = try await FriendService.fetchFriends(client, offline: true)
+                friends = try await FriendService.fetchFriends(userData.client, offline: true)
             } catch {
-
+                print(error)
             }
         }
     }
