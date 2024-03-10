@@ -20,6 +20,7 @@
 		20395DC22B945EEF00003921 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20395DC12B945EEF00003921 /* VRCKit */; };
 		20395DC42B94653100003921 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DC32B94653100003921 /* FriendsView.swift */; };
 		208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AD2A32B9C17BB00F66ED3 /* UserData.swift */; };
+		20CA2D262B9D699D005CC55F /* FriendListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CA2D252B9D699D005CC55F /* FriendListType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		20395DB32B945CD900003921 /* friendplusUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = friendplusUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		20395DC32B94653100003921 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		208AD2A32B9C17BB00F66ED3 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		20CA2D252B9D699D005CC55F /* FriendListType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +88,8 @@
 		2019D1E92B9C1BAE0094E358 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				20CA2D202B9D677B005CC55F /* Friends */,
 				20395D962B945CD700003921 /* ContentView.swift */,
-				20395DC32B94653100003921 /* FriendsView.swift */,
 				201E40E42B9B55E300321521 /* LoginView.swift */,
 			);
 			path = Views;
@@ -174,6 +176,15 @@
 				20395DB32B945CD900003921 /* friendplusUITestsLaunchTests.swift */,
 			);
 			path = friendplusUITests;
+			sourceTree = "<group>";
+		};
+		20CA2D202B9D677B005CC55F /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				20CA2D252B9D699D005CC55F /* FriendListType.swift */,
+				20395DC32B94653100003921 /* FriendsView.swift */,
+			);
+			path = Friends;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,6 +328,7 @@
 				20395DC42B94653100003921 /* FriendsView.swift in Sources */,
 				201E40E52B9B55E300321521 /* LoginView.swift in Sources */,
 				2019D1F02B9C3CBF0094E358 /* SizeViewModifier.swift in Sources */,
+				20CA2D262B9D699D005CC55F /* FriendListType.swift in Sources */,
 				2019D1ED2B9C3AEC0094E358 /* View+frame.swift in Sources */,
 				20395D952B945CD700003921 /* friendplusApp.swift in Sources */,
 			);
