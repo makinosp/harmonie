@@ -16,18 +16,42 @@ struct LoginView: View {
     @State var code: String = ""
 
     var body: some View {
-        if requiresTwoFactorAuth.isEmpty {
-            usernamePasswordFields
-        } else {
-            otpField
+        ZStack {
+            Color(UIColor.secondarySystemBackground)
+                .edgesIgnoringSafeArea(.all)
+            if requiresTwoFactorAuth.isEmpty {
+                usernamePasswordFields
+            } else {
+                otpField
+            }
         }
     }
 
     var usernamePasswordFields: some View {
-        Form {
-            TextField("UserName", text: $username)
-            SecureField("Password", text: $password)
-            Button("Login") {
+        VStack(spacing: 24) {
+            VStack(spacing: 8) {
+                HStack {
+                    Image(systemName: "at")
+                        .foregroundStyle(Color.gray)
+                    TextField("UserName", text: $username)
+                }
+                .padding(8)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundStyle(Color.white)
+                )
+                HStack {
+                    Image(systemName: "lock")
+                        .foregroundStyle(Color.gray)
+                    SecureField("Password", text: $password)
+                }
+                .padding(8)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundStyle(Color.white)
+                )
+            }
+            Button {
                 userData.client = APIClientAsync(
                     username: username,
                     password: password
@@ -36,15 +60,32 @@ struct LoginView: View {
                     let wrappedUser = try await AuthenticationService.loginUserInfo(userData.client)
                     self.requiresTwoFactorAuth = wrappedUser.requiresTwoFactorAuth
                 }
+            } label: {
+                Image(systemName: "arrow.right")
+                    .bold()
+                    .font(.title2)
+                    .frame(width: 48, height: 48)
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .clipShape(Circle())
             }
-            .frame(maxWidth: .infinity)
         }
+        .padding(24)
     }
 
     var otpField: some View {
-        Form {
-            TextField("Code", text: $code)
-            Button("OK") {
+        VStack(spacing: 24) {
+            HStack {
+                Image(systemName: "ellipsis")
+                    .foregroundStyle(Color.gray)
+                TextField("Code", text: $code)
+            }
+            .padding(8)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .foregroundStyle(Color.white)
+            )
+            Button {
                 Task {
                     var verifyType: String?
                     if requiresTwoFactorAuth.contains(TwoFactorAuthType.totp.rawValue) {
@@ -59,8 +100,20 @@ struct LoginView: View {
                         code: code
                     )
                 }
+            } label: {
+                Image(systemName: "arrow.right")
+                    .bold()
+                    .font(.title2)
+                    .frame(width: 48, height: 48)
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .clipShape(Circle())
             }
-            .frame(maxWidth: .infinity)
         }
+        .padding(24)
     }
+}
+
+#Preview("LoginView") {
+    LoginView()
 }

@@ -21,6 +21,11 @@ struct ContentView: View {
                             Image(systemName: "person.2.fill")
                             Text("Friends")
                         }
+                    ProfileView()
+                        .tabItem {
+                            Image(systemName: "person.crop.circle.fill")
+                            Text("Profile")
+                        }
                 }
             } else {
                 LoginView()
@@ -28,18 +33,16 @@ struct ContentView: View {
         } else {
             ProgressView()
                 .task {
-                    userData.client.updateCookies()
                     do {
-                        isValidToken = try await AuthenticationService.verifyAuthToken(userData.client)
+                        let isValidToken = try await AuthenticationService.verifyAuthToken(userData.client)
+                        self.isValidToken = isValidToken
+                        if isValidToken {
+                            userData.user = try await AuthenticationService.loginUserInfo(userData.client).user
+                        }
                     } catch {
                         print(error)
                     }
                 }
         }
     }
-}
-
-#Preview {
-    ContentView()
-        .environmentObject(UserData())
 }

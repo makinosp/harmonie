@@ -51,30 +51,52 @@ struct FriendsView: View {
                 .presentationDetents([.medium, .large])
         }
         .task {
-            if !isPreview {
-                do {
-                    friends = try await FriendService.fetchFriends(
-                        userData.client,
-                        offline: false
-                    )
-                } catch {
-                    print(error)
-                }
-            }
+            friends = await fetchFriend(offset: 0, offline: false)
         }
     }
 
+    /// Fetch friends from API
+    func fetchFriend(offset: Int, offline: Bool) async -> [Friend] {
+        guard !isPreview else { return [] }
+        do {
+            return try await FriendService.fetchFriends(
+                userData.client,
+                offset: offset,
+                offline: offline
+            )
+        } catch {
+            print(error)
+            return []
+        }
+    }
+
+    /// Friend List branched by list type
     func friendListView(_ listType: FriendListType) -> some View {
         List {
             if let status = listType.status {
-                ForEach(filteredFriendsByStatus(status)) { friend in
+                let filteredFriends = friends.filter { $0.status == status.rawValue }
+
+                // TODO: Additional fetch
+//                let fetchThreshold = filteredFriends.dropLast(5).last
+                ForEach(filteredFriends) { friend in
                     rowView(friend)
+//                        .task {
+//                            guard let fetchThreshold = fetchThreshold else { return }
+//                            if friend.id == fetchThreshold.id {
+//                                await friends.append(
+//                                    contentsOf: fetchFriend(
+//                                        offset: friends.count,
+//                                        offline: false)
+//                                )
+//                            }
+//                        }
                 }
             } else if listType == .all {
                 ForEach(friends) { friend in
                     rowView(friend)
                 }
             } else if listType == .offline {
+                // TODO: Additional fetch
                 ForEach(offlineFriends) { friend in
                     rowView(friend)
                 }
@@ -85,10 +107,11 @@ struct FriendsView: View {
             }
         }
         .listStyle(.inset)
-    }
-
-    func filteredFriendsByStatus(_ status: FriendService.Status) -> [Friend] {
-        friends.filter { $0.status == status.rawValue }
+        .task {
+            if listType == .offline {
+                offlineFriends = await fetchFriend(offset: 0, offline: true)
+            }
+        }
     }
 
     /// Row view for friend list
