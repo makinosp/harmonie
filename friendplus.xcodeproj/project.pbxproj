@@ -20,6 +20,7 @@
 		20395DC22B945EEF00003921 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20395DC12B945EEF00003921 /* VRCKit */; };
 		20395DC42B94653100003921 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DC32B94653100003921 /* FriendsView.swift */; };
 		208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AD2A32B9C17BB00F66ED3 /* UserData.swift */; };
+		2094455D2B9D95A000F55040 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2094455C2B9D95A000F55040 /* ProfileView.swift */; };
 		20CA2D262B9D699D005CC55F /* FriendListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CA2D252B9D699D005CC55F /* FriendListType.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		20395DB32B945CD900003921 /* friendplusUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = friendplusUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		20395DC32B94653100003921 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		208AD2A32B9C17BB00F66ED3 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		2094455C2B9D95A000F55040 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		20CA2D252B9D699D005CC55F /* FriendListType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +93,7 @@
 				20CA2D202B9D677B005CC55F /* Friends */,
 				20395D962B945CD700003921 /* ContentView.swift */,
 				201E40E42B9B55E300321521 /* LoginView.swift */,
+				2094455C2B9D95A000F55040 /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */,
+				2094455D2B9D95A000F55040 /* ProfileView.swift in Sources */,
 				20395D972B945CD700003921 /* ContentView.swift in Sources */,
 				20395DC42B94653100003921 /* FriendsView.swift in Sources */,
 				201E40E52B9B55E300321521 /* LoginView.swift in Sources */,
