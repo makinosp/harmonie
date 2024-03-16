@@ -82,11 +82,6 @@ struct FriendsView: View {
                            await additionalFetchOfflineFriends(friend: friend)
                         }
                 }
-                .task {
-                    if listType == .offline {
-                        offlineFriends = await fetchFriends(offset: 0, offline: true)
-                    }
-                }
             } else if listType == .recently {
                 ForEach(recentylyFriends) { friend in
                     rowView(friend)
@@ -94,6 +89,11 @@ struct FriendsView: View {
             }
         }
         .listStyle(.inset)
+        .task {
+            if listType == .offline {
+                offlineFriends = await fetchFriends(offset: 0, offline: true)
+            }
+        }
     }
 
     /// Row view for friend list
