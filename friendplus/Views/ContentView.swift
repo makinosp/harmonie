@@ -18,9 +18,20 @@ struct ContentView: View {
         } else if userData.user != nil {
             TabView {
                 FriendsView()
+                    .badge(userData.user?.onlineFriends.count ?? 0)
                     .tabItem {
                         Image(systemName: "person.2.fill")
                         Text("Friends")
+                    }
+                LocationsView()
+                    .tabItem {
+                        Image(systemName: "location.fill")
+                        Text("Locations")
+                    }
+                FavoritesView()
+                    .tabItem {
+                        Image(systemName: "star.fill")
+                        Text("Favorites")
                     }
                 ProfileView()
                     .tabItem {
