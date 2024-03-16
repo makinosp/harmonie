@@ -10,7 +10,7 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var userData: UserData
-    @State var friends: [Friend]
+    @State var onlineFriends: [Friend]
     @State var offlineFriends: [Friend]
     @State var recentylyFriends: [Friend]
     @State var listSelection: FriendListType?
@@ -19,11 +19,11 @@ struct FriendsView: View {
     let thumbnailFrame = CGSize(width: 32, height: 32)
 
     init(
-        friends: [Friend] = [],
+        onlineFriends: [Friend] = [],
         offlineFriends: [Friend] = [],
         recentryFriends: [Friend] = []
     ) {
-        self.friends = friends
+        self.onlineFriends = onlineFriends
         self.offlineFriends = offlineFriends
         self.recentylyFriends = recentryFriends
     }
@@ -47,26 +47,19 @@ struct FriendsView: View {
             }
         }
         .sheet(item: $friendSelection) { friend in
-            detailView(friend)
+            FriendDetailView(friend: friend)
                 .presentationDetents([.medium, .large])
         }
         .task {
-            friends = await fetchFriend(offset: 0, offline: false)
-        }
-    }
-
-    /// Fetch friends from API
-    func fetchFriend(offset: Int, offline: Bool) async -> [Friend] {
-        guard !isPreview else { return [] }
-        do {
-            return try await FriendService.fetchFriends(
-                userData.client,
-                offset: offset,
-                offline: offline
-            )
-        } catch {
-            print(error)
-            return []
+            guard let onlineFriendsCount = userData.user?.onlineFriends.count else { return }
+            while onlineFriends.count < onlineFriendsCount {
+                onlineFriends.append(
+                    contentsOf: await fetchFriends(
+                        offset: onlineFriends.count,
+                        offline: false
+                    )
+                )
+            }
         }
     }
 
@@ -74,31 +67,25 @@ struct FriendsView: View {
     func friendListView(_ listType: FriendListType) -> some View {
         List {
             if let status = listType.status {
-                let filteredFriends = friends.filter { $0.status == status.rawValue }
-
-                // TODO: Additional fetch
-//                let fetchThreshold = filteredFriends.dropLast(5).last
+                let filteredFriends = onlineFriends.filter { $0.status == status.rawValue }
                 ForEach(filteredFriends) { friend in
                     rowView(friend)
-//                        .task {
-//                            guard let fetchThreshold = fetchThreshold else { return }
-//                            if friend.id == fetchThreshold.id {
-//                                await friends.append(
-//                                    contentsOf: fetchFriend(
-//                                        offset: friends.count,
-//                                        offline: false)
-//                                )
-//                            }
-//                        }
                 }
             } else if listType == .all {
-                ForEach(friends) { friend in
+                ForEach(onlineFriends) { friend in
                     rowView(friend)
                 }
             } else if listType == .offline {
-                // TODO: Additional fetch
                 ForEach(offlineFriends) { friend in
                     rowView(friend)
+                        .task {
+                           await additionalFetchOfflineFriends(friend: friend)
+                        }
+                }
+                .task {
+                    if listType == .offline {
+                        offlineFriends = await fetchFriends(offset: 0, offline: true)
+                    }
                 }
             } else if listType == .recently {
                 ForEach(recentylyFriends) { friend in
@@ -107,11 +94,6 @@ struct FriendsView: View {
             }
         }
         .listStyle(.inset)
-        .task {
-            if listType == .offline {
-                offlineFriends = await fetchFriend(offset: 0, offline: true)
-            }
-        }
     }
 
     /// Row view for friend list
@@ -137,66 +119,35 @@ struct FriendsView: View {
         }
     }
 
-    /// Friends detail view
-    func detailView(_ friend: Friend) -> some View {
-        ScrollView {
-            VStack {
-                AsyncImage(
-                    url: URL(string: friend.currentAvatarThumbnailImageUrl)) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    } placeholder: {
-                        ProgressView()
-                    }
-                VStack {
-                    Text(friend.displayName)
-                        .font(.headline)
-                    Text(friend.statusDescription)
-                        .font(.body)
-                }
-                .padding()
-                if let bio = friend.bio {
-                    Text(bio)
-                        .font(.body)
-                        .foregroundStyle(Color.gray)
-                        .padding()
-                }
-                Text(friend.lastLogin.description)
-                if let bioLinks = friend.bioLinks {
-                    ForEach(
-                        Array(bioLinks.enumerated()),
-                        id: \.element
-                    ) { (index, urlString) in
-                        if let url = URL(string: urlString) {
-                            Link("Link \((index + 1).description)", destination: url)
-                        }
-                    }
-                }
-            }
+    /// Fetch friends from API
+    func fetchFriends(offset: Int, offline: Bool) async -> [Friend] {
+        guard !isPreview else { return [] }
+        do {
+            return try await FriendService.fetchFriends(
+                userData.client,
+                offset: offset,
+                offline: offline
+            )
+        } catch {
+            print(error)
+            return []
         }
     }
-}
 
-#Preview("FriendsView") {
-    FriendsView(
-        friends: [
-            Friend(
-                bio: "bio",
-                bioLinks: ["https://twitter.com/makinovrc"],
-                currentAvatarImageUrl: "https://api.vrchat.cloud/api/1/file/file_29cc0315-390e-44b1-b9f1-6eb7601ca5fd/2/file",
-                currentAvatarThumbnailImageUrl: "https://api.vrchat.cloud/api/1/image/file_29cc0315-390e-44b1-b9f1-6eb7601ca5fd/2/512",
-                developerType: "string",
-                displayName: "displayName",
-                id: UUID().uuidString,
-                isFriend: true,
-                lastLogin: Date(),
-                lastPlatform: "lastPlatform",
-                status: "active",
-                statusDescription: "statusDescription",
-                tags: ["tag"]
+    /// Additional fetch offline friends from API
+    func additionalFetchOfflineFriends(friend: Friend) async {
+        guard let offlineFriendsCount = userData.user?.offlineFriends.count,
+              let fetchThreshold = offlineFriends.dropLast(5).last else {
+            return
+        }
+        if offlineFriends.count < offlineFriendsCount,
+           friend.id == fetchThreshold.id {
+            await offlineFriends.append(
+                contentsOf: fetchFriends(
+                    offset: offlineFriends.count,
+                    offline: false
+                )
             )
-        ]
-    )
-    .environmentObject(UserData())
+        }
+    }
 }
