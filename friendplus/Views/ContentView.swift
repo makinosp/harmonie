@@ -13,36 +13,39 @@ struct ContentView: View {
     @State var isValidToken: Bool?
 
     var body: some View {
-        if let isValidToken = isValidToken {
-            if isValidToken {
-                TabView {
-                    FriendsView()
-                        .tabItem {
-                            Image(systemName: "person.2.fill")
-                            Text("Friends")
-                        }
-                    ProfileView()
-                        .tabItem {
-                            Image(systemName: "person.crop.circle.fill")
-                            Text("Profile")
-                        }
-                }
-            } else {
-                LoginView()
+        if let isValidToken = isValidToken, !isValidToken {
+            LoginView()
+        } else if userData.user != nil {
+            TabView {
+                FriendsView()
+                    .tabItem {
+                        Image(systemName: "person.2.fill")
+                        Text("Friends")
+                    }
+                ProfileView()
+                    .tabItem {
+                        Image(systemName: "person.crop.circle.fill")
+                        Text("Profile")
+                    }
             }
         } else {
             ProgressView()
                 .task {
-                    do {
-                        let isValidToken = try await AuthenticationService.verifyAuthToken(userData.client)
-                        self.isValidToken = isValidToken
-                        if isValidToken {
-                            userData.user = try await AuthenticationService.loginUserInfo(userData.client).user
-                        }
-                    } catch {
-                        print(error)
-                    }
+                    await fetchUserData()
                 }
+        }
+    }
+
+    func fetchUserData() async {
+        typealias authentication = AuthenticationService
+        do {
+            guard try await authentication.verifyAuthToken(userData.client) else {
+                isValidToken = false
+                return
+            }
+            userData.user = try await authentication.loginUserInfo(userData.client).user
+        } catch {
+            print(error)
         }
     }
 }

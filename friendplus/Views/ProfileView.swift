@@ -14,13 +14,24 @@ struct ProfileView: View {
     var body: some View {
         if let user = userData.user {
             VStack {
+                AsyncImage(
+                    url: URL(string: user.currentAvatarImageUrl)) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    } placeholder: {
+                        ProgressView()
+                    }
                 Text(user.displayName)
                     .font(.headline)
+                HStack {
+                    Label("\(user.friends.count)", systemImage: "person.2")
+                }
                 Text(user.bio)
                     .font(.footnote)
             }
         } else {
-            Text("Data Error")
+            Label("Data Error", systemImage: "exclamationmark.triangle.fill")
         }
     }
 }
