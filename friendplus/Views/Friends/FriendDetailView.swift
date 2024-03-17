@@ -29,12 +29,10 @@ struct FriendDetailView: View {
                         .font(.body)
                 }
                 .padding()
-                if let bio = friend.bio {
-                    Text(bio)
-                        .font(.body)
-                        .foregroundStyle(Color.gray)
-                        .padding()
-                }
+                Text(friend.bio)
+                    .font(.body)
+                    .foregroundStyle(Color.gray)
+                    .padding()
                 Text(friend.lastLogin.description)
                 if let bioLinks = friend.bioLinks {
                     ForEach(
