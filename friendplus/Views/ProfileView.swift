@@ -27,8 +27,10 @@ struct ProfileView: View {
                 HStack {
                     Label("\(user.friends.count)", systemImage: "person.2")
                 }
-                Text(user.bio)
-                    .font(.footnote)
+                if let bio = user.bio {
+                    Text(bio)
+                        .font(.footnote)
+                }
             }
         } else {
             Label("Data Error", systemImage: "exclamationmark.triangle.fill")
