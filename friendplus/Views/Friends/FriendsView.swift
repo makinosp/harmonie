@@ -15,6 +15,7 @@ struct FriendsView: View {
     @State var recentylyFriends: [Friend]
     @State var listSelection: FriendListType?
     @State var friendSelection: Friend?
+    @State var searchText: String
     let imageFrame = CGSize(width: 200, height: 150)
     let thumbnailFrame = CGSize(width: 32, height: 32)
 
@@ -26,6 +27,7 @@ struct FriendsView: View {
         self.onlineFriends = onlineFriends
         self.offlineFriends = offlineFriends
         self.recentylyFriends = recentryFriends
+        searchText = ""
     }
 
     var body: some View {
@@ -41,13 +43,10 @@ struct FriendsView: View {
             }
             .navigationTitle("Friends")
         } detail: {
-            if let listSelection = listSelection {
-                friendListView(listSelection)
-                    .navigationTitle(listSelection.description)
-            }
+            friendListView()
         }
         .sheet(item: $friendSelection) { friend in
-            FriendDetailView(friend: friend)
+            FriendDetailView(friend: UserDetail(friend: friend))
                 .presentationDetents([.medium, .large])
         }
         .task {
@@ -61,39 +60,45 @@ struct FriendsView: View {
                 )
             }
         }
+        .task {
+            offlineFriends = await fetchFriends(offset: 0, offline: true)
+        }
     }
 
     /// Friend List branched by list type
-    func friendListView(_ listType: FriendListType) -> some View {
+    func friendListView() -> some View {
         List {
-            if let status = listType.status {
-                let filteredFriends = onlineFriends.filter { $0.status == status.rawValue }
-                ForEach(filteredFriends) { friend in
-                    rowView(friend)
-                }
-            } else if listType == .all {
-                ForEach(onlineFriends) { friend in
-                    rowView(friend)
-                }
-            } else if listType == .offline {
-                ForEach(offlineFriends) { friend in
-                    rowView(friend)
-                        .task {
-                           await additionalFetchOfflineFriends(friend: friend)
-                        }
-                }
-            } else if listType == .recently {
-                ForEach(recentylyFriends) { friend in
-                    rowView(friend)
+            if let listType = listSelection {
+                if let status = listType.status {
+                    let filteredFriends = onlineFriends.filter { $0.status == status.rawValue }
+                    ForEach(filteredFriends) { friend in
+                        rowView(friend)
+                    }
+                } else if listType == .all {
+                    ForEach(onlineFriends) { friend in
+                        rowView(friend)
+                    }
+                } else if listType == .offline {
+                    ForEach(offlineFriends) { friend in
+                        rowView(friend)
+                            .task {
+                                await additionalFetchOfflineFriends(friend: friend)
+                            }
+                    }
+                } else if listType == .recently {
+                    ForEach(recentylyFriends) { friend in
+                        rowView(friend)
+                    }
                 }
             }
         }
         .listStyle(.inset)
-        .task {
-            if listType == .offline {
-                offlineFriends = await fetchFriends(offset: 0, offline: true)
-            }
-        }
+        .searchable(
+            text: $searchText,
+            placement: .navigationBarDrawer(displayMode: .always)
+        )
+        .navigationTitle(listSelection?.description ?? "")
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     /// Row view for friend list

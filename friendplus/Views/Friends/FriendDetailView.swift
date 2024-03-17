@@ -9,7 +9,8 @@ import SwiftUI
 import VRCKit
 
 struct FriendDetailView: View {
-    @State var friend: Friend
+    @EnvironmentObject var userData: UserData
+    @State var friend: UserDetail
 
     var body: some View {
         ScrollView {
@@ -19,6 +20,16 @@ struct FriendDetailView: View {
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fill)
+                            .overlay {
+                                LinearGradient(
+                                    gradient: Gradient(colors: [.black.opacity(0.5), .clear]),
+                                    startPoint: .top,
+                                    endPoint: .center
+                                )
+                            }
+                            .overlay(alignment: .top) {
+                                toolbar
+                            }
                     } placeholder: {
                         ProgressView()
                     }
@@ -29,10 +40,12 @@ struct FriendDetailView: View {
                         .font(.body)
                 }
                 .padding()
-                Text(friend.bio)
-                    .font(.body)
-                    .foregroundStyle(Color.gray)
-                    .padding()
+                if let bio = friend.bio {
+                    Text(bio)
+                        .font(.body)
+                        .foregroundStyle(Color.gray)
+                        .padding()
+                }
                 Text(friend.lastLogin.description)
                 if let bioLinks = friend.bioLinks {
                     ForEach(
@@ -44,7 +57,35 @@ struct FriendDetailView: View {
                         }
                     }
                 }
+                HStack {
+                    Image(systemName: "text.bubble")
+                        .foregroundStyle(Color.gray)
+                    TextEditor(text: $friend.note)
+                }
+                .padding()
             }
         }
+        .background(.bar)
+        .task {
+            do {
+                friend = try await UserService.fetchUser(userData.client, userId: friend.id)
+            } catch {
+                print(error)
+            }
+        }
+    }
+
+    var toolbar: some View {
+        HStack {
+            Spacer()
+            Button {
+                // action
+            } label: {
+                Image(systemName: "star")
+                    .font(.title2)
+                    .foregroundStyle(Color.white)
+            }
+        }
+        .padding()
     }
 }
