@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		200723952BA55BB8002C27E8 /* FriendsViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200723942BA55BB8002C27E8 /* FriendsViewPreview.swift */; };
 		200723972BA56377002C27E8 /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200723962BA56377002C27E8 /* FriendDetailView.swift */; };
 		2019D1ED2B9C3AEC0094E358 /* View+frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2019D1EC2B9C3AEC0094E358 /* View+frame.swift */; };
 		2019D1F02B9C3CBF0094E358 /* SizeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2019D1EF2B9C3CBF0094E358 /* SizeViewModifier.swift */; };
@@ -46,7 +45,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		200723942BA55BB8002C27E8 /* FriendsViewPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewPreview.swift; sourceTree = "<group>"; };
 		200723962BA56377002C27E8 /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
 		2019D1EC2B9C3AEC0094E358 /* View+frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+frame.swift"; sourceTree = "<group>"; };
 		2019D1EF2B9C3CBF0094E358 /* SizeViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeViewModifier.swift; sourceTree = "<group>"; };
@@ -196,7 +194,6 @@
 			children = (
 				20CA2D252B9D699D005CC55F /* FriendListType.swift */,
 				20395DC32B94653100003921 /* FriendsView.swift */,
-				200723942BA55BB8002C27E8 /* FriendsViewPreview.swift */,
 				200723962BA56377002C27E8 /* FriendDetailView.swift */,
 			);
 			path = Friends;
@@ -342,7 +339,6 @@
 				2094455D2B9D95A000F55040 /* ProfileView.swift in Sources */,
 				202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */,
 				20395D972B945CD700003921 /* ContentView.swift in Sources */,
-				200723952BA55BB8002C27E8 /* FriendsViewPreview.swift in Sources */,
 				20395DC42B94653100003921 /* FriendsView.swift in Sources */,
 				201E40E52B9B55E300321521 /* LoginView.swift in Sources */,
 				200723972BA56377002C27E8 /* FriendDetailView.swift in Sources */,
