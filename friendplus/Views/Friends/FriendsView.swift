@@ -12,7 +12,7 @@ struct FriendsView: View {
     @EnvironmentObject var userData: UserData
     @State var onlineFriends: [Friend]
     @State var offlineFriends: [Friend]
-    @State var recentylyFriends: [Friend]
+    @State var recentlyFriends: [Friend]
     @State var listSelection: FriendListType?
     @State var friendSelection: Friend?
     @State var searchText: String
@@ -22,11 +22,11 @@ struct FriendsView: View {
     init(
         onlineFriends: [Friend] = [],
         offlineFriends: [Friend] = [],
-        recentryFriends: [Friend] = []
+        recentlyFriends: [Friend] = []
     ) {
         self.onlineFriends = onlineFriends
         self.offlineFriends = offlineFriends
-        self.recentylyFriends = recentryFriends
+        self.recentlyFriends = recentlyFriends
         searchText = ""
     }
 
@@ -43,7 +43,7 @@ struct FriendsView: View {
             }
             .navigationTitle("Friends")
         } detail: {
-            friendListView()
+            friendListView
         }
         .sheet(item: $friendSelection) { friend in
             FriendDetailView(friend: UserDetail(friend: friend))
@@ -60,13 +60,10 @@ struct FriendsView: View {
                 )
             }
         }
-        .task {
-            offlineFriends = await fetchFriends(offset: 0, offline: true)
-        }
     }
 
     /// Friend List branched by list type
-    func friendListView() -> some View {
+    var friendListView: some View {
         List {
             if let listType = listSelection {
                 if let status = listType.status {
@@ -86,7 +83,7 @@ struct FriendsView: View {
                             }
                     }
                 } else if listType == .recently {
-                    ForEach(recentylyFriends) { friend in
+                    ForEach(recentlyFriends) { friend in
                         rowView(friend)
                     }
                 }
@@ -99,13 +96,29 @@ struct FriendsView: View {
         )
         .navigationTitle(listSelection?.description ?? "")
         .navigationBarTitleDisplayMode(.inline)
+        .task(id: listSelection) {
+            if let listType = listSelection, listType == .offline {
+                offlineFriends = await fetchFriends(offset: 0, offline: true)
+            } else if let listType = listSelection, listType == .recently {
+                guard let friendIds = userData.user?.friends.reversed().prefix(10) else { return }
+                do {
+                    for friendId in friendIds {
+                        let userDetail = try await UserService.fetchUser(userData.client, userId: friendId)
+                        recentlyFriends.append(userDetail.friend)
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
 
     /// Row view for friend list
     func rowView(_ friend: Friend) -> some View {
         HStack {
+            let imageUrl = friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon
             AsyncImage(
-                url: URL(string: friend.currentAvatarThumbnailImageUrl)) { image in
+                url: URL(string: imageUrl)) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
