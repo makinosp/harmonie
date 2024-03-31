@@ -48,13 +48,15 @@ struct FriendsView: View {
                 friendListView
                 if listSelection == .recently {
                     Button {
-                        // TODO: additional fetch
+                        Task {
+                            let friends = await fetchFriendsByIds(offset: recentlyFriends.count)
+                            recentlyFriends.append(contentsOf: friends)
+                        }
                     } label: {
                         Image(systemName: "arrow.down.circle")
                         Text("Load more")
                     }
                     .padding()
-                    .frame(maxHeight: .infinity, alignment: .top)
                 }
             }
         }
@@ -113,15 +115,7 @@ struct FriendsView: View {
             if let listType = listSelection, listType == .offline {
                 offlineFriends = await fetchFriends(offset: 0, offline: true)
             } else if let listType = listSelection, listType == .recently {
-                guard let friendIds = userData.user?.friends else { return }
-                await recentlyFriends.append(
-                    contentsOf: fetchFriendsByIds(
-                        friendIds: friendIds
-                            .reversed()
-                            .prefix(fetchRecentlyFriendsCount)
-                            .map(\.description)
-                    )
-                )
+                recentlyFriends = await fetchFriendsByIds(offset: 0)
             }
         }
     }
@@ -166,9 +160,18 @@ struct FriendsView: View {
     }
 
     /// Fetch friends by IDs from API
-    func fetchFriendsByIds(friendIds: [String]) async -> [Friend] {
+    func fetchFriendsByIds(offset: Int) async -> [Friend] {
+        guard let friendIds = userData.user?.friends else { return [] }
         do {
-            return try await UserService.fetchUsers(userData.client, userIds: friendIds).map(\.friend)
+            return try await UserService.fetchUsers(
+                userData.client,
+                userIds: friendIds
+                    .reversed()
+                    .dropFirst(offset)
+                    .prefix(fetchRecentlyFriendsCount)
+                    .map(\.description)
+            )
+            .map(\.friend)
         } catch {
             print(error)
             return []
