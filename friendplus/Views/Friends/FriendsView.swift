@@ -168,21 +168,7 @@ struct FriendsView: View {
     /// Fetch friends by IDs from API
     func fetchFriendsByIds(friendIds: [String]) async -> [Friend] {
         do {
-            var friends: [(index: Int, friend: Friend)] = []
-            try await withThrowingTaskGroup(of: (index: Int, friend: Friend).self) { group in
-                for (index, friendId) in friendIds.enumerated() {
-                    group.addTask {
-                        try await (
-                            index: index,
-                            friend: UserService.fetchUser(userData.client, userId: friendId).friend
-                        )
-                    }
-                }
-                for try await friendDetail in group {
-                    friends.append(friendDetail)
-                }
-            }
-            return friends.sorted(by: { r, l in r.index < l.index }).map(\.friend)
+            return try await UserService.fetchUsers(userData.client, userIds: friendIds).map(\.friend)
         } catch {
             print(error)
             return []
