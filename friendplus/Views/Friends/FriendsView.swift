@@ -18,6 +18,7 @@ struct FriendsView: View {
     @State var searchText: String
     let imageFrame = CGSize(width: 200, height: 150)
     let thumbnailFrame = CGSize(width: 32, height: 32)
+    let fetchRecentlyFriendsCount = 10
 
     init(
         onlineFriends: [Friend] = [],
@@ -43,7 +44,19 @@ struct FriendsView: View {
             }
             .navigationTitle("Friends")
         } detail: {
-            friendListView
+            VStack {
+                friendListView
+                if listSelection == .recently {
+                    Button {
+                        // TODO: additional fetch
+                    } label: {
+                        Image(systemName: "arrow.down.circle")
+                        Text("Load more")
+                    }
+                    .padding()
+                    .frame(maxHeight: .infinity, alignment: .top)
+                }
+            }
         }
         .sheet(item: $friendSelection) { friend in
             FriendDetailView(friend: UserDetail(friend: friend))
@@ -100,15 +113,15 @@ struct FriendsView: View {
             if let listType = listSelection, listType == .offline {
                 offlineFriends = await fetchFriends(offset: 0, offline: true)
             } else if let listType = listSelection, listType == .recently {
-                guard let friendIds = userData.user?.friends.reversed().prefix(10) else { return }
-                do {
-                    for friendId in friendIds {
-                        let userDetail = try await UserService.fetchUser(userData.client, userId: friendId)
-                        recentlyFriends.append(userDetail.friend)
-                    }
-                } catch {
-                    print(error)
-                }
+                guard let friendIds = userData.user?.friends else { return }
+                await recentlyFriends.append(
+                    contentsOf: fetchFriendsByIds(
+                        friendIds: friendIds
+                            .reversed()
+                            .prefix(fetchRecentlyFriendsCount)
+                            .map(\.description)
+                    )
+                )
             }
         }
     }
@@ -146,6 +159,30 @@ struct FriendsView: View {
                 offset: offset,
                 offline: offline
             )
+        } catch {
+            print(error)
+            return []
+        }
+    }
+
+    /// Fetch friends by IDs from API
+    func fetchFriendsByIds(friendIds: [String]) async -> [Friend] {
+        do {
+            var friends: [(index: Int, friend: Friend)] = []
+            try await withThrowingTaskGroup(of: (index: Int, friend: Friend).self) { group in
+                for (index, friendId) in friendIds.enumerated() {
+                    group.addTask {
+                        try await (
+                            index: index,
+                            friend: UserService.fetchUser(userData.client, userId: friendId).friend
+                        )
+                    }
+                }
+                for try await friendDetail in group {
+                    friends.append(friendDetail)
+                }
+            }
+            return friends.sorted(by: { r, l in r.index < l.index }).map(\.friend)
         } catch {
             print(error)
             return []
