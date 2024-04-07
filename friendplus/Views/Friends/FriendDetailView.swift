@@ -60,7 +60,18 @@ struct FriendDetailView: View {
                 }
                 Spacer()
                 Button {
-                    // save action
+                    Task {
+                        do {
+                            let _ = try await UserNoteService.updateUserNote(
+                                userData.client,
+                                targetUserId: friend.id,
+                                note: friend.note
+                            )
+                            dismiss()
+                        } catch {
+                            print(error)
+                        }
+                    }
                 } label: {
                     Text("Save")
                 }
