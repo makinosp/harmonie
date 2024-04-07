@@ -10,57 +10,29 @@ import VRCKit
 
 struct FriendDetailView: View {
     @EnvironmentObject var userData: UserData
+    @Environment(\.dismiss) private var dismiss
     @State var friend: UserDetail
+    @State var isAppearedNote = false
 
     var body: some View {
         ScrollView {
             VStack {
-                AsyncImage(
-                    url: URL(string: friend.currentAvatarThumbnailImageUrl)) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .overlay {
-                                LinearGradient(
-                                    gradient: Gradient(colors: [.black.opacity(0.5), .clear]),
-                                    startPoint: .top,
-                                    endPoint: .center
-                                )
-                            }
-                            .overlay(alignment: .top) {
-                                toolbar
-                            }
-                    } placeholder: {
-                        ProgressView()
-                    }
+                profileImage
                 VStack {
-                    Text(friend.displayName)
-                        .font(.headline)
-                    Text(friend.statusDescription)
-                        .font(.body)
-                }
-                .padding()
-                if let bio = friend.bio {
-                    Text(bio)
-                        .font(.body)
-                        .foregroundStyle(Color.gray)
-                        .padding()
-                }
-                Text(friend.lastLogin.description)
-                if let bioLinks = friend.bioLinks {
-                    ForEach(
-                        Array(bioLinks.enumerated()),
-                        id: \.element
-                    ) { (index, urlString) in
-                        if let url = URL(string: urlString) {
-                            Link("Link \((index + 1).description)", destination: url)
+                    if let bio = friend.bio {
+                        Text(bio)
+                            .font(.callout)
+                    }
+                    if let bioLinks = friend.bioLinks {
+                        ForEach(
+                            Array(bioLinks.enumerated()),
+                            id: \.element
+                        ) { (index, urlString) in
+                            if let url = URL(string: urlString) {
+                                Link(urlString, destination: url)
+                            }
                         }
                     }
-                }
-                HStack {
-                    Image(systemName: "text.bubble")
-                        .foregroundStyle(Color.gray)
-                    TextEditor(text: $friend.note)
                 }
                 .padding()
             }
@@ -73,19 +45,106 @@ struct FriendDetailView: View {
                 print(error)
             }
         }
+        .sheet(isPresented: $isAppearedNote) {
+            noteEditor
+        }
+    }
+
+    var noteEditor: some View {
+        VStack {
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Cancel")
+                }
+                Spacer()
+                Button {
+                    // save action
+                } label: {
+                    Text("Save")
+                }
+            }
+            TextEditor(text: $friend.note)
+                .overlay(alignment: .topLeading) {
+                    if friend.note.isEmpty {
+                        Text("Enter note")
+                            .foregroundStyle(Color(uiColor: .placeholderText))
+                            .allowsHitTesting(false)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 5)
+                    }
+                }
+        }
+        .padding()
+    }
+
+    var profileImage: some View {
+        AsyncImage(
+            url: URL(string: friend.currentAvatarThumbnailImageUrl)) { image in
+                let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .overlay {
+                        LinearGradient(
+                            gradient: gradient,
+                            startPoint: .top,
+                            endPoint: .center
+                        )
+                    }
+                    .overlay {
+                        LinearGradient(
+                            gradient: gradient,
+                            startPoint: .bottom,
+                            endPoint: .center
+                        )
+                    }
+                    .overlay(alignment: .top) {
+                        toolbar
+                    }
+                    .overlay(alignment: .bottom) {
+                        displayNameAndStatus
+                    }
+            } placeholder: {
+                ProgressView()
+            }
     }
 
     var toolbar: some View {
         HStack {
             Spacer()
             Button {
+                isAppearedNote.toggle()
+            } label: {
+                Image(systemName: "clipboard")
+                    .font(.title2)
+            }
+            Button {
                 // action
             } label: {
                 Image(systemName: "star")
                     .font(.title2)
-                    .foregroundStyle(Color.white)
             }
         }
+        .foregroundStyle(Color.white)
+        .padding()
+    }
+
+    var displayNameAndStatus: some View {
+        HStack(alignment: .bottom) {
+            Label {
+                Text(friend.displayName)
+            } icon: {
+                Image(systemName: "circle.fill")
+                    .foregroundStyle(StatusColor.statusColor(friend.status))
+            }
+            .font(.headline)
+            Text(friend.statusDescription)
+                .font(.subheadline)
+            Spacer()
+        }
+        .foregroundStyle(Color.white)
         .padding()
     }
 }
