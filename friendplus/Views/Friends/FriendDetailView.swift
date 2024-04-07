@@ -37,7 +37,7 @@ struct FriendDetailView: View {
                 .padding()
             }
         }
-        .background(.bar)
+        .backgroundStyle(.ultraThinMaterial)
         .task {
             do {
                 friend = try await UserService.fetchUser(userData.client, userId: friend.id)
@@ -77,6 +77,8 @@ struct FriendDetailView: View {
                 }
             }
             TextEditor(text: $friend.note)
+                .scrollContentBackground(Visibility.hidden)
+                .backgroundStyle(.ultraThinMaterial)
                 .overlay(alignment: .topLeading) {
                     if friend.note.isEmpty {
                         Text("Enter note")
@@ -88,11 +90,13 @@ struct FriendDetailView: View {
                 }
         }
         .padding()
+        .backgroundStyle(.ultraThinMaterial)
     }
 
     var profileImage: some View {
-        AsyncImage(
-            url: URL(string: friend.currentAvatarThumbnailImageUrl)) { image in
+        let imageUrl = friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon
+        return AsyncImage(
+            url: URL(string: imageUrl)) { image in
                 let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
                 image
                     .resizable()
@@ -128,16 +132,15 @@ struct FriendDetailView: View {
             Button {
                 isAppearedNote.toggle()
             } label: {
-                Image(systemName: "clipboard")
-                    .font(.title2)
+                Image(systemName: "doc.plaintext")
             }
             Button {
-                // action
+                // TODO: favorite action
             } label: {
                 Image(systemName: "star")
-                    .font(.title2)
             }
         }
+        .font(.title3)
         .foregroundStyle(Color.white)
         .padding()
     }
