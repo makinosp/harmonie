@@ -9,8 +9,7 @@ import SwiftUI
 import VRCKit
 
 class StatusColor {
-    static func statusColor(_ statusString: String) -> Color {
-        let status = FriendService.Status(rawValue: statusString)
+    static func statusColor(_ status: Status) -> Color {
         switch status {
             case .joinMe:
                 return .green
@@ -22,8 +21,6 @@ class StatusColor {
                 return .red
             case .offline:
                 return .gray
-            case .none:
-                return .black
         }
     }
 }
