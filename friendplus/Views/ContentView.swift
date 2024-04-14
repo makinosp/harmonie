@@ -14,7 +14,7 @@ struct ContentView: View {
 
     var body: some View {
         if let isValidToken = isValidToken, !isValidToken {
-            LoginView()
+            LoginView(isValidToken: $isValidToken)
         } else if userData.user != nil {
             TabView {
                 FriendsView()
@@ -50,8 +50,10 @@ struct ContentView: View {
     func fetchUserData() async {
         typealias authentication = AuthenticationService
         do {
-            guard try await authentication.verifyAuthToken(userData.client) else {
-                isValidToken = false
+            let isValidToken: Bool
+            isValidToken = try await authentication.verifyAuthToken(userData.client)
+            self.isValidToken = isValidToken
+            guard isValidToken else {
                 return
             }
             userData.user = try await authentication.loginUserInfo(userData.client).user

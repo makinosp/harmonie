@@ -10,6 +10,7 @@ import VRCKit
 
 struct LoginView: View {
     @EnvironmentObject var userData: UserData
+    @Binding var isValidToken: Bool?
     @State var requiresTwoFactorAuth: [String] = []
     @State var username: String = ""
     @State var password: String = ""
@@ -94,7 +95,7 @@ struct LoginView: View {
                         verifyType = TwoFactorAuthType.emailotp.rawValue
                     }
                     guard let verifyType = verifyType else { return }
-                    let _ = try await AuthenticationService.verify2FA(
+                    isValidToken = try await AuthenticationService.verify2FA(
                         userData.client,
                         verifyType: verifyType,
                         code: code
@@ -112,8 +113,4 @@ struct LoginView: View {
         }
         .padding(24)
     }
-}
-
-#Preview("LoginView") {
-    LoginView()
 }
