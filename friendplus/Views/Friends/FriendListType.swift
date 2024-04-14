@@ -41,7 +41,7 @@ enum FriendListType: CaseIterable, Identifiable {
         }
     }
 
-    var status: FriendService.Status? {
+    var status: Status? {
         switch self {
             case .active:
                 return .active

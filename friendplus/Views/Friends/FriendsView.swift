@@ -82,7 +82,7 @@ struct FriendsView: View {
         List {
             if let listType = listSelection {
                 if let status = listType.status {
-                    let filteredFriends = onlineFriends.filter { $0.status == status.rawValue }
+                    let filteredFriends = onlineFriends.filter { $0.status == status }
                     ForEach(filteredFriends) { friend in
                         rowView(friend)
                     }
