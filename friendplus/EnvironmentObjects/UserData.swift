@@ -11,4 +11,5 @@ import VRCKit
 class UserData: ObservableObject {
     @Published var client = APIClientAsync()
     @Published var user: User?
+    @Published var favoriteGroups: [FavoriteGroup]?
 }
