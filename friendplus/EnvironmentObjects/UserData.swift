@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 class UserData: ObservableObject {
-    @Published var client = APIClientAsync()
+    @Published var client = APIClient()
     @Published var user: User?
     @Published var favoriteGroups: [FavoriteGroup]?
 }

@@ -53,7 +53,7 @@ struct LoginView: View {
                 )
             }
             Button {
-                userData.client = APIClientAsync(
+                userData.client = APIClient(
                     username: username,
                     password: password
                 )
