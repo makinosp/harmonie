@@ -58,8 +58,16 @@ struct LoginView: View {
                     password: password
                 )
                 Task {
-                    let wrappedUser = try await AuthenticationService.loginUserInfo(userData.client)
-                    self.requiresTwoFactorAuth = wrappedUser.requiresTwoFactorAuth
+                    let response = try await AuthenticationService.loginUserInfo(userData.client)
+                    switch response {
+                    case .requiresTwoFactorAuth(let factors):
+                        self.requiresTwoFactorAuth = factors
+                    case .user(let user):
+                        print(user)
+                    case .failure(let failure):
+                        print(failure)
+                    }
+
                 }
             } label: {
                 Image(systemName: "arrow.right")

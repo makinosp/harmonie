@@ -27,7 +27,7 @@ struct FavoritesView: View {
         }
         .task {
             do {
-                userData.favoriteGroups = try await FavoriteService.listFavoriteGroups(userData.client)
+                userData.favoriteGroups = try await FavoriteService.listFavoriteGroups(userData.client).get()
                 let favoritesWithGroupId = try await fetchFavoritesInGroups()
                 friendsInFavoriteGroups = try await fetchFriendsInGroups(favoritesWithGroupId)
             } catch {
@@ -49,7 +49,7 @@ struct FavoritesView: View {
                             userData.client,
                             type: .friend,
                             tag: favoriteGroup.name
-                        )
+                        ).get()
                     )
                 }
             }
@@ -72,7 +72,7 @@ struct FavoritesView: View {
                         friends: UserService.fetchUsers(
                             userData.client,
                             userIds: favoriteGroup.favorites.map(\.favoriteId)
-                        )
+                        ).get()
                     )
                 }
             }

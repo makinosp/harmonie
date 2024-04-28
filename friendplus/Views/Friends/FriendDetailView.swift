@@ -40,7 +40,7 @@ struct FriendDetailView: View {
         .backgroundStyle(.ultraThinMaterial)
         .task {
             do {
-                friend = try await UserService.fetchUser(userData.client, userId: friend.id)
+                friend = try await UserService.fetchUser(userData.client, userId: friend.id).get()
             } catch {
                 print(error)
             }
