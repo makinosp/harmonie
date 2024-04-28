@@ -48,15 +48,13 @@ struct ContentView: View {
     }
 
     func fetchUserData() async {
-        typealias authentication = AuthenticationService
         do {
             let isValidToken: Bool
-            isValidToken = try await authentication.verifyAuthToken(userData.client)
+            isValidToken = try await AuthenticationService.verifyAuthToken(userData.client)
             self.isValidToken = isValidToken
-            guard isValidToken else {
-                return
-            }
-            userData.user = try await authentication.loginUserInfo(userData.client).user
+            guard isValidToken else { return }
+            let response = try await AuthenticationService.loginUserInfo(userData.client)
+            if case .user(let user) = response { userData.user = user }
         } catch {
             print(error)
         }

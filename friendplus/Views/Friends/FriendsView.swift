@@ -148,13 +148,18 @@ struct FriendsView: View {
     func fetchFriends(offset: Int, offline: Bool) async -> [Friend] {
         guard !isPreview else { return [] }
         do {
-            return try await FriendService.fetchFriends(
+            let result = try await FriendService.fetchFriends(
                 userData.client,
                 offset: offset,
                 offline: offline
             )
+            switch result {
+            case .success(let success):
+                return success
+            case .failure(_):
+                return []
+            }
         } catch {
-            print(error)
             return []
         }
     }
@@ -171,9 +176,9 @@ struct FriendsView: View {
                     .prefix(fetchRecentlyFriendsCount)
                     .map(\.description)
             )
+            .get()
             .map(\.friend)
         } catch {
-            print(error)
             return []
         }
     }
