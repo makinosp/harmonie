@@ -23,7 +23,7 @@ struct FavoritesView: View {
         NavigationSplitView {
             if friendsInFavoriteGroups != nil {
                 List {
-                    ForEach(favoriteFriendGroups) { group in
+                    ForEach(userData.favoriteFriendGroups) { group in
                         Section(header: Text(group.displayName)) {
                             ForEach(favoritesFromGroupId(group.id)) { friend in
                                 rowView(friend)
@@ -125,11 +125,6 @@ struct FavoritesView: View {
             }
         }
         return results
-    }
-
-    /// Filter friends groups from favorite groups
-    var favoriteFriendGroups: [FavoriteGroup] {
-        userData.favoriteGroups?.filter { $0.type == .friend } ?? []
     }
 
     /// Lookup friends list from group ID
