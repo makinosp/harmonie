@@ -32,25 +32,35 @@ struct ProfileView: View {
                         }
                     }
                     Section {
-                        Label {
-                            Text("Edit Profile")
-                        } icon: {
-                            Image(systemName: "pencil")
-                        }
-                        Label {
-                            Text(user.statusDescription)
-                        } icon: {
-                            Image(systemName: "ellipsis.bubble")
-                        }
-                        Label {
-                            Text("Edit Status Descriptions")
-                        } icon: {
-                            Image(systemName: "list.bullet")
-                        }
-                        Label {
-                            Text("Logout")
-                        } icon: {
-                            Image(systemName: "delete.forward")
+//                        Label {
+//                            Text("Edit Profile")
+//                        } icon: {
+//                            Image(systemName: "pencil")
+//                        }
+//                        Label {
+//                            Text(user.statusDescription)
+//                        } icon: {
+//                            Image(systemName: "ellipsis.bubble")
+//                        }
+//                        Label {
+//                            Text("Edit Status Descriptions")
+//                        } icon: {
+//                            Image(systemName: "list.bullet")
+//                        }
+                        Button {
+                            // TODO: Logout Action
+                            userData.user = nil
+                            userData.favoriteGroups = nil
+                            userData.client.deleteCookies()
+                            userData.client = APIClient()
+                        } label: {
+                            Label {
+                                Text("Logout")
+                                    .foregroundStyle(Color.red)
+                            } icon: {
+                                Image(systemName: "delete.forward")
+                                    .foregroundStyle(Color.red)
+                            }
                         }
                     }
                     Section {
