@@ -146,7 +146,6 @@ struct FriendsView: View {
 
     /// Fetch friends from API
     func fetchFriends(offset: Int, offline: Bool) async -> [Friend] {
-        guard !isPreview else { return [] }
         do {
             let result = try await FriendService.fetchFriends(
                 userData.client,

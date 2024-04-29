@@ -23,11 +23,11 @@ struct ContentView: View {
                         Image(systemName: "person.2.fill")
                         Text("Friends")
                     }
-                LocationsView()
-                    .tabItem {
-                        Image(systemName: "location.fill")
-                        Text("Locations")
-                    }
+//                LocationsView()
+//                    .tabItem {
+//                        Image(systemName: "location.fill")
+//                        Text("Locations")
+//                    }
                 FavoritesView()
                     .tabItem {
                         Image(systemName: "star.fill")
@@ -41,20 +41,38 @@ struct ContentView: View {
             }
         } else {
             ProgressView()
-                .task {
-                    await fetchUserData()
+                .onAppear {
+                    Task {
+                        await fetchUserData()
+                    }
                 }
         }
     }
 
     func fetchUserData() async {
         do {
-            let isValidToken: Bool
-            isValidToken = try await AuthenticationService.verifyAuthToken(userData.client)
+            // verify auth token
+            let isValidToken: Bool = try await AuthenticationService.verifyAuthToken(userData.client)
             self.isValidToken = isValidToken
             guard isValidToken else { return }
-            let response = try await AuthenticationService.loginUserInfo(userData.client)
-            if case .user(let user) = response { userData.user = user }
+
+            // user info
+            switch try await AuthenticationService.loginUserInfo(userData.client) {
+            case .user(let user):
+                userData.user = user
+            case .failure(let error):
+                print(error)
+            default:
+                break
+            }
+
+            // favorite info
+            switch try await FavoriteService.listFavoriteGroups(userData.client) {
+            case .success(let success):
+                userData.favoriteGroups = success
+            case .failure(let failure):
+                print(failure)
+            }
         } catch {
             print(error)
         }
