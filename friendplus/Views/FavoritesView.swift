@@ -10,32 +10,70 @@ import SwiftUI
 
 struct FavoritesView: View {
     @EnvironmentObject var userData: UserData
-    @State var friendsInFavoriteGroups: [FriendsInFavoriteGroup] = []
+    @State var friendsInFavoriteGroups: [FriendsInFavoriteGroup]?
+    @State var friendSelection: UserDetail?
 
     typealias FavoritesWithGroupId = (favoriteGroupId: String, favorites: [Favorite])
     typealias FriendsInFavoriteGroup = (favoriteGroupId: String, friends: [UserDetail])
+    typealias FriendsResultSet = (favoriteGroupId: String, result: Result<[UserDetail], ErrorResponse>)
+
+    let thumbnailFrame = CGSize(width: 32, height: 32)
 
     var body: some View {
-        List {
-            ForEach(favoriteFriendGroups) { group in
-                Section(header: Text(group.displayName)) {
-                    ForEach(favoritesFromGroupId(group.id)) { friend in
-                        Text(friend.displayName)
+        NavigationSplitView {
+            if friendsInFavoriteGroups != nil {
+                List {
+                    ForEach(favoriteFriendGroups) { group in
+                        Section(header: Text(group.displayName)) {
+                            ForEach(favoritesFromGroupId(group.id)) { friend in
+                                rowView(friend)
+                            }
+                        }
                     }
                 }
+                .sheet(item: $friendSelection) { friend in
+                    FriendDetailView(friend: friend)
+                        .presentationDetents([.medium, .large])
+                }
+                .navigationTitle("Favorites")
+            } else {
+                ProgressView()
+                    .task {
+                        do {
+                            let favoritesWithGroupId = try await fetchFavoritesInGroups()
+                            friendsInFavoriteGroups = try await fetchFriendsInGroups(favoritesWithGroupId)
+                        } catch {
+                            print(error)
+                        }
+                    }
             }
+        } detail: { EmptyView() }
+    }
+
+    func rowView(_ friend: UserDetail) -> some View {
+        HStack {
+            let imageUrl = friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon
+            AsyncImage(
+                url: URL(string: imageUrl)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(size: thumbnailFrame)
+                        .clipShape(Circle())
+                } placeholder: {
+                    ProgressView()
+                        .frame(size: thumbnailFrame)
+                }
+            Text(friend.displayName)
         }
-        .task {
-            do {
-                userData.favoriteGroups = try await FavoriteService.listFavoriteGroups(userData.client).get()
-                let favoritesWithGroupId = try await fetchFavoritesInGroups()
-                friendsInFavoriteGroups = try await fetchFriendsInGroups(favoritesWithGroupId)
-            } catch {
-                print(error)
-            }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            friendSelection = friend
         }
     }
 
+    /// Fetch a list of favorite IDs for each favorite group
     func fetchFavoritesInGroups() async throws -> [FavoritesWithGroupId] {
         guard let favoriteGroups = userData.favoriteGroups else { return [] }
 
@@ -60,34 +98,42 @@ struct FavoritesView: View {
         return results
     }
 
+    /// Fetch friend info from favorite IDs
     func fetchFriendsInGroups(
         _ favoritesWithGroupId: [FavoritesWithGroupId]
     ) async throws -> [FriendsInFavoriteGroup] {
         var results: [FriendsInFavoriteGroup] = []
-        try await withThrowingTaskGroup(of: FriendsInFavoriteGroup.self) { taskGroup in
+        try await withThrowingTaskGroup(of: FriendsResultSet.self) { taskGroup in
             for favoriteGroup in favoritesWithGroupId {
                 taskGroup.addTask {
-                    try await FriendsInFavoriteGroup(
+                    try await FriendsResultSet(
                         favoriteGroupId: favoriteGroup.favoriteGroupId,
-                        friends: UserService.fetchUsers(
+                        result: UserService.fetchUsers(
                             userData.client,
                             userIds: favoriteGroup.favorites.map(\.favoriteId)
-                        ).get()
+                        )
                     )
                 }
             }
-            for try await friendsInFavoriteGroup in taskGroup {
-                results.append(friendsInFavoriteGroup)
+            for try await result in taskGroup {
+                switch result.result {
+                case .success(let friends):
+                    results.append(FriendsInFavoriteGroup(favoriteGroupId: result.favoriteGroupId, friends: friends))
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
         return results
     }
 
+    /// Filter friends groups from favorite groups
     var favoriteFriendGroups: [FavoriteGroup] {
         userData.favoriteGroups?.filter { $0.type == .friend } ?? []
     }
 
+    /// Lookup friends list from group ID
     func favoritesFromGroupId(_ id: String) -> [UserDetail] {
-        friendsInFavoriteGroups.first(where: { $0.favoriteGroupId == id } )?.friends ?? []
+        friendsInFavoriteGroups?.first(where: { $0.favoriteGroupId == id } )?.friends ?? []
     }
 }
