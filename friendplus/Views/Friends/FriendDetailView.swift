@@ -47,6 +47,7 @@ struct FriendDetailView: View {
         }
         .sheet(isPresented: $isAppearedNote) {
             noteEditor
+                .presentationDetents([.medium])
         }
     }
 
@@ -54,7 +55,7 @@ struct FriendDetailView: View {
         VStack {
             HStack {
                 Button {
-                    dismiss()
+                    isAppearedNote = false
                 } label: {
                     Text("Cancel")
                 }
@@ -67,7 +68,7 @@ struct FriendDetailView: View {
                                 targetUserId: friend.id,
                                 note: friend.note
                             )
-                            dismiss()
+                            isAppearedNote = false
                         } catch {
                             print(error)
                         }
@@ -134,8 +135,14 @@ struct FriendDetailView: View {
             } label: {
                 Image(systemName: "doc.plaintext")
             }
-            Button {
-                // TODO: favorite action
+            Menu {
+                ForEach(userData.favoriteFriendGroups) { group in
+                    Button {
+                        // TODO: Action
+                    } label: {
+                        Text(group.displayName)
+                    }
+                }
             } label: {
                 Image(systemName: "star")
             }

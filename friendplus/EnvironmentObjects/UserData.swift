@@ -12,4 +12,9 @@ class UserData: ObservableObject {
     @Published var client = APIClient()
     @Published var user: User?
     @Published var favoriteGroups: [FavoriteGroup]?
+
+    /// Filter friends groups from favorite groups
+    var favoriteFriendGroups: [FavoriteGroup] {
+        favoriteGroups?.filter { $0.type == .friend } ?? []
+    }
 }
