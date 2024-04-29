@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-var isPreview: Bool {
-    ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
-}
-
 @main
 struct FriendplusApp: App {
     var body: some Scene {
