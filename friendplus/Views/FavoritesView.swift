@@ -21,9 +21,9 @@ struct FavoritesView: View {
 
     var body: some View {
         NavigationSplitView {
-            if friendsInFavoriteGroups != nil {
+            if friendsInFavoriteGroups != nil, let favoriteFriendGroups = userData.favoriteFriendGroups {
                 List {
-                    ForEach(userData.favoriteFriendGroups) { group in
+                    ForEach(favoriteFriendGroups) { group in
                         Section(header: Text(group.displayName)) {
                             ForEach(favoritesFromGroupId(group.id)) { friend in
                                 rowView(friend)

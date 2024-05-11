@@ -73,6 +73,12 @@ struct ContentView: View {
             case .failure(let failure):
                 print(failure)
             }
+            
+            do {
+                userData.favoriteFriendDetails = try await userData.fetchFriendsInGroups(userData.fetchFavoriteGroupDetails())
+            } catch {
+                print(error)
+            }
         } catch {
             print(error)
         }
