@@ -68,8 +68,19 @@ struct ContentView: View {
 
             // favorite info
             switch try await FavoriteService.listFavoriteGroups(userData.client) {
-            case .success(let success):
-                userData.favoriteGroups = success
+            case .success(let favoriteGroups):
+                userData.favoriteGroups = favoriteGroups
+                do {
+                    userData.favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
+                        userData.client,
+                        favorites: FavoriteService.fetchFavoriteGroupDetails(
+                            userData.client,
+                            favoriteGroups: favoriteGroups
+                        )
+                    )
+                } catch {
+                    print(error)
+                }
             case .failure(let failure):
                 print(failure)
             }

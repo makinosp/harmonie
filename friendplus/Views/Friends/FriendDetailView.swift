@@ -135,16 +135,28 @@ struct FriendDetailView: View {
             } label: {
                 Image(systemName: "doc.plaintext")
             }
-            Menu {
-                ForEach(userData.favoriteFriendGroups) { group in
-                    Button {
-                        // TODO: Action
-                    } label: {
-                        Text(group.displayName)
+            if let favoriteFriendGroups = userData.favoriteFriendGroups {
+                Menu {
+                    ForEach(favoriteFriendGroups) { group in
+                        Button {
+                            // TODO: Action
+                        } label: {
+                            Label {
+                                Text(group.displayName)
+                            } icon: {
+                                if userData.isIncludedFriendInFavorite(friendId: friend.id, groupId: group.id) {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                        }
+                    }
+                } label: {
+                    if userData.findOutFriendFromFavorites(friend.id) == nil {
+                        Image(systemName: "star")
+                    } else {
+                        Image(systemName: "star.fill")
                     }
                 }
-            } label: {
-                Image(systemName: "star")
             }
         }
         .font(.title3)
