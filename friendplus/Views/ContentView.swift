@@ -11,11 +11,12 @@ import VRCKit
 struct ContentView: View {
     @EnvironmentObject var userData: UserData
     @State var isValidToken: Bool?
+    @State var isCompleted = false
 
     var body: some View {
         if let isValidToken = isValidToken, !isValidToken {
             LoginView(isValidToken: $isValidToken)
-        } else if userData.user != nil {
+        } else if isCompleted {
             TabView {
                 FriendsView()
                     .badge(userData.user?.onlineFriends.count ?? 0)
@@ -43,20 +44,20 @@ struct ContentView: View {
             ProgressView()
                 .onAppear {
                     Task {
-                        await fetchUserData()
+                        await initialization()
                     }
                 }
         }
     }
 
-    func fetchUserData() async {
+    func initialization() async {
         do {
             // verify auth token
             let isValidToken: Bool = try await AuthenticationService.verifyAuthToken(userData.client)
             self.isValidToken = isValidToken
             guard isValidToken else { return }
 
-            // user info
+            // fetch user data
             switch try await AuthenticationService.loginUserInfo(userData.client) {
             case .user(let user):
                 userData.user = user
@@ -66,24 +67,23 @@ struct ContentView: View {
                 break
             }
 
-            // favorite info
+            // fetch favorite data
             switch try await FavoriteService.listFavoriteGroups(userData.client) {
             case .success(let favoriteGroups):
                 userData.favoriteGroups = favoriteGroups
-                do {
-                    userData.favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
-                        userData.client,
-                        favorites: FavoriteService.fetchFavoriteGroupDetails(
-                            userData.client,
-                            favoriteGroups: favoriteGroups
-                        )
-                    )
-                } catch {
-                    print(error)
-                }
-            case .failure(let failure):
-                print(failure)
+                let favorites = try await FavoriteService.fetchFavoriteGroupDetails(
+                    userData.client,
+                    favoriteGroups: favoriteGroups
+                )
+                userData.favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
+                    userData.client,
+                    favorites: favorites
+                )
+            case .failure(let error):
+                print(error)
             }
+
+            isCompleted = true
         } catch {
             print(error)
         }

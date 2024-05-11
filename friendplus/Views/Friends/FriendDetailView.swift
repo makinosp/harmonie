@@ -51,49 +51,6 @@ struct FriendDetailView: View {
         }
     }
 
-    var noteEditor: some View {
-        VStack {
-            HStack {
-                Button {
-                    isAppearedNote = false
-                } label: {
-                    Text("Cancel")
-                }
-                Spacer()
-                Button {
-                    Task {
-                        do {
-                            let _ = try await UserNoteService.updateUserNote(
-                                userData.client,
-                                targetUserId: friend.id,
-                                note: friend.note
-                            )
-                            isAppearedNote = false
-                        } catch {
-                            print(error)
-                        }
-                    }
-                } label: {
-                    Text("Save")
-                }
-            }
-            TextEditor(text: $friend.note)
-                .scrollContentBackground(Visibility.hidden)
-                .backgroundStyle(.ultraThinMaterial)
-                .overlay(alignment: .topLeading) {
-                    if friend.note.isEmpty {
-                        Text("Enter note")
-                            .foregroundStyle(Color(uiColor: .placeholderText))
-                            .allowsHitTesting(false)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 5)
-                    }
-                }
-        }
-        .padding()
-        .backgroundStyle(.ultraThinMaterial)
-    }
-
     var profileImage: some View {
         let imageUrl = friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon
         return AsyncImage(
@@ -130,38 +87,43 @@ struct FriendDetailView: View {
     var toolbar: some View {
         HStack {
             Spacer()
-            Button {
-                isAppearedNote.toggle()
-            } label: {
-                Image(systemName: "doc.plaintext")
-            }
-            if let favoriteFriendGroups = userData.favoriteFriendGroups {
-                Menu {
-                    ForEach(favoriteFriendGroups) { group in
-                        Button {
-                            // TODO: Action
-                        } label: {
-                            Label {
-                                Text(group.displayName)
-                            } icon: {
-                                if userData.isIncludedFriendInFavorite(friendId: friend.id, groupId: group.id) {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
-                        }
-                    }
-                } label: {
-                    if userData.findOutFriendFromFavorites(friend.id) == nil {
-                        Image(systemName: "star")
-                    } else {
-                        Image(systemName: "star.fill")
-                    }
-                }
-            }
+            noteButton
+            favoriteButton
         }
         .font(.title3)
         .foregroundStyle(Color.white)
         .padding()
+    }
+
+    var noteButton: some View {
+        Button {
+            isAppearedNote.toggle()
+        } label: {
+            Image(systemName: friend.note.isEmpty ? "doc" : "doc.fill")
+        }
+    }
+
+    @ViewBuilder
+    var favoriteButton: some View {
+        if let favoriteFriendGroups = userData.favoriteFriendGroups {
+            Menu {
+                ForEach(favoriteFriendGroups) { group in
+                    Button {
+                        // TODO: Action
+                    } label: {
+                        Label {
+                            Text(group.displayName)
+                        } icon: {
+                            if userData.isIncludedFriendInFavorite(friendId: friend.id, groupId: group.id) {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                }
+            } label: {
+                Image(systemName: userData.findOutFriendFromFavorites(friend.id) == nil ? "star" : "star.fill")
+            }
+        }
     }
 
     var displayNameAndStatus: some View {
@@ -179,5 +141,44 @@ struct FriendDetailView: View {
         }
         .foregroundStyle(Color.white)
         .padding()
+    }
+
+    var noteEditor: some View {
+        VStack {
+            HStack {
+                Button("Cancel") {
+                    isAppearedNote = false
+                }
+                Spacer()
+                Button("Save") {
+                    Task {
+                        do {
+                            let _ = try await UserNoteService.updateUserNote(
+                                userData.client,
+                                targetUserId: friend.id,
+                                note: friend.note
+                            )
+                            isAppearedNote = false
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
+            }
+            TextEditor(text: $friend.note)
+                .scrollContentBackground(Visibility.hidden)
+                .backgroundStyle(.ultraThinMaterial)
+                .overlay(alignment: .topLeading) {
+                    if friend.note.isEmpty {
+                        Text("Enter note")
+                            .foregroundStyle(Color(uiColor: .placeholderText))
+                            .allowsHitTesting(false)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 5)
+                    }
+                }
+        }
+        .padding()
+        .backgroundStyle(.ultraThinMaterial)
     }
 }
