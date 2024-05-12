@@ -30,6 +30,13 @@ class UserData: ObservableObject {
         return includingFavorite?.favoriteGroupId
     }
 
+    func addFriendInFavorite(friend: UserDetail, groupId: String) {
+        guard var groups = favoriteFriendDetails,
+              let groupIndex = groups.firstIndex(where: { $0.favoriteGroupId == groupId }) else { return }
+        groups[groupIndex].friends.insert(friend, at: 0)
+        favoriteFriendDetails = groups
+    }
+
     func removeFriendFromFavorite(friendId: String, groupId: String) {
         guard var groups = favoriteFriendDetails,
               let groupIndex = groups.firstIndex(where: { $0.favoriteGroupId == groupId }) else { return }

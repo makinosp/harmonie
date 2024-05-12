@@ -104,7 +104,8 @@ struct FriendDetailView: View {
     }
 
     @ViewBuilder var favoriteButton: some View {
-        let isAdded = userData.findOutFriendFromFavorites(friend.id) != nil
+        let addedGroupId = userData.findOutFriendFromFavorites(friend.id)
+        let isAdded = addedGroupId != nil
         if let favoriteFriendGroups = userData.favoriteFriendGroups {
             Menu {
                 ForEach(favoriteFriendGroups) { group in
@@ -115,16 +116,35 @@ struct FriendDetailView: View {
                     Button {
                         Task {
                             do {
-                                if isAddedIn {
+                                if let addedGroupId {
                                     let _ = try await FavoriteService.removeFavorite(
                                         userData.client,
                                         favoriteId: friend.id
                                     ).get()
+
+                                    if !isAddedIn {
+                                        let _ = try await FavoriteService.addFavorite(
+                                            userData.client,
+                                            type: .friend,
+                                            favoriteId: friend.id,
+                                            tag: group.name
+                                        ).get()
+                                        userData.addFriendInFavorite(friend: friend, groupId: group.id)
+                                    }
+
+                                    userData.removeFriendFromFavorite(
+                                        friendId: friend.id,
+                                        groupId: addedGroupId
+                                    )
+                                } else {
+                                    let _ = try await FavoriteService.addFavorite(
+                                        userData.client,
+                                        type: .friend,
+                                        favoriteId: friend.id,
+                                        tag: group.name
+                                    ).get()
+                                    userData.addFriendInFavorite(friend: friend, groupId: group.id)
                                 }
-                                userData.removeFriendFromFavorite(
-                                    friendId: friend.id,
-                                    groupId: group.id
-                                )
                             } catch {
                                 print(error)
                             }
