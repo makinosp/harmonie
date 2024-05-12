@@ -103,25 +103,44 @@ struct FriendDetailView: View {
         }
     }
 
-    @ViewBuilder
-    var favoriteButton: some View {
+    @ViewBuilder var favoriteButton: some View {
+        let isAdded = userData.findOutFriendFromFavorites(friend.id) != nil
         if let favoriteFriendGroups = userData.favoriteFriendGroups {
             Menu {
                 ForEach(favoriteFriendGroups) { group in
+                    let isAddedIn = userData.isIncludedFriendInFavorite(
+                        friendId: friend.id,
+                        groupId: group.id
+                    )
                     Button {
-                        // TODO: Action
+                        Task {
+                            do {
+                                if isAddedIn {
+                                    let _ = try await FavoriteService.removeFavorite(
+                                        userData.client,
+                                        favoriteId: friend.id
+                                    ).get()
+                                }
+                                userData.removeFriendFromFavorite(
+                                    friendId: friend.id,
+                                    groupId: group.id
+                                )
+                            } catch {
+                                print(error)
+                            }
+                        }
                     } label: {
                         Label {
                             Text(group.displayName)
                         } icon: {
-                            if userData.isIncludedFriendInFavorite(friendId: friend.id, groupId: group.id) {
+                            if isAddedIn {
                                 Image(systemName: "checkmark")
                             }
                         }
                     }
                 }
             } label: {
-                Image(systemName: userData.findOutFriendFromFavorites(friend.id) == nil ? "star" : "star.fill")
+                Image(systemName: isAdded ? "star.fill" : "star")
             }
         }
     }

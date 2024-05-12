@@ -30,6 +30,13 @@ class UserData: ObservableObject {
         return includingFavorite?.favoriteGroupId
     }
 
+    func removeFriendFromFavorite(friendId: String, groupId: String) {
+        guard var groups = favoriteFriendDetails,
+              let groupIndex = groups.firstIndex(where: { $0.favoriteGroupId == groupId }) else { return }
+        groups[groupIndex].friends = groups[groupIndex].friends.filter { $0.id != friendId }
+        favoriteFriendDetails = groups
+    }
+
     /// Lookup favorite friend list by group ID
     func lookUpFavoriteFriends(_ groupId: String) -> [UserDetail]? {
         favoriteFriendDetails?.first(where: { $0.favoriteGroupId == groupId } )?.friends
