@@ -295,6 +295,7 @@
 			mainGroup = 20395D882B945CD700003921;
 			packageReferences = (
 				20395DC02B945E0600003921 /* XCLocalSwiftPackageReference "../vrckit" */,
+				208555102BF8E7BA0079A92F /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -689,6 +690,17 @@
 			relativePath = ../vrckit;
 		};
 /* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		208555102BF8E7BA0079A92F /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/treastrain/AsyncSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		20395DC12B945EEF00003921 /* VRCKit */ = {
