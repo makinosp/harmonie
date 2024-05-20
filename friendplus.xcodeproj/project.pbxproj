@@ -23,6 +23,8 @@
 		20395DC22B945EEF00003921 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20395DC12B945EEF00003921 /* VRCKit */; };
 		20395DC42B94653100003921 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DC32B94653100003921 /* FriendsView.swift */; };
 		2044ADF02BC264240057BA6A /* StatusColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2044ADEF2BC264240057BA6A /* StatusColor.swift */; };
+		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
+		206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */; };
 		208555132BF8EAC90079A92F /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208555122BF8EAC90079A92F /* Initialization.swift */; };
 		208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AD2A32B9C17BB00F66ED3 /* UserData.swift */; };
 		2094455D2B9D95A000F55040 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2094455C2B9D95A000F55040 /* ProfileView.swift */; };
@@ -77,6 +79,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
+				206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */,
+				206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +227,8 @@
 			name = friendplus;
 			packageProductDependencies = (
 				20395DC12B945EEF00003921 /* VRCKit */,
+				206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */,
+				206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */,
 			);
 			productName = friendplus;
 			productReference = 20395D912B945CD700003921 /* friendplus.app */;
@@ -298,7 +304,7 @@
 			mainGroup = 20395D882B945CD700003921;
 			packageReferences = (
 				20395DC02B945E0600003921 /* XCLocalSwiftPackageReference "../vrckit" */,
-				208555102BF8E7BA0079A92F /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */,
+				206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -696,12 +702,12 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		208555102BF8E7BA0079A92F /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */ = {
+		206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/treastrain/AsyncSwiftUI";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.0;
+				kind = exactVersion;
+				version = 0.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -710,6 +716,15 @@
 		20395DC12B945EEF00003921 /* VRCKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VRCKit;
+		};
+		206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AsyncSwiftUI;
+		};
+		206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */;
+			productName = AsyncSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

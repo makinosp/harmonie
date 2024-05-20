@@ -59,10 +59,10 @@ struct ContentView: View {
 
             // fetch user data
             switch try await AuthenticationService.loginUserInfo(userData.client) {
-            case .user(let user):
-                userData.user = user
-            case .failure(let error):
-                print(error)
+            case let value as User:
+                userData.user = value
+            case let value as [String]:
+                break
             default:
                 break
             }
