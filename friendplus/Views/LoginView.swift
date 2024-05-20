@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/03/08.
 //
 
-import SwiftUI
+import AsyncSwiftUI
 import VRCKit
 
 struct LoginView: View {
@@ -16,6 +16,10 @@ struct LoginView: View {
     @State var password: String = ""
     @State var code: String = ""
 
+    @State var isRunning = false
+    @State var isPresentedAlert = false
+    @State var vrckError: VRCKitError? = nil
+
     var body: some View {
         ZStack {
             Color(UIColor.secondarySystemBackground)
@@ -25,6 +29,11 @@ struct LoginView: View {
             } else {
                 otpField
             }
+        }
+        .alert(isPresented: $isPresentedAlert, error: vrckError) { _ in
+            Button("OK") {}
+        } message: { error in
+            Text(error.failureReason ?? "Try again later.")
         }
     }
 
@@ -52,31 +61,30 @@ struct LoginView: View {
                         .foregroundStyle(Color.white)
                 )
             }
-            Button {
-                userData.client = APIClient(
-                    username: username,
-                    password: password
-                )
-                Task {
-                    let response = try await AuthenticationService.loginUserInfo(userData.client)
-                    switch response {
-                    case .requiresTwoFactorAuth(let factors):
-                        self.requiresTwoFactorAuth = factors
-                    case .user(let user):
-                        print(user)
-                    case .failure(let failure):
-                        print(failure)
+            if isRunning {
+                ProgressView()
+            } else {
+                AsyncButton {
+                    userData.client = APIClient(
+                        username: username,
+                        password: password
+                    )
+                    do {
+                        switch try await AuthenticationService.loginUserInfo(userData.client) {
+                        case let value as [String]:
+                            self.requiresTwoFactorAuth = value
+                        default:
+                            break
+                        }
+                    } catch let error as VRCKitError {
+                        isPresentedAlert = true
+                        vrckError = error
+                    } catch {
+                        vrckError = .unexpectedError
                     }
-
+                } label: {
+                    Label("Sign In", systemImage: "chevron.right")
                 }
-            } label: {
-                Image(systemName: "arrow.right")
-                    .bold()
-                    .font(.title2)
-                    .frame(width: 48, height: 48)
-                    .foregroundColor(Color.white)
-                    .background(Color.blue)
-                    .clipShape(Circle())
             }
         }
         .padding(24)
@@ -94,8 +102,10 @@ struct LoginView: View {
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundStyle(Color.white)
             )
-            Button {
-                Task {
+            if isRunning {
+                ProgressView()
+            } else {
+                AsyncButton {
                     var verifyType: String?
                     if requiresTwoFactorAuth.contains(TwoFactorAuthType.totp.rawValue) {
                         verifyType = TwoFactorAuthType.totp.rawValue
@@ -103,20 +113,27 @@ struct LoginView: View {
                         verifyType = TwoFactorAuthType.emailotp.rawValue
                     }
                     guard let verifyType = verifyType else { return }
-                    isValidToken = try await AuthenticationService.verify2FA(
-                        userData.client,
-                        verifyType: verifyType,
-                        code: code
-                    )
+                    do {
+                        isValidToken = try await AuthenticationService.verify2FA(
+                            userData.client,
+                            verifyType: verifyType,
+                            code: code
+                        )
+                    } catch let error as VRCKitError {
+                        isPresentedAlert = true
+                        vrckError = error
+                    } catch {
+                        vrckError = .unexpectedError
+                    }
+                } label: {
+                    Image(systemName: "arrow.right")
+                        .bold()
+                        .font(.title2)
+                        .frame(width: 48, height: 48)
+                        .foregroundColor(Color.white)
+                        .background(Color.blue)
+                        .clipShape(Circle())
                 }
-            } label: {
-                Image(systemName: "arrow.right")
-                    .bold()
-                    .font(.title2)
-                    .frame(width: 48, height: 48)
-                    .foregroundColor(Color.white)
-                    .background(Color.blue)
-                    .clipShape(Circle())
             }
         }
         .padding(24)
