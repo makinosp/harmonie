@@ -48,11 +48,7 @@ struct ProfileView: View {
 //                            Image(systemName: "list.bullet")
 //                        }
                         Button {
-                            // TODO: Logout Action
-                            userData.user = nil
-                            userData.favoriteGroups = nil
-                            userData.client.deleteCookies()
-                            userData.client = APIClient()
+                            userData.logout()
                         } label: {
                             Label {
                                 Text("Logout")
