@@ -18,6 +18,13 @@ class UserData: ObservableObject {
         favoriteGroups?.filter { $0.type == .friend }
     }
 
+    func logout() {
+        user = nil
+        favoriteGroups = nil
+        client.deleteCookies()
+        client = APIClient()
+    }
+
     /// Find out which favorite group the friend belongs to from the friend ID and return that favorite ID
     /// If it does not exist, nil is returned
     func findOutFriendFromFavorites(_ friendId: String) -> String? {

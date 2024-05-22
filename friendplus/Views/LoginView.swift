@@ -10,7 +10,7 @@ import VRCKit
 
 struct LoginView: View {
     @EnvironmentObject var userData: UserData
-    @Binding var isValidToken: Bool?
+    @Binding var step: ContentView.Step
     @State var requiresTwoFactorAuth: [String] = []
     @State var username: String = ""
     @State var password: String = ""
@@ -72,14 +72,19 @@ struct LoginView: View {
                     do {
                         switch try await AuthenticationService.loginUserInfo(userData.client) {
                         case let value as [String]:
-                            self.requiresTwoFactorAuth = value
+                            requiresTwoFactorAuth = value
+                        case let value as User:
+                            userData.user = value
+                            step = .done(user: value)
                         default:
-                            break
+                            isPresentedAlert = true
+                            vrckError = .unexpectedError
                         }
                     } catch let error as VRCKitError {
                         isPresentedAlert = true
                         vrckError = error
                     } catch {
+                        isPresentedAlert = true
                         vrckError = .unexpectedError
                     }
                 } label: {
@@ -114,15 +119,21 @@ struct LoginView: View {
                     }
                     guard let verifyType = verifyType else { return }
                     do {
-                        isValidToken = try await AuthenticationService.verify2FA(
+                        if try await AuthenticationService.verify2FA(
                             userData.client,
                             verifyType: verifyType,
                             code: code
-                        )
+                        ) {
+                            step = .loggedIn
+                        } else {
+                            // TODO: throw error
+                            print("not verified")
+                        }
                     } catch let error as VRCKitError {
                         isPresentedAlert = true
                         vrckError = error
                     } catch {
+                        isPresentedAlert = true
                         vrckError = .unexpectedError
                     }
                 } label: {

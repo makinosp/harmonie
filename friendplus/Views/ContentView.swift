@@ -10,16 +10,38 @@ import VRCKit
 
 struct ContentView: View {
     @EnvironmentObject var userData: UserData
-    @State var isValidToken: Bool?
-    @State var isCompleted = false
+    @State var isPresentedAlert = false
+    @State var vrckError: VRCKitError? = nil
+    @State var step: Step = .initializing
+
+    public enum Step: Equatable {
+        case initializing
+        case loggingIn
+        case loggedIn
+        case done(user: User)
+    }
 
     var body: some View {
-        if let isValidToken = isValidToken, !isValidToken {
-            LoginView(isValidToken: $isValidToken)
-        } else if isCompleted {
+        switch step {
+        case .initializing, .loggedIn:
+            ProgressView()
+                .controlSize(.large)
+                .task {
+                    await initialization()
+                }
+                .alert(isPresented: $isPresentedAlert, error: vrckError) { _ in
+                    Button("OK") {
+                        userData.logout()
+                    }
+                } message: { error in
+                    Text(error.failureReason ?? "Try again later.")
+                }
+        case .loggingIn:
+            LoginView(step: $step)
+        case .done(let user):
             TabView {
                 FriendsView()
-                    .badge(userData.user?.onlineFriends.count ?? 0)
+                    .badge(user.onlineFriends.count)
                     .tabItem {
                         Image(systemName: "person.2.fill")
                         Text("Friends")
@@ -40,52 +62,64 @@ struct ContentView: View {
                         Text("Profile")
                     }
             }
-        } else {
-            ProgressView()
-                .onAppear {
-                    Task {
-                        await initialization()
-                    }
-                }
         }
     }
 
     func initialization() async {
+        // check local data
+        if userData.client.isEmptyCookies {
+            step = .loggingIn
+            return
+        }
         do {
             // verify auth token
-            let isValidToken: Bool = try await AuthenticationService.verifyAuthToken(userData.client)
-            self.isValidToken = isValidToken
-            guard isValidToken else { return }
+            guard try await AuthenticationService.verifyAuthToken(userData.client) else {
+                step = .loggingIn
+                return
+            }
 
             // fetch user data
             switch try await AuthenticationService.loginUserInfo(userData.client) {
             case let value as User:
                 userData.user = value
-            case let value as [String]:
-                break
+
+                // TODO: catch error
+                // fetch favorite data
+                switch try await FavoriteService.listFavoriteGroups(userData.client) {
+                case .success(let favoriteGroups):
+                    userData.favoriteGroups = favoriteGroups
+                    let favorites = try await FavoriteService.fetchFavoriteGroupDetails(
+                        userData.client,
+                        favoriteGroups: favoriteGroups
+                    )
+                    userData.favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
+                        userData.client,
+                        favorites: favorites
+                    )
+                case .failure(let error):
+                    print(error)
+                }
+
+                step = .done(user: value)
+            case _ as [String]:
+                step = .loggingIn
             default:
-                break
+                unexpectedErrorOccurred()
             }
-
-            // fetch favorite data
-            switch try await FavoriteService.listFavoriteGroups(userData.client) {
-            case .success(let favoriteGroups):
-                userData.favoriteGroups = favoriteGroups
-                let favorites = try await FavoriteService.fetchFavoriteGroupDetails(
-                    userData.client,
-                    favoriteGroups: favoriteGroups
-                )
-                userData.favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
-                    userData.client,
-                    favorites: favorites
-                )
-            case .failure(let error):
-                print(error)
-            }
-
-            isCompleted = true
+        } catch let error as VRCKitError {
+            errorOccurred(error)
         } catch {
-            print(error)
+            unexpectedErrorOccurred()
         }
+    }
+
+    func errorOccurred(_ error: VRCKitError) {
+        isPresentedAlert = true
+        vrckError = error
+    }
+
+    func unexpectedErrorOccurred() {
+        isPresentedAlert = true
+        vrckError = .unexpectedError
     }
 }
