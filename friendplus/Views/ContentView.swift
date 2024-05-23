@@ -24,18 +24,25 @@ struct ContentView: View {
     var body: some View {
         switch step {
         case .initializing, .loggedIn:
-            ProgressView()
-                .controlSize(.large)
-                .task {
-                    await initialization()
-                }
-                .alert(isPresented: $isPresentedAlert, error: vrckError) { _ in
-                    Button("OK") {
-                        userData.logout()
+            ZStack {
+                Color(UIColor.secondarySystemBackground)
+                ProgressView()
+                    .controlSize(.large)
+                    .task {
+                        await initialization()
                     }
-                } message: { error in
-                    Text(error.failureReason ?? "Try again later.")
-                }
+                    .alert(isPresented: $isPresentedAlert, error: vrckError) { _ in
+                        Button("OK") {
+                            userData.logout()
+                        }
+                    } message: { error in
+                        Text(error.failureReason ?? "Try again later.")
+                    }
+                    .background(
+                        Color(UIColor.secondarySystemBackground)
+                    )
+            }
+            .edgesIgnoringSafeArea(.all)
         case .loggingIn:
             LoginView(step: $step)
         case .done(let user):
@@ -77,29 +84,11 @@ struct ContentView: View {
                 step = .loggingIn
                 return
             }
-
             // fetch user data
             switch try await AuthenticationService.loginUserInfo(userData.client) {
             case let value as User:
                 userData.user = value
-
-                // TODO: catch error
-                // fetch favorite data
-                switch try await FavoriteService.listFavoriteGroups(userData.client) {
-                case .success(let favoriteGroups):
-                    userData.favoriteGroups = favoriteGroups
-                    let favorites = try await FavoriteService.fetchFavoriteGroupDetails(
-                        userData.client,
-                        favoriteGroups: favoriteGroups
-                    )
-                    userData.favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
-                        userData.client,
-                        favorites: favorites
-                    )
-                case .failure(let error):
-                    print(error)
-                }
-
+                try await fetchFavorite()
                 step = .done(user: value)
             case _ as [String]:
                 step = .loggingIn
@@ -111,6 +100,20 @@ struct ContentView: View {
         } catch {
             unexpectedErrorOccurred()
         }
+    }
+
+    // fetch favorite data
+    func fetchFavorite() async throws {
+        let favoriteGroups = try await FavoriteService.listFavoriteGroups(userData.client)
+        userData.favoriteGroups = favoriteGroups
+        let favorites = try await FavoriteService.fetchFavoriteGroupDetails(
+            userData.client,
+            favoriteGroups: favoriteGroups
+        )
+        userData.favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
+            userData.client,
+            favorites: favorites
+        )
     }
 
     func errorOccurred(_ error: VRCKitError) {
