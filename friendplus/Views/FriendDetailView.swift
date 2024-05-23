@@ -18,26 +18,9 @@ struct FriendDetailView: View {
         ScrollView {
             VStack {
                 profileImage
-                VStack {
-                    if let bio = friend.bio {
-                        Text(bio)
-                            .font(.callout)
-                    }
-                    if let bioLinks = friend.bioLinks {
-                        ForEach(
-                            Array(bioLinks.enumerated()),
-                            id: \.element
-                        ) { (index, urlString) in
-                            if let url = URL(string: urlString) {
-                                Link(urlString, destination: url)
-                            }
-                        }
-                    }
-                }
-                .padding()
+                contentDetail
             }
         }
-        .backgroundStyle(.ultraThinMaterial)
         .task {
             do {
                 friend = try await UserService.fetchUser(userData.client, userId: friend.id).get()
@@ -59,6 +42,8 @@ struct FriendDetailView: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
+                    .frame(maxHeight: 250)
+                    .clipped()
                     .overlay {
                         LinearGradient(
                             gradient: gradient,
@@ -81,6 +66,8 @@ struct FriendDetailView: View {
                     }
             } placeholder: {
                 ProgressView()
+                    .controlSize(.large)
+                    .frame(height: 250)
             }
     }
 
@@ -179,6 +166,52 @@ struct FriendDetailView: View {
             Spacer()
         }
         .foregroundStyle(Color.white)
+        .padding()
+    }
+
+    var contentDetail: some View {
+        VStack(spacing: 8) {
+            VStack(alignment: .leading) {
+                Text("Note")
+                    .font(.subheadline)
+                    .foregroundStyle(Color.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(friend.note)
+                    .font(.body)
+                    .padding(.horizontal, 8)
+            }
+
+            VStack(alignment: .leading) {
+                Text("Bio")
+                    .font(.subheadline)
+                    .foregroundStyle(Color.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if let bio = friend.bio {
+                    Text(bio)
+                        .font(.body)
+                        .padding(.horizontal, 8)
+                }
+            }
+
+            VStack(alignment: .leading) {
+                Text("Links")
+                    .font(.subheadline)
+                    .foregroundStyle(Color.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if let bioLinks = friend.bioLinks {
+                    ForEach(
+                        Array(bioLinks.enumerated()),
+                        id: \.element
+                    ) { (index, urlString) in
+                        if let url = URL(string: urlString) {
+                            Link(urlString, destination: url)
+                                .font(.body)
+                                .padding(.horizontal, 8)
+                        }
+                    }
+                }
+            }
+        }
         .padding()
     }
 

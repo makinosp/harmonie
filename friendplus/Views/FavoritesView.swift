@@ -31,6 +31,7 @@ struct FavoritesView: View {
                 .sheet(item: $friendSelection) { friend in
                     FriendDetailView(friend: friend)
                         .presentationDetents([.medium, .large])
+                        .presentationBackground(.bar)
                 }
                 .navigationTitle("Favorites")
             } else {
