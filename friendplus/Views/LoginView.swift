@@ -22,8 +22,7 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            Color(UIColor.secondarySystemBackground)
-                .edgesIgnoringSafeArea(.all)
+            Color(UIColor.systemGroupedBackground)
             if requiresTwoFactorAuth.isEmpty {
                 usernamePasswordFields
             } else {
@@ -35,6 +34,7 @@ struct LoginView: View {
         } message: { error in
             Text(error.failureReason ?? "Try again later.")
         }
+        .edgesIgnoringSafeArea(.all)
     }
 
     var usernamePasswordFields: some View {
@@ -48,7 +48,7 @@ struct LoginView: View {
                 .padding(8)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(Color(UIColor.systemBackground))
                 )
                 HStack {
                     Image(systemName: "lock")
@@ -58,37 +58,16 @@ struct LoginView: View {
                 .padding(8)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(Color(UIColor.systemBackground))
                 )
             }
             if isRunning {
                 ProgressView()
             } else {
                 AsyncButton {
-                    userData.client = APIClient(
-                        username: username,
-                        password: password
-                    )
-                    do {
-                        switch try await AuthenticationService.loginUserInfo(userData.client) {
-                        case let value as [String]:
-                            requiresTwoFactorAuth = value
-                        case let value as User:
-                            userData.user = value
-                            step = .done(user: value)
-                        default:
-                            isPresentedAlert = true
-                            vrckError = .unexpectedError
-                        }
-                    } catch let error as VRCKitError {
-                        isPresentedAlert = true
-                        vrckError = error
-                    } catch {
-                        isPresentedAlert = true
-                        vrckError = .unexpectedError
-                    }
+                    await login()
                 } label: {
-                    Label("Sign In", systemImage: "chevron.right")
+                    Label("Login", systemImage: "chevron.right")
                 }
             }
         }
@@ -105,37 +84,13 @@ struct LoginView: View {
             .padding(8)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(Color(UIColor.systemBackground))
             )
             if isRunning {
                 ProgressView()
             } else {
                 AsyncButton {
-                    var verifyType: String?
-                    if requiresTwoFactorAuth.contains(TwoFactorAuthType.totp.rawValue) {
-                        verifyType = TwoFactorAuthType.totp.rawValue
-                    } else if requiresTwoFactorAuth.contains(TwoFactorAuthType.emailotp.rawValue) {
-                        verifyType = TwoFactorAuthType.emailotp.rawValue
-                    }
-                    guard let verifyType = verifyType else { return }
-                    do {
-                        if try await AuthenticationService.verify2FA(
-                            userData.client,
-                            verifyType: verifyType,
-                            code: code
-                        ) {
-                            step = .loggedIn
-                        } else {
-                            // TODO: throw error
-                            print("not verified")
-                        }
-                    } catch let error as VRCKitError {
-                        isPresentedAlert = true
-                        vrckError = error
-                    } catch {
-                        isPresentedAlert = true
-                        vrckError = .unexpectedError
-                    }
+                    await verifyTwoFA()
                 } label: {
                     Image(systemName: "arrow.right")
                         .bold()
@@ -148,5 +103,58 @@ struct LoginView: View {
             }
         }
         .padding(24)
+    }
+
+    func login() async {
+        userData.client = APIClient(
+            username: username,
+            password: password
+        )
+        do {
+            switch try await AuthenticationService.loginUserInfo(userData.client) {
+            case let value as [String]:
+                requiresTwoFactorAuth = value
+            case let value as User:
+                userData.user = value
+                step = .done(user: value)
+            default:
+                isPresentedAlert = true
+                vrckError = .unexpectedError
+            }
+        } catch let error as VRCKitError {
+            isPresentedAlert = true
+            vrckError = error
+        } catch {
+            isPresentedAlert = true
+            vrckError = .unexpectedError
+        }
+    }
+
+    func verifyTwoFA() async {
+        var verifyType: String?
+        if requiresTwoFactorAuth.contains(TwoFactorAuthType.totp.rawValue) {
+            verifyType = TwoFactorAuthType.totp.rawValue
+        } else if requiresTwoFactorAuth.contains(TwoFactorAuthType.emailotp.rawValue) {
+            verifyType = TwoFactorAuthType.emailotp.rawValue
+        }
+        guard let verifyType = verifyType else { return }
+        do {
+            if try await AuthenticationService.verify2FA(
+                userData.client,
+                verifyType: verifyType,
+                code: code
+            ) {
+                step = .loggedIn
+            } else {
+                // TODO: throw error
+                print("not verified")
+            }
+        } catch let error as VRCKitError {
+            isPresentedAlert = true
+            vrckError = error
+        } catch {
+            isPresentedAlert = true
+            vrckError = .unexpectedError
+        }
     }
 }

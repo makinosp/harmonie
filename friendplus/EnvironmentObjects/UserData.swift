@@ -14,6 +14,10 @@ class UserData: ObservableObject {
     @Published var favoriteGroups: [FavoriteGroup]?
     @Published var favoriteFriendDetails: [FavoriteFriendDetail]?
 
+    init() {
+        client.updateCookies()
+    }
+
     var favoriteFriendGroups: [FavoriteGroup]? {
         favoriteGroups?.filter { $0.type == .friend }
     }
