@@ -63,6 +63,7 @@ struct FriendsView: View {
         .sheet(item: $friendSelection) { friend in
             FriendDetailView(friend: UserDetail(friend: friend))
                 .presentationDetents([.medium, .large])
+                .presentationBackground(.bar)
         }
         .task {
             guard let onlineFriendsCount = userData.user?.onlineFriends.count else { return }
@@ -133,6 +134,7 @@ struct FriendsView: View {
                         .clipShape(Circle())
                 } placeholder: {
                     ProgressView()
+                        .controlSize(.small)
                         .frame(size: thumbnailFrame)
                 }
             Text(friend.displayName)
