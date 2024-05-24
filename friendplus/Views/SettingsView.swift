@@ -1,5 +1,5 @@
 //
-//  ProfileView.swift
+//  SettingsView.swift
 //  friendplus
 //
 //  Created by makinosp on 2024/03/10.
@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-struct ProfileView: View {
+struct SettingsView: View {
     @EnvironmentObject var userData: UserData
     let thumbnailFrame = CGSize(width: 32, height: 32)
 
