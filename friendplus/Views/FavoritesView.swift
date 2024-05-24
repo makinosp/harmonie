@@ -16,7 +16,8 @@ struct FavoritesView: View {
 
     var body: some View {
         NavigationSplitView {
-            if let favoriteFriendGroups = userData.favoriteFriendGroups {
+            if let favoriteFriendGroups = userData.favoriteFriendGroups,
+               userData.favoriteFriendDetails != nil {
                 List {
                     ForEach(favoriteFriendGroups) { group in
                         if let friends = userData.lookUpFavoriteFriends(group.id) {
@@ -35,7 +36,8 @@ struct FavoritesView: View {
                 }
                 .navigationTitle("Favorites")
             } else {
-                ProgressView()
+                HAProgressView()
+                    .navigationTitle("Favorites")
             }
         } detail: { EmptyView() }
     }

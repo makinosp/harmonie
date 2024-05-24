@@ -77,7 +77,7 @@ struct SettingsView: View {
 
             }
         } else {
-            Label("Data Error", systemImage: "exclamationmark.triangle.fill")
+            EmptyView()
         }
     }
 }
