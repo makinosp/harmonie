@@ -74,20 +74,11 @@ struct FriendDetailView: View {
     var toolbar: some View {
         HStack {
             Spacer()
-            noteButton
             favoriteButton
         }
         .font(.title3)
         .foregroundStyle(Color.white)
         .padding()
-    }
-
-    var noteButton: some View {
-        Button {
-            isAppearedNote.toggle()
-        } label: {
-            Image(systemName: friend.note.isEmpty ? "doc" : "doc.fill")
-        }
     }
 
     @ViewBuilder var favoriteButton: some View {
@@ -172,13 +163,19 @@ struct FriendDetailView: View {
     var contentDetail: some View {
         VStack(spacing: 8) {
             VStack(alignment: .leading) {
-                Text("Note")
-                    .font(.subheadline)
-                    .foregroundStyle(Color.gray)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    Text("Note")
+                    Image(systemName: "square.and.pencil")
+                }
+                .font(.subheadline)
+                .foregroundStyle(Color.gray)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 Text(friend.note)
                     .font(.body)
                     .padding(.horizontal, 8)
+            }
+            .onTapGesture {
+                isAppearedNote = true
             }
 
             VStack(alignment: .leading) {
