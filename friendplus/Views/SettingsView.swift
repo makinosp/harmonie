@@ -13,71 +13,70 @@ struct SettingsView: View {
     let thumbnailFrame = CGSize(width: 32, height: 32)
 
     var body: some View {
-        if let user = userData.user {
-            NavigationSplitView {
-                List {
-                    Section {
-                        HStack {
-                            AsyncImage(
-                                url: URL(string: user.currentAvatarImageUrl)) { image in
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(size: thumbnailFrame)
-                                        .clipShape(Circle())
-                                } placeholder: {
-                                    ProgressView()
-                                        .controlSize(.small)
-                                        .frame(size: thumbnailFrame)
-                                }
-                            Text(user.displayName)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .contentShape(Rectangle())
+        NavigationSplitView {
+            settingsContent.navigationTitle("Settings")
+        } detail: { EmptyView() }
+    }
 
-                        Label {
-                            Text("Edit Profile")
-                        } icon: {
-                            Image(systemName: "square.and.pencil")
-                        }
-                        Label {
-                            Text("Edit Status Descriptions")
-                        } icon: {
-                            Image(systemName: "square.and.pencil")
-                        }
-                    }
-                    Section {
-                        Label {
-                            Text("Support")
-                        } icon: {
-                            Image(systemName: "sparkle")
-                        }
-                        Label {
-                            Text("About")
-                        } icon: {
-                            Image(systemName: "info.circle.fill")
-                        }
-                    }
-                    Section {
-                        Button {
-                            userData.logout()
-                        } label: {
-                            Label {
-                                Text("Logout")
-                                    .foregroundStyle(Color.red)
-                            } icon: {
-                                Image(systemName: "rectangle.portrait.and.arrow.forward")
-                                    .foregroundStyle(Color.red)
+    var settingsContent: some View {
+        List {
+            if let user = userData.user {
+                Section(header: Text("My Profile")) {
+                    HStack {
+                        AsyncImage(
+                            url: URL(string: user.currentAvatarImageUrl)) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(size: thumbnailFrame)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                ProgressView()
+                                    .controlSize(.small)
+                                    .frame(size: thumbnailFrame)
                             }
-                        }
+                        Text(user.displayName)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+
+                    Label {
+                        Text("Edit Profile")
+                    } icon: {
+                        Image(systemName: "square.and.pencil")
+                    }
+                    Label {
+                        Text("Edit Status Descriptions")
+                    } icon: {
+                        Image(systemName: "square.and.pencil")
                     }
                 }
-                .navigationTitle("Settings")
-            } detail: {
-
             }
-        } else {
-            EmptyView()
+            Section {
+                Label {
+                    Text("Support")
+                } icon: {
+                    Image(systemName: "sparkle")
+                }
+                Label {
+                    Text("About")
+                } icon: {
+                    Image(systemName: "info.circle.fill")
+                }
+            }
+            Section {
+                Button {
+                    userData.logout()
+                } label: {
+                    Label {
+                        Text("Logout")
+                            .foregroundStyle(Color.red)
+                    } icon: {
+                        Image(systemName: "rectangle.portrait.and.arrow.forward")
+                            .foregroundStyle(Color.red)
+                    }
+                }
+            }
         }
     }
 }
