@@ -1,5 +1,5 @@
 //
-//  ProfileView.swift
+//  SettingsView.swift
 //  friendplus
 //
 //  Created by makinosp on 2024/03/10.
@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-struct ProfileView: View {
+struct SettingsView: View {
     @EnvironmentObject var userData: UserData
     let thumbnailFrame = CGSize(width: 32, height: 32)
 
@@ -27,36 +27,23 @@ struct ProfileView: View {
                                         .clipShape(Circle())
                                 } placeholder: {
                                     ProgressView()
+                                        .controlSize(.small)
+                                        .frame(size: thumbnailFrame)
                                 }
                             Text(user.displayName)
                         }
-                    }
-                    Section {
-//                        Label {
-//                            Text("Edit Profile")
-//                        } icon: {
-//                            Image(systemName: "pencil")
-//                        }
-//                        Label {
-//                            Text(user.statusDescription)
-//                        } icon: {
-//                            Image(systemName: "ellipsis.bubble")
-//                        }
-//                        Label {
-//                            Text("Edit Status Descriptions")
-//                        } icon: {
-//                            Image(systemName: "list.bullet")
-//                        }
-                        Button {
-                            userData.logout()
-                        } label: {
-                            Label {
-                                Text("Logout")
-                                    .foregroundStyle(Color.red)
-                            } icon: {
-                                Image(systemName: "delete.forward")
-                                    .foregroundStyle(Color.red)
-                            }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+
+                        Label {
+                            Text("Edit Profile")
+                        } icon: {
+                            Image(systemName: "square.and.pencil")
+                        }
+                        Label {
+                            Text("Edit Status Descriptions")
+                        } icon: {
+                            Image(systemName: "square.and.pencil")
                         }
                     }
                     Section {
@@ -71,13 +58,26 @@ struct ProfileView: View {
                             Image(systemName: "info.circle.fill")
                         }
                     }
+                    Section {
+                        Button {
+                            userData.logout()
+                        } label: {
+                            Label {
+                                Text("Logout")
+                                    .foregroundStyle(Color.red)
+                            } icon: {
+                                Image(systemName: "rectangle.portrait.and.arrow.forward")
+                                    .foregroundStyle(Color.red)
+                            }
+                        }
+                    }
                 }
-                .navigationTitle("Profile")
+                .navigationTitle("Settings")
             } detail: {
 
             }
         } else {
-            Label("Data Error", systemImage: "exclamationmark.triangle.fill")
+            EmptyView()
         }
     }
 }

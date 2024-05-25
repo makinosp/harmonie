@@ -24,25 +24,17 @@ struct ContentView: View {
     var body: some View {
         switch step {
         case .initializing, .loggedIn:
-            ZStack {
-                Color(UIColor.secondarySystemBackground)
-                ProgressView()
-                    .controlSize(.large)
-                    .task {
-                        await initialization()
+            HAProgressView()
+                .task {
+                    await initialization()
+                }
+                .alert(isPresented: $isPresentedAlert, error: vrckError) { _ in
+                    Button("OK") {
+                        userData.logout()
                     }
-                    .alert(isPresented: $isPresentedAlert, error: vrckError) { _ in
-                        Button("OK") {
-                            userData.logout()
-                        }
-                    } message: { error in
-                        Text(error.failureReason ?? "Try again later.")
-                    }
-                    .background(
-                        Color(UIColor.secondarySystemBackground)
-                    )
-            }
-            .edgesIgnoringSafeArea(.all)
+                } message: { error in
+                    Text(error.failureReason ?? "Try again later.")
+                }
         case .loggingIn:
             LoginView(step: $step)
         case .done(let user):
@@ -63,11 +55,20 @@ struct ContentView: View {
                         Image(systemName: "star.fill")
                         Text("Favorites")
                     }
-                ProfileView()
+                SettingsView()
                     .tabItem {
                         Image(systemName: "person.crop.circle.fill")
                         Text("Profile")
                     }
+            }
+            .task(priority: .background) {
+                do {
+                    try await fetchFavorite()
+                } catch let error as VRCKitError {
+                    errorOccurred(error)
+                } catch {
+                    unexpectedErrorOccurred()
+                }
             }
         }
     }
@@ -88,7 +89,6 @@ struct ContentView: View {
             switch try await AuthenticationService.loginUserInfo(userData.client) {
             case let value as User:
                 userData.user = value
-                try await fetchFavorite()
                 step = .done(user: value)
             case _ as [String]:
                 step = .loggingIn
