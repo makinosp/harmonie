@@ -34,41 +34,46 @@ struct FriendDetailView: View {
         }
     }
 
+    var imageUrl: URL? {
+        URL(string: friend.userIcon.isEmpty ? friend.thumbnailUrl : friend.userIcon)
+    }
+
     var profileImage: some View {
-        let imageUrl = friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon
-        return AsyncImage(
-            url: URL(string: imageUrl)) { image in
-                let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxHeight: 250)
-                    .clipped()
-                    .overlay {
-                        LinearGradient(
-                            gradient: gradient,
-                            startPoint: .top,
-                            endPoint: .center
-                        )
-                    }
-                    .overlay {
-                        LinearGradient(
-                            gradient: gradient,
-                            startPoint: .bottom,
-                            endPoint: .center
-                        )
-                    }
-                    .overlay(alignment: .top) {
-                        toolbar
-                    }
-                    .overlay(alignment: .bottom) {
-                        displayNameAndStatus
-                    }
-            } placeholder: {
+        AsyncImage(url: imageUrl) { image in
+            let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(maxHeight: 250)
+                .clipped()
+                .overlay {
+                    LinearGradient(
+                        gradient: gradient,
+                        startPoint: .top,
+                        endPoint: .center
+                    )
+                }
+                .overlay {
+                    LinearGradient(
+                        gradient: gradient,
+                        startPoint: .bottom,
+                        endPoint: .center
+                    )
+                }
+        } placeholder: {
+            ZStack {
+                Color.clear
+                    .frame(height: 250)
                 ProgressView()
                     .controlSize(.large)
-                    .frame(height: 250)
             }
+        }
+        .overlay(alignment: .top) {
+            toolbar
+        }
+        .overlay(alignment: .bottom) {
+            displayNameAndStatus
+        }
     }
 
     var toolbar: some View {
