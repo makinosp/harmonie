@@ -1,6 +1,6 @@
 //
 //  LoginView.swift
-//  friendplus
+//  harmonie
 //
 //  Created by makinosp on 2024/03/08.
 //
