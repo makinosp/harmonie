@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 class StatusColor {
-    static func statusColor(_ status: Status) -> Color {
+    static func statusColor(_ status: User.Status) -> Color {
         switch status {
             case .joinMe:
                 return .green
