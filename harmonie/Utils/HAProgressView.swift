@@ -1,6 +1,6 @@
 //
 //  HAProgressView.swift
-//  friendplus
+//  harmonie
 //
 //  Created by makinosp on 2024/05/24.
 //
