@@ -32,7 +32,7 @@ struct FavoritesView: View {
                 .sheet(item: $friendSelection) { friend in
                     FriendDetailView(friend: friend)
                         .presentationDetents([.medium, .large])
-                        .presentationBackground(.bar)
+                        .presentationBackground(Color(UIColor.systemGroupedBackground))
                 }
                 .navigationTitle("Favorites")
             } else {

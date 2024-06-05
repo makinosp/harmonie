@@ -15,9 +15,11 @@ struct FriendDetailView: View {
     @State var instance: Instance?
 
     var body: some View {
-        VStack(spacing: 0) {
-            profileImage
-            contentList
+        ScrollView {
+            VStack(spacing: 0) {
+                profileImage
+                contentStacks
+            }
         }
         .task {
             await fetchUser()
@@ -133,16 +135,15 @@ struct FriendDetailView: View {
         .padding()
     }
 
-    var contentList: some View {
-        List {
+    var contentStacks: some View {
+        VStack(spacing: 12) {
             if let instance = instance {
-                instanceSection(instance)
+                locationSection(instance)
             }
             noteSection
             if let bio = friend.bio {
                 bioSection(bio)
             }
-
             if let bioLinks = friend.bioLinks {
                 let bioUrls = bioLinks.compactMap { URL(string: $0) }
                 if !bioUrls.isEmpty {
@@ -150,56 +151,48 @@ struct FriendDetailView: View {
                 }
             }
         }
-        .listSectionSpacing(.compact)
+        .padding()
     }
 
-    func instanceSection(_ instance: Instance) -> some View {
-        Section {
-            VStack(alignment: .leading) {
-                Text("Location")
-                    .font(.subheadline)
-                    .foregroundStyle(Color.gray)
-                Text(instance.world.name)
-                    .font(.body)
-            }
+    func locationSection(_ instance: Instance) -> some View {
+        HASection {
+            Text("Location")
+                .font(.subheadline)
+                .foregroundStyle(Color.gray)
+            Text(instance.world.name)
+                .font(.body)
         }
     }
 
     var noteSection: some View {
-        Section {
-            VStack(alignment: .leading) {
-                Text("Note")
-                    .font(.subheadline)
-                    .foregroundStyle(Color.gray)
-                TextField("Enter note", text: $friend.note, axis: .vertical)
-                    .font(.body)
-            }
+        HASection {
+            Text("Note")
+                .font(.subheadline)
+                .foregroundStyle(Color.gray)
+            TextField("Enter note", text: $friend.note, axis: .vertical)
+                .font(.body)
         }
     }
 
     func bioSection(_ bio: String) -> some View {
-        Section {
-            VStack(alignment: .leading) {
-                Text("Bio")
-                    .font(.subheadline)
-                    .foregroundStyle(Color.gray)
-                Text(bio)
-                    .font(.body)
-            }
+        HASection {
+            Text("Bio")
+                .font(.subheadline)
+                .foregroundStyle(Color.gray)
+            Text(bio)
+                .font(.body)
         }
     }
 
     func bioLinksSection(_ urls: [URL]) -> some View {
-        Section {
+        HASection {
+            Text("Social Links")
+                .font(.subheadline)
+                .foregroundStyle(Color.gray)
             VStack(alignment: .leading) {
-                Text("Social Links")
-                    .font(.subheadline)
-                    .foregroundStyle(Color.gray)
-                VStack(alignment: .leading) {
-                    ForEach(urls, id: \.self) { url in
-                        Link(url.description, destination: url)
-                            .font(.body)
-                    }
+                ForEach(urls, id: \.self) { url in
+                    Link(url.description, destination: url)
+                        .font(.body)
                 }
             }
         }
