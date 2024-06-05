@@ -63,7 +63,7 @@ struct FriendsView: View {
         .sheet(item: $friendSelection) { friend in
             FriendDetailView(friend: UserDetail(friend: friend))
                 .presentationDetents([.medium, .large])
-                .presentationBackground(.bar)
+                .presentationBackground(Color(UIColor.systemGroupedBackground))
         }
         .task {
             guard let onlineFriendsCount = userData.user?.onlineFriends.count else { return }
