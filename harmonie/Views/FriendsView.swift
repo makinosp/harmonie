@@ -16,8 +16,7 @@ struct FriendsView: View {
     @State var listSelection: FriendListType?
     @State var friendSelection: Friend?
     @State var searchText: String
-    let imageFrame = CGSize(width: 200, height: 150)
-    let thumbnailFrame = CGSize(width: 32, height: 32)
+    let thumbnailSize = CGSize(width: 32, height: 32)
     let fetchRecentlyFriendsCount = 10
 
     init(
@@ -124,19 +123,10 @@ struct FriendsView: View {
     /// Row view for friend list
     func rowView(_ friend: Friend) -> some View {
         HStack {
-            let imageUrl = friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon
-            AsyncImage(
-                url: URL(string: imageUrl)) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(size: thumbnailFrame)
-                        .clipShape(Circle())
-                } placeholder: {
-                    ProgressView()
-                        .controlSize(.small)
-                        .frame(size: thumbnailFrame)
-                }
+            HACircleImage(
+                imageUrl: friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon,
+                size: thumbnailSize
+            )
             Text(friend.displayName)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
