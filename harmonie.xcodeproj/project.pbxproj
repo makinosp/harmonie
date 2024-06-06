@@ -32,7 +32,6 @@
 		209938A82C109B08003B4A8A /* View+sectioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A72C109B08003B4A8A /* View+sectioning.swift */; };
 		209938AA2C109C8C003B4A8A /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* HASection.swift */; };
 		20CA2D262B9D699D005CC55F /* FriendListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CA2D252B9D699D005CC55F /* FriendListType.swift */; };
-		20F213DB2C11FB470061DE29 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DA2C11FB470061DE29 /* Nuke */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
 		20F213DF2C1200220061DE29 /* HACircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F213DE2C1200220061DE29 /* HACircleImage.swift */; };
 /* End PBXBuildFile section */
@@ -92,7 +91,6 @@
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
 				206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */,
 				206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */,
-				20F213DB2C11FB470061DE29 /* Nuke in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,7 +243,6 @@
 				20395DC12B945EEF00003921 /* VRCKit */,
 				206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */,
 				206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */,
-				20F213DA2C11FB470061DE29 /* Nuke */,
 				20F213DC2C11FB470061DE29 /* NukeUI */,
 			);
 			productName = harmonie;
@@ -756,11 +753,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */;
 			productName = AsyncSwiftUI;
-		};
-		20F213DA2C11FB470061DE29 /* Nuke */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */;
-			productName = Nuke;
 		};
 		20F213DC2C11FB470061DE29 /* NukeUI */ = {
 			isa = XCSwiftPackageProductDependency;
