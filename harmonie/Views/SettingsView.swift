@@ -10,7 +10,7 @@ import VRCKit
 
 struct SettingsView: View {
     @EnvironmentObject var userData: UserData
-    let thumbnailFrame = CGSize(width: 32, height: 32)
+    let thumbnailSize = CGSize(width: 40, height: 40)
 
     var body: some View {
         NavigationSplitView {
@@ -23,18 +23,10 @@ struct SettingsView: View {
             if let user = userData.user {
                 Section(header: Text("My Profile")) {
                     HStack {
-                        AsyncImage(
-                            url: URL(string: user.currentAvatarImageUrl)) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(size: thumbnailFrame)
-                                    .clipShape(Circle())
-                            } placeholder: {
-                                ProgressView()
-                                    .controlSize(.small)
-                                    .frame(size: thumbnailFrame)
-                            }
+                        HACircleImage(
+                            imageUrl: user.userIcon.isEmpty ? user.currentAvatarThumbnailImageUrl : user.userIcon,
+                            size: thumbnailSize
+                        )
                         Text(user.displayName)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)

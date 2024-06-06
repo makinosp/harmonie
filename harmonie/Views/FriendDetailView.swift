@@ -6,6 +6,7 @@
 //
 
 import AsyncSwiftUI
+import NukeUI
 import VRCKit
 
 struct FriendDetailView: View {
@@ -40,33 +41,37 @@ struct FriendDetailView: View {
     }
 
     var profileImage: some View {
-        AsyncImage(url: imageUrl) { image in
+        LazyImage(url: imageUrl) { state in
             let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(maxHeight: 250)
-                .clipped()
-                .overlay {
-                    LinearGradient(
-                        gradient: gradient,
-                        startPoint: .top,
-                        endPoint: .center
-                    )
+            if let image = state.image {
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxHeight: 250)
+                    .clipped()
+                    .overlay {
+                        LinearGradient(
+                            gradient: gradient,
+                            startPoint: .top,
+                            endPoint: .center
+                        )
+                    }
+                    .overlay {
+                        LinearGradient(
+                            gradient: gradient,
+                            startPoint: .bottom,
+                            endPoint: .center
+                        )
+                    }
+            } else if state.error != nil {
+                Image(systemName: "exclamationmark.circle")
+                    .frame(maxHeight: 250)
+            } else {
+                ZStack {
+                    Color.clear
+                        .frame(height: 250)
+                    ProgressView()
                 }
-                .overlay {
-                    LinearGradient(
-                        gradient: gradient,
-                        startPoint: .bottom,
-                        endPoint: .center
-                    )
-                }
-        } placeholder: {
-            ZStack {
-                Color.clear
-                    .frame(height: 250)
-                ProgressView()
-                    .controlSize(.large)
             }
         }
         .overlay(alignment: .top) {

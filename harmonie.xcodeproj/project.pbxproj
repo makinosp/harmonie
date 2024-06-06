@@ -32,6 +32,8 @@
 		209938A82C109B08003B4A8A /* View+sectioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A72C109B08003B4A8A /* View+sectioning.swift */; };
 		209938AA2C109C8C003B4A8A /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* HASection.swift */; };
 		20CA2D262B9D699D005CC55F /* FriendListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CA2D252B9D699D005CC55F /* FriendListType.swift */; };
+		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
+		20F213DF2C1200220061DE29 /* HACircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F213DE2C1200220061DE29 /* HACircleImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,7 @@
 		209938A72C109B08003B4A8A /* View+sectioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+sectioning.swift"; sourceTree = "<group>"; };
 		209938A92C109C8C003B4A8A /* HASection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HASection.swift; sourceTree = "<group>"; };
 		20CA2D252B9D699D005CC55F /* FriendListType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListType.swift; sourceTree = "<group>"; };
+		20F213DE2C1200220061DE29 /* HACircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HACircleImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */,
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
 				206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */,
 				206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */,
@@ -214,6 +218,7 @@
 				2044ADEF2BC264240057BA6A /* StatusColor.swift */,
 				205B3BF32C00D8BF0097D62A /* HAProgressView.swift */,
 				209938A92C109C8C003B4A8A /* HASection.swift */,
+				20F213DE2C1200220061DE29 /* HACircleImage.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				20395DC12B945EEF00003921 /* VRCKit */,
 				206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */,
 				206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */,
+				20F213DC2C11FB470061DE29 /* NukeUI */,
 			);
 			productName = harmonie;
 			productReference = 20395D912B945CD700003921 /* harmonie.app */;
@@ -314,6 +320,7 @@
 			packageReferences = (
 				20395DC02B945E0600003921 /* XCLocalSwiftPackageReference "../vrckit" */,
 				206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */,
+				20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -359,6 +366,7 @@
 			files = (
 				208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */,
 				209938AA2C109C8C003B4A8A /* HASection.swift in Sources */,
+				20F213DF2C1200220061DE29 /* HACircleImage.swift in Sources */,
 				202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */,
 				20395D972B945CD700003921 /* ContentView.swift in Sources */,
 				20395DC42B94653100003921 /* FriendsView.swift in Sources */,
@@ -722,6 +730,14 @@
 				version = 0.2.0;
 			};
 		};
+		20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -737,6 +753,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */;
 			productName = AsyncSwiftUI;
+		};
+		20F213DC2C11FB470061DE29 /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
