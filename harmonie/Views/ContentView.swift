@@ -12,17 +12,9 @@ struct ContentView: View {
     @EnvironmentObject var userData: UserData
     @State var isPresentedAlert = false
     @State var vrckError: VRCKitError? = nil
-    @State var step: Step = .initializing
-
-    public enum Step: Equatable {
-        case initializing
-        case loggingIn
-        case loggedIn
-        case done(user: User)
-    }
 
     var body: some View {
-        switch step {
+        switch userData.step {
         case .initializing, .loggedIn:
             HAProgressView()
                 .task {
@@ -36,7 +28,7 @@ struct ContentView: View {
                     Text(error.failureReason ?? "Try again later.")
                 }
         case .loggingIn:
-            LoginView(step: $step)
+            LoginView()
         case .done(let user):
             TabView {
                 FriendsView()
@@ -76,22 +68,22 @@ struct ContentView: View {
     func initialization() async {
         // check local data
         if userData.client.isEmptyCookies {
-            step = .loggingIn
+            userData.step = .loggingIn
             return
         }
         do {
             // verify auth token
             guard try await AuthenticationService.verifyAuthToken(userData.client) else {
-                step = .loggingIn
+                userData.step = .loggingIn
                 return
             }
             // fetch user data
             switch try await AuthenticationService.loginUserInfo(userData.client) {
             case let value as User:
                 userData.user = value
-                step = .done(user: value)
+                userData.step = .done(user: value)
             case _ as [String]:
-                step = .loggingIn
+                userData.step = .loggingIn
             default:
                 unexpectedErrorOccurred()
             }

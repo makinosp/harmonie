@@ -10,7 +10,6 @@ import VRCKit
 
 struct LoginView: View {
     @EnvironmentObject var userData: UserData
-    @Binding var step: ContentView.Step
     @State var requiresTwoFactorAuth: [String] = []
     @State var username: String = ""
     @State var password: String = ""
@@ -116,7 +115,7 @@ struct LoginView: View {
                 requiresTwoFactorAuth = value
             case let value as User:
                 userData.user = value
-                step = .done(user: value)
+                userData.step = .done(user: value)
             default:
                 isPresentedAlert = true
                 vrckError = .unexpectedError
@@ -144,7 +143,7 @@ struct LoginView: View {
                 verifyType: verifyType,
                 code: code
             ) {
-                step = .loggedIn
+                userData.step = .loggedIn
             } else {
                 // TODO: throw error
                 print("not verified")
