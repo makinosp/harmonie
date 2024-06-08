@@ -37,11 +37,11 @@ struct ContentView: View {
                         Image(systemName: "person.2.fill")
                         Text("Friends")
                     }
-//                LocationsView()
-//                    .tabItem {
-//                        Image(systemName: "location.fill")
-//                        Text("Locations")
-//                    }
+                LocationsView()
+                    .tabItem {
+                        Image(systemName: "location.fill")
+                        Text("Locations")
+                    }
                 FavoritesView()
                     .tabItem {
                         Image(systemName: "star.fill")
@@ -49,8 +49,8 @@ struct ContentView: View {
                     }
                 SettingsView()
                     .tabItem {
-                        Image(systemName: "person.crop.circle.fill")
-                        Text("Profile")
+                        Image(systemName: "gear")
+                        Text("Settings")
                     }
             }
             .task(priority: .background) {
@@ -66,6 +66,7 @@ struct ContentView: View {
     }
 
     func initialization() async {
+        typealias Service = AuthenticationService
         // check local data
         if userData.client.isEmptyCookies {
             userData.step = .loggingIn
@@ -73,19 +74,17 @@ struct ContentView: View {
         }
         do {
             // verify auth token
-            guard try await AuthenticationService.verifyAuthToken(userData.client) else {
+            guard try await Service.verifyAuthToken(userData.client) else {
                 userData.step = .loggingIn
                 return
             }
             // fetch user data
-            switch try await AuthenticationService.loginUserInfo(userData.client) {
+            switch try await Service.loginUserInfo(userData.client) {
             case let value as User:
                 userData.user = value
                 userData.step = .done(user: value)
-            case _ as [String]:
-                userData.step = .loggingIn
             default:
-                unexpectedErrorOccurred()
+                userData.step = .loggingIn
             }
         } catch let error as VRCKitError {
             errorOccurred(error)

@@ -10,25 +10,14 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var userData: UserData
-    @State var onlineFriends: [Friend]
-    @State var offlineFriends: [Friend]
-    @State var recentlyFriends: [Friend]
+    @State var onlineFriends: [Friend] = []
+    @State var offlineFriends: [Friend] = []
+    @State var recentlyFriends: [Friend] = []
     @State var listSelection: FriendListType?
     @State var friendSelection: Friend?
-    @State var searchText: String
+    @State var searchText: String = ""
     let thumbnailSize = CGSize(width: 32, height: 32)
     let fetchRecentlyFriendsCount = 10
-
-    init(
-        onlineFriends: [Friend] = [],
-        offlineFriends: [Friend] = [],
-        recentlyFriends: [Friend] = []
-    ) {
-        self.onlineFriends = onlineFriends
-        self.offlineFriends = offlineFriends
-        self.recentlyFriends = recentlyFriends
-        searchText = ""
-    }
 
     var body: some View {
         NavigationSplitView {
