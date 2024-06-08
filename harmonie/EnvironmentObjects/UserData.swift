@@ -13,6 +13,14 @@ class UserData: ObservableObject {
     @Published var user: User?
     @Published var favoriteGroups: [FavoriteGroup]?
     @Published var favoriteFriendDetails: [FavoriteFriendDetail]?
+    @Published var step: Step = .initializing
+
+    public enum Step: Equatable {
+        case initializing
+        case loggingIn
+        case loggedIn
+        case done(user: User)
+    }
 
     init() {
         client.updateCookies()
@@ -25,8 +33,10 @@ class UserData: ObservableObject {
     func logout() {
         user = nil
         favoriteGroups = nil
+        favoriteFriendDetails = nil
         client.deleteCookies()
         client = APIClient()
+        step = .loggedIn
     }
 
     /// Find out which favorite group the friend belongs to from the friend ID and return that favorite ID
