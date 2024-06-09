@@ -24,7 +24,7 @@ struct SettingsView: View {
                 Section(header: Text("My Profile")) {
                     HStack {
                         HACircleImage(
-                            imageUrl: user.userIcon.isEmpty ? user.currentAvatarThumbnailImageUrl : user.userIcon,
+                            imageUrl: (user.userIcon.isEmpty ? user.currentAvatarThumbnailImageUrl : user.userIcon) ?? "",
                             size: thumbnailSize
                         )
                         Text(user.displayName)

@@ -102,7 +102,7 @@ struct LoginView: View {
                 requiresTwoFactorAuth = value
             case let value as User:
                 userData.user = value
-                userData.step = .done(user: value)
+                userData.step = .done
             default:
                 isPresentedAlert = true
                 vrckError = .unexpectedError
