@@ -56,7 +56,7 @@ struct ContentView: View {
             }
             .task(priority: .background) {
                 do {
-                    try await favoriteViewModel.fetchFavorite(userData.client)
+                    try await favoriteViewModel.fetchFavorite()
                 } catch let error as VRCKitError {
                     errorOccurred(error)
                 } catch {

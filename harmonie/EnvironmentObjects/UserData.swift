@@ -5,14 +5,14 @@
 //  Created by makinosp on 2024/03/09.
 //
 
-import SwiftUI
+import Foundation
 import VRCKit
 
 @MainActor
 class UserData: ObservableObject {
-    var client = APIClient()
     @Published var user: User?
     @Published var step: Step = .initializing
+    var client = APIClient()
 
     @Published var onlineFriends: [Friend] = []
     @Published var offlineFriends: [Friend] = []
