@@ -10,6 +10,7 @@ import VRCKit
 
 struct ContentView: View {
     @EnvironmentObject var userData: UserData
+    @EnvironmentObject var favoriteViewModel: FavoriteViewModel
     @State var isPresentedAlert = false
     @State var vrckError: VRCKitError? = nil
 
@@ -54,13 +55,13 @@ struct ContentView: View {
                     }
             }
             .task(priority: .background) {
-//                do {
-//                    try await fetchFavorite()
-//                } catch let error as VRCKitError {
-//                    errorOccurred(error)
-//                } catch {
-//                    unexpectedErrorOccurred()
-//                }
+                do {
+                    try await favoriteViewModel.fetchFavorite(userData.client)
+                } catch let error as VRCKitError {
+                    errorOccurred(error)
+                } catch {
+                    unexpectedErrorOccurred()
+                }
             }
         }
     }
@@ -83,7 +84,6 @@ struct ContentView: View {
             userData.user = user
             // fetch friends data
             try await userData.fetchAllFriends()
-            try await fetchFavorite()
         } catch let error as VRCKitError {
             errorOccurred(error)
         } catch {
@@ -91,20 +91,6 @@ struct ContentView: View {
         }
         // complete
         return .done
-    }
-
-    // fetch favorite data
-    func fetchFavorite() async throws {
-        let favoriteGroups = try await FavoriteService.listFavoriteGroups(userData.client)
-        userData.favoriteGroups = favoriteGroups
-        let favorites = try await FavoriteService.fetchFavoriteGroupDetails(
-            userData.client,
-            favoriteGroups: favoriteGroups
-        )
-        userData.favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
-            userData.client,
-            favorites: favorites
-        )
     }
 
     func errorOccurred(_ error: VRCKitError) {

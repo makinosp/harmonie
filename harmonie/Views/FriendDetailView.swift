@@ -11,6 +11,7 @@ import VRCKit
 
 struct FriendDetailView: View {
     @EnvironmentObject var userData: UserData
+    @EnvironmentObject var favoriteViewModel: FavoriteViewModel
     @Environment(\.dismiss) private var dismiss
     @State var friend: UserDetail
     @State var instance: Instance?
@@ -33,7 +34,7 @@ struct FriendDetailView: View {
     }
 
     var addedFavoriteGroupId: String? {
-        userData.findOutFriendFromFavorites(friend.id)
+        favoriteViewModel.findOutFriendFromFavorites(friend.id)
     }
 
     var isAddedFavorite: Bool {
@@ -85,7 +86,7 @@ struct FriendDetailView: View {
     var toolbar: some View {
         HStack {
             Spacer()
-            if let favoriteFriendGroups = userData.favoriteFriendGroups {
+            if let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups {
                 favoriteMenu(favoriteFriendGroups)
             }
         }
@@ -96,7 +97,7 @@ struct FriendDetailView: View {
     func favoriteMenu(_ favoriteGroups: [FavoriteGroup]) -> some View {
         Menu {
             ForEach(favoriteGroups) { group in
-                let isAddedFavoriteIn = userData.isIncludedFriendInFavorite(
+                let isAddedFavoriteIn = favoriteViewModel.isIncludedFriendInFavorite(
                     friendId: friend.id,
                     groupId: group.id
                 )
@@ -234,10 +235,10 @@ struct FriendDetailView: View {
                         favoriteId: friend.id,
                         tag: group.name
                     ).get()
-                    userData.addFriendInFavorite(friend: friend, groupId: group.id)
+                    favoriteViewModel.addFriendInFavorite(friend: friend, groupId: group.id)
                 }
 
-                userData.removeFriendFromFavorite(
+                favoriteViewModel.removeFriendFromFavorite(
                     friendId: friend.id,
                     groupId: addedFavoriteGroupId
                 )
@@ -248,7 +249,7 @@ struct FriendDetailView: View {
                     favoriteId: friend.id,
                     tag: group.name
                 ).get()
-                userData.addFriendInFavorite(friend: friend, groupId: group.id)
+                favoriteViewModel.addFriendInFavorite(friend: friend, groupId: group.id)
             }
         } catch {
             print(error)
