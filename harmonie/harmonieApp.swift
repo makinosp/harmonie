@@ -9,11 +9,18 @@ import SwiftUI
 
 @main
 struct HarmonieApp: App {
+    let userData: UserData
+
+    init() {
+        self.userData = UserData()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(UserData())
-                .environmentObject(FavoriteViewModel())
+                .environmentObject(userData)
+                .environmentObject(FavoriteViewModel(client: userData.client))
+                .environmentObject(FriendViewModel(client: userData.client))
         }
     }
 }

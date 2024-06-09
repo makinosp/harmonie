@@ -10,15 +10,20 @@ import VRCKit
 
 @MainActor
 class FavoriteViewModel: ObservableObject {
-    @Published var favoriteGroups: [FavoriteGroup]?
-    @Published var favoriteFriendDetails: [FavoriteFriendDetail]?
+    @Published var favoriteGroups: [FavoriteGroup]? = nil
+    @Published var favoriteFriendDetails: [FavoriteFriendDetail]? = nil
+    var client: APIClient
+
+    init(client: APIClient) {
+        self.client = client
+    }
 
     var favoriteFriendGroups: [FavoriteGroup]? {
         favoriteGroups?.filter { $0.type == .friend }
     }
 
     // fetch favorite data
-    func fetchFavorite(_ client: APIClient) async throws {
+    func fetchFavorite() async throws {
         favoriteGroups = try await FavoriteService.listFavoriteGroups(client)
         guard let favoriteGroups = favoriteGroups else { return }
         let favorites = try await FavoriteService.fetchFavoriteGroupDetails(

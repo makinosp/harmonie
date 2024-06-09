@@ -5,17 +5,16 @@
 //  Created by makinosp on 2024/03/09.
 //
 
-import SwiftUI
+import Foundation
 import VRCKit
 
 @MainActor
 class UserData: ObservableObject {
-    var client = APIClient()
     @Published var user: User?
     @Published var step: Step = .initializing
-
-    @Published var onlineFriends: [Friend] = []
-    @Published var offlineFriends: [Friend] = []
+    @Published var isPresentedAlert = false
+    @Published var vrckError: VRCKitError? = nil
+    var client = APIClient()
 
     public enum Step: Equatable {
         case initializing
@@ -28,20 +27,42 @@ class UserData: ObservableObject {
         client.updateCookies()
     }
 
+    func initialization() async -> UserData.Step {
+        typealias Service = AuthenticationService
+        // check local data
+        if client.isEmptyCookies {
+            return .loggingIn
+        }
+        do {
+            // verify auth token and fetch user data
+            guard try await Service.verifyAuthToken(client),
+                  let user = try await Service.loginUserInfo(client) as? User else {
+                return .loggingIn
+            }
+            self.user = user
+        } catch let error as VRCKitError {
+            errorOccurred(error)
+        } catch {
+            unexpectedErrorOccurred()
+        }
+        // complete
+        return .done
+    }
+
+    func errorOccurred(_ error: VRCKitError) {
+        isPresentedAlert = true
+        vrckError = error
+    }
+
+    func unexpectedErrorOccurred() {
+        isPresentedAlert = true
+        vrckError = .unexpectedError
+    }
+
     func logout() {
         user = nil
         client.deleteCookies()
         client = APIClient()
         step = .loggedIn
-    }
-
-    /// Fetch friends from API
-    func fetchAllFriends() async throws {
-        guard let user = user else { return }
-        onlineFriends = try await FriendService.fetchFriends(
-            client,
-            count: user.onlineFriends.count,
-            offline: false
-        )
     }
 }

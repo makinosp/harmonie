@@ -10,6 +10,7 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var userData: UserData
+    @EnvironmentObject var friendViewModel: FriendViewModel
     @State var offlineFriends: [Friend] = []
     @State var recentlyFriends: [Friend] = []
     @State var listSelection: FriendListType?
@@ -59,12 +60,12 @@ struct FriendsView: View {
         List {
             if let listType = listSelection {
                 if let status = listType.status {
-                    let filteredFriends = userData.onlineFriends.filter { $0.status == status }
+                    let filteredFriends = friendViewModel.onlineFriends.filter { $0.status == status }
                     ForEach(filteredFriends) { friend in
                         rowView(friend)
                     }
                 } else if listType == .all {
-                    ForEach(userData.onlineFriends) { friend in
+                    ForEach(friendViewModel.onlineFriends) { friend in
                         rowView(friend)
                     }
                 } else if listType == .offline {
