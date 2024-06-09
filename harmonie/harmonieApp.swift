@@ -13,6 +13,7 @@ struct HarmonieApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(UserData())
+                .environmentObject(FavoriteViewModel())
         }
     }
 }
