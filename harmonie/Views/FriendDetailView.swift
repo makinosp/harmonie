@@ -29,7 +29,7 @@ struct FriendDetailView: View {
     }
 
     var imageUrl: URL? {
-        URL(string: friend.userIcon.isEmpty ? friend.thumbnailUrl : friend.userIcon)
+        URL(string: (friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon) ?? "")
     }
 
     var addedFavoriteGroupId: String? {
@@ -205,7 +205,7 @@ struct FriendDetailView: View {
 
     func fetchUser() async {
         do {
-            friend = try await UserService.fetchUser(userData.client, userId: friend.id).get()
+            friend = try await UserService.fetchUser(userData.client, userId: friend.id)
         } catch {
             print(error)
         }

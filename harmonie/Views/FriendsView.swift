@@ -10,7 +10,6 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var userData: UserData
-    @State var onlineFriends: [Friend] = []
     @State var offlineFriends: [Friend] = []
     @State var recentlyFriends: [Friend] = []
     @State var listSelection: FriendListType?
@@ -53,17 +52,6 @@ struct FriendsView: View {
                 .presentationDetents([.medium, .large])
                 .presentationBackground(Color(UIColor.systemGroupedBackground))
         }
-        .task {
-            guard let onlineFriendsCount = userData.user?.onlineFriends.count else { return }
-            while onlineFriends.count < onlineFriendsCount {
-                onlineFriends.append(
-                    contentsOf: await fetchFriends(
-                        offset: onlineFriends.count,
-                        offline: false
-                    )
-                )
-            }
-        }
     }
 
     /// Friend List branched by list type
@@ -71,12 +59,12 @@ struct FriendsView: View {
         List {
             if let listType = listSelection {
                 if let status = listType.status {
-                    let filteredFriends = onlineFriends.filter { $0.status == status }
+                    let filteredFriends = userData.onlineFriends.filter { $0.status == status }
                     ForEach(filteredFriends) { friend in
                         rowView(friend)
                     }
                 } else if listType == .all {
-                    ForEach(onlineFriends) { friend in
+                    ForEach(userData.onlineFriends) { friend in
                         rowView(friend)
                     }
                 } else if listType == .offline {
@@ -113,7 +101,7 @@ struct FriendsView: View {
     func rowView(_ friend: Friend) -> some View {
         HStack {
             HACircleImage(
-                imageUrl: friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon,
+                imageUrl: (friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon) ?? "",
                 size: thumbnailSize
             )
             Text(friend.displayName)
@@ -128,17 +116,11 @@ struct FriendsView: View {
     /// Fetch friends from API
     func fetchFriends(offset: Int, offline: Bool) async -> [Friend] {
         do {
-            let result = try await FriendService.fetchFriends(
+            return try await FriendService.fetchFriends(
                 userData.client,
                 offset: offset,
                 offline: offline
             )
-            switch result {
-            case .success(let success):
-                return success
-            case .failure(_):
-                return []
-            }
         } catch {
             return []
         }
@@ -156,7 +138,6 @@ struct FriendsView: View {
                     .prefix(fetchRecentlyFriendsCount)
                     .map(\.description)
             )
-            .get()
             .map(\.friend)
         } catch {
             return []

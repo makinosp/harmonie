@@ -8,18 +8,22 @@
 import SwiftUI
 import VRCKit
 
+@MainActor
 class UserData: ObservableObject {
-    @Published var client = APIClient()
+    var client = APIClient()
     @Published var user: User?
     @Published var favoriteGroups: [FavoriteGroup]?
     @Published var favoriteFriendDetails: [FavoriteFriendDetail]?
     @Published var step: Step = .initializing
 
+    @Published var onlineFriends: [Friend] = []
+    @Published var offlineFriends: [Friend] = []
+
     public enum Step: Equatable {
         case initializing
         case loggingIn
         case loggedIn
-        case done(user: User)
+        case done
     }
 
     init() {
@@ -75,5 +79,15 @@ class UserData: ObservableObject {
         return favoriteFriendDetails.contains(where: { friend in
             friend.id == friendId
         })
+    }
+
+    /// Fetch friends from API
+    func fetchAllFriends() async throws {
+        guard let user = user else { return }
+        onlineFriends = try await FriendService.fetchFriends(
+            client,
+            count: user.onlineFriends.count,
+            offline: false
+        )
     }
 }

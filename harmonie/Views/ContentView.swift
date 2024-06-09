@@ -18,7 +18,7 @@ struct ContentView: View {
         case .initializing, .loggedIn:
             HAProgressView()
                 .task {
-                    await initialization()
+                    userData.step = await initialization()
                 }
                 .alert(isPresented: $isPresentedAlert, error: vrckError) { _ in
                     Button("OK") {
@@ -29,10 +29,10 @@ struct ContentView: View {
                 }
         case .loggingIn:
             LoginView()
-        case .done(let user):
+        case .done:
             TabView {
                 FriendsView()
-                    .badge(user.onlineFriends.count)
+                    .badge(userData.user?.onlineFriends.count ?? 0)
                     .tabItem {
                         Image(systemName: "person.2.fill")
                         Text("Friends")
@@ -54,43 +54,43 @@ struct ContentView: View {
                     }
             }
             .task(priority: .background) {
-                do {
-                    try await fetchFavorite()
-                } catch let error as VRCKitError {
-                    errorOccurred(error)
-                } catch {
-                    unexpectedErrorOccurred()
-                }
+//                do {
+//                    try await fetchFavorite()
+//                } catch let error as VRCKitError {
+//                    errorOccurred(error)
+//                } catch {
+//                    unexpectedErrorOccurred()
+//                }
             }
         }
     }
 
-    func initialization() async {
+    func initialization() async -> UserData.Step {
         typealias Service = AuthenticationService
         // check local data
         if userData.client.isEmptyCookies {
-            userData.step = .loggingIn
-            return
+            return .loggingIn
         }
         do {
             // verify auth token
             guard try await Service.verifyAuthToken(userData.client) else {
-                userData.step = .loggingIn
-                return
+                return .loggingIn
             }
             // fetch user data
-            switch try await Service.loginUserInfo(userData.client) {
-            case let value as User:
-                userData.user = value
-                userData.step = .done(user: value)
-            default:
-                userData.step = .loggingIn
+            guard let user = try await Service.loginUserInfo(userData.client) as? User else {
+                return .loggingIn
             }
+            userData.user = user
+            // fetch friends data
+            try await userData.fetchAllFriends()
+            try await fetchFavorite()
         } catch let error as VRCKitError {
             errorOccurred(error)
         } catch {
             unexpectedErrorOccurred()
         }
+        // complete
+        return .done
     }
 
     // fetch favorite data
