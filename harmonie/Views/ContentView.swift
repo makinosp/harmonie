@@ -11,17 +11,19 @@ import VRCKit
 struct ContentView: View {
     @EnvironmentObject var userData: UserData
     @EnvironmentObject var favoriteViewModel: FavoriteViewModel
-    @State var isPresentedAlert = false
-    @State var vrckError: VRCKitError? = nil
+    @EnvironmentObject var friendViewModel: FriendViewModel
 
     var body: some View {
         switch userData.step {
         case .initializing, .loggedIn:
             HAProgressView()
                 .task {
-                    userData.step = await initialization()
+                    userData.step = await userData.initialization()
                 }
-                .alert(isPresented: $isPresentedAlert, error: vrckError) { _ in
+                .alert(
+                    isPresented: $userData.isPresentedAlert,
+                    error: userData.vrckError
+                ) { _ in
                     Button("OK") {
                         userData.logout()
                     }
@@ -58,48 +60,21 @@ struct ContentView: View {
                 do {
                     try await favoriteViewModel.fetchFavorite()
                 } catch let error as VRCKitError {
-                    errorOccurred(error)
+                    userData.errorOccurred(error)
                 } catch {
-                    unexpectedErrorOccurred()
+                    userData.unexpectedErrorOccurred()
+                }
+            }
+            .task(priority: .background) {
+                guard let count = userData.user?.onlineFriends.count else { return }
+                do {
+                    try await friendViewModel.fetchAllFriends(count: count)
+                } catch let error as VRCKitError {
+                    userData.errorOccurred(error)
+                } catch {
+                    userData.unexpectedErrorOccurred()
                 }
             }
         }
-    }
-
-    func initialization() async -> UserData.Step {
-        typealias Service = AuthenticationService
-        // check local data
-        if userData.client.isEmptyCookies {
-            return .loggingIn
-        }
-        do {
-            // verify auth token
-            guard try await Service.verifyAuthToken(userData.client) else {
-                return .loggingIn
-            }
-            // fetch user data
-            guard let user = try await Service.loginUserInfo(userData.client) as? User else {
-                return .loggingIn
-            }
-            userData.user = user
-            // fetch friends data
-            try await userData.fetchAllFriends()
-        } catch let error as VRCKitError {
-            errorOccurred(error)
-        } catch {
-            unexpectedErrorOccurred()
-        }
-        // complete
-        return .done
-    }
-
-    func errorOccurred(_ error: VRCKitError) {
-        isPresentedAlert = true
-        vrckError = error
-    }
-
-    func unexpectedErrorOccurred() {
-        isPresentedAlert = true
-        vrckError = .unexpectedError
     }
 }
