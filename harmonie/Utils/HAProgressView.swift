@@ -14,6 +14,6 @@ struct HAProgressView: View {
             ProgressView()
                 .controlSize(.large)
         }
-        .edgesIgnoringSafeArea(.all)
+        .ignoresSafeArea()
     }
 }
