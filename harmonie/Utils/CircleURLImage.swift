@@ -1,5 +1,5 @@
 //
-//  HACircleImage.swift
+//  CircleURLImage.swift
 //  harmonie
 //
 //  Created by makinosp on 2024/06/06.
@@ -8,12 +8,12 @@
 import NukeUI
 import SwiftUI
 
-struct HACircleImage: View {
-    let imageUrl: String
+struct CircleURLImage: View {
+    let imageUrl: URL?
     let size: CGSize
 
     var body: some View {
-        LazyImage(url: URL(string: imageUrl)) { state in
+        LazyImage(url: imageUrl) { state in
             if let image = state.image {
                 image
                     .resizable()

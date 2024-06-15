@@ -25,12 +25,10 @@ struct FriendDetailView: View {
         }
         .task {
             await fetchUser()
-            await fetchInstance()
+            if friend.isVisible {
+                await fetchInstance()
+            }
         }
-    }
-
-    var imageUrl: URL? {
-        URL(string: (friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon) ?? "")
     }
 
     var addedFavoriteGroupId: String? {
@@ -42,7 +40,7 @@ struct FriendDetailView: View {
     }
 
     var profileImage: some View {
-        LazyImage(url: imageUrl) { state in
+        LazyImage(url: friend.thumbnailUrl) { state in
             let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
             if let image = state.image {
                 image
@@ -75,23 +73,46 @@ struct FriendDetailView: View {
                 }
             }
         }
-        .overlay(alignment: .top) {
-            toolbar
-        }
-        .overlay(alignment: .bottom) {
-            displayStatusAndName
-        }
+        .overlay(alignment: .top) { topBar }
+        .overlay(alignment: .bottom) { bottomBar }
     }
 
-    var toolbar: some View {
+    var topBar: some View {
         HStack {
+            Spacer()
+            AsyncButton("Save") {
+                await saveNote()
+            }
+            .foregroundStyle(Color.accentColor)
+            .buttonStyle(.borderedProminent)
+            .tint(Material.regularMaterial)
+            .buttonBorderShape(.capsule)
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+    }
+
+    var bottomBar: some View {
+        HStack {
+            HStack(alignment: .bottom) {
+                Label {
+                    Text(friend.displayName)
+                } icon: {
+                    Image(systemName: "circle.fill")
+                        .foregroundStyle(StatusColor.statusColor(friend.status))
+                }
+                .font(.headline)
+                Text(friend.statusDescription)
+                    .font(.subheadline)
+            }
             Spacer()
             if let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups {
                 favoriteMenu(favoriteFriendGroups)
             }
         }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
         .foregroundStyle(Color.white)
-        .padding(8)
     }
 
     func favoriteMenu(_ favoriteGroups: [FavoriteGroup]) -> some View {
@@ -115,12 +136,12 @@ struct FriendDetailView: View {
             }
         } label: {
             Image(systemName: isAddedFavorite ? "star.fill" : "star")
-                .font(.body)
-        }
-        .padding(8)
-        .background {
-            Circle()
-                .foregroundStyle(Material.ultraThin)
+                .frame(size: CGSize(width: 12, height: 12))
+                .padding(12)
+                .background {
+                    Circle()
+                        .foregroundStyle(Material.regularMaterial)
+                }
         }
     }
 
@@ -137,8 +158,7 @@ struct FriendDetailView: View {
                 .font(.subheadline)
             Spacer()
         }
-        .foregroundStyle(Color.white)
-        .padding()
+        .padding(8)
     }
 
     var contentStacks: some View {

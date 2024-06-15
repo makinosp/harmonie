@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		200723972BA56377002C27E8 /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200723962BA56377002C27E8 /* FriendDetailView.swift */; };
+		200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */; };
+		200FA7B02C1D745B0001E655 /* LocationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AF2C1D745B0001E655 /* LocationCardView.swift */; };
 		20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20102BCE2C157C77007738D3 /* HarmonieApp.swift */; };
 		2019D1ED2B9C3AEC0094E358 /* View+frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2019D1EC2B9C3AEC0094E358 /* View+frame.swift */; };
 		2019D1F02B9C3CBF0094E358 /* SizeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2019D1EF2B9C3CBF0094E358 /* SizeViewModifier.swift */; };
@@ -17,9 +19,6 @@
 		20395D972B945CD700003921 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395D962B945CD700003921 /* ContentView.swift */; };
 		20395D9B2B945CD800003921 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20395D9A2B945CD800003921 /* Assets.xcassets */; };
 		20395D9E2B945CD800003921 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20395D9D2B945CD800003921 /* Preview Assets.xcassets */; };
-		20395DA82B945CD900003921 /* harmonieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DA72B945CD900003921 /* harmonieTests.swift */; };
-		20395DB22B945CD900003921 /* harmonieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DB12B945CD900003921 /* harmonieUITests.swift */; };
-		20395DB42B945CD900003921 /* harmonieUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DB32B945CD900003921 /* harmonieUITestsLaunchTests.swift */; };
 		20395DC22B945EEF00003921 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20395DC12B945EEF00003921 /* VRCKit */; };
 		20395DC42B94653100003921 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DC32B94653100003921 /* FriendsView.swift */; };
 		2044ADF02BC264240057BA6A /* StatusColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2044ADEF2BC264240057BA6A /* StatusColor.swift */; };
@@ -30,12 +29,14 @@
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
 		206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */; };
 		208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AD2A32B9C17BB00F66ED3 /* UserData.swift */; };
+		208DB7EC2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */; };
+		208DB7ED2C1D5B6000ACD0AB /* HarmonieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */; };
+		208DB7EF2C1D5B8B00ACD0AB /* HarmonieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */; };
 		209938A62C1099EE003B4A8A /* SectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A52C1099EE003B4A8A /* SectionModifier.swift */; };
 		209938A82C109B08003B4A8A /* View+sectioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A72C109B08003B4A8A /* View+sectioning.swift */; };
 		209938AA2C109C8C003B4A8A /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* HASection.swift */; };
 		20CA2D262B9D699D005CC55F /* FriendListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CA2D252B9D699D005CC55F /* FriendListType.swift */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
-		20F213DF2C1200220061DE29 /* HACircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F213DE2C1200220061DE29 /* HACircleImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 
 /* Begin PBXFileReference section */
 		200723962BA56377002C27E8 /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
+		200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleURLImage.swift; sourceTree = "<group>"; };
+		200FA7AF2C1D745B0001E655 /* LocationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCardView.swift; sourceTree = "<group>"; };
 		20102BCE2C157C77007738D3 /* HarmonieApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieApp.swift; sourceTree = "<group>"; };
 		2019D1EC2B9C3AEC0094E358 /* View+frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+frame.swift"; sourceTree = "<group>"; };
 		2019D1EF2B9C3CBF0094E358 /* SizeViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeViewModifier.swift; sourceTree = "<group>"; };
@@ -68,10 +71,7 @@
 		20395D9A2B945CD800003921 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20395D9D2B945CD800003921 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		20395DA32B945CD900003921 /* harmonieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = harmonieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		20395DA72B945CD900003921 /* harmonieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = harmonieTests.swift; sourceTree = "<group>"; };
 		20395DAD2B945CD900003921 /* harmonieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = harmonieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		20395DB12B945CD900003921 /* harmonieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = harmonieUITests.swift; sourceTree = "<group>"; };
-		20395DB32B945CD900003921 /* harmonieUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = harmonieUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		20395DC32B94653100003921 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		2044ADEF2BC264240057BA6A /* StatusColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusColor.swift; sourceTree = "<group>"; };
 		205B3BF12C00D51A0097D62A /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -79,11 +79,13 @@
 		205FFDD42C15783F00D93ACD /* FavoriteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		205FFDD62C157AA700D93ACD /* FriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
 		208AD2A32B9C17BB00F66ED3 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieUITests.swift; sourceTree = "<group>"; };
+		208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieTests.swift; sourceTree = "<group>"; };
 		209938A52C1099EE003B4A8A /* SectionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModifier.swift; sourceTree = "<group>"; };
 		209938A72C109B08003B4A8A /* View+sectioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+sectioning.swift"; sourceTree = "<group>"; };
 		209938A92C109C8C003B4A8A /* HASection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HASection.swift; sourceTree = "<group>"; };
 		20CA2D252B9D699D005CC55F /* FriendListType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListType.swift; sourceTree = "<group>"; };
-		20F213DE2C1200220061DE29 /* HACircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HACircleImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,14 +117,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		200FA7AE2C1D74380001E655 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				200FA7AF2C1D745B0001E655 /* LocationCardView.swift */,
+				202844C32BA5CE1B00357D09 /* LocationsView.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		2019D1E92B9C1BAE0094E358 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				200FA7AE2C1D74380001E655 /* Location */,
 				20395D962B945CD700003921 /* ContentView.swift */,
 				202844C12BA5CC4F00357D09 /* FavoritesView.swift */,
 				200723962BA56377002C27E8 /* FriendDetailView.swift */,
 				20395DC32B94653100003921 /* FriendsView.swift */,
-				202844C32BA5CE1B00357D09 /* LocationsView.swift */,
 				201E40E42B9B55E300321521 /* LoginView.swift */,
 				205B3BF12C00D51A0097D62A /* SettingsView.swift */,
 			);
@@ -203,7 +214,7 @@
 		20395DA62B945CD900003921 /* harmonieTests */ = {
 			isa = PBXGroup;
 			children = (
-				20395DA72B945CD900003921 /* harmonieTests.swift */,
+				208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */,
 			);
 			path = harmonieTests;
 			sourceTree = "<group>";
@@ -211,8 +222,8 @@
 		20395DB02B945CD900003921 /* harmonieUITests */ = {
 			isa = PBXGroup;
 			children = (
-				20395DB12B945CD900003921 /* harmonieUITests.swift */,
-				20395DB32B945CD900003921 /* harmonieUITestsLaunchTests.swift */,
+				208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */,
+				208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */,
 			);
 			path = harmonieUITests;
 			sourceTree = "<group>";
@@ -220,11 +231,11 @@
 		208555112BF8E8BB0079A92F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */,
 				20CA2D252B9D699D005CC55F /* FriendListType.swift */,
 				2044ADEF2BC264240057BA6A /* StatusColor.swift */,
 				205B3BF32C00D8BF0097D62A /* HAProgressView.swift */,
 				209938A92C109C8C003B4A8A /* HASection.swift */,
-				20F213DE2C1200220061DE29 /* HACircleImage.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -306,10 +317,12 @@
 					};
 					20395DA22B945CD900003921 = {
 						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1540;
 						TestTargetID = 20395D902B945CD700003921;
 					};
 					20395DAC2B945CD900003921 = {
 						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1540;
 						TestTargetID = 20395D902B945CD700003921;
 					};
 				};
@@ -373,10 +386,11 @@
 				205FFDD72C157AA700D93ACD /* FriendViewModel.swift in Sources */,
 				208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */,
 				209938AA2C109C8C003B4A8A /* HASection.swift in Sources */,
-				20F213DF2C1200220061DE29 /* HACircleImage.swift in Sources */,
 				202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */,
 				20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */,
 				20395D972B945CD700003921 /* ContentView.swift in Sources */,
+				200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */,
+				200FA7B02C1D745B0001E655 /* LocationCardView.swift in Sources */,
 				20395DC42B94653100003921 /* FriendsView.swift in Sources */,
 				2044ADF02BC264240057BA6A /* StatusColor.swift in Sources */,
 				205FFDD52C15783F00D93ACD /* FavoriteViewModel.swift in Sources */,
@@ -397,7 +411,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20395DA82B945CD900003921 /* harmonieTests.swift in Sources */,
+				208DB7EF2C1D5B8B00ACD0AB /* HarmonieTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,8 +419,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20395DB42B945CD900003921 /* harmonieUITestsLaunchTests.swift in Sources */,
-				20395DB22B945CD900003921 /* harmonieUITests.swift in Sources */,
+				208DB7ED2C1D5B6000ACD0AB /* HarmonieUITests.swift in Sources */,
+				208DB7EC2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +624,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJHK4FP72G;
@@ -619,6 +634,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.nemushee.harmonieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/harmonie.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/harmonie";
@@ -630,6 +646,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJHK4FP72G;
@@ -649,6 +666,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJHK4FP72G;
@@ -657,6 +675,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.nemushee.harmonieUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = harmonie;
@@ -667,6 +686,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJHK4FP72G;
