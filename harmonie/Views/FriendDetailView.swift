@@ -80,8 +80,8 @@ struct FriendDetailView: View {
     var topBar: some View {
         HStack {
             Spacer()
-            Button("Save") {
-                print("Saving...")
+            AsyncButton("Save") {
+                await saveNote()
             }
             .foregroundStyle(Color.accentColor)
             .buttonStyle(.borderedProminent)
