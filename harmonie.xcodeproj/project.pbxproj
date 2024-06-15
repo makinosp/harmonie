@@ -17,9 +17,6 @@
 		20395D972B945CD700003921 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395D962B945CD700003921 /* ContentView.swift */; };
 		20395D9B2B945CD800003921 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20395D9A2B945CD800003921 /* Assets.xcassets */; };
 		20395D9E2B945CD800003921 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20395D9D2B945CD800003921 /* Preview Assets.xcassets */; };
-		20395DA82B945CD900003921 /* harmonieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DA72B945CD900003921 /* harmonieTests.swift */; };
-		20395DB22B945CD900003921 /* harmonieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DB12B945CD900003921 /* harmonieUITests.swift */; };
-		20395DB42B945CD900003921 /* harmonieUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DB32B945CD900003921 /* harmonieUITestsLaunchTests.swift */; };
 		20395DC22B945EEF00003921 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20395DC12B945EEF00003921 /* VRCKit */; };
 		20395DC42B94653100003921 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DC32B94653100003921 /* FriendsView.swift */; };
 		2044ADF02BC264240057BA6A /* StatusColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2044ADEF2BC264240057BA6A /* StatusColor.swift */; };
@@ -30,6 +27,9 @@
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
 		206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */; };
 		208AD2A42B9C17BB00F66ED3 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AD2A32B9C17BB00F66ED3 /* UserData.swift */; };
+		208DB7EC2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */; };
+		208DB7ED2C1D5B6000ACD0AB /* HarmonieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */; };
+		208DB7EF2C1D5B8B00ACD0AB /* HarmonieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */; };
 		209938A62C1099EE003B4A8A /* SectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A52C1099EE003B4A8A /* SectionModifier.swift */; };
 		209938A82C109B08003B4A8A /* View+sectioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A72C109B08003B4A8A /* View+sectioning.swift */; };
 		209938AA2C109C8C003B4A8A /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* HASection.swift */; };
@@ -68,10 +68,7 @@
 		20395D9A2B945CD800003921 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20395D9D2B945CD800003921 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		20395DA32B945CD900003921 /* harmonieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = harmonieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		20395DA72B945CD900003921 /* harmonieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = harmonieTests.swift; sourceTree = "<group>"; };
 		20395DAD2B945CD900003921 /* harmonieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = harmonieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		20395DB12B945CD900003921 /* harmonieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = harmonieUITests.swift; sourceTree = "<group>"; };
-		20395DB32B945CD900003921 /* harmonieUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = harmonieUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		20395DC32B94653100003921 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		2044ADEF2BC264240057BA6A /* StatusColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusColor.swift; sourceTree = "<group>"; };
 		205B3BF12C00D51A0097D62A /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -79,6 +76,9 @@
 		205FFDD42C15783F00D93ACD /* FavoriteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		205FFDD62C157AA700D93ACD /* FriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
 		208AD2A32B9C17BB00F66ED3 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieUITests.swift; sourceTree = "<group>"; };
+		208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieTests.swift; sourceTree = "<group>"; };
 		209938A52C1099EE003B4A8A /* SectionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModifier.swift; sourceTree = "<group>"; };
 		209938A72C109B08003B4A8A /* View+sectioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+sectioning.swift"; sourceTree = "<group>"; };
 		209938A92C109C8C003B4A8A /* HASection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HASection.swift; sourceTree = "<group>"; };
@@ -203,7 +203,7 @@
 		20395DA62B945CD900003921 /* harmonieTests */ = {
 			isa = PBXGroup;
 			children = (
-				20395DA72B945CD900003921 /* harmonieTests.swift */,
+				208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */,
 			);
 			path = harmonieTests;
 			sourceTree = "<group>";
@@ -211,8 +211,8 @@
 		20395DB02B945CD900003921 /* harmonieUITests */ = {
 			isa = PBXGroup;
 			children = (
-				20395DB12B945CD900003921 /* harmonieUITests.swift */,
-				20395DB32B945CD900003921 /* harmonieUITestsLaunchTests.swift */,
+				208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */,
+				208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */,
 			);
 			path = harmonieUITests;
 			sourceTree = "<group>";
@@ -306,10 +306,12 @@
 					};
 					20395DA22B945CD900003921 = {
 						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1540;
 						TestTargetID = 20395D902B945CD700003921;
 					};
 					20395DAC2B945CD900003921 = {
 						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1540;
 						TestTargetID = 20395D902B945CD700003921;
 					};
 				};
@@ -397,7 +399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20395DA82B945CD900003921 /* harmonieTests.swift in Sources */,
+				208DB7EF2C1D5B8B00ACD0AB /* HarmonieTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,8 +407,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20395DB42B945CD900003921 /* harmonieUITestsLaunchTests.swift in Sources */,
-				20395DB22B945CD900003921 /* harmonieUITests.swift in Sources */,
+				208DB7ED2C1D5B6000ACD0AB /* HarmonieUITests.swift in Sources */,
+				208DB7EC2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +612,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJHK4FP72G;
@@ -619,6 +622,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.nemushee.harmonieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/harmonie.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/harmonie";
@@ -630,6 +634,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJHK4FP72G;
@@ -649,6 +654,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJHK4FP72G;
@@ -657,6 +663,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.nemushee.harmonieUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = harmonie;
@@ -667,6 +674,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJHK4FP72G;

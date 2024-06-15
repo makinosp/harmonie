@@ -1,13 +1,13 @@
 //
-//  harmonieUITestsLaunchTests.swift
-//  harmonieUITests
+//  HarmonieUITestsLaunchTests.swift
+//  HarmonieUITests
 //
 //  Created by makinosp on 2024/03/03.
 //
 
 import XCTest
 
-final class harmonieUITestsLaunchTests: XCTestCase {
+final class HarmonieUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
