@@ -1,37 +1,13 @@
 //
-//  LocationsView.swift
+//  LocationCardView.swift
 //  harmonie
 //
-//  Created by makinosp on 2024/03/16.
+//  Created by makinosp on 2024/06/15.
 //
 
 import NukeUI
 import SwiftUI
 import VRCKit
-
-struct LocationsView: View {
-    @EnvironmentObject var userData: UserData
-    @EnvironmentObject var friendViewModel: FriendViewModel
-
-    var body: some View {
-        NavigationSplitView {
-            ScrollView {
-                LazyVStack {
-                    ForEach(FriendService.friendsGroupedByLocation(friendViewModel.onlineFriends)) { friendsLocation in
-                        if friendsLocation.isVisible {
-                            LocationCardView(location: friendsLocation)
-                        }
-                    }
-                }
-                .padding(.horizontal, 8)
-            }
-            .background(Color(UIColor.systemGroupedBackground))
-            .navigationTitle("Locations")
-        } detail: {
-            EmptyView()
-        }
-    }
-}
 
 struct LocationCardView: View {
     @EnvironmentObject var userData: UserData
@@ -54,7 +30,7 @@ struct LocationCardView: View {
                                 .font(.footnote)
                                 .foregroundStyle(Color.gray)
                             Spacer()
-                            Text("\(location.friends.count.description) / \(instance.capacity.description)")
+                            Text(personAmount(instance))
                                 .font(.footnote)
                                 .foregroundStyle(Color.gray)
                         }
@@ -72,25 +48,8 @@ struct LocationCardView: View {
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
-                    LazyImage(url: URL(string: instance.world.imageUrl)) { state in
-                        if let image = state.image {
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(maxWidth: frameWidth)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                        } else if state.error != nil {
-                            Image(systemName: "exclamationmark.circle")
-                                .frame(maxWidth: frameWidth)
-                        } else {
-                            ZStack {
-                                Color.clear
-                                    .frame(maxWidth: frameWidth)
-                                ProgressView()
-                            }
-                        }
-                    }
-                    .padding()
+                    locationThumbnail(URL(string: instance.world.imageUrl))
+                        .padding()
                 }
             } else { ProgressView() }
         }
@@ -103,6 +62,31 @@ struct LocationCardView: View {
                 )
             } catch {
                 print(error)
+            }
+        }
+    }
+
+    func personAmount(_ instance: Instance) -> String {
+        "\(location.friends.count.description) / \(instance.capacity.description)"
+    }
+
+    func locationThumbnail(_ url: URL?) -> some View {
+        LazyImage(url: url) { state in
+            if let image = state.image {
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: frameWidth)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            } else if state.error != nil {
+                Image(systemName: "exclamationmark.circle")
+                    .frame(maxWidth: frameWidth)
+            } else {
+                ZStack {
+                    Color.clear
+                        .frame(maxWidth: frameWidth)
+                    ProgressView()
+                }
             }
         }
     }
