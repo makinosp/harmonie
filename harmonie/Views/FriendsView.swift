@@ -101,8 +101,8 @@ struct FriendsView: View {
     /// Row view for friend list
     func rowView(_ friend: Friend) -> some View {
         HStack {
-            HACircleImage(
-                imageUrl: (friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon) ?? "",
+            CircleURLImage(
+                imageUrl: friend.userIconUrl,
                 size: thumbnailSize
             )
             Text(friend.displayName)

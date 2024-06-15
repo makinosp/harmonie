@@ -23,8 +23,8 @@ struct SettingsView: View {
             if let user = userData.user {
                 Section(header: Text("My Profile")) {
                     HStack {
-                        HACircleImage(
-                            imageUrl: (user.userIcon.isEmpty ? user.currentAvatarThumbnailImageUrl : user.userIcon) ?? "",
+                        CircleURLImage(
+                            imageUrl: user.userIconUrl,
                             size: thumbnailSize
                         )
                         Text(user.displayName)

@@ -61,8 +61,8 @@ struct LocationCardView: View {
                         ScrollView(.horizontal) {
                             HStack(spacing: 4) {
                                 ForEach(location.friends) { friend in
-                                    HACircleImage(
-                                        imageUrl: (friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon) ?? "",
+                                    CircleURLImage(
+                                        imageUrl: friend.userIconUrl,
                                         size: iconSize
                                     )
                                 }

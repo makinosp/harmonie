@@ -25,7 +25,9 @@ struct FriendDetailView: View {
         }
         .task {
             await fetchUser()
-            await fetchInstance()
+            if friend.isVisible {
+                await fetchInstance()
+            }
         }
     }
 
