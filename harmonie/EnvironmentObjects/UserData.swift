@@ -42,8 +42,10 @@ class UserData: ObservableObject {
             self.user = user
         } catch let error as VRCKitError {
             errorOccurred(error)
+            return .loggingIn
         } catch {
             unexpectedErrorOccurred()
+            return .loggingIn
         }
         // complete
         return .done
