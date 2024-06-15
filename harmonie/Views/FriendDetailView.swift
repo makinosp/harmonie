@@ -73,23 +73,46 @@ struct FriendDetailView: View {
                 }
             }
         }
-        .overlay(alignment: .top) {
-            toolbar
-        }
-        .overlay(alignment: .bottom) {
-            displayStatusAndName
-        }
+        .overlay(alignment: .top) { topBar }
+        .overlay(alignment: .bottom) { bottomBar }
     }
 
-    var toolbar: some View {
+    var topBar: some View {
         HStack {
+            Spacer()
+            Button("Save") {
+                print("Saving...")
+            }
+            .foregroundStyle(Color.accentColor)
+            .buttonStyle(.borderedProminent)
+            .tint(Material.regularMaterial)
+            .buttonBorderShape(.capsule)
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+    }
+
+    var bottomBar: some View {
+        HStack {
+            HStack(alignment: .bottom) {
+                Label {
+                    Text(friend.displayName)
+                } icon: {
+                    Image(systemName: "circle.fill")
+                        .foregroundStyle(StatusColor.statusColor(friend.status))
+                }
+                .font(.headline)
+                Text(friend.statusDescription)
+                    .font(.subheadline)
+            }
             Spacer()
             if let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups {
                 favoriteMenu(favoriteFriendGroups)
             }
         }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
         .foregroundStyle(Color.white)
-        .padding(8)
     }
 
     func favoriteMenu(_ favoriteGroups: [FavoriteGroup]) -> some View {
@@ -113,12 +136,12 @@ struct FriendDetailView: View {
             }
         } label: {
             Image(systemName: isAddedFavorite ? "star.fill" : "star")
-                .font(.body)
-        }
-        .padding(8)
-        .background {
-            Circle()
-                .foregroundStyle(Material.ultraThin)
+                .frame(size: CGSize(width: 12, height: 12))
+                .padding(12)
+                .background {
+                    Circle()
+                        .foregroundStyle(Material.regularMaterial)
+                }
         }
     }
 
@@ -135,8 +158,7 @@ struct FriendDetailView: View {
                 .font(.subheadline)
             Spacer()
         }
-        .foregroundStyle(Color.white)
-        .padding()
+        .padding(8)
     }
 
     var contentStacks: some View {
