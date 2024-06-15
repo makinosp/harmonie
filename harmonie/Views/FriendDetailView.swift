@@ -31,10 +31,6 @@ struct FriendDetailView: View {
         }
     }
 
-    var imageUrl: URL? {
-        URL(string: (friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon) ?? "")
-    }
-
     var addedFavoriteGroupId: String? {
         favoriteViewModel.findOutFriendFromFavorites(friend.id)
     }
@@ -44,7 +40,7 @@ struct FriendDetailView: View {
     }
 
     var profileImage: some View {
-        LazyImage(url: imageUrl) { state in
+        LazyImage(url: friend.thumbnailUrl) { state in
             let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
             if let image = state.image {
                 image
