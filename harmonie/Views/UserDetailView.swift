@@ -1,5 +1,5 @@
 //
-//  FriendDetailView.swift
+//  UserDetailView.swift
 //  harmonie
 //
 //  Created by makinosp on 2024/03/16.
@@ -9,38 +9,45 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-struct FriendDetailView: View {
+struct UserDetailView: View {
     @EnvironmentObject var userData: UserData
     @EnvironmentObject var favoriteViewModel: FavoriteViewModel
     @Environment(\.dismiss) private var dismiss
-    @State var friend: UserDetail
+    @State var user: UserDetail?
     @State var instance: Instance?
+    let id: String
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                profileImage
-                contentStacks
+        if let user = user {
+            ScrollView {
+                VStack(spacing: 0) {
+                    profileImage(user)
+                    contentStacks(user)
+                }
             }
-        }
-        .task {
-            await fetchUser()
-            if friend.isVisible {
-                await fetchInstance()
+            .task {
+                if user.isVisible {
+                    await fetchInstance(user)
+                }
             }
+        } else {
+            ProgressView()
+                .task {
+                    await fetchUser()
+                }
         }
     }
 
     var addedFavoriteGroupId: String? {
-        favoriteViewModel.findOutFriendFromFavorites(friend.id)
+        favoriteViewModel.findOutFriendFromFavorites(id)
     }
 
     var isAddedFavorite: Bool {
         addedFavoriteGroupId != nil
     }
 
-    var profileImage: some View {
-        LazyImage(url: friend.thumbnailUrl) { state in
+    func profileImage(_ user: UserDetail) -> some View {
+        LazyImage(url: user.thumbnailUrl) { state in
             let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
             if let image = state.image {
                 image
@@ -73,15 +80,15 @@ struct FriendDetailView: View {
                 }
             }
         }
-        .overlay(alignment: .top) { topBar }
-        .overlay(alignment: .bottom) { bottomBar }
+        .overlay(alignment: .top) { topBar(user) }
+        .overlay(alignment: .bottom) { bottomBar(user) }
     }
 
-    var topBar: some View {
+    func topBar(_ user: UserDetail) -> some View {
         HStack {
             Spacer()
             AsyncButton("Save") {
-                await saveNote()
+                await saveNote(user)
             }
             .foregroundStyle(Color.accentColor)
             .buttonStyle(.borderedProminent)
@@ -92,22 +99,22 @@ struct FriendDetailView: View {
         .padding(.horizontal, 12)
     }
 
-    var bottomBar: some View {
+    func bottomBar(_ user: UserDetail) -> some View {
         HStack {
             HStack(alignment: .bottom) {
                 Label {
-                    Text(friend.displayName)
+                    Text(user.displayName)
                 } icon: {
                     Image(systemName: "circle.fill")
-                        .foregroundStyle(StatusColor.statusColor(friend.status))
+                        .foregroundStyle(StatusColor.statusColor(user.status))
                 }
                 .font(.headline)
-                Text(friend.statusDescription)
+                Text(user.statusDescription)
                     .font(.subheadline)
             }
             Spacer()
             if let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups {
-                favoriteMenu(favoriteFriendGroups)
+                favoriteMenu(user, favoriteFriendGroups)
             }
         }
         .padding(.vertical, 8)
@@ -115,15 +122,15 @@ struct FriendDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    func favoriteMenu(_ favoriteGroups: [FavoriteGroup]) -> some View {
+    func favoriteMenu(_ user: UserDetail, _ favoriteGroups: [FavoriteGroup]) -> some View {
         Menu {
             ForEach(favoriteGroups) { group in
                 let isAddedFavoriteIn = favoriteViewModel.isIncludedFriendInFavorite(
-                    friendId: friend.id,
+                    friendId: user.id,
                     groupId: group.id
                 )
                 AsyncButton {
-                    await toggleFavorite(group: group)
+                    await toggleFavorite(user, group: group)
                 } label: {
                     Label {
                         Text(group.displayName)
@@ -145,32 +152,32 @@ struct FriendDetailView: View {
         }
     }
 
-    var displayStatusAndName: some View {
+    func displayStatusAndName(_ user: UserDetail) -> some View {
         HStack(alignment: .bottom) {
             Label {
-                Text(friend.displayName)
+                Text(user.displayName)
             } icon: {
                 Image(systemName: "circle.fill")
-                    .foregroundStyle(StatusColor.statusColor(friend.status))
+                    .foregroundStyle(StatusColor.statusColor(user.status))
             }
             .font(.headline)
-            Text(friend.statusDescription)
+            Text(user.statusDescription)
                 .font(.subheadline)
             Spacer()
         }
         .padding(8)
     }
 
-    var contentStacks: some View {
+    func contentStacks(_ user: UserDetail) -> some View {
         VStack(spacing: 12) {
             if let instance = instance {
                 locationSection(instance)
             }
             noteSection
-            if let bio = friend.bio {
+            if let bio = user.bio {
                 bioSection(bio)
             }
-            if let bioLinks = friend.bioLinks {
+            if let bioLinks = user.bioLinks {
                 let bioUrls = bioLinks.compactMap { URL(string: $0) }
                 if !bioUrls.isEmpty {
                     bioLinksSection(bioUrls)
@@ -195,8 +202,8 @@ struct FriendDetailView: View {
             Text("Note")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
-            TextField("Enter note", text: $friend.note, axis: .vertical)
-                .font(.body)
+//            TextField("Enter note", text: $user.note, axis: .vertical)
+//                .font(.body)
         }
     }
 
@@ -226,62 +233,62 @@ struct FriendDetailView: View {
 
     func fetchUser() async {
         do {
-            friend = try await UserService.fetchUser(userData.client, userId: friend.id)
+            user = try await UserService.fetchUser(userData.client, userId: id)
         } catch {
             print(error)
         }
     }
 
-    func fetchInstance() async {
+    func fetchInstance(_ user: UserDetail) async {
         do {
-            instance = try await InstanceService.fetchInstance(userData.client, location: friend.location)
+            instance = try await InstanceService.fetchInstance(userData.client, location: user.location)
         } catch {
             print(error)
         }
     }
 
-    func toggleFavorite(group: FavoriteGroup) async {
+    func toggleFavorite(_ user: UserDetail, group: FavoriteGroup) async {
         do {
             if let addedFavoriteGroupId {
                 let _ = try await FavoriteService.removeFavorite(
                     userData.client,
-                    favoriteId: friend.id
+                    favoriteId: user.id
                 ).get()
 
                 if !isAddedFavorite {
                     let _ = try await FavoriteService.addFavorite(
                         userData.client,
                         type: .friend,
-                        favoriteId: friend.id,
+                        favoriteId: user.id,
                         tag: group.name
                     ).get()
-                    favoriteViewModel.addFriendInFavorite(friend: friend, groupId: group.id)
+                    favoriteViewModel.addFriendInFavorite(friend: user, groupId: group.id)
                 }
 
                 favoriteViewModel.removeFriendFromFavorite(
-                    friendId: friend.id,
+                    friendId: user.id,
                     groupId: addedFavoriteGroupId
                 )
             } else {
                 let _ = try await FavoriteService.addFavorite(
                     userData.client,
                     type: .friend,
-                    favoriteId: friend.id,
+                    favoriteId: user.id,
                     tag: group.name
                 ).get()
-                favoriteViewModel.addFriendInFavorite(friend: friend, groupId: group.id)
+                favoriteViewModel.addFriendInFavorite(friend: user, groupId: group.id)
             }
         } catch {
             print(error)
         }
     }
 
-    func saveNote() async {
+    func saveNote(_ user: UserDetail) async {
         do {
             let _ = try await UserNoteService.updateUserNote(
                 userData.client,
-                targetUserId: friend.id,
-                note: friend.note
+                targetUserId: user.id,
+                note: user.note
             )
         } catch {
             print(error)

@@ -49,7 +49,7 @@ struct FriendsView: View {
             }
         }
         .sheet(item: $friendSelection) { friend in
-            FriendDetailView(friend: UserDetail(friend: friend))
+            UserDetailView(id: friend.id)
                 .presentationDetents([.medium, .large])
                 .presentationBackground(Color(UIColor.systemGroupedBackground))
         }
