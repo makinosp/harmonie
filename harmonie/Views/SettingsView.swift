@@ -10,27 +10,39 @@ import VRCKit
 
 struct SettingsView: View {
     @EnvironmentObject var userData: UserData
+    @State var isSheetOpened = false
     let thumbnailSize = CGSize(width: 40, height: 40)
 
     var body: some View {
         NavigationSplitView {
             settingsContent.navigationTitle("Settings")
         } detail: { EmptyView() }
+            .sheet(isPresented: $isSheetOpened) {
+                if let user = userData.user {
+                    FriendDetailView(friend: user)
+                        .presentationDetents([.medium, .large])
+                        .presentationBackground(Color(UIColor.systemGroupedBackground))
+                }
+            }
     }
 
     var settingsContent: some View {
         List {
             if let user = userData.user {
                 Section(header: Text("My Profile")) {
-                    HStack {
-                        CircleURLImage(
-                            imageUrl: user.userIconUrl,
-                            size: thumbnailSize
-                        )
-                        Text(user.displayName)
+                    Button {
+                        isSheetOpened.toggle()
+                    } label: {
+                        HStack {
+                            CircleURLImage(
+                                imageUrl: user.userIconUrl,
+                                size: thumbnailSize
+                            )
+                            Text(user.displayName)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .contentShape(Rectangle())
 
                     Label {
                         Text("Edit Profile")

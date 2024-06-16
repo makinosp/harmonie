@@ -13,7 +13,7 @@ struct FriendDetailView: View {
     @EnvironmentObject var userData: UserData
     @EnvironmentObject var favoriteViewModel: FavoriteViewModel
     @Environment(\.dismiss) private var dismiss
-    @State var friend: UserDetail
+    @State var friend: any ProfileDetailRepresentable
     @State var instance: Instance?
 
     var body: some View {
@@ -195,8 +195,8 @@ struct FriendDetailView: View {
             Text("Note")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
-            TextField("Enter note", text: $friend.note, axis: .vertical)
-                .font(.body)
+//            TextField("Enter note", text: $friend.note, axis: .vertical)
+//                .font(.body)
         }
     }
 
@@ -233,6 +233,7 @@ struct FriendDetailView: View {
     }
 
     func fetchInstance() async {
+        guard let friend = friend as? UserDetail else { return }
         do {
             instance = try await InstanceService.fetchInstance(userData.client, location: friend.location)
         } catch {
@@ -241,6 +242,7 @@ struct FriendDetailView: View {
     }
 
     func toggleFavorite(group: FavoriteGroup) async {
+        guard let friend = friend as? UserDetail else { return }
         do {
             if let addedFavoriteGroupId {
                 let _ = try await FavoriteService.removeFavorite(
@@ -277,6 +279,7 @@ struct FriendDetailView: View {
     }
 
     func saveNote() async {
+        guard let friend = friend as? UserDetail else { return }
         do {
             let _ = try await UserNoteService.updateUserNote(
                 userData.client,
