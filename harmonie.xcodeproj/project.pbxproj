@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		200723972BA56377002C27E8 /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200723962BA56377002C27E8 /* FriendDetailView.swift */; };
+		200723972BA56377002C27E8 /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200723962BA56377002C27E8 /* UserDetailView.swift */; };
 		200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */; };
 		200FA7B02C1D745B0001E655 /* LocationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AF2C1D745B0001E655 /* LocationCardView.swift */; };
 		20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20102BCE2C157C77007738D3 /* HarmonieApp.swift */; };
@@ -57,7 +57,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		200723962BA56377002C27E8 /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
+		200723962BA56377002C27E8 /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
 		200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleURLImage.swift; sourceTree = "<group>"; };
 		200FA7AF2C1D745B0001E655 /* LocationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCardView.swift; sourceTree = "<group>"; };
 		20102BCE2C157C77007738D3 /* HarmonieApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieApp.swift; sourceTree = "<group>"; };
@@ -132,10 +132,10 @@
 				200FA7AE2C1D74380001E655 /* Location */,
 				20395D962B945CD700003921 /* ContentView.swift */,
 				202844C12BA5CC4F00357D09 /* FavoritesView.swift */,
-				200723962BA56377002C27E8 /* FriendDetailView.swift */,
 				20395DC32B94653100003921 /* FriendsView.swift */,
 				201E40E42B9B55E300321521 /* LoginView.swift */,
 				205B3BF12C00D51A0097D62A /* SettingsView.swift */,
+				200723962BA56377002C27E8 /* UserDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -395,7 +395,7 @@
 				2044ADF02BC264240057BA6A /* StatusColor.swift in Sources */,
 				205FFDD52C15783F00D93ACD /* FavoriteViewModel.swift in Sources */,
 				201E40E52B9B55E300321521 /* LoginView.swift in Sources */,
-				200723972BA56377002C27E8 /* FriendDetailView.swift in Sources */,
+				200723972BA56377002C27E8 /* UserDetailView.swift in Sources */,
 				2019D1F02B9C3CBF0094E358 /* SizeViewModifier.swift in Sources */,
 				209938A62C1099EE003B4A8A /* SectionModifier.swift in Sources */,
 				209938A82C109B08003B4A8A /* View+sectioning.swift in Sources */,

@@ -19,7 +19,7 @@ struct SettingsView: View {
         } detail: { EmptyView() }
             .sheet(isPresented: $isSheetOpened) {
                 if let user = userData.user {
-                    FriendDetailView(friend: user)
+                    UserDetailView(id: user.id)
                         .presentationDetents([.medium, .large])
                         .presentationBackground(Color(UIColor.systemGroupedBackground))
                 }
