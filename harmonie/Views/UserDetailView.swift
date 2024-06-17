@@ -17,6 +17,13 @@ struct UserDetailView: View {
     @State var instance: Instance?
     let id: String
 
+    var note: Binding<String?> {
+        .init(
+            get: { user?.note },
+            set: { value in user?.note = value ?? "" }
+        )
+    }
+
     var body: some View {
         if let user = user {
             ScrollView {
@@ -202,8 +209,8 @@ struct UserDetailView: View {
             Text("Note")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
-//            TextField("Enter note", text: $user.note, axis: .vertical)
-//                .font(.body)
+            TextField("Enter note", text: note ?? "", axis: .vertical)
+                .font(.body)
         }
     }
 
@@ -241,7 +248,10 @@ struct UserDetailView: View {
 
     func fetchInstance(_ user: UserDetail) async {
         do {
-            instance = try await InstanceService.fetchInstance(userData.client, location: user.location)
+            instance = try await InstanceService.fetchInstance(
+                userData.client,
+                location: user.location
+            )
         } catch {
             print(error)
         }
@@ -262,7 +272,10 @@ struct UserDetailView: View {
                         favoriteId: user.id,
                         tag: group.name
                     ).get()
-                    favoriteViewModel.addFriendInFavorite(friend: user, groupId: group.id)
+                    favoriteViewModel.addFriendInFavorite(
+                        friend: user,
+                        groupId: group.id
+                    )
                 }
 
                 favoriteViewModel.removeFriendFromFavorite(
