@@ -40,25 +40,21 @@ class UserData: ObservableObject {
                 return .loggingIn
             }
             self.user = user
-        } catch let error as VRCKitError {
-            errorOccurred(error)
-            return .loggingIn
         } catch {
-            unexpectedErrorOccurred()
+            handleError(error)
             return .loggingIn
         }
         // complete
         return .done
     }
 
-    func errorOccurred(_ error: VRCKitError) {
+    func handleError(_ error: Error) {
+        if let error = error as? VRCKitError {
+            vrckError = error
+        } else {
+            vrckError = .unexpectedError
+        }
         isPresentedAlert = true
-        vrckError = error
-    }
-
-    func unexpectedErrorOccurred() {
-        isPresentedAlert = true
-        vrckError = .unexpectedError
     }
 
     func logout() {

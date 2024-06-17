@@ -292,7 +292,7 @@ struct UserDetailView: View {
                 favoriteViewModel.addFriendInFavorite(friend: user, groupId: group.id)
             }
         } catch {
-            print(error)
+            userData.handleError(error)
         }
     }
 
@@ -304,7 +304,7 @@ struct UserDetailView: View {
                 note: user.note
             )
         } catch {
-            print(error)
+            userData.handleError(error)
         }
     }
 }
