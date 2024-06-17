@@ -123,6 +123,7 @@ struct FriendsView: View {
                 offline: offline
             )
         } catch {
+            userData.handleError(error)
             return []
         }
     }
@@ -141,6 +142,7 @@ struct FriendsView: View {
             )
             .map(\.friend)
         } catch {
+            userData.handleError(error)
             return []
         }
     }

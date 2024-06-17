@@ -59,21 +59,25 @@ struct ContentView: View {
             .task(priority: .background) {
                 do {
                     try await favoriteViewModel.fetchFavorite()
-                } catch let error as VRCKitError {
-                    userData.errorOccurred(error)
                 } catch {
-                    userData.unexpectedErrorOccurred()
+                    userData.handleError(error)
                 }
             }
             .task(priority: .background) {
                 guard let count = userData.user?.onlineFriends.count else { return }
                 do {
                     try await friendViewModel.fetchAllFriends(count: count)
-                } catch let error as VRCKitError {
-                    userData.errorOccurred(error)
                 } catch {
-                    userData.unexpectedErrorOccurred()
+                    userData.handleError(error)
                 }
+            }
+            .alert(
+                isPresented: $userData.isPresentedAlert,
+                error: userData.vrckError
+            ) { _ in
+                Button("OK") {}
+            } message: { error in
+                Text(error.failureReason ?? "Try again later.")
             }
         }
     }
