@@ -120,7 +120,8 @@ struct UserDetailView: View {
                     .font(.subheadline)
             }
             Spacer()
-            if let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups {
+            if user.isFriend,
+               let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups {
                 favoriteMenu(user, favoriteFriendGroups)
             }
         }
@@ -242,7 +243,7 @@ struct UserDetailView: View {
         do {
             user = try await UserService.fetchUser(userData.client, userId: id)
         } catch {
-            print(error)
+            userData.handleError(error)
         }
     }
 
@@ -253,7 +254,7 @@ struct UserDetailView: View {
                 location: user.location
             )
         } catch {
-            print(error)
+            userData.handleError(error)
         }
     }
 
@@ -263,7 +264,7 @@ struct UserDetailView: View {
                 let _ = try await FavoriteService.removeFavorite(
                     userData.client,
                     favoriteId: user.id
-                ).get()
+                )
 
                 if !isAddedFavorite {
                     let _ = try await FavoriteService.addFavorite(
@@ -271,7 +272,7 @@ struct UserDetailView: View {
                         type: .friend,
                         favoriteId: user.id,
                         tag: group.name
-                    ).get()
+                    )
                     favoriteViewModel.addFriendInFavorite(
                         friend: user,
                         groupId: group.id
@@ -288,7 +289,7 @@ struct UserDetailView: View {
                     type: .friend,
                     favoriteId: user.id,
                     tag: group.name
-                ).get()
+                )
                 favoriteViewModel.addFriendInFavorite(friend: user, groupId: group.id)
             }
         } catch {
