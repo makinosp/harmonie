@@ -14,16 +14,17 @@ struct SettingsView: View {
     let thumbnailSize = CGSize(width: 40, height: 40)
 
     var body: some View {
-        NavigationSplitView {
-            settingsContent.navigationTitle("Settings")
-        } detail: { EmptyView() }
-            .sheet(isPresented: $isSheetOpened) {
-                if let user = userData.user {
-                    UserDetailView(id: user.id)
-                        .presentationDetents([.medium, .large])
-                        .presentationBackground(Color(UIColor.systemGroupedBackground))
-                }
+        NavigationStack {
+            settingsContent
+                .navigationTitle("Settings")
+        }
+        .sheet(isPresented: $isSheetOpened) {
+            if let user = userData.user {
+                UserDetailView(id: user.id)
+                    .presentationDetents([.medium, .large])
+                    .presentationBackground(Color(UIColor.systemGroupedBackground))
             }
+        }
     }
 
     var settingsContent: some View {
@@ -42,17 +43,6 @@ struct SettingsView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
-                    }
-
-                    Label {
-                        Text("Edit Profile")
-                    } icon: {
-                        Image(systemName: "square.and.pencil")
-                    }
-                    Label {
-                        Text("Edit Status Descriptions")
-                    } icon: {
-                        Image(systemName: "square.and.pencil")
                     }
                 }
             }
