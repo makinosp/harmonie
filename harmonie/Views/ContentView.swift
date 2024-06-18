@@ -41,6 +41,7 @@ struct ContentView: View {
                         Text("Friends")
                     }
                 LocationsView()
+                    .badge(FriendService.friendsGroupedByLocation(friendViewModel.onlineFriends).count)
                     .tabItem {
                         Image(systemName: "location.fill")
                         Text("Locations")
