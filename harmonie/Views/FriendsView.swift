@@ -11,7 +11,6 @@ import VRCKit
 struct FriendsView: View {
     @EnvironmentObject var userData: UserData
     @EnvironmentObject var friendViewModel: FriendViewModel
-    @State var offlineFriends: [Friend] = []
     @State var recentlyFriends: [Friend] = []
     @State var listSelection: FriendListType?
     @State var friendSelection: Friend?
@@ -32,21 +31,7 @@ struct FriendsView: View {
             }
             .navigationTitle("Friends")
         } detail: {
-            VStack {
-                friendListView
-                if listSelection == .recently {
-                    Button {
-                        Task {
-                            let friends = await fetchFriendsByIds(offset: recentlyFriends.count)
-                            recentlyFriends.append(contentsOf: friends)
-                        }
-                    } label: {
-                        Image(systemName: "arrow.down.circle")
-                        Text("Load more")
-                    }
-                    .padding()
-                }
-            }
+            friendListView
         }
         .sheet(item: $friendSelection) { friend in
             UserDetailView(id: friend.id)
@@ -69,11 +54,8 @@ struct FriendsView: View {
                         rowView(friend)
                     }
                 } else if listType == .offline {
-                    ForEach(offlineFriends) { friend in
+                    ForEach(friendViewModel.offlineFriends) { friend in
                         rowView(friend)
-                            .task {
-                                await additionalFetchOfflineFriends(friend: friend)
-                            }
                     }
                 } else if listType == .recently {
                     ForEach(recentlyFriends) { friend in
@@ -89,13 +71,6 @@ struct FriendsView: View {
         )
         .navigationTitle(listSelection?.description ?? "")
         .navigationBarTitleDisplayMode(.inline)
-        .task(id: listSelection) {
-            if let listType = listSelection, listType == .offline {
-                offlineFriends = await fetchFriends(offset: 0, offline: true)
-            } else if let listType = listSelection, listType == .recently {
-                recentlyFriends = await fetchFriendsByIds(offset: 0)
-            }
-        }
     }
 
     /// Row view for friend list
@@ -111,56 +86,6 @@ struct FriendsView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             friendSelection = friend
-        }
-    }
-
-    /// Fetch friends from API
-    func fetchFriends(offset: Int, offline: Bool) async -> [Friend] {
-        do {
-            return try await FriendService.fetchFriends(
-                userData.client,
-                offset: offset,
-                offline: offline
-            )
-        } catch {
-            userData.handleError(error)
-            return []
-        }
-    }
-
-    /// Fetch friends by IDs from API
-    func fetchFriendsByIds(offset: Int) async -> [Friend] {
-        guard let friendIds = userData.user?.friends else { return [] }
-        do {
-            return try await UserService.fetchUsers(
-                userData.client,
-                userIds: friendIds
-                    .reversed()
-                    .dropFirst(offset)
-                    .prefix(fetchRecentlyFriendsCount)
-                    .map(\.description)
-            )
-            .map(\.friend)
-        } catch {
-            userData.handleError(error)
-            return []
-        }
-    }
-
-    /// Additional fetch offline friends from API
-    func additionalFetchOfflineFriends(friend: Friend) async {
-        guard let offlineFriendsCount = userData.user?.offlineFriends.count,
-              let fetchThreshold = offlineFriends.dropLast(5).last else {
-            return
-        }
-        if offlineFriends.count < offlineFriendsCount,
-           friend.id == fetchThreshold.id {
-            await offlineFriends.append(
-                contentsOf: fetchFriends(
-                    offset: offlineFriends.count,
-                    offline: false
-                )
-            )
         }
     }
 }

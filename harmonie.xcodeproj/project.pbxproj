@@ -38,6 +38,7 @@
 		209938AA2C109C8C003B4A8A /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* HASection.swift */; };
 		209D77302C2251C200A11666 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D772F2C2251C200A11666 /* MainTabView.swift */; };
 		20CA2D262B9D699D005CC55F /* FriendListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CA2D252B9D699D005CC55F /* FriendListType.swift */; };
+		20E3FC032C245B5300E336E3 /* HarmonieErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3FC022C245B5300E336E3 /* HarmonieErrors.swift */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 		209938A92C109C8C003B4A8A /* HASection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HASection.swift; sourceTree = "<group>"; };
 		209D772F2C2251C200A11666 /* MainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		20CA2D252B9D699D005CC55F /* FriendListType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListType.swift; sourceTree = "<group>"; };
+		20E3FC022C245B5300E336E3 /* HarmonieErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonieErrors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +244,7 @@
 				2044ADEF2BC264240057BA6A /* StatusColor.swift */,
 				205B3BF32C00D8BF0097D62A /* HAProgressView.swift */,
 				209938A92C109C8C003B4A8A /* HASection.swift */,
+				20E3FC022C245B5300E336E3 /* HarmonieErrors.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				205FFDD52C15783F00D93ACD /* FavoriteViewModel.swift in Sources */,
 				201E40E52B9B55E300321521 /* LoginView.swift in Sources */,
 				200723972BA56377002C27E8 /* UserDetailView.swift in Sources */,
+				20E3FC032C245B5300E336E3 /* HarmonieErrors.swift in Sources */,
 				2019D1F02B9C3CBF0094E358 /* SizeViewModifier.swift in Sources */,
 				209938A62C1099EE003B4A8A /* SectionModifier.swift in Sources */,
 				209938A82C109B08003B4A8A /* View+sectioning.swift in Sources */,

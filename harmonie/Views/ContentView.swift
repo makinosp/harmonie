@@ -34,17 +34,12 @@ struct ContentView: View {
             LoginView()
         case .done:
             MainTabView()
-                .task(priority: .background) {
+                .task(priority: .low) {
+                    async let fetchFavoriteTask: () = favoriteViewModel.fetchFavorite()
+                    async let fetchAllFriendsTask: () = friendViewModel.fetchAllFriends()
+
                     do {
-                        try await favoriteViewModel.fetchFavorite()
-                    } catch {
-                        userData.handleError(error)
-                    }
-                }
-                .task(priority: .background) {
-                    guard let count = userData.user?.onlineFriends.count else { return }
-                    do {
-                        try await friendViewModel.fetchAllFriends(count: count)
+                        let _ = try await (fetchFavoriteTask, fetchAllFriendsTask)
                     } catch {
                         userData.handleError(error)
                     }
