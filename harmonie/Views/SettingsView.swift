@@ -15,8 +15,16 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationStack {
-            settingsContent
-                .navigationTitle("Settings")
+            VStack {
+                settingsContent
+                HStack {
+                    Text(appName)
+                    Text(appVersion)
+                }
+                .font(.footnote)
+            }
+            .padding()
+            .navigationTitle("Settings")
         }
         .sheet(isPresented: $isSheetOpened) {
             if let user = userData.user {
@@ -72,5 +80,13 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+
+    var appName: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
+    }
+
+    var appVersion: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
     }
 }
