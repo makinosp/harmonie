@@ -20,7 +20,7 @@ struct HarmonieApp: App {
             ContentView()
                 .environmentObject(userData)
                 .environmentObject(FavoriteViewModel(client: userData.client))
-                .environmentObject(FriendViewModel(client: userData.client))
+                .environmentObject(FriendViewModel(client: userData.client, userData: userData))
         }
     }
 }

@@ -13,17 +13,29 @@ class FriendViewModel: ObservableObject {
     @Published var onlineFriends: [Friend] = []
     @Published var offlineFriends: [Friend] = []
     var client: APIClient
+    var userData: UserData
 
-    init(client: APIClient) {
+    init(client: APIClient, userData: UserData) {
         self.client = client
+        self.userData = userData
     }
 
     /// Fetch friends from API
-    func fetchAllFriends(count: Int) async throws {
-        onlineFriends = try await FriendService.fetchFriends(
+    func fetchAllFriends() async throws {
+        guard let user = userData.user else {
+            throw HarmonieError.dataError
+        }
+        async let onlineFriendsTask = FriendService.fetchFriends(
             client,
-            count: count,
+            count: user.onlineFriends.count,
             offline: false
         )
+        async let offlineFriendsTask = FriendService.fetchFriends(
+            client,
+            count: user.offlineFriends.count,
+            offline: true
+        )
+        onlineFriends = try await onlineFriendsTask
+        offlineFriends = try await offlineFriendsTask
     }
 }

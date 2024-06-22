@@ -33,52 +33,25 @@ struct ContentView: View {
         case .loggingIn:
             LoginView()
         case .done:
-            TabView {
-                FriendsView()
-                    .badge(userData.user?.onlineFriends.count ?? 0)
-                    .tabItem {
-                        Image(systemName: "person.2.fill")
-                        Text("Friends")
+            MainTabView()
+                .task(priority: .low) {
+                    async let fetchFavoriteTask: () = favoriteViewModel.fetchFavorite()
+                    async let fetchAllFriendsTask: () = friendViewModel.fetchAllFriends()
+
+                    do {
+                        let _ = try await (fetchFavoriteTask, fetchAllFriendsTask)
+                    } catch {
+                        userData.handleError(error)
                     }
-                LocationsView()
-                    .tabItem {
-                        Image(systemName: "location.fill")
-                        Text("Locations")
-                    }
-                FavoritesView()
-                    .tabItem {
-                        Image(systemName: "star.fill")
-                        Text("Favorites")
-                    }
-                SettingsView()
-                    .tabItem {
-                        Image(systemName: "gear")
-                        Text("Settings")
-                    }
-            }
-            .task(priority: .background) {
-                do {
-                    try await favoriteViewModel.fetchFavorite()
-                } catch {
-                    userData.handleError(error)
                 }
-            }
-            .task(priority: .background) {
-                guard let count = userData.user?.onlineFriends.count else { return }
-                do {
-                    try await friendViewModel.fetchAllFriends(count: count)
-                } catch {
-                    userData.handleError(error)
+                .alert(
+                    isPresented: $userData.isPresentedAlert,
+                    error: userData.vrckError
+                ) { _ in
+                    Button("OK") {}
+                } message: { error in
+                    Text(error.failureReason ?? "Try again later.")
                 }
-            }
-            .alert(
-                isPresented: $userData.isPresentedAlert,
-                error: userData.vrckError
-            ) { _ in
-                Button("OK") {}
-            } message: { error in
-                Text(error.failureReason ?? "Try again later.")
-            }
         }
     }
 }
