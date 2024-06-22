@@ -15,17 +15,17 @@ struct MainTabView: View {
 
     var body: some View {
         TabView {
-            FriendsView()
-                .badge(userData.user?.onlineFriends.count ?? 0)
-                .tabItem {
-                    Image(systemName: "person.2.fill")
-                    Text("Friends")
-                }
             LocationsView()
                 .badge(FriendService.friendsGroupedByLocation(friendViewModel.onlineFriends).count)
                 .tabItem {
                     Image(systemName: "location.fill")
                     Text("Locations")
+                }
+            FriendsView()
+                .badge(userData.user?.onlineFriends.count ?? 0)
+                .tabItem {
+                    Image(systemName: "person.2.fill")
+                    Text("Friends")
                 }
             FavoritesView()
                 .tabItem {

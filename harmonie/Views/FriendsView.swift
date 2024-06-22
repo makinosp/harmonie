@@ -14,7 +14,7 @@ struct FriendsView: View {
     @State var recentlyFriends: [Friend] = []
     @State var listSelection: FriendListType?
     @State var friendSelection: Friend?
-    @State var searchText: String = ""
+    @State var searchString: String = ""
     let thumbnailSize = CGSize(width: 32, height: 32)
     let fetchRecentlyFriendsCount = 10
 
@@ -29,9 +29,13 @@ struct FriendsView: View {
                     }
                 }
             }
+            .searchable(
+                text: $searchString,
+                placement: .navigationBarDrawer(displayMode: .always)
+            )
             .navigationTitle("Friends")
         } detail: {
-            friendListView
+            listView
         }
         .sheet(item: $friendSelection) { friend in
             UserDetailView(id: friend.id)
@@ -41,32 +45,17 @@ struct FriendsView: View {
     }
 
     /// Friend List branched by list type
-    var friendListView: some View {
+    var listView: some View {
         List {
             if let listType = listSelection {
-                if let status = listType.status {
-                    let filteredFriends = friendViewModel.onlineFriends.filter { $0.status == status }
-                    ForEach(filteredFriends) { friend in
-                        rowView(friend)
-                    }
-                } else if listType == .all {
-                    ForEach(friendViewModel.onlineFriends) { friend in
-                        rowView(friend)
-                    }
-                } else if listType == .offline {
-                    ForEach(friendViewModel.offlineFriends) { friend in
-                        rowView(friend)
-                    }
-                } else if listType == .recently {
-                    ForEach(recentlyFriends) { friend in
-                        rowView(friend)
-                    }
+                ForEach(filterFriends(listType: listType)) { friend in
+                    rowView(friend)
                 }
             }
         }
         .listStyle(.inset)
         .searchable(
-            text: $searchText,
+            text: $searchString,
             placement: .navigationBarDrawer(displayMode: .always)
         )
         .navigationTitle(listSelection?.description ?? "")
@@ -87,5 +76,107 @@ struct FriendsView: View {
         .onTapGesture {
             friendSelection = friend
         }
+    }
+
+    func isIncluded(target: String) -> Bool {
+        searchString.isEmpty || target.range(of: searchString, options: .caseInsensitive) != nil
+    }
+
+    func filterFriends(listType: FriendListType) -> [Friend] {
+        switch listType {
+        case .all:
+            return friendViewModel.onlineFriends.filter {
+                isIncluded(target: $0.displayName)
+            }
+        case .recently:
+            return recentlyFriends.filter {
+                isIncluded(target: $0.displayName)
+            }
+        case .status(let status):
+            switch status {
+            case .offline:
+                return friendViewModel.offlineFriends.filter {
+                    isIncluded(target: $0.displayName)
+                }
+            default:
+                return friendViewModel.onlineFriends
+                    .filter { $0.status == status }
+                    .filter {
+                        isIncluded(target: $0.displayName)
+                    }
+            }
+        }
+    }
+
+    /// Defining friend list types and icons
+    enum FriendListType: Hashable {
+        case all
+        case status(User.Status)
+        case recently
+
+        @ViewBuilder
+        var icon: some View {
+            switch self {
+            case .all:
+                Image(systemName: "person.crop.rectangle.stack.fill")
+            case .status(let status):
+                statusIcon(status: status)
+            case .recently:
+                Image(systemName: "person.crop.circle.badge.clock.fill")
+            }
+        }
+    }
+
+    static func statusIcon(status: User.Status) -> some View {
+        switch status {
+        case .active:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.green)
+        case .joinMe:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.cyan)
+        case .askMe:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.orange)
+        case .busy:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.red)
+        case .offline:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.gray)
+        }
+    }
+}
+
+extension FriendsView.FriendListType: Identifiable {
+    var id: Int {
+        self.description.hash
+    }
+}
+
+extension FriendsView.FriendListType: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .all:
+            return "All Online"
+        case .status(let status):
+            return status.description
+        case .recently:
+            return "Recently"
+        }
+    }
+}
+
+extension FriendsView.FriendListType: CaseIterable {
+    static var allCases: [FriendsView.FriendListType] {
+        [
+            .all,
+            .status(.active),
+            .status(.joinMe),
+            .status(.askMe),
+            .status(.busy),
+            .status(.offline),
+            .recently,
+        ]
     }
 }
