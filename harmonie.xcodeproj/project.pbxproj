@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,6 +39,7 @@
 		209938A82C109B08003B4A8A /* View+sectioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A72C109B08003B4A8A /* View+sectioning.swift */; };
 		209938AA2C109C8C003B4A8A /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* HASection.swift */; };
 		209D77302C2251C200A11666 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D772F2C2251C200A11666 /* MainTabView.swift */; };
+		20B26CB62C283BE2000E1A79 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20B26CB52C283BE2000E1A79 /* VRCKit */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +102,7 @@
 				201B43102C27F48E00879A2F /* LicenseList in Frameworks */,
 				20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */,
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
+				20B26CB62C283BE2000E1A79 /* VRCKit in Frameworks */,
 				206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */,
 				206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */,
 			);
@@ -270,6 +272,7 @@
 				206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */,
 				20F213DC2C11FB470061DE29 /* NukeUI */,
 				201B430F2C27F48E00879A2F /* LicenseList */,
+				20B26CB52C283BE2000E1A79 /* VRCKit */,
 			);
 			productName = harmonie;
 			productReference = 20395D912B945CD700003921 /* harmonie.app */;
@@ -346,10 +349,10 @@
 			);
 			mainGroup = 20395D882B945CD700003921;
 			packageReferences = (
-				20395DC02B945E0600003921 /* XCLocalSwiftPackageReference "../vrckit" */,
 				206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */,
 				20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */,
 				201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */,
+				20B26CB42C283BE2000E1A79 /* XCRemoteSwiftPackageReference "vrckit" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -756,13 +759,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		20395DC02B945E0600003921 /* XCLocalSwiftPackageReference "../vrckit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../vrckit;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -778,6 +774,14 @@
 			requirement = {
 				kind = exactVersion;
 				version = 0.2.0;
+			};
+		};
+		20B26CB42C283BE2000E1A79 /* XCRemoteSwiftPackageReference "vrckit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/makinosp/vrckit";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 		20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */ = {
@@ -808,6 +812,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */;
 			productName = AsyncSwiftUI;
+		};
+		20B26CB52C283BE2000E1A79 /* VRCKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20B26CB42C283BE2000E1A79 /* XCRemoteSwiftPackageReference "vrckit" */;
+			productName = VRCKit;
 		};
 		20F213DC2C11FB470061DE29 /* NukeUI */ = {
 			isa = XCSwiftPackageProductDependency;

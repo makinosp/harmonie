@@ -1,5 +1,5 @@
 {
-  "originHash" : "a584ef5a78c4a9ba1ba4dfa4409978da6a04ca331e864f7240d8d642297213c2",
+  "originHash" : "518edb848a434b30e6fd0544629522d366644d8774d2a0fc887638cadae8ff85",
   "pins" : [
     {
       "identity" : "asyncswiftui",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "2efd206503e99dd3a88a4dc433a76f98ce8cc198",
         "version" : "12.7.1"
+      }
+    },
+    {
+      "identity" : "vrckit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/makinosp/vrckit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9ff35047dac5063cc71be2acccf3494a9d838b1a"
       }
     }
   ],
