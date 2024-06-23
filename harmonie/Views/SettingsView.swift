@@ -29,7 +29,6 @@ struct SettingsView: View {
                 }
                 .font(.footnote)
             }
-            .padding()
             .navigationTitle("Settings")
         }
         .sheet(item: $sheetType) { sheetType in
@@ -71,8 +70,9 @@ struct SettingsView: View {
                         .contentShape(Rectangle())
                     }
                 }
+                .textCase(nil)
             }
-            Section {
+            Section(header: Text("Open Source License Notice")) {
                 Link(destination: URL(string: "https://github.com/makinosp/harmonie")!) {
                     Label {
                         Text("Source Code")
@@ -90,6 +90,7 @@ struct SettingsView: View {
                     }
                 }
             }
+            .textCase(nil)
             Section {
                 AsyncButton {
                     await userData.logout()
