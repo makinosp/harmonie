@@ -24,8 +24,8 @@ struct ContentView: View {
                     isPresented: $userData.isPresentedAlert,
                     error: userData.vrckError
                 ) { _ in
-                    Button("OK") {
-                        userData.logout()
+                    AsyncButton("OK") {
+                        await userData.logout()
                     }
                 } message: { error in
                     Text(error.failureReason ?? "Try again later.")
