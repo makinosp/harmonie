@@ -6,12 +6,18 @@
 //
 
 import AsyncSwiftUI
+import LicenseList
 import VRCKit
 
 struct SettingsView: View {
     @EnvironmentObject var userData: UserData
-    @State var isSheetOpened = false
+    @State var sheetType: SheetType?
     let thumbnailSize = CGSize(width: 40, height: 40)
+
+    enum SheetType: Identifiable {
+        case userDetail, license
+        var id: Int { hashValue }
+    }
 
     var body: some View {
         NavigationStack {
@@ -26,12 +32,24 @@ struct SettingsView: View {
             .padding()
             .navigationTitle("Settings")
         }
-        .sheet(isPresented: $isSheetOpened) {
+        .sheet(item: $sheetType) { sheetType in
+            presentSheet(sheetType)
+        }
+    }
+
+    @ViewBuilder
+    func presentSheet(_ sheetType: SheetType) -> some View {
+        switch sheetType {
+        case .userDetail:
             if let user = userData.user {
                 UserDetailView(id: user.id)
                     .presentationDetents([.medium, .large])
                     .presentationBackground(Color(UIColor.systemGroupedBackground))
             }
+        case .license:
+            licenseView
+                .presentationDetents([.large])
+                .presentationBackground(Color(UIColor.systemGroupedBackground))
         }
     }
 
@@ -40,7 +58,7 @@ struct SettingsView: View {
             if let user = userData.user {
                 Section(header: Text("My Profile")) {
                     Button {
-                        isSheetOpened.toggle()
+                        sheetType = .userDetail
                     } label: {
                         HStack {
                             CircleURLImage(
@@ -55,15 +73,21 @@ struct SettingsView: View {
                 }
             }
             Section {
-                Label {
-                    Text("Support")
-                } icon: {
-                    Image(systemName: "sparkle")
+                Link(destination: URL(string: "https://github.com/makinosp/harmonie")!) {
+                    Label {
+                        Text("Source Code")
+                    } icon: {
+                        Image(systemName: "curlybraces.square.fill")
+                    }
                 }
-                Label {
-                    Text("About")
-                } icon: {
-                    Image(systemName: "info.circle.fill")
+                Button {
+                    sheetType = .license
+                } label: {
+                    Label {
+                        Text("Third Party Licence")
+                    } icon: {
+                        Image(systemName: "info.circle.fill")
+                    }
                 }
             }
             Section {
@@ -79,6 +103,13 @@ struct SettingsView: View {
                     }
                 }
             }
+        }
+    }
+
+    var licenseView: some View {
+        NavigationView {
+            LicenseListView()
+                .navigationTitle("LICENSE")
         }
     }
 

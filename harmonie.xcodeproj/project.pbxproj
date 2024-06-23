@@ -14,6 +14,7 @@
 		2019D1ED2B9C3AEC0094E358 /* View+frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2019D1EC2B9C3AEC0094E358 /* View+frame.swift */; };
 		2019D1F02B9C3CBF0094E358 /* SizeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2019D1EF2B9C3CBF0094E358 /* SizeViewModifier.swift */; };
 		201B430D2C27F44100879A2F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201B430C2C27F44100879A2F /* Errors.swift */; };
+		201B43102C27F48E00879A2F /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 201B430F2C27F48E00879A2F /* LicenseList */; };
 		201E40E52B9B55E300321521 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201E40E42B9B55E300321521 /* LoginView.swift */; };
 		202844C22BA5CC4F00357D09 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202844C12BA5CC4F00357D09 /* FavoritesView.swift */; };
 		202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202844C32BA5CE1B00357D09 /* LocationsView.swift */; };
@@ -97,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				201B43102C27F48E00879A2F /* LicenseList in Frameworks */,
 				20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */,
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
 				206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */,
@@ -267,6 +269,7 @@
 				206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */,
 				206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */,
 				20F213DC2C11FB470061DE29 /* NukeUI */,
+				201B430F2C27F48E00879A2F /* LicenseList */,
 			);
 			productName = harmonie;
 			productReference = 20395D912B945CD700003921 /* harmonie.app */;
@@ -346,6 +349,7 @@
 				20395DC02B945E0600003921 /* XCLocalSwiftPackageReference "../vrckit" */,
 				206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */,
 				20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */,
+				201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -760,6 +764,14 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cybozu/LicenseList.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
 		206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/treastrain/AsyncSwiftUI";
@@ -779,6 +791,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		201B430F2C27F48E00879A2F /* LicenseList */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */;
+			productName = LicenseList;
+		};
 		20395DC12B945EEF00003921 /* VRCKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VRCKit;
