@@ -23,7 +23,7 @@ class FriendViewModel: ObservableObject {
     /// Fetch friends from API
     func fetchAllFriends() async throws {
         guard let user = userData.user else {
-            throw HarmonieError.dataError
+            throw Errors.dataError
         }
         async let onlineFriendsTask = FriendService.fetchFriends(
             client,
