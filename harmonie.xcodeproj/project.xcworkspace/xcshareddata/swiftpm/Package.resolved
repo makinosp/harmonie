@@ -1,5 +1,5 @@
 {
-  "originHash" : "bf6580c88aae929f51f7e6f7af7e4fc3e296ec3aa188dd4994a0a38d679eaa95",
+  "originHash" : "518edb848a434b30e6fd0544629522d366644d8774d2a0fc887638cadae8ff85",
   "pins" : [
     {
       "identity" : "asyncswiftui",
@@ -11,6 +11,15 @@
       }
     },
     {
+      "identity" : "licenselist",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/cybozu/LicenseList.git",
+      "state" : {
+        "revision" : "0828b88c1a6130d56ede2cc6c41ec50068a7ebd6",
+        "version" : "0.7.0"
+      }
+    },
+    {
       "identity" : "nuke",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kean/Nuke",
@@ -18,7 +27,16 @@
         "revision" : "2efd206503e99dd3a88a4dc433a76f98ce8cc198",
         "version" : "12.7.1"
       }
+    },
+    {
+      "identity" : "vrckit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/makinosp/vrckit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9ff35047dac5063cc71be2acccf3494a9d838b1a"
+      }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
