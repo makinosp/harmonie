@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/03/03.
 //
 
-import SwiftUI
+import AsyncSwiftUI
 import VRCKit
 
 struct ContentView: View {
@@ -15,8 +15,8 @@ struct ContentView: View {
 
     var body: some View {
         switch userData.step {
-        case .initializing, .loggedIn:
-            HAProgressView()
+        case .initializing:
+            ProgressScreen()
                 .task {
                     userData.step = await userData.initialization()
                 }
@@ -24,8 +24,8 @@ struct ContentView: View {
                     isPresented: $userData.isPresentedAlert,
                     error: userData.vrckError
                 ) { _ in
-                    Button("OK") {
-                        userData.logout()
+                    AsyncButton("OK") {
+                        await userData.logout()
                     }
                 } message: { error in
                     Text(error.failureReason ?? "Try again later.")
@@ -34,7 +34,7 @@ struct ContentView: View {
             LoginView()
         case .done:
             MainTabView()
-                .task(priority: .low) {
+                .task {
                     async let fetchFavoriteTask: () = favoriteViewModel.fetchFavorite()
                     async let fetchAllFriendsTask: () = friendViewModel.fetchAllFriends()
 

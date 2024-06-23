@@ -37,7 +37,7 @@ struct FavoritesView: View {
                 }
                 .navigationTitle("Favorites")
             } else {
-                HAProgressView()
+                ProgressScreen()
                     .navigationTitle("Favorites")
             }
         } detail: { EmptyView() }

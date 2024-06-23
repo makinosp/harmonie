@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct HAProgressView: View {
+struct ProgressScreen: View {
     var body: some View {
         ZStack {
-            Color(UIColor.secondarySystemBackground)
+            Color(UIColor.systemBackground)
             ProgressView()
                 .controlSize(.large)
         }

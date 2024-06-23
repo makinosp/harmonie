@@ -10,7 +10,7 @@ import VRCKit
 
 struct LoginView: View {
     @EnvironmentObject var userData: UserData
-    @State var requiresTwoFactorAuth: [TwoFactorAuthType] = []
+    @State var verifyType: VerifyType?
     @State var username: String = ""
     @State var password: String = ""
     @State var code: String = ""
@@ -23,7 +23,7 @@ struct LoginView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            if requiresTwoFactorAuth.isEmpty {
+            if verifyType == nil {
                 usernamePasswordFields
                 loginButton("Login", login)
             } else {
@@ -78,28 +78,31 @@ struct LoginView: View {
         _ text: String,
         _ action: @escaping () async -> Void
     ) -> some View {
-        if isRunning {
-            ProgressView()
-        } else {
-            AsyncButton {
-                await action()
-            } label: {
+        AsyncButton {
+            await action()
+        } label: {
+            if isRunning {
+                ProgressView()
+            } else {
                 Text(text)
             }
-            .buttonStyle(.bordered)
-            .buttonBorderShape(.capsule)
         }
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.capsule)
+        .disabled(isRunning)
     }
 
     func login() async {
+        isRunning = true
         userData.client = APIClient(
             username: username,
             password: password
         )
         do {
+            defer { isRunning = false }
             switch try await Service.loginUserInfo(userData.client) {
-            case let value as [TwoFactorAuthType]:
-                requiresTwoFactorAuth = value
+            case let value as VerifyType:
+                verifyType = value
             case let value as User:
                 userData.user = value
                 userData.step = .done
@@ -107,33 +110,27 @@ struct LoginView: View {
                 isPresentedAlert = true
                 vrckError = .unexpectedError
             }
-        } catch let error as VRCKitError {
-            isPresentedAlert = true
-            vrckError = error
         } catch {
-            isPresentedAlert = true
-            vrckError = .unexpectedError
+            userData.handleError(error)
         }
     }
 
     func verifyTwoFA() async {
-        guard let verifyType = Service.getVerifyType(requiresTwoFactorAuth) else {
+        isRunning = true
+        guard let verifyType = verifyType else {
             return
         }
         do {
+            defer { isRunning = false }
             if try await Service.verify2FA(
                 userData.client,
                 verifyType: verifyType,
                 code: code
             ) {
-                userData.step = .loggedIn
+                userData.step = .initializing
             }
-        } catch let error as VRCKitError {
-            isPresentedAlert = true
-            vrckError = error
         } catch {
-            isPresentedAlert = true
-            vrckError = .unexpectedError
+            userData.handleError(error)
         }
     }
 }

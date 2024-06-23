@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/03/10.
 //
 
-import SwiftUI
+import AsyncSwiftUI
 import VRCKit
 
 struct SettingsView: View {
@@ -67,8 +67,8 @@ struct SettingsView: View {
                 }
             }
             Section {
-                Button {
-                    userData.logout()
+                AsyncButton {
+                    await userData.logout()
                 } label: {
                     Label {
                         Text("Logout")
