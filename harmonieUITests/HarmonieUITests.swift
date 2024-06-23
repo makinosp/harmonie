@@ -1,13 +1,13 @@
 //
-//  harmonieUITests.swift
-//  harmonieUITests
+//  HarmonieUITests.swift
+//  HarmonieUITests
 //
 //  Created by makinosp on 2024/03/03.
 //
 
 import XCTest
 
-final class harmonieUITests: XCTestCase {
+final class HarmonieUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

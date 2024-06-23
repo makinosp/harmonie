@@ -14,17 +14,10 @@ class UserData: ObservableObject {
     @Published var step: Step = .initializing
     @Published var isPresentedAlert = false
     @Published var vrckError: VRCKitError? = nil
-    var client = APIClient()
+    @Published var client = APIClient()
 
     public enum Step: Equatable {
-        case initializing
-        case loggingIn
-        case loggedIn
-        case done
-    }
-
-    init() {
-        client.updateCookies()
+        case initializing, loggingIn, done
     }
 
     func initialization() async -> UserData.Step {
@@ -40,31 +33,31 @@ class UserData: ObservableObject {
                 return .loggingIn
             }
             self.user = user
-        } catch let error as VRCKitError {
-            errorOccurred(error)
-            return .loggingIn
+            return .done
         } catch {
-            unexpectedErrorOccurred()
+            handleError(error)
             return .loggingIn
         }
-        // complete
-        return .done
     }
 
-    func errorOccurred(_ error: VRCKitError) {
+    func logout() async {
+        do {
+            try await AuthenticationService.logout(client)
+            user = nil
+            client.deleteCookies()
+            client = APIClient()
+            step = .initializing
+        } catch {
+            handleError(error)
+        }
+    }
+
+    func handleError(_ error: Error) {
+        if let error = error as? VRCKitError {
+            vrckError = error
+        } else {
+            vrckError = .unexpectedError
+        }
         isPresentedAlert = true
-        vrckError = error
-    }
-
-    func unexpectedErrorOccurred() {
-        isPresentedAlert = true
-        vrckError = .unexpectedError
-    }
-
-    func logout() {
-        user = nil
-        client.deleteCookies()
-        client = APIClient()
-        step = .loggedIn
     }
 }

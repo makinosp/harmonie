@@ -5,60 +5,95 @@
 //  Created by makinosp on 2024/03/10.
 //
 
-import SwiftUI
+import AsyncSwiftUI
+import LicenseList
 import VRCKit
 
 struct SettingsView: View {
     @EnvironmentObject var userData: UserData
+    @State var sheetType: SheetType?
     let thumbnailSize = CGSize(width: 40, height: 40)
 
+    enum SheetType: Identifiable {
+        case userDetail, license
+        var id: Int { hashValue }
+    }
+
     var body: some View {
-        NavigationSplitView {
-            settingsContent.navigationTitle("Settings")
-        } detail: { EmptyView() }
+        NavigationStack {
+            VStack {
+                settingsContent
+                HStack {
+                    Text(appName)
+                    Text(appVersion)
+                }
+                .font(.footnote)
+            }
+            .navigationTitle("Settings")
+        }
+        .sheet(item: $sheetType) { sheetType in
+            presentSheet(sheetType)
+        }
+    }
+
+    @ViewBuilder
+    func presentSheet(_ sheetType: SheetType) -> some View {
+        switch sheetType {
+        case .userDetail:
+            if let user = userData.user {
+                UserDetailView(id: user.id)
+                    .presentationDetents([.medium, .large])
+                    .presentationBackground(Color(UIColor.systemGroupedBackground))
+            }
+        case .license:
+            licenseView
+                .presentationDetents([.large])
+                .presentationBackground(Color(UIColor.systemGroupedBackground))
+        }
     }
 
     var settingsContent: some View {
         List {
             if let user = userData.user {
                 Section(header: Text("My Profile")) {
-                    HStack {
-                        HACircleImage(
-                            imageUrl: (user.userIcon.isEmpty ? user.currentAvatarThumbnailImageUrl : user.userIcon) ?? "",
-                            size: thumbnailSize
-                        )
-                        Text(user.displayName)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .contentShape(Rectangle())
-
-                    Label {
-                        Text("Edit Profile")
-                    } icon: {
-                        Image(systemName: "square.and.pencil")
-                    }
-                    Label {
-                        Text("Edit Status Descriptions")
-                    } icon: {
-                        Image(systemName: "square.and.pencil")
+                    Button {
+                        sheetType = .userDetail
+                    } label: {
+                        HStack {
+                            CircleURLImage(
+                                imageUrl: user.userIconUrl,
+                                size: thumbnailSize
+                            )
+                            Text(user.displayName)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
                     }
                 }
+                .textCase(nil)
             }
-            Section {
-                Label {
-                    Text("Support")
-                } icon: {
-                    Image(systemName: "sparkle")
+            Section(header: Text("Open Source License Notice")) {
+                Link(destination: URL(string: "https://github.com/makinosp/harmonie")!) {
+                    Label {
+                        Text("Source Code")
+                    } icon: {
+                        Image(systemName: "curlybraces.square.fill")
+                    }
                 }
-                Label {
-                    Text("About")
-                } icon: {
-                    Image(systemName: "info.circle.fill")
-                }
-            }
-            Section {
                 Button {
-                    userData.logout()
+                    sheetType = .license
+                } label: {
+                    Label {
+                        Text("Third Party Licence")
+                    } icon: {
+                        Image(systemName: "info.circle.fill")
+                    }
+                }
+            }
+            .textCase(nil)
+            Section {
+                AsyncButton {
+                    await userData.logout()
                 } label: {
                     Label {
                         Text("Logout")
@@ -70,5 +105,20 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+
+    var licenseView: some View {
+        NavigationView {
+            LicenseListView()
+                .navigationTitle("LICENSE")
+        }
+    }
+
+    var appName: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
+    }
+
+    var appVersion: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
     }
 }

@@ -1,5 +1,5 @@
 //
-//  FriendDetailView.swift
+//  UserDetailView.swift
 //  harmonie
 //
 //  Created by makinosp on 2024/03/16.
@@ -9,40 +9,52 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-struct FriendDetailView: View {
+struct UserDetailView: View {
     @EnvironmentObject var userData: UserData
     @EnvironmentObject var favoriteViewModel: FavoriteViewModel
     @Environment(\.dismiss) private var dismiss
-    @State var friend: UserDetail
+    @State var user: UserDetail?
     @State var instance: Instance?
+    let id: String
 
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                profileImage
-                contentStacks
-            }
-        }
-        .task {
-            await fetchUser()
-            await fetchInstance()
-        }
+    var note: Binding<String?> {
+        .init(
+            get: { user?.note },
+            set: { value in user?.note = value ?? "" }
+        )
     }
 
-    var imageUrl: URL? {
-        URL(string: (friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon) ?? "")
+    var body: some View {
+        if let user = user {
+            ScrollView {
+                VStack(spacing: 0) {
+                    profileImage(user)
+                    contentStacks(user)
+                }
+            }
+            .task {
+                if user.isVisible {
+                    await fetchInstance(user)
+                }
+            }
+        } else {
+            ProgressView()
+                .task {
+                    await fetchUser()
+                }
+        }
     }
 
     var addedFavoriteGroupId: String? {
-        favoriteViewModel.findOutFriendFromFavorites(friend.id)
+        favoriteViewModel.findOutFriendFromFavorites(id)
     }
 
     var isAddedFavorite: Bool {
         addedFavoriteGroupId != nil
     }
 
-    var profileImage: some View {
-        LazyImage(url: imageUrl) { state in
+    func profileImage(_ user: UserDetail) -> some View {
+        LazyImage(url: user.thumbnailUrl) { state in
             let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
             if let image = state.image {
                 image
@@ -75,34 +87,58 @@ struct FriendDetailView: View {
                 }
             }
         }
-        .overlay(alignment: .top) {
-            toolbar
-        }
-        .overlay(alignment: .bottom) {
-            displayStatusAndName
-        }
+        .overlay(alignment: .top) { topBar(user) }
+        .overlay(alignment: .bottom) { bottomBar(user) }
     }
 
-    var toolbar: some View {
+    func topBar(_ user: UserDetail) -> some View {
         HStack {
             Spacer()
-            if let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups {
-                favoriteMenu(favoriteFriendGroups)
+            AsyncButton("Save") {
+                await saveNote(user)
             }
+            .foregroundStyle(Color.accentColor)
+            .buttonStyle(.borderedProminent)
+            .tint(Material.regularMaterial)
+            .buttonBorderShape(.capsule)
         }
-        .foregroundStyle(Color.white)
-        .padding(8)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
     }
 
-    func favoriteMenu(_ favoriteGroups: [FavoriteGroup]) -> some View {
+    func bottomBar(_ user: UserDetail) -> some View {
+        HStack {
+            HStack(alignment: .bottom) {
+                Label {
+                    Text(user.displayName)
+                } icon: {
+                    Image(systemName: "circle.fill")
+                        .foregroundStyle(StatusColor.statusColor(user.status))
+                }
+                .font(.headline)
+                Text(user.statusDescription)
+                    .font(.subheadline)
+            }
+            Spacer()
+            if user.isFriend,
+               let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups {
+                favoriteMenu(user, favoriteFriendGroups)
+            }
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+        .foregroundStyle(Color.white)
+    }
+
+    func favoriteMenu(_ user: UserDetail, _ favoriteGroups: [FavoriteGroup]) -> some View {
         Menu {
             ForEach(favoriteGroups) { group in
                 let isAddedFavoriteIn = favoriteViewModel.isIncludedFriendInFavorite(
-                    friendId: friend.id,
+                    friendId: user.id,
                     groupId: group.id
                 )
                 AsyncButton {
-                    await toggleFavorite(group: group)
+                    await toggleFavorite(user, group: group)
                 } label: {
                     Label {
                         Text(group.displayName)
@@ -115,42 +151,41 @@ struct FriendDetailView: View {
             }
         } label: {
             Image(systemName: isAddedFavorite ? "star.fill" : "star")
-                .font(.body)
-        }
-        .padding(8)
-        .background {
-            Circle()
-                .foregroundStyle(Material.ultraThin)
+                .frame(size: CGSize(width: 12, height: 12))
+                .padding(12)
+                .background {
+                    Circle()
+                        .foregroundStyle(Material.regularMaterial)
+                }
         }
     }
 
-    var displayStatusAndName: some View {
+    func displayStatusAndName(_ user: UserDetail) -> some View {
         HStack(alignment: .bottom) {
             Label {
-                Text(friend.displayName)
+                Text(user.displayName)
             } icon: {
                 Image(systemName: "circle.fill")
-                    .foregroundStyle(StatusColor.statusColor(friend.status))
+                    .foregroundStyle(StatusColor.statusColor(user.status))
             }
             .font(.headline)
-            Text(friend.statusDescription)
+            Text(user.statusDescription)
                 .font(.subheadline)
             Spacer()
         }
-        .foregroundStyle(Color.white)
-        .padding()
+        .padding(8)
     }
 
-    var contentStacks: some View {
+    func contentStacks(_ user: UserDetail) -> some View {
         VStack(spacing: 12) {
             if let instance = instance {
                 locationSection(instance)
             }
             noteSection
-            if let bio = friend.bio {
+            if let bio = user.bio {
                 bioSection(bio)
             }
-            if let bioLinks = friend.bioLinks {
+            if let bioLinks = user.bioLinks {
                 let bioUrls = bioLinks.compactMap { URL(string: $0) }
                 if !bioUrls.isEmpty {
                     bioLinksSection(bioUrls)
@@ -175,7 +210,7 @@ struct FriendDetailView: View {
             Text("Note")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
-            TextField("Enter note", text: $friend.note, axis: .vertical)
+            TextField("Enter note", text: note ?? "", axis: .vertical)
                 .font(.body)
         }
     }
@@ -206,65 +241,71 @@ struct FriendDetailView: View {
 
     func fetchUser() async {
         do {
-            friend = try await UserService.fetchUser(userData.client, userId: friend.id)
+            user = try await UserService.fetchUser(userData.client, userId: id)
         } catch {
-            print(error)
+            userData.handleError(error)
         }
     }
 
-    func fetchInstance() async {
+    func fetchInstance(_ user: UserDetail) async {
         do {
-            instance = try await InstanceService.fetchInstance(userData.client, location: friend.location)
+            instance = try await InstanceService.fetchInstance(
+                userData.client,
+                location: user.location
+            )
         } catch {
-            print(error)
+            userData.handleError(error)
         }
     }
 
-    func toggleFavorite(group: FavoriteGroup) async {
+    func toggleFavorite(_ user: UserDetail, group: FavoriteGroup) async {
         do {
             if let addedFavoriteGroupId {
                 let _ = try await FavoriteService.removeFavorite(
                     userData.client,
-                    favoriteId: friend.id
-                ).get()
+                    favoriteId: user.id
+                )
 
                 if !isAddedFavorite {
                     let _ = try await FavoriteService.addFavorite(
                         userData.client,
                         type: .friend,
-                        favoriteId: friend.id,
+                        favoriteId: user.id,
                         tag: group.name
-                    ).get()
-                    favoriteViewModel.addFriendInFavorite(friend: friend, groupId: group.id)
+                    )
+                    favoriteViewModel.addFriendInFavorite(
+                        friend: user,
+                        groupId: group.id
+                    )
                 }
 
                 favoriteViewModel.removeFriendFromFavorite(
-                    friendId: friend.id,
+                    friendId: user.id,
                     groupId: addedFavoriteGroupId
                 )
             } else {
                 let _ = try await FavoriteService.addFavorite(
                     userData.client,
                     type: .friend,
-                    favoriteId: friend.id,
+                    favoriteId: user.id,
                     tag: group.name
-                ).get()
-                favoriteViewModel.addFriendInFavorite(friend: friend, groupId: group.id)
+                )
+                favoriteViewModel.addFriendInFavorite(friend: user, groupId: group.id)
             }
         } catch {
-            print(error)
+            userData.handleError(error)
         }
     }
 
-    func saveNote() async {
+    func saveNote(_ user: UserDetail) async {
         do {
             let _ = try await UserNoteService.updateUserNote(
                 userData.client,
-                targetUserId: friend.id,
-                note: friend.note
+                targetUserId: user.id,
+                note: user.note
             )
         } catch {
-            print(error)
+            userData.handleError(error)
         }
     }
 }

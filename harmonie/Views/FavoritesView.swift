@@ -31,13 +31,13 @@ struct FavoritesView: View {
                     }
                 }
                 .sheet(item: $friendSelection) { friend in
-                    FriendDetailView(friend: friend)
+                    UserDetailView(id: friend.id)
                         .presentationDetents([.medium, .large])
                         .presentationBackground(Color(UIColor.systemGroupedBackground))
                 }
                 .navigationTitle("Favorites")
             } else {
-                HAProgressView()
+                ProgressScreen()
                     .navigationTitle("Favorites")
             }
         } detail: { EmptyView() }
@@ -45,8 +45,8 @@ struct FavoritesView: View {
 
     func rowView(_ friend: UserDetail) -> some View {
         HStack {
-            HACircleImage(
-                imageUrl: (friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon) ?? "",
+            CircleURLImage(
+                imageUrl: friend.userIconUrl,
                 size: thumbnailSize
             )
             Text(friend.displayName)

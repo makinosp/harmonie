@@ -11,11 +11,10 @@ import VRCKit
 struct FriendsView: View {
     @EnvironmentObject var userData: UserData
     @EnvironmentObject var friendViewModel: FriendViewModel
-    @State var offlineFriends: [Friend] = []
     @State var recentlyFriends: [Friend] = []
     @State var listSelection: FriendListType?
     @State var friendSelection: Friend?
-    @State var searchText: String = ""
+    @State var searchString: String = ""
     let thumbnailSize = CGSize(width: 32, height: 32)
     let fetchRecentlyFriendsCount = 10
 
@@ -30,79 +29,44 @@ struct FriendsView: View {
                     }
                 }
             }
+            .searchable(
+                text: $searchString,
+                placement: .navigationBarDrawer(displayMode: .always)
+            )
             .navigationTitle("Friends")
         } detail: {
-            VStack {
-                friendListView
-                if listSelection == .recently {
-                    Button {
-                        Task {
-                            let friends = await fetchFriendsByIds(offset: recentlyFriends.count)
-                            recentlyFriends.append(contentsOf: friends)
-                        }
-                    } label: {
-                        Image(systemName: "arrow.down.circle")
-                        Text("Load more")
-                    }
-                    .padding()
-                }
-            }
+            listView
         }
         .sheet(item: $friendSelection) { friend in
-            FriendDetailView(friend: UserDetail(friend: friend))
+            UserDetailView(id: friend.id)
                 .presentationDetents([.medium, .large])
                 .presentationBackground(Color(UIColor.systemGroupedBackground))
         }
     }
 
     /// Friend List branched by list type
-    var friendListView: some View {
+    var listView: some View {
         List {
             if let listType = listSelection {
-                if let status = listType.status {
-                    let filteredFriends = friendViewModel.onlineFriends.filter { $0.status == status }
-                    ForEach(filteredFriends) { friend in
-                        rowView(friend)
-                    }
-                } else if listType == .all {
-                    ForEach(friendViewModel.onlineFriends) { friend in
-                        rowView(friend)
-                    }
-                } else if listType == .offline {
-                    ForEach(offlineFriends) { friend in
-                        rowView(friend)
-                            .task {
-                                await additionalFetchOfflineFriends(friend: friend)
-                            }
-                    }
-                } else if listType == .recently {
-                    ForEach(recentlyFriends) { friend in
-                        rowView(friend)
-                    }
+                ForEach(filterFriends(listType: listType)) { friend in
+                    rowView(friend)
                 }
             }
         }
         .listStyle(.inset)
         .searchable(
-            text: $searchText,
+            text: $searchString,
             placement: .navigationBarDrawer(displayMode: .always)
         )
         .navigationTitle(listSelection?.description ?? "")
         .navigationBarTitleDisplayMode(.inline)
-        .task(id: listSelection) {
-            if let listType = listSelection, listType == .offline {
-                offlineFriends = await fetchFriends(offset: 0, offline: true)
-            } else if let listType = listSelection, listType == .recently {
-                recentlyFriends = await fetchFriendsByIds(offset: 0)
-            }
-        }
     }
 
     /// Row view for friend list
     func rowView(_ friend: Friend) -> some View {
         HStack {
-            HACircleImage(
-                imageUrl: (friend.userIcon.isEmpty ? friend.currentAvatarThumbnailImageUrl : friend.userIcon) ?? "",
+            CircleURLImage(
+                imageUrl: friend.userIconUrl,
                 size: thumbnailSize
             )
             Text(friend.displayName)
@@ -114,51 +78,105 @@ struct FriendsView: View {
         }
     }
 
-    /// Fetch friends from API
-    func fetchFriends(offset: Int, offline: Bool) async -> [Friend] {
-        do {
-            return try await FriendService.fetchFriends(
-                userData.client,
-                offset: offset,
-                offline: offline
-            )
-        } catch {
-            return []
+    func isIncluded(target: String) -> Bool {
+        searchString.isEmpty || target.range(of: searchString, options: .caseInsensitive) != nil
+    }
+
+    func filterFriends(listType: FriendListType) -> [Friend] {
+        switch listType {
+        case .all:
+            return friendViewModel.onlineFriends.filter {
+                isIncluded(target: $0.displayName)
+            }
+        case .recently:
+            return recentlyFriends.filter {
+                isIncluded(target: $0.displayName)
+            }
+        case .status(let status):
+            switch status {
+            case .offline:
+                return friendViewModel.offlineFriends.filter {
+                    isIncluded(target: $0.displayName)
+                }
+            default:
+                return friendViewModel.onlineFriends
+                    .filter { $0.status == status }
+                    .filter {
+                        isIncluded(target: $0.displayName)
+                    }
+            }
         }
     }
 
-    /// Fetch friends by IDs from API
-    func fetchFriendsByIds(offset: Int) async -> [Friend] {
-        guard let friendIds = userData.user?.friends else { return [] }
-        do {
-            return try await UserService.fetchUsers(
-                userData.client,
-                userIds: friendIds
-                    .reversed()
-                    .dropFirst(offset)
-                    .prefix(fetchRecentlyFriendsCount)
-                    .map(\.description)
-            )
-            .map(\.friend)
-        } catch {
-            return []
+    /// Defining friend list types and icons
+    enum FriendListType: Hashable {
+        case all
+        case status(User.Status)
+        case recently
+
+        @ViewBuilder
+        var icon: some View {
+            switch self {
+            case .all:
+                Image(systemName: "person.crop.rectangle.stack.fill")
+            case .status(let status):
+                statusIcon(status: status)
+            case .recently:
+                Image(systemName: "person.crop.circle.badge.clock.fill")
+            }
         }
     }
 
-    /// Additional fetch offline friends from API
-    func additionalFetchOfflineFriends(friend: Friend) async {
-        guard let offlineFriendsCount = userData.user?.offlineFriends.count,
-              let fetchThreshold = offlineFriends.dropLast(5).last else {
-            return
+    static func statusIcon(status: User.Status) -> some View {
+        switch status {
+        case .active:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.green)
+        case .joinMe:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.cyan)
+        case .askMe:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.orange)
+        case .busy:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.red)
+        case .offline:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.gray)
         }
-        if offlineFriends.count < offlineFriendsCount,
-           friend.id == fetchThreshold.id {
-            await offlineFriends.append(
-                contentsOf: fetchFriends(
-                    offset: offlineFriends.count,
-                    offline: false
-                )
-            )
+    }
+}
+
+extension FriendsView.FriendListType: Identifiable {
+    var id: Int {
+        self.description.hash
+    }
+}
+
+extension FriendsView.FriendListType: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .all:
+            return "All Online"
+        case .status(let status):
+            return status.description
+        case .recently:
+            return "Recently"
         }
+    }
+}
+
+extension FriendsView.FriendListType: CaseIterable {
+    static var allCases: [FriendsView.FriendListType] {
+        [
+            .all,
+            .status(.active),
+            .status(.joinMe),
+            .status(.askMe),
+            .status(.busy),
+            .status(.offline),
+            .recently,
+        ]
     }
 }

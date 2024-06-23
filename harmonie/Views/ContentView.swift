@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/03/03.
 //
 
-import SwiftUI
+import AsyncSwiftUI
 import VRCKit
 
 struct ContentView: View {
@@ -15,8 +15,8 @@ struct ContentView: View {
 
     var body: some View {
         switch userData.step {
-        case .initializing, .loggedIn:
-            HAProgressView()
+        case .initializing:
+            ProgressScreen()
                 .task {
                     userData.step = await userData.initialization()
                 }
@@ -24,8 +24,8 @@ struct ContentView: View {
                     isPresented: $userData.isPresentedAlert,
                     error: userData.vrckError
                 ) { _ in
-                    Button("OK") {
-                        userData.logout()
+                    AsyncButton("OK") {
+                        await userData.logout()
                     }
                 } message: { error in
                     Text(error.failureReason ?? "Try again later.")
@@ -33,48 +33,25 @@ struct ContentView: View {
         case .loggingIn:
             LoginView()
         case .done:
-            TabView {
-                FriendsView()
-                    .badge(userData.user?.onlineFriends.count ?? 0)
-                    .tabItem {
-                        Image(systemName: "person.2.fill")
-                        Text("Friends")
+            MainTabView()
+                .task {
+                    async let fetchFavoriteTask: () = favoriteViewModel.fetchFavorite()
+                    async let fetchAllFriendsTask: () = friendViewModel.fetchAllFriends()
+
+                    do {
+                        let _ = try await (fetchFavoriteTask, fetchAllFriendsTask)
+                    } catch {
+                        userData.handleError(error)
                     }
-                LocationsView()
-                    .tabItem {
-                        Image(systemName: "location.fill")
-                        Text("Locations")
-                    }
-                FavoritesView()
-                    .tabItem {
-                        Image(systemName: "star.fill")
-                        Text("Favorites")
-                    }
-                SettingsView()
-                    .tabItem {
-                        Image(systemName: "gear")
-                        Text("Settings")
-                    }
-            }
-            .task(priority: .background) {
-                do {
-                    try await favoriteViewModel.fetchFavorite()
-                } catch let error as VRCKitError {
-                    userData.errorOccurred(error)
-                } catch {
-                    userData.unexpectedErrorOccurred()
                 }
-            }
-            .task(priority: .background) {
-                guard let count = userData.user?.onlineFriends.count else { return }
-                do {
-                    try await friendViewModel.fetchAllFriends(count: count)
-                } catch let error as VRCKitError {
-                    userData.errorOccurred(error)
-                } catch {
-                    userData.unexpectedErrorOccurred()
+                .alert(
+                    isPresented: $userData.isPresentedAlert,
+                    error: userData.vrckError
+                ) { _ in
+                    Button("OK") {}
+                } message: { error in
+                    Text(error.failureReason ?? "Try again later.")
                 }
-            }
         }
     }
 }
