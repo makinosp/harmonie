@@ -16,8 +16,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Set Default Scheme
         run: |
-          scheme_list=$(xcodebuild -list -json | tr -d "\n")
-          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['schemes'][0]")
+          default="Harmonie Release"
           echo $default | cat >default
           echo Using default scheme: $default
       - name: Enable PrepareLicenseList Plugin
