@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "20395D902B945CD700003921"
-               BuildableName = "harmonie.app"
-               BlueprintName = "harmonie"
-               ReferencedContainer = "container:harmonie.xcodeproj">
+               BuildableName = "Harmonie.app"
+               BlueprintName = "Harmonie"
+               ReferencedContainer = "container:Harmonie.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,9 +36,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "20395DA22B945CD900003921"
-               BuildableName = "harmonieTests.xctest"
-               BlueprintName = "harmonieTests"
-               ReferencedContainer = "container:harmonie.xcodeproj">
+               BuildableName = "HarmonieTests.xctest"
+               BlueprintName = "HarmonieTests"
+               ReferencedContainer = "container:Harmonie.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -47,15 +47,15 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "20395DAC2B945CD900003921"
-               BuildableName = "harmonieUITests.xctest"
-               BlueprintName = "harmonieUITests"
-               ReferencedContainer = "container:harmonie.xcodeproj">
+               BuildableName = "HarmonieUITests.xctest"
+               BlueprintName = "HarmonieUITests"
+               ReferencedContainer = "container:Harmonie.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -69,9 +69,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "20395D902B945CD700003921"
-            BuildableName = "harmonie.app"
-            BlueprintName = "harmonie"
-            ReferencedContainer = "container:harmonie.xcodeproj">
+            BuildableName = "Harmonie.app"
+            BlueprintName = "Harmonie"
+            ReferencedContainer = "container:Harmonie.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
@@ -93,9 +93,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "20395D902B945CD700003921"
-            BuildableName = "harmonie.app"
-            BlueprintName = "harmonie"
-            ReferencedContainer = "container:harmonie.xcodeproj">
+            BuildableName = "Harmonie.app"
+            BlueprintName = "Harmonie"
+            ReferencedContainer = "container:Harmonie.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
