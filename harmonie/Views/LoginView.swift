@@ -122,13 +122,15 @@ struct LoginView: View {
         }
         do {
             defer { isRunning = false }
-            if try await Service.verify2FA(
+            guard try await Service.verify2FA(
                 userData.client,
                 verifyType: verifyType,
                 code: code
-            ) {
-                userData.step = .initializing
+            ) else {
+                // TODO: reset login process
+                return
             }
+            userData.reset()
         } catch {
             userData.handleError(error)
         }

@@ -18,7 +18,7 @@ struct ContentView: View {
         case .initializing:
             ProgressScreen()
                 .task {
-                    userData.step = await userData.initialization()
+                    userData.step = await userData.setup()
                 }
                 .alert(
                     isPresented: $userData.isPresentedAlert,

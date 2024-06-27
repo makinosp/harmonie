@@ -20,7 +20,16 @@ class UserData: ObservableObject {
         case initializing, loggingIn, done
     }
 
-    func initialization() async -> UserData.Step {
+    func reset() {
+        user = nil
+        step = .initializing
+        client = APIClient()
+    }
+    
+    /// Check the authentication status of the user,
+    /// fetch the user information, and perform the initialization process.
+    /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
+    func setup() async -> UserData.Step {
         typealias Service = AuthenticationService
         // check local data
         if client.isEmptyCookies {
@@ -43,13 +52,10 @@ class UserData: ObservableObject {
     func logout() async {
         do {
             try await AuthenticationService.logout(client)
-            user = nil
-            client.deleteCookies()
-            client = APIClient()
-            step = .initializing
         } catch {
             handleError(error)
         }
+        reset()
     }
 
     func handleError(_ error: Error) {
