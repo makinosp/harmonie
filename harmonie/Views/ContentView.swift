@@ -32,6 +32,14 @@ struct ContentView: View {
                 }
         case .loggingIn:
             LoginView()
+                .alert(
+                    isPresented: $userData.isPresentedAlert,
+                    error: userData.vrckError
+                ) { _ in
+                    Button("OK") {}
+                } message: { error in
+                    Text(error.failureReason ?? "Try again later.")
+                }
         case .done:
             MainTabView()
                 .task {

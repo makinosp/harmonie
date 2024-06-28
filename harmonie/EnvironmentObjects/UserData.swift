@@ -32,7 +32,7 @@ class UserData: ObservableObject {
     func setup() async -> UserData.Step {
         typealias Service = AuthenticationService
         // check local data
-        if client.isEmptyCookies {
+        if client.cookies.isEmpty {
             return .loggingIn
         }
         do {
@@ -49,13 +49,50 @@ class UserData: ObservableObject {
         }
     }
 
-    func logout() async {
+    func login(_ username: String, _ password: String) async -> VerifyType? {
+        client = APIClient(username: username, password: password)
         do {
-            try await AuthenticationService.logout(client)
+            switch try await AuthenticationService.loginUserInfo(client) {
+            case let value as VerifyType:
+                return value
+            case let value as User:
+                user = value
+                step = .done
+            default: break
+            }
         } catch {
             handleError(error)
         }
-        reset()
+        return nil
+    }
+
+    func verifyTwoFA(_ verifyType: VerifyType?, _ code: String) async {
+        do {
+            defer {
+                reset()
+            }
+            guard let verifyType = verifyType else {
+                throw Errors.dataError
+            }
+            guard try await AuthenticationService.verify2FA(
+                client,
+                verifyType: verifyType,
+                code: code
+            ) else {
+                throw Errors.dataError
+            }
+        } catch {
+            handleError(error)
+        }
+    }
+
+    func logout() async {
+        do {
+            try await AuthenticationService.logout(client)
+            reset()
+        } catch {
+            handleError(error)
+        }
     }
 
     func handleError(_ error: Error) {

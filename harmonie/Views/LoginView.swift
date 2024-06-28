@@ -14,30 +14,24 @@ struct LoginView: View {
     @State var username: String = ""
     @State var password: String = ""
     @State var code: String = ""
-
     @State var isRunning = false
-    @State var isPresentedAlert = false
-    @State var vrckError: VRCKitError? = nil
-
-    private typealias Service = AuthenticationService
 
     var body: some View {
         VStack(spacing: 16) {
             if verifyType == nil {
                 usernamePasswordFields
-                loginButton("Login", login)
+                loginButton("Login") {
+                    verifyType = await userData.login(username, password)
+                }
             } else {
                 otpField
-                loginButton("Continue", verifyTwoFA)
+                loginButton("Continue") {
+                    await userData.verifyTwoFA(verifyType, code)
+                }
             }
         }
         .padding(32)
         .ignoresSafeArea(.keyboard)
-        .alert(isPresented: $isPresentedAlert, error: vrckError) { _ in
-            Button("OK") {}
-        } message: { error in
-            Text(error.failureReason ?? "Try again later.")
-        }
     }
 
     var usernamePasswordFields: some View {
@@ -79,7 +73,9 @@ struct LoginView: View {
         _ action: @escaping () async -> Void
     ) -> some View {
         AsyncButton {
+            isRunning = true
             await action()
+            isRunning = false
         } label: {
             if isRunning {
                 ProgressView()
@@ -90,49 +86,5 @@ struct LoginView: View {
         .buttonStyle(.bordered)
         .buttonBorderShape(.capsule)
         .disabled(isRunning)
-    }
-
-    func login() async {
-        isRunning = true
-        userData.client = APIClient(
-            username: username,
-            password: password
-        )
-        do {
-            defer { isRunning = false }
-            switch try await Service.loginUserInfo(userData.client) {
-            case let value as VerifyType:
-                verifyType = value
-            case let value as User:
-                userData.user = value
-                userData.step = .done
-            default:
-                isPresentedAlert = true
-                vrckError = .unexpectedError
-            }
-        } catch {
-            userData.handleError(error)
-        }
-    }
-
-    func verifyTwoFA() async {
-        isRunning = true
-        guard let verifyType = verifyType else {
-            return
-        }
-        do {
-            defer { isRunning = false }
-            guard try await Service.verify2FA(
-                userData.client,
-                verifyType: verifyType,
-                code: code
-            ) else {
-                // TODO: reset login process
-                return
-            }
-            userData.reset()
-        } catch {
-            userData.handleError(error)
-        }
     }
 }
