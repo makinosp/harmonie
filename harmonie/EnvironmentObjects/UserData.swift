@@ -14,7 +14,7 @@ class UserData: ObservableObject {
     @Published var step: Step = .initializing
     @Published var isPresentedAlert = false
     @Published var vrckError: VRCKitError? = nil
-    @Published var client = APIClient()
+    var client = APIClient()
 
     public enum Step: Equatable {
         case initializing, loggingIn, done

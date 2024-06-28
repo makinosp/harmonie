@@ -20,26 +20,12 @@ struct ContentView: View {
                 .task {
                     userData.step = await userData.setup()
                 }
-                .alert(
-                    isPresented: $userData.isPresentedAlert,
-                    error: userData.vrckError
-                ) { _ in
-                    AsyncButton("OK") {
-                        await userData.logout()
-                    }
-                } message: { error in
-                    Text(error.failureReason ?? "Try again later.")
+                .errorAlert {
+                    Task { await userData.logout() }
                 }
         case .loggingIn:
             LoginView()
-                .alert(
-                    isPresented: $userData.isPresentedAlert,
-                    error: userData.vrckError
-                ) { _ in
-                    Button("OK") {}
-                } message: { error in
-                    Text(error.failureReason ?? "Try again later.")
-                }
+                .errorAlert()
         case .done:
             MainTabView()
                 .task {
@@ -52,14 +38,7 @@ struct ContentView: View {
                         userData.handleError(error)
                     }
                 }
-                .alert(
-                    isPresented: $userData.isPresentedAlert,
-                    error: userData.vrckError
-                ) { _ in
-                    Button("OK") {}
-                } message: { error in
-                    Text(error.failureReason ?? "Try again later.")
-                }
+                .errorAlert()
         }
     }
 }
