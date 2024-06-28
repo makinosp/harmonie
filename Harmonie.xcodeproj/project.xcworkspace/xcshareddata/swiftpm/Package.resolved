@@ -34,9 +34,9 @@
       "location" : "https://github.com/makinosp/vrckit",
       "state" : {
         "branch" : "main",
-        "revision" : "9ff35047dac5063cc71be2acccf3494a9d838b1a"
+        "revision" : "8ba00b74f8178fea820e37ed1773c3574ad8b2e7"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
