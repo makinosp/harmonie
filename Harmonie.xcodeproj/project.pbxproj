@@ -16,6 +16,7 @@
 		201B430D2C27F44100879A2F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201B430C2C27F44100879A2F /* Errors.swift */; };
 		201B43102C27F48E00879A2F /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 201B430F2C27F48E00879A2F /* LicenseList */; };
 		201E40E52B9B55E300321521 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201E40E42B9B55E300321521 /* LoginView.swift */; };
+		201E47202C2F0363000F3C41 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20B26CB52C283BE2000E1A79 /* VRCKit */; };
 		202844C22BA5CC4F00357D09 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202844C12BA5CC4F00357D09 /* FavoritesView.swift */; };
 		202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202844C32BA5CE1B00357D09 /* LocationsView.swift */; };
 		20395D972B945CD700003921 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395D962B945CD700003921 /* ContentView.swift */; };
@@ -39,7 +40,6 @@
 		209938A82C109B08003B4A8A /* View+sectioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A72C109B08003B4A8A /* View+sectioning.swift */; };
 		209938AA2C109C8C003B4A8A /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* HASection.swift */; };
 		209D77302C2251C200A11666 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D772F2C2251C200A11666 /* MainTabView.swift */; };
-		20B26CB62C283BE2000E1A79 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20B26CB52C283BE2000E1A79 /* VRCKit */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
 /* End PBXBuildFile section */
 
@@ -99,10 +99,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				201E47202C2F0363000F3C41 /* VRCKit in Frameworks */,
 				201B43102C27F48E00879A2F /* LicenseList in Frameworks */,
 				20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */,
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
-				20B26CB62C283BE2000E1A79 /* VRCKit in Frameworks */,
 				206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */,
 				206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */,
 			);
@@ -596,7 +596,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = net.nemushee.harmonie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -627,7 +627,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = net.nemushee.harmonie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
