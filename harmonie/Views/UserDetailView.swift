@@ -10,8 +10,8 @@ import NukeUI
 import VRCKit
 
 struct UserDetailView: View {
-    @EnvironmentObject var userData: UserData
-    @EnvironmentObject var favoriteViewModel: FavoriteViewModel
+    @EnvironmentObject var appVM: AppViewModel
+    @EnvironmentObject var favoriteVM: FavoriteViewModel
     @Environment(\.dismiss) private var dismiss
     @State var user: UserDetail?
     @State var instance: Instance?
@@ -46,7 +46,7 @@ struct UserDetailView: View {
     }
 
     var addedFavoriteGroupId: String? {
-        favoriteViewModel.findOutFriendFromFavorites(id)
+        favoriteVM.findOutFriendFromFavorites(id)
     }
 
     var isAddedFavorite: Bool {
@@ -121,7 +121,7 @@ struct UserDetailView: View {
             }
             Spacer()
             if user.isFriend,
-               let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups {
+               let favoriteFriendGroups = favoriteVM.favoriteFriendGroups {
                 favoriteMenu(user, favoriteFriendGroups)
             }
         }
@@ -133,7 +133,7 @@ struct UserDetailView: View {
     func favoriteMenu(_ user: UserDetail, _ favoriteGroups: [FavoriteGroup]) -> some View {
         Menu {
             ForEach(favoriteGroups) { group in
-                let isAddedFavoriteIn = favoriteViewModel.isIncludedFriendInFavorite(
+                let isAddedFavoriteIn = favoriteVM.isIncludedFriendInFavorite(
                     friendId: user.id,
                     groupId: group.id
                 )
@@ -241,20 +241,20 @@ struct UserDetailView: View {
 
     func fetchUser() async {
         do {
-            user = try await UserService.fetchUser(userData.client, userId: id)
+            user = try await UserService.fetchUser(appVM.client, userId: id)
         } catch {
-            userData.handleError(error)
+            appVM.handleError(error)
         }
     }
 
     func fetchInstance(_ user: UserDetail) async {
         do {
             instance = try await InstanceService.fetchInstance(
-                userData.client,
+                appVM.client,
                 location: user.location
             )
         } catch {
-            userData.handleError(error)
+            appVM.handleError(error)
         }
     }
 
@@ -262,50 +262,50 @@ struct UserDetailView: View {
         do {
             if let addedFavoriteGroupId {
                 let _ = try await FavoriteService.removeFavorite(
-                    userData.client,
+                    appVM.client,
                     favoriteId: user.id
                 )
 
                 if !isAddedFavorite {
                     let _ = try await FavoriteService.addFavorite(
-                        userData.client,
+                        appVM.client,
                         type: .friend,
                         favoriteId: user.id,
                         tag: group.name
                     )
-                    favoriteViewModel.addFriendInFavorite(
+                    favoriteVM.addFriendInFavorite(
                         friend: user,
                         groupId: group.id
                     )
                 }
 
-                favoriteViewModel.removeFriendFromFavorite(
+                favoriteVM.removeFriendFromFavorite(
                     friendId: user.id,
                     groupId: addedFavoriteGroupId
                 )
             } else {
                 let _ = try await FavoriteService.addFavorite(
-                    userData.client,
+                    appVM.client,
                     type: .friend,
                     favoriteId: user.id,
                     tag: group.name
                 )
-                favoriteViewModel.addFriendInFavorite(friend: user, groupId: group.id)
+                favoriteVM.addFriendInFavorite(friend: user, groupId: group.id)
             }
         } catch {
-            userData.handleError(error)
+            appVM.handleError(error)
         }
     }
 
     func saveNote(_ user: UserDetail) async {
         do {
             let _ = try await UserNoteService.updateUserNote(
-                userData.client,
+                appVM.client,
                 targetUserId: user.id,
                 note: user.note
             )
         } catch {
-            userData.handleError(error)
+            appVM.handleError(error)
         }
     }
 }

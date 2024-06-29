@@ -9,19 +9,19 @@ import AsyncSwiftUI
 import VRCKit
 
 struct ContentView: View {
-    @EnvironmentObject var userData: UserData
-    @EnvironmentObject var favoriteViewModel: FavoriteViewModel
-    @EnvironmentObject var friendViewModel: FriendViewModel
+    @EnvironmentObject var appVM: AppViewModel
+    @EnvironmentObject var favoriteVM: FavoriteViewModel
+    @EnvironmentObject var friendVM: FriendViewModel
 
     var body: some View {
-        switch userData.step {
+        switch appVM.step {
         case .initializing:
             ProgressScreen()
                 .task {
-                    userData.step = await userData.setup()
+                    appVM.step = await appVM.setup()
                 }
                 .errorAlert {
-                    Task { await userData.logout() }
+                    Task { await appVM.logout() }
                 }
         case .loggingIn:
             LoginView()
@@ -29,13 +29,13 @@ struct ContentView: View {
         case .done:
             MainTabView()
                 .task {
-                    async let fetchFavoriteTask: () = favoriteViewModel.fetchFavorite()
-                    async let fetchAllFriendsTask: () = friendViewModel.fetchAllFriends()
+                    async let fetchFavoriteTask: () = favoriteVM.fetchFavorite()
+                    async let fetchAllFriendsTask: () = friendVM.fetchAllFriends()
 
                     do {
                         let _ = try await (fetchFavoriteTask, fetchAllFriendsTask)
                     } catch {
-                        userData.handleError(error)
+                        appVM.handleError(error)
                     }
                 }
                 .errorAlert()

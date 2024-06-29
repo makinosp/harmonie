@@ -12,26 +12,24 @@ import VRCKit
 class FriendViewModel: ObservableObject {
     @Published var onlineFriends: [Friend] = []
     @Published var offlineFriends: [Friend] = []
-    var client: APIClient
-    var userData: UserData
+    var appVM: AppViewModel
 
-    init(client: APIClient, userData: UserData) {
-        self.client = client
-        self.userData = userData
+    init(appVM: AppViewModel) {
+        self.appVM = appVM
     }
 
     /// Fetch friends from API
     func fetchAllFriends() async throws {
-        guard let user = userData.user else {
+        guard let user = appVM.user else {
             throw Errors.dataError
         }
         async let onlineFriendsTask = FriendService.fetchFriends(
-            client,
+            appVM.client,
             count: user.onlineFriends.count,
             offline: false
         )
         async let offlineFriendsTask = FriendService.fetchFriends(
-            client,
+            appVM.client,
             count: user.offlineFriends.count,
             offline: true
         )

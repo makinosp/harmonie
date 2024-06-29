@@ -10,7 +10,7 @@ import LicenseList
 import VRCKit
 
 struct SettingsView: View {
-    @EnvironmentObject var userData: UserData
+    @EnvironmentObject var appVM: AppViewModel
     @State var sheetType: SheetType?
     let thumbnailSize = CGSize(width: 40, height: 40)
 
@@ -40,7 +40,7 @@ struct SettingsView: View {
     func presentSheet(_ sheetType: SheetType) -> some View {
         switch sheetType {
         case .userDetail:
-            if let user = userData.user {
+            if let user = appVM.user {
                 UserDetailView(id: user.id)
                     .presentationDetents([.medium, .large])
                     .presentationBackground(Color(UIColor.systemGroupedBackground))
@@ -54,7 +54,7 @@ struct SettingsView: View {
 
     var settingsContent: some View {
         List {
-            if let user = userData.user {
+            if let user = appVM.user {
                 Section(header: Text("My Profile")) {
                     Button {
                         sheetType = .userDetail
@@ -93,7 +93,7 @@ struct SettingsView: View {
             .textCase(nil)
             Section {
                 AsyncButton {
-                    await userData.logout()
+                    await appVM.logout()
                 } label: {
                     Label {
                         Text("Logout")

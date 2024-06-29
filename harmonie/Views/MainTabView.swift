@@ -9,20 +9,19 @@ import SwiftUI
 import VRCKit
 
 struct MainTabView: View {
-    @EnvironmentObject var userData: UserData
-    @EnvironmentObject var favoriteViewModel: FavoriteViewModel
-    @EnvironmentObject var friendViewModel: FriendViewModel
+    @EnvironmentObject var appVM: AppViewModel
+    @EnvironmentObject var friendVM: FriendViewModel
 
     var body: some View {
         TabView {
             LocationsView()
-                .badge(FriendService.friendsGroupedByLocation(friendViewModel.onlineFriends).count)
+                .badge(FriendService.friendsGroupedByLocation(friendVM.onlineFriends).count)
                 .tabItem {
                     Image(systemName: "location.fill")
                     Text("Locations")
                 }
             FriendsView()
-                .badge(userData.user?.onlineFriends.count ?? 0)
+                .badge(appVM.user?.onlineFriends.count ?? 0)
                 .tabItem {
                     Image(systemName: "person.2.fill")
                     Text("Friends")

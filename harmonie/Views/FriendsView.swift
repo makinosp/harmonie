@@ -9,8 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct FriendsView: View {
-    @EnvironmentObject var userData: UserData
-    @EnvironmentObject var friendViewModel: FriendViewModel
+    @EnvironmentObject var friendVM: FriendViewModel
     @State var recentlyFriends: [Friend] = []
     @State var listSelection: FriendListType?
     @State var friendSelection: Friend?
@@ -85,7 +84,7 @@ struct FriendsView: View {
     func filterFriends(listType: FriendListType) -> [Friend] {
         switch listType {
         case .all:
-            return friendViewModel.onlineFriends.filter {
+            return friendVM.onlineFriends.filter {
                 isIncluded(target: $0.displayName)
             }
         case .recently:
@@ -95,11 +94,11 @@ struct FriendsView: View {
         case .status(let status):
             switch status {
             case .offline:
-                return friendViewModel.offlineFriends.filter {
+                return friendVM.offlineFriends.filter {
                     isIncluded(target: $0.displayName)
                 }
             default:
-                return friendViewModel.onlineFriends
+                return friendVM.onlineFriends
                     .filter { $0.status == status }
                     .filter {
                         isIncluded(target: $0.displayName)

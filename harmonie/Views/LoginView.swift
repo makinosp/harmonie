@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import VRCKit
 
 struct LoginView: View {
-    @EnvironmentObject var userData: UserData
+    @EnvironmentObject var appVM: AppViewModel
     @State var verifyType: VerifyType?
     @State var username: String = ""
     @State var password: String = ""
@@ -21,12 +21,12 @@ struct LoginView: View {
             if verifyType == nil {
                 usernamePasswordFields
                 loginButton("Login") {
-                    verifyType = await userData.login(username, password)
+                    verifyType = await appVM.login(username, password)
                 }
             } else {
                 otpField
                 loginButton("Continue") {
-                    await userData.verifyTwoFA(verifyType, code)
+                    await appVM.verifyTwoFA(verifyType, code)
                 }
             }
         }

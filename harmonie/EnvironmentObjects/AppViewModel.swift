@@ -9,14 +9,14 @@ import Foundation
 import VRCKit
 
 @MainActor
-class UserData: ObservableObject {
+class AppViewModel: ObservableObject {
     @Published var user: User?
     @Published var step: Step = .initializing
     @Published var isPresentedAlert = false
     @Published var vrckError: VRCKitError? = nil
     var client = APIClient()
 
-    public enum Step: Equatable {
+    enum Step: Equatable {
         case initializing, loggingIn, done
     }
 
@@ -29,7 +29,7 @@ class UserData: ObservableObject {
     /// Check the authentication status of the user,
     /// fetch the user information, and perform the initialization process.
     /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
-    func setup() async -> UserData.Step {
+    func setup() async -> Step {
         typealias Service = AuthenticationService
         // check local data
         if client.cookies.isEmpty {
