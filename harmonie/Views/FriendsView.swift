@@ -10,7 +10,6 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
-    @State var recentlyFriends: [Friend] = []
     @State var listSelection: FriendListType?
     @State var friendSelection: Friend?
     @State var searchString: String = ""
@@ -47,7 +46,7 @@ struct FriendsView: View {
     var listView: some View {
         List {
             if let listType = listSelection {
-                ForEach(filterFriends(listType: listType)) { friend in
+                ForEach(friendVM.filterFriends(by: listType, searchString: searchString)) { friend in
                     rowView(friend)
                 }
             }
@@ -77,36 +76,6 @@ struct FriendsView: View {
         }
     }
 
-    func isIncluded(target: String) -> Bool {
-        searchString.isEmpty || target.range(of: searchString, options: .caseInsensitive) != nil
-    }
-
-    func filterFriends(listType: FriendListType) -> [Friend] {
-        switch listType {
-        case .all:
-            return friendVM.onlineFriends.filter {
-                isIncluded(target: $0.displayName)
-            }
-        case .recently:
-            return recentlyFriends.filter {
-                isIncluded(target: $0.displayName)
-            }
-        case .status(let status):
-            switch status {
-            case .offline:
-                return friendVM.offlineFriends.filter {
-                    isIncluded(target: $0.displayName)
-                }
-            default:
-                return friendVM.onlineFriends
-                    .filter { $0.status == status }
-                    .filter {
-                        isIncluded(target: $0.displayName)
-                    }
-            }
-        }
-    }
-
     /// Defining friend list types and icons
     enum FriendListType: Hashable {
         case all
@@ -119,30 +88,10 @@ struct FriendsView: View {
             case .all:
                 Image(systemName: "person.crop.rectangle.stack.fill")
             case .status(let status):
-                statusIcon(status: status)
+                StatusColor.statusIcon(status: status)
             case .recently:
                 Image(systemName: "person.crop.circle.badge.clock.fill")
             }
-        }
-    }
-
-    static func statusIcon(status: User.Status) -> some View {
-        switch status {
-        case .active:
-            Image(systemName: "person.crop.circle.fill")
-                .foregroundStyle(Color.green)
-        case .joinMe:
-            Image(systemName: "person.crop.circle.fill")
-                .foregroundStyle(Color.cyan)
-        case .askMe:
-            Image(systemName: "person.crop.circle.fill")
-                .foregroundStyle(Color.orange)
-        case .busy:
-            Image(systemName: "person.crop.circle.fill")
-                .foregroundStyle(Color.red)
-        case .offline:
-            Image(systemName: "person.crop.circle.fill")
-                .foregroundStyle(Color.gray)
         }
     }
 }

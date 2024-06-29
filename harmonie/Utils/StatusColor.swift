@@ -23,4 +23,24 @@ class StatusColor {
                 return .gray
         }
     }
+
+    static func statusIcon(status: User.Status) -> some View {
+        switch status {
+        case .active:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.green)
+        case .joinMe:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.cyan)
+        case .askMe:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.orange)
+        case .busy:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.red)
+        case .offline:
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(Color.gray)
+        }
+    }
 }
