@@ -9,19 +9,18 @@ import VRCKit
 import SwiftUI
 
 struct FavoritesView: View {
-    @EnvironmentObject var userData: UserData
-    @EnvironmentObject var favoriteViewModel: FavoriteViewModel
+    @EnvironmentObject var favoriteVM: FavoriteViewModel
     @State var friendSelection: UserDetail?
 
     let thumbnailSize = CGSize(width: 32, height: 32)
 
     var body: some View {
         NavigationSplitView {
-            if let favoriteFriendGroups = favoriteViewModel.favoriteFriendGroups,
-               favoriteViewModel.favoriteFriendDetails != nil {
+            if let favoriteFriendGroups = favoriteVM.favoriteFriendGroups,
+               favoriteVM.favoriteFriendDetails != nil {
                 List {
                     ForEach(favoriteFriendGroups) { group in
-                        if let friends = favoriteViewModel.lookUpFavoriteFriends(group.id) {
+                        if let friends = favoriteVM.lookUpFavoriteFriends(group.id) {
                             Section(header: Text(group.displayName)) {
                                 ForEach(friends) { friend in
                                     rowView(friend)

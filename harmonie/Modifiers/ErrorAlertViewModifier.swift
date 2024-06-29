@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ErrorAlertViewModifier: ViewModifier {
-    @EnvironmentObject var userData: UserData
+    @EnvironmentObject var userData: AppViewModel
     let action: () -> Void
 
     init(_ action: @escaping () -> Void) {

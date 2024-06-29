@@ -10,7 +10,7 @@ import SwiftUI
 import VRCKit
 
 struct LocationCardView: View {
-    @EnvironmentObject var userData: UserData
+    @EnvironmentObject var appVM: AppViewModel
     @State var instance: Instance?
     let location: FriendsLocation
     let frameWidth: CGFloat = 120
@@ -57,7 +57,7 @@ struct LocationCardView: View {
         .task {
             do {
                 instance = try await InstanceService.fetchInstance(
-                    userData.client,
+                    appVM.client,
                     location: location.location
                 )
             } catch {
