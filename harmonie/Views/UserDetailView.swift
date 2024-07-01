@@ -46,7 +46,7 @@ struct UserDetailView: View {
     }
 
     var addedFavoriteGroupId: String? {
-        favoriteVM.findOutFriendFromFavorites(id)
+        favoriteVM.findOutFriendFromFavorites(friendId: id)
     }
 
     var isAddedFavorite: Bool {
@@ -260,14 +260,14 @@ struct UserDetailView: View {
 
     func toggleFavorite(_ user: UserDetail, group: FavoriteGroup) async {
         do {
-            if let addedFavoriteGroupId {
-                let _ = try await FavoriteService.removeFavorite(
+            if let addedFavoriteGroupId, group.id != addedFavoriteGroupId {
+                _ = try await FavoriteService.removeFavorite(
                     appVM.client,
                     favoriteId: user.id
                 )
 
-                if !isAddedFavorite {
-                    let _ = try await FavoriteService.addFavorite(
+                if isAddedFavorite {
+                    _ = try await FavoriteService.addFavorite(
                         appVM.client,
                         type: .friend,
                         favoriteId: user.id,
@@ -299,7 +299,7 @@ struct UserDetailView: View {
 
     func saveNote(_ user: UserDetail) async {
         do {
-            let _ = try await UserNoteService.updateUserNote(
+            _ = try await UserNoteService.updateUserNote(
                 appVM.client,
                 targetUserId: user.id,
                 note: user.note

@@ -38,7 +38,7 @@ class FavoriteViewModel: ObservableObject {
 
     /// Find out which favorite group the friend belongs to from the friend ID and return that favorite ID
     /// If it does not exist, nil is returned
-    func findOutFriendFromFavorites(_ friendId: String) -> String? {
+    func findOutFriendFromFavorites(friendId: String) -> String? {
         guard let favoriteFriendDetails = favoriteFriendDetails else { return nil }
         let includingFavorite = favoriteFriendDetails.first(where: { favoriteFriendDetail in
             favoriteFriendDetail.friends.contains(where: { friend in
