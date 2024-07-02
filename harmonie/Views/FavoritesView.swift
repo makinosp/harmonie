@@ -20,7 +20,7 @@ struct FavoritesView: View {
                favoriteVM.favoriteFriendDetails != nil {
                 List {
                     ForEach(favoriteFriendGroups) { group in
-                        if let friends = favoriteVM.lookUpFavoriteFriends(group.id) {
+                        if let friends = favoriteVM.getFavoriteFriends(group.id) {
                             Section(header: Text(group.displayName)) {
                                 ForEach(friends) { friend in
                                     rowView(friend)
