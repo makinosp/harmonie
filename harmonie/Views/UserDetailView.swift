@@ -17,18 +17,11 @@ struct UserDetailView: View {
     @State var instance: Instance?
     let id: String
 
-    var note: Binding<String?> {
-        .init(
-            get: { user?.note },
-            set: { value in user?.note = value ?? "" }
-        )
-    }
-
     var body: some View {
         if let user = user {
             ScrollView {
                 VStack(spacing: 0) {
-                    profileImage(user)
+                    profileImageContainer(user)
                     contentStacks(user)
                 }
             }
@@ -45,37 +38,17 @@ struct UserDetailView: View {
         }
     }
 
-    var addedFavoriteGroupId: String? {
-        favoriteVM.findOutFriendFromFavorites(friendId: id)
+    var note: Binding<String?> {
+        .init(
+            get: { user?.note },
+            set: { value in user?.note = value ?? "" }
+        )
     }
 
-    var isAddedFavorite: Bool {
-        addedFavoriteGroupId != nil
-    }
-
-    func profileImage(_ user: UserDetail) -> some View {
+    func profileImageContainer(_ user: UserDetail) -> some View {
         LazyImage(url: user.thumbnailUrl) { state in
-            let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
             if let image = state.image {
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxHeight: 250)
-                    .clipped()
-                    .overlay {
-                        LinearGradient(
-                            gradient: gradient,
-                            startPoint: .top,
-                            endPoint: .center
-                        )
-                    }
-                    .overlay {
-                        LinearGradient(
-                            gradient: gradient,
-                            startPoint: .bottom,
-                            endPoint: .center
-                        )
-                    }
+                profileImage(image: image)
             } else if state.error != nil {
                 Image(systemName: "exclamationmark.circle")
                     .frame(maxHeight: 250)
@@ -89,6 +62,30 @@ struct UserDetailView: View {
         }
         .overlay(alignment: .top) { topBar(user) }
         .overlay(alignment: .bottom) { bottomBar(user) }
+    }
+
+    @ViewBuilder
+    func profileImage(image: Image) -> some View {
+        let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
+        image
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(maxHeight: 250)
+            .clipped()
+            .overlay {
+                LinearGradient(
+                    gradient: gradient,
+                    startPoint: .top,
+                    endPoint: .center
+                )
+            }
+            .overlay {
+                LinearGradient(
+                    gradient: gradient,
+                    startPoint: .bottom,
+                    endPoint: .center
+                )
+            }
     }
 
     func topBar(_ user: UserDetail) -> some View {
@@ -133,30 +130,34 @@ struct UserDetailView: View {
     func favoriteMenu(_ user: UserDetail, _ favoriteGroups: [FavoriteGroup]) -> some View {
         Menu {
             ForEach(favoriteGroups) { group in
-                let isAddedFavoriteIn = favoriteVM.isIncludedFriendInFavorite(
-                    friendId: user.id,
-                    groupId: group.id
-                )
-                AsyncButton {
-                    await toggleFavorite(user, group: group)
-                } label: {
-                    Label {
-                        Text(group.displayName)
-                    } icon: {
-                        if isAddedFavoriteIn {
-                            Image(systemName: "checkmark")
-                        }
-                    }
-                }
+                favoriteMenuItem(user: user, group: group)
             }
         } label: {
-            Image(systemName: isAddedFavorite ? "star.fill" : "star")
+            let isAdded = favoriteVM.findFavoriteGroupIdForFriend(friendId: user.id) != nil
+            Image(systemName: isAdded ? "star.fill" : "star")
                 .frame(size: CGSize(width: 12, height: 12))
                 .padding(12)
                 .background {
                     Circle()
                         .foregroundStyle(Material.regularMaterial)
                 }
+        }
+    }
+
+    func favoriteMenuItem(user: UserDetail, group: FavoriteGroup) -> some View {
+        AsyncButton {
+            await updateFavorite(user: user, group: group)
+        } label: {
+            Label {
+                Text(group.displayName)
+            } icon: {
+                if favoriteVM.isFriendInFavoriteGroup(
+                    friendId: user.id,
+                    groupId: group.id
+                ) {
+                    Image(systemName: "checkmark")
+                }
+            }
         }
     }
 
@@ -258,40 +259,12 @@ struct UserDetailView: View {
         }
     }
 
-    func toggleFavorite(_ user: UserDetail, group: FavoriteGroup) async {
+    func updateFavorite(user: UserDetail, group: FavoriteGroup) async {
         do {
-            if let addedFavoriteGroupId, group.id != addedFavoriteGroupId {
-                _ = try await FavoriteService.removeFavorite(
-                    appVM.client,
-                    favoriteId: user.id
-                )
-
-                if isAddedFavorite {
-                    _ = try await FavoriteService.addFavorite(
-                        appVM.client,
-                        type: .friend,
-                        favoriteId: user.id,
-                        tag: group.name
-                    )
-                    favoriteVM.addFriendInFavorite(
-                        friend: user,
-                        groupId: group.id
-                    )
-                }
-
-                favoriteVM.removeFriendFromFavorite(
-                    friendId: user.id,
-                    groupId: addedFavoriteGroupId
-                )
-            } else {
-                let _ = try await FavoriteService.addFavorite(
-                    appVM.client,
-                    type: .friend,
-                    favoriteId: user.id,
-                    tag: group.name
-                )
-                favoriteVM.addFriendInFavorite(friend: user, groupId: group.id)
-            }
+            try await favoriteVM.updateFavorite(
+                user: user,
+                targetGroup: group
+            )
         } catch {
             appVM.handleError(error)
         }
