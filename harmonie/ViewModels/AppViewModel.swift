@@ -25,14 +25,14 @@ class AppViewModel: ObservableObject {
         step = .initializing
         client = APIClient()
     }
-    
+
     /// Check the authentication status of the user,
     /// fetch the user information, and perform the initialization process.
     /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
     func setup() async -> Step {
         typealias Service = AuthenticationService
         // check local data
-        if client.cookies.isEmpty {
+        if client.cookieManager.cookies.isEmpty {
             return .loggingIn
         }
         do {
