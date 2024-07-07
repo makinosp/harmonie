@@ -62,10 +62,9 @@ class AppViewModel: ObservableObject {
     func login(_ username: String, _ password: String) async -> VerifyType? {
         if username == "demo" && password == "demo" {
             setDemoMode()
+        } else {
+            client.setCledentials(username: username, password: password)
         }
-        client.setCledentials(username: username, password: password)
-        // FIXME: Why the username and password are not reflected unless they are reassigned
-        service = AuthenticationService(client: client)
         do {
             switch try await service.loginUserInfo() {
             case let value as VerifyType:
