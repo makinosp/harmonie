@@ -10,12 +10,13 @@ import VRCKit
 
 struct LocationsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
+    let service: any FriendServiceProtocol
 
     var body: some View {
         NavigationSplitView {
             ScrollView {
                 LazyVStack {
-                    ForEach(FriendService.friendsGroupedByLocation(friendVM.onlineFriends)) { friendsLocation in
+                    ForEach(service.friendsGroupedByLocation(friendVM.onlineFriends)) { friendsLocation in
                         if friendsLocation.isVisible {
                             LocationCardView(location: friendsLocation)
                         }

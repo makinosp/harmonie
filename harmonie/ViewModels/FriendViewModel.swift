@@ -13,9 +13,11 @@ class FriendViewModel: ObservableObject {
     @Published var onlineFriends: [Friend] = []
     @Published var offlineFriends: [Friend] = []
     var appVM: AppViewModel
+    var service: any FriendServiceProtocol
 
     init(appVM: AppViewModel) {
         self.appVM = appVM
+        service = appVM.friendService
     }
 
     /// Fetch friends from API
@@ -23,13 +25,11 @@ class FriendViewModel: ObservableObject {
         guard let user = appVM.user else {
             throw Errors.dataError
         }
-        async let onlineFriendsTask = FriendService.fetchFriends(
-            appVM.client,
+        async let onlineFriendsTask = service.fetchFriends(
             count: user.onlineFriends.count,
             offline: false
         )
-        async let offlineFriendsTask = FriendService.fetchFriends(
-            appVM.client,
+        async let offlineFriendsTask = service.fetchFriends(
             count: user.offlineFriends.count,
             offline: true
         )

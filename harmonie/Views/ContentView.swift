@@ -27,7 +27,7 @@ struct ContentView: View {
             LoginView()
                 .errorAlert()
         case .done:
-            MainTabView()
+            MainTabView(friendService: appVM.friendService)
                 .task {
                     async let fetchFavoriteTask: () = favoriteVM.fetchFavorite()
                     async let fetchAllFriendsTask: () = friendVM.fetchAllFriends()

@@ -11,11 +11,12 @@ import VRCKit
 struct MainTabView: View {
     @EnvironmentObject var appVM: AppViewModel
     @EnvironmentObject var friendVM: FriendViewModel
+    let friendService: any FriendServiceProtocol
 
     var body: some View {
         TabView {
-            LocationsView()
-                .badge(FriendService.friendsGroupedByLocation(friendVM.onlineFriends).count)
+            LocationsView(service: friendService)
+                .badge(friendService.friendsGroupedByLocation(friendVM.onlineFriends).count)
                 .tabItem {
                     Image(systemName: "location.fill")
                     Text("Locations")
