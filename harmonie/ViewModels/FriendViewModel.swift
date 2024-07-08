@@ -17,7 +17,19 @@ class FriendViewModel: ObservableObject {
 
     init(appVM: AppViewModel) {
         self.appVM = appVM
-        service = appVM.friendService
+        service = FriendService(client: appVM.client)
+    }
+
+    func setDemoMode() {
+        service = FriendPreviewService(client: appVM.client)
+    }
+
+    var onlineFriendsCount: Int {
+        service.friendsGroupedByLocation(onlineFriends).count
+    }
+
+    var friendsLocations: [FriendsLocation] {
+        service.friendsGroupedByLocation(onlineFriends)
     }
 
     /// Fetch friends from API

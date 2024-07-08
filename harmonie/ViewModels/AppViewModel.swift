@@ -26,10 +26,6 @@ class AppViewModel: ObservableObject {
         case initializing, loggingIn, done
     }
 
-    var friendService: any FriendServiceProtocol {
-        FriendService(client: client)
-    }
-
     func setDemoMode() {
         demoMode = true
         service = AuthenticationPreviewService(client: client)
