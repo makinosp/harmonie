@@ -249,11 +249,9 @@ struct UserDetailView: View {
     }
 
     func fetchInstance(_ user: UserDetail) async {
+        let service = InstanceService(client: appVM.client)
         do {
-            instance = try await InstanceService.fetchInstance(
-                appVM.client,
-                location: user.location
-            )
+            instance = try await service.fetchInstance(location: user.location)
         } catch {
             appVM.handleError(error)
         }
