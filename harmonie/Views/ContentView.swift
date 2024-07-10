@@ -10,8 +10,8 @@ import VRCKit
 
 struct ContentView: View {
     @EnvironmentObject var appVM: AppViewModel
-    @EnvironmentObject var favoriteVM: FavoriteViewModel
     @EnvironmentObject var friendVM: FriendViewModel
+    // @EnvironmentObject var favoriteVM: FavoriteViewModel
 
     var body: some View {
         switch appVM.step {
@@ -29,11 +29,14 @@ struct ContentView: View {
         case .done:
             MainTabView()
                 .task {
-                    async let fetchFavoriteTask: () = favoriteVM.fetchFavorite()
+                    if appVM.demoMode {
+                        friendVM.setDemoMode()
+                    }
                     async let fetchAllFriendsTask: () = friendVM.fetchAllFriends()
+                    // async let fetchFavoriteTask: () = favoriteVM.fetchFavorite()
 
                     do {
-                        let _ = try await (fetchFavoriteTask, fetchAllFriendsTask)
+                        let _ = try await (fetchAllFriendsTask)
                     } catch {
                         appVM.handleError(error)
                     }

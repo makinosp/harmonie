@@ -15,7 +15,7 @@ struct LocationsView: View {
         NavigationSplitView {
             ScrollView {
                 LazyVStack {
-                    ForEach(FriendService.friendsGroupedByLocation(friendVM.onlineFriends)) { friendsLocation in
+                    ForEach(friendVM.friendsLocations) { friendsLocation in
                         if friendsLocation.isVisible {
                             LocationCardView(location: friendsLocation)
                         }

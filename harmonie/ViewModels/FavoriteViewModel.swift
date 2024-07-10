@@ -31,16 +31,16 @@ class FavoriteViewModel: ObservableObject {
     /// Asynchronously fetches and updates the favorite groups and their details.
     /// - Throws: An error if any network request or decoding operation fails.
     func fetchFavorite() async throws {
-        favoriteGroups = try await FavoriteService.listFavoriteGroups(client)
-        guard let favoriteGroups = favoriteGroups else { return }
-        let favorites = try await FavoriteService.fetchFavoriteGroupDetails(
-            client,
-            favoriteGroups: favoriteGroups
-        )
-        favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
-            client,
-            favorites: favorites
-        )
+        // favoriteGroups = try await FavoriteService.listFavoriteGroups(client)
+        // guard let favoriteGroups = favoriteGroups else { return }
+        // let favorites = try await FavoriteService.fetchFavoriteGroupDetails(
+        //     client,
+        //     favoriteGroups: favoriteGroups
+        // )
+        // favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
+        //     client,
+        //     favorites: favorites
+        // )
     }
 
     /// Find out which favorite group the friend belongs to from the friend ID and return that favorite ID
