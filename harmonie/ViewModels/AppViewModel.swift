@@ -111,9 +111,18 @@ class AppViewModel: ObservableObject {
     func handleError(_ error: Error) {
         if let error = error as? VRCKitError {
             vrckError = error
+        } else if (error as NSError?)?.isCancelled ?? false {
+            return
         } else {
             vrckError = .unexpectedError
         }
         isPresentedAlert = true
+    }
+}
+
+fileprivate extension NSError {
+    /// A Boolean value indicating whether the error represents a cancelled network request.
+    var isCancelled: Bool {
+        self.domain == NSURLErrorDomain && self.code == NSURLErrorCancelled
     }
 }
