@@ -24,6 +24,10 @@ class FriendViewModel: ObservableObject {
         service = FriendPreviewService(client: appVM.client)
     }
 
+    var allFriends: [Friend] {
+        onlineFriends + offlineFriends
+    }
+
     var friendsLocations: [FriendsLocation] {
         service.friendsGroupedByLocation(onlineFriends)
     }

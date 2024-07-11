@@ -12,9 +12,12 @@ import VRCKit
 /// Acts as an interface between the UI and backend services for handling favorite group operations.
 @MainActor
 class FavoriteViewModel: ObservableObject {
-    @Published var favoriteGroups: [FavoriteGroup]? = nil
-    @Published var favoriteFriendDetails: [FavoriteFriendDetail]? = nil
-    var client: APIClient
+    typealias FavoriteFriend = (favoriteGroupId: String, friends: [Friend])
+
+    @Published var favoriteGroups: [FavoriteGroup]?
+    @Published var favoriteFriends: [FavoriteFriend]?
+    let client: APIClient
+    let friendVM: FriendViewModel
 
     /// Initializes the view model with the specified HTTP client.
     /// - Parameter client: The `APIClient` instance used for making network requests.
@@ -31,16 +34,21 @@ class FavoriteViewModel: ObservableObject {
     /// Asynchronously fetches and updates the favorite groups and their details.
     /// - Throws: An error if any network request or decoding operation fails.
     func fetchFavorite() async throws {
-        // favoriteGroups = try await FavoriteService.listFavoriteGroups(client)
-        // guard let favoriteGroups = favoriteGroups else { return }
-        // let favorites = try await FavoriteService.fetchFavoriteGroupDetails(
-        //     client,
-        //     favoriteGroups: favoriteGroups
-        // )
-        // favoriteFriendDetails = try await FavoriteService.fetchFriendsInGroups(
-        //     client,
-        //     favorites: favorites
-        // )
+        favoriteGroups = try await FavoriteService.listFavoriteGroups(client)
+        guard let favoriteGroups = favoriteGroups else { return }
+        let favoriteDetails: [FavoriteDetail] = try await FavoriteService.fetchFavoriteGroupDetails(
+            client,
+            favoriteGroups: favoriteGroups
+        )
+        let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
+        favoriteFriends = favoriteDetailsOfFriends.map { favoriteDetail in
+            (
+                favoriteGroupId: favoriteDetail.id,
+                friends: favoriteDetail.favorites.compactMap { favorite in
+                    friendVM.allFriends.first { $0.id == favorite.id }
+                }
+            )
+        }
     }
 
     /// Find out which favorite group the friend belongs to from the friend ID and return that favorite ID
