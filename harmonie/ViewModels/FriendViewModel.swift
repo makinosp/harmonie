@@ -28,6 +28,10 @@ class FriendViewModel: ObservableObject {
         onlineFriends + offlineFriends
     }
 
+    func getFriend(id: String) -> Friend? {
+        allFriends.first { $0.id == id }
+    }
+
     var friendsLocations: [FriendsLocation] {
         service.friendsGroupedByLocation(onlineFriends)
     }

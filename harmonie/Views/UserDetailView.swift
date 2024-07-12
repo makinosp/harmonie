@@ -146,7 +146,7 @@ struct UserDetailView: View {
 
     func favoriteMenuItem(user: UserDetail, group: FavoriteGroup) -> some View {
         AsyncButton {
-            await updateFavorite(user: user, group: group)
+            await updateFavorite(friendId: user.id, group: group)
         } label: {
             Label {
                 Text(group.displayName)
@@ -257,10 +257,10 @@ struct UserDetailView: View {
         }
     }
 
-    func updateFavorite(user: UserDetail, group: FavoriteGroup) async {
+    func updateFavorite(friendId: String, group: FavoriteGroup) async {
         do {
             try await favoriteVM.updateFavorite(
-                user: user,
+                friendId: friendId,
                 targetGroup: group
             )
         } catch {

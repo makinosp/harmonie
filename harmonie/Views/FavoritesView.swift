@@ -10,14 +10,14 @@ import SwiftUI
 
 struct FavoritesView: View {
     @EnvironmentObject var favoriteVM: FavoriteViewModel
-    @State var friendSelection: UserDetail?
+    @State var friendSelection: Friend?
 
     let thumbnailSize = CGSize(width: 32, height: 32)
 
     var body: some View {
         NavigationSplitView {
             if let favoriteFriendGroups = favoriteVM.favoriteFriendGroups,
-               favoriteVM.favoriteFriendDetails != nil {
+               favoriteVM.favoriteFriends != nil {
                 List {
                     ForEach(favoriteFriendGroups) { group in
                         if let friends = favoriteVM.getFavoriteFriends(group.id) {
@@ -42,7 +42,7 @@ struct FavoritesView: View {
         } detail: { EmptyView() }
     }
 
-    func rowView(_ friend: UserDetail) -> some View {
+    func rowView(_ friend: Friend) -> some View {
         HStack {
             CircleURLImage(
                 imageUrl: friend.userIconUrl,
