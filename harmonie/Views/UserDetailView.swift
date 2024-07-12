@@ -117,9 +117,8 @@ struct UserDetailView: View {
                     .font(.subheadline)
             }
             Spacer()
-            if user.isFriend,
-               let favoriteFriendGroups = favoriteVM.favoriteFriendGroups {
-                favoriteMenu(user, favoriteFriendGroups)
+            if user.isFriend  {
+                favoriteMenu(user)
             }
         }
         .padding(.vertical, 8)
@@ -127,14 +126,13 @@ struct UserDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    func favoriteMenu(_ user: UserDetail, _ favoriteGroups: [FavoriteGroup]) -> some View {
+    func favoriteMenu(_ user: UserDetail) -> some View {
         Menu {
-            ForEach(favoriteGroups) { group in
+            ForEach(favoriteVM.favoriteFriendGroups) { group in
                 favoriteMenuItem(user: user, group: group)
             }
         } label: {
-            let isAdded = favoriteVM.findFavoriteGroupIdForFriend(friendId: user.id) != nil
-            Image(systemName: isAdded ? "star.fill" : "star")
+            Image(systemName: favoriteVM.isAdded(friendId: user.id) ? "star.fill" : "star")
                 .frame(size: CGSize(width: 12, height: 12))
                 .padding(12)
                 .background {

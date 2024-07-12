@@ -13,9 +13,8 @@ import VRCKit
 @MainActor
 class FavoriteViewModel: ObservableObject {
     typealias FavoriteFriend = (favoriteGroupId: String, friends: [Friend])
-
-    @Published var favoriteGroups: [FavoriteGroup]?
-    @Published var favoriteFriends: [FavoriteFriend]?
+    @Published var favoriteGroups: [FavoriteGroup] = []
+    @Published var favoriteFriends: [FavoriteFriend] = []
     let appVM: AppViewModel
     let friendVM: FriendViewModel
 
@@ -28,15 +27,14 @@ class FavoriteViewModel: ObservableObject {
 
     /// A filtered list of favorite groups that contain only friend-type groups.
     /// It retrieves friend-type groups from the `favoriteGroups` property.
-    var favoriteFriendGroups: [FavoriteGroup]? {
-        favoriteGroups?.filter { $0.type == .friend }
+    var favoriteFriendGroups: [FavoriteGroup] {
+        favoriteGroups.filter { $0.type == .friend }
     }
 
     /// Asynchronously fetches and updates the favorite groups and their details.
     /// - Throws: An error if any network request or decoding operation fails.
     func fetchFavorite() async throws {
         favoriteGroups = try await FavoriteService.listFavoriteGroups(appVM.client)
-        guard let favoriteGroups = favoriteGroups else { return }
         let favoriteDetails: [FavoriteDetail] = try await FavoriteService.fetchFavoriteGroupDetails(
             appVM.client,
             favoriteGroups: favoriteGroups
@@ -58,7 +56,6 @@ class FavoriteViewModel: ObservableObject {
     /// - Parameter friendId: The ID of the friend to search for.
     /// - Returns: The ID of the favorite group that contains the friend, or nil if the friend is not found.
     func findFavoriteGroupIdForFriend(friendId: String) -> String? {
-        guard let favoriteFriends = favoriteFriends else { return nil }
         let includingFavorite = favoriteFriends.first(where: { favoriteFriendDetail in
             favoriteFriendDetail.friends.contains(where: { friend in
                 friend.id == friendId
@@ -67,15 +64,18 @@ class FavoriteViewModel: ObservableObject {
         return includingFavorite?.favoriteGroupId
     }
 
+    func isAdded(friendId: String) -> Bool {
+        findFavoriteGroupIdForFriend(friendId: friendId) != nil
+    }
+
     /// Adds a friend to a specified favorite group.
     /// - Parameters:
     ///   - friend: The `Friend` object representing the friend to add.
     ///   - groupId: The ID of the favorite group to which the friend should be added.
     func addFriendToFavoriteGroup(friend: Friend, groupId: String) {
-        guard var groups = favoriteFriends,
-              let groupIndex = groups.firstIndex(where: { $0.favoriteGroupId == groupId }) else { return }
-        groups[groupIndex].friends.insert(friend, at: 0)
-        favoriteFriends = groups
+        let groupIndex = favoriteFriends.firstIndex(where: { $0.favoriteGroupId == groupId })
+        guard let groupIndex = groupIndex else { return }
+        favoriteFriends[groupIndex].friends.insert(friend, at: 0)
     }
 
     /// Removes a friend from the favorite group identified by `groupId`.
@@ -84,17 +84,16 @@ class FavoriteViewModel: ObservableObject {
     ///   - friendId: The ID of the friend to remove.
     ///   - groupId: The ID of the favorite group from which the friend should be removed.
     func removeFriendFromFavoriteGroup(friendId: String, groupId: String) {
-        guard var groups = favoriteFriends,
-              let groupIndex = groups.firstIndex(where: { $0.favoriteGroupId == groupId }) else { return }
-        groups[groupIndex].friends = groups[groupIndex].friends.filter { $0.id != friendId }
-        favoriteFriends = groups
+        let groupIndex = favoriteFriends.firstIndex(where: { $0.favoriteGroupId == groupId })
+        guard let groupIndex = groupIndex else { return }
+        favoriteFriends[groupIndex].friends = favoriteFriends[groupIndex].friends.filter { $0.id != friendId }
     }
 
     /// Looks up the list of favorite friends belonging to the group identified by `groupId`.
     /// - Parameter groupId: The ID of the favorite group to look up.
     /// - Returns: An optional array of `UserDetail` objects representing favorite friends in the specified group.
     func getFavoriteFriends(_ groupId: String) -> [Friend]? {
-        return favoriteFriends?.first(where: { $0.favoriteGroupId == groupId } )?.friends
+        return favoriteFriends.first(where: { $0.favoriteGroupId == groupId } )?.friends
     }
 
     /// Checks if a friend with the specified ID is included in the list of favorite friends

@@ -11,15 +11,15 @@ import SwiftUI
 struct FavoritesView: View {
     @EnvironmentObject var favoriteVM: FavoriteViewModel
     @State var friendSelection: Friend?
+    @State var isFetching = false
 
     let thumbnailSize = CGSize(width: 32, height: 32)
 
     var body: some View {
         NavigationSplitView {
-            if let favoriteFriendGroups = favoriteVM.favoriteFriendGroups,
-               favoriteVM.favoriteFriends != nil {
+            if !isFetching {
                 List {
-                    ForEach(favoriteFriendGroups) { group in
+                    ForEach(favoriteVM.favoriteFriendGroups) { group in
                         if let friends = favoriteVM.getFavoriteFriends(group.id) {
                             Section(header: Text(group.displayName)) {
                                 ForEach(friends) { friend in
