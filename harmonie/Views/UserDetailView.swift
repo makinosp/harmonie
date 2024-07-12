@@ -117,9 +117,8 @@ struct UserDetailView: View {
                     .font(.subheadline)
             }
             Spacer()
-            if user.isFriend,
-               let favoriteFriendGroups = favoriteVM.favoriteFriendGroups {
-                favoriteMenu(user, favoriteFriendGroups)
+            if user.isFriend  {
+                favoriteMenu(user)
             }
         }
         .padding(.vertical, 8)
@@ -127,14 +126,13 @@ struct UserDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    func favoriteMenu(_ user: UserDetail, _ favoriteGroups: [FavoriteGroup]) -> some View {
+    func favoriteMenu(_ user: UserDetail) -> some View {
         Menu {
-            ForEach(favoriteGroups) { group in
+            ForEach(favoriteVM.favoriteFriendGroups) { group in
                 favoriteMenuItem(user: user, group: group)
             }
         } label: {
-            let isAdded = favoriteVM.findFavoriteGroupIdForFriend(friendId: user.id) != nil
-            Image(systemName: isAdded ? "star.fill" : "star")
+            Image(systemName: favoriteVM.isAdded(friendId: user.id) ? "star.fill" : "star")
                 .frame(size: CGSize(width: 12, height: 12))
                 .padding(12)
                 .background {
@@ -146,7 +144,7 @@ struct UserDetailView: View {
 
     func favoriteMenuItem(user: UserDetail, group: FavoriteGroup) -> some View {
         AsyncButton {
-            await updateFavorite(user: user, group: group)
+            await updateFavorite(friendId: user.id, group: group)
         } label: {
             Label {
                 Text(group.displayName)
@@ -249,20 +247,18 @@ struct UserDetailView: View {
     }
 
     func fetchInstance(_ user: UserDetail) async {
+        let service = InstanceService(client: appVM.client)
         do {
-            instance = try await InstanceService.fetchInstance(
-                appVM.client,
-                location: user.location
-            )
+            instance = try await service.fetchInstance(location: user.location)
         } catch {
             appVM.handleError(error)
         }
     }
 
-    func updateFavorite(user: UserDetail, group: FavoriteGroup) async {
+    func updateFavorite(friendId: String, group: FavoriteGroup) async {
         do {
             try await favoriteVM.updateFavorite(
-                user: user,
+                friendId: friendId,
                 targetGroup: group
             )
         } catch {

@@ -55,13 +55,11 @@ struct LocationCardView: View {
         }
         .frame(minHeight: 120)
         .task {
+            let service = InstanceService(client: appVM.client)
             do {
-                instance = try await InstanceService.fetchInstance(
-                    appVM.client,
-                    location: location.location
-                )
+                instance = try await service.fetchInstance(location: location.location)
             } catch {
-                print(error)
+                appVM.handleError(error)
             }
         }
     }

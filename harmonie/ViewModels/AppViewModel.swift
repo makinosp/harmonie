@@ -14,10 +14,21 @@ class AppViewModel: ObservableObject {
     @Published var step: Step = .initializing
     @Published var isPresentedAlert = false
     @Published var vrckError: VRCKitError? = nil
+    @Published var demoMode = false
     var client = APIClient()
+    var service: any AuthenticationServiceProtocol
+
+    init() {
+        self.service = AuthenticationService(client: client)
+    }
 
     enum Step: Equatable {
         case initializing, loggingIn, done
+    }
+
+    func setDemoMode() {
+        demoMode = true
+        service = AuthenticationPreviewService(client: client)
     }
 
     func reset() {
@@ -25,20 +36,19 @@ class AppViewModel: ObservableObject {
         step = .initializing
         client = APIClient()
     }
-    
+
     /// Check the authentication status of the user,
     /// fetch the user information, and perform the initialization process.
     /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
     func setup() async -> Step {
-        typealias Service = AuthenticationService
         // check local data
-        if client.cookies.isEmpty {
+        guard !client.cookieManager.cookies.isEmpty else {
             return .loggingIn
         }
         do {
             // verify auth token and fetch user data
-            guard try await Service.verifyAuthToken(client),
-                  let user = try await Service.loginUserInfo(client) as? User else {
+            guard try await service.verifyAuthToken(),
+                  let user = try await service.loginUserInfo() as? User else {
                 return .loggingIn
             }
             self.user = user
@@ -50,9 +60,13 @@ class AppViewModel: ObservableObject {
     }
 
     func login(_ username: String, _ password: String) async -> VerifyType? {
-        client = APIClient(username: username, password: password)
+        if username == "demo" && password == "demo" {
+            setDemoMode()
+        } else {
+            client.setCledentials(username: username, password: password)
+        }
         do {
-            switch try await AuthenticationService.loginUserInfo(client) {
+            switch try await service.loginUserInfo() {
             case let value as VerifyType:
                 return value
             case let value as User:
@@ -74,8 +88,7 @@ class AppViewModel: ObservableObject {
             guard let verifyType = verifyType else {
                 throw Errors.dataError
             }
-            guard try await AuthenticationService.verify2FA(
-                client,
+            guard try await service.verify2FA(
                 verifyType: verifyType,
                 code: code
             ) else {
@@ -88,7 +101,7 @@ class AppViewModel: ObservableObject {
 
     func logout() async {
         do {
-            try await AuthenticationService.logout(client)
+            try await service.logout()
             reset()
         } catch {
             handleError(error)
@@ -98,9 +111,18 @@ class AppViewModel: ObservableObject {
     func handleError(_ error: Error) {
         if let error = error as? VRCKitError {
             vrckError = error
+        } else if (error as NSError?)?.isCancelled ?? false {
+            return
         } else {
             vrckError = .unexpectedError
         }
         isPresentedAlert = true
+    }
+}
+
+fileprivate extension NSError {
+    /// A Boolean value indicating whether the error represents a cancelled network request.
+    var isCancelled: Bool {
+        self.domain == NSURLErrorDomain && self.code == NSURLErrorCancelled
     }
 }

@@ -15,7 +15,7 @@ struct MainTabView: View {
     var body: some View {
         TabView {
             LocationsView()
-                .badge(FriendService.friendsGroupedByLocation(friendVM.onlineFriends).count)
+                .badge(friendVM.friendsLocations.count)
                 .tabItem {
                     Image(systemName: "location.fill")
                     Text("Locations")

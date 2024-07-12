@@ -29,12 +29,21 @@
       }
     },
     {
+      "identity" : "swiftlintplugins",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
+      "state" : {
+        "revision" : "b8431a26655378581890d56b95a0b59aba9f62da",
+        "version" : "0.55.1"
+      }
+    },
+    {
       "identity" : "vrckit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/makinosp/vrckit",
       "state" : {
         "branch" : "main",
-        "revision" : "8ba00b74f8178fea820e37ed1773c3574ad8b2e7"
+        "revision" : "0d441e3ee222d7226fb918951818f53a92a04a01"
       }
     }
   ],

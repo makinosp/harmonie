@@ -13,9 +13,27 @@ class FriendViewModel: ObservableObject {
     @Published var onlineFriends: [Friend] = []
     @Published var offlineFriends: [Friend] = []
     var appVM: AppViewModel
+    var service: any FriendServiceProtocol
 
     init(appVM: AppViewModel) {
         self.appVM = appVM
+        service = FriendService(client: appVM.client)
+    }
+
+    func setDemoMode() {
+        service = FriendPreviewService(client: appVM.client)
+    }
+
+    var allFriends: [Friend] {
+        onlineFriends + offlineFriends
+    }
+
+    func getFriend(id: String) -> Friend? {
+        allFriends.first { $0.id == id }
+    }
+
+    var friendsLocations: [FriendsLocation] {
+        service.friendsGroupedByLocation(onlineFriends)
     }
 
     /// Fetch friends from API
@@ -23,13 +41,11 @@ class FriendViewModel: ObservableObject {
         guard let user = appVM.user else {
             throw Errors.dataError
         }
-        async let onlineFriendsTask = FriendService.fetchFriends(
-            appVM.client,
+        async let onlineFriendsTask = service.fetchFriends(
             count: user.onlineFriends.count,
             offline: false
         )
-        async let offlineFriendsTask = FriendService.fetchFriends(
-            appVM.client,
+        async let offlineFriendsTask = service.fetchFriends(
             count: user.offlineFriends.count,
             offline: true
         )
