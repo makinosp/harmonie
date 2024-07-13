@@ -10,8 +10,6 @@ import VRCKit
 
 struct ContentView: View {
     @EnvironmentObject var appVM: AppViewModel
-    @EnvironmentObject var friendVM: FriendViewModel
-    @EnvironmentObject var favoriteVM: FavoriteViewModel
 
     var body: some View {
         switch appVM.step {
@@ -28,17 +26,6 @@ struct ContentView: View {
                 .errorAlert()
         case .done:
             MainTabView()
-                .task {
-                    if appVM.demoMode {
-                        friendVM.setDemoMode()
-                    }
-                    do {
-                        try await friendVM.fetchAllFriends()
-                        try await favoriteVM.fetchFavorite()
-                    } catch {
-                        appVM.handleError(error)
-                    }
-                }
                 .errorAlert()
         }
     }

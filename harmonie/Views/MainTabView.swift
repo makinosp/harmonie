@@ -11,6 +11,7 @@ import VRCKit
 struct MainTabView: View {
     @EnvironmentObject var appVM: AppViewModel
     @EnvironmentObject var friendVM: FriendViewModel
+    @EnvironmentObject var favoriteVM: FavoriteViewModel
 
     var body: some View {
         TabView {
@@ -36,6 +37,17 @@ struct MainTabView: View {
                     Image(systemName: "gear")
                     Text("Settings")
                 }
+        }
+        .task {
+            if appVM.demoMode {
+                friendVM.setDemoMode()
+            }
+            do {
+                try await friendVM.fetchAllFriends()
+                try await favoriteVM.fetchFavorite()
+            } catch {
+                appVM.handleError(error)
+            }
         }
     }
 }
