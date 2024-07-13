@@ -12,11 +12,11 @@ import VRCKit
 class FriendViewModel: ObservableObject {
     @Published var onlineFriends: [Friend] = []
     @Published var offlineFriends: [Friend] = []
-    var appVM: AppViewModel
+    let user: User
     var service: any FriendServiceProtocol
 
-    init(appVM: AppViewModel, service: any FriendServiceProtocol) {
-        self.appVM = appVM
+    init(user: User, service: any FriendServiceProtocol) {
+        self.user = user
         self.service = service
     }
 
@@ -34,9 +34,6 @@ class FriendViewModel: ObservableObject {
 
     /// Fetch friends from API
     func fetchAllFriends() async throws {
-        guard let user = appVM.user else {
-            throw Errors.dataError
-        }
         async let onlineFriendsTask = service.fetchFriends(
             count: user.onlineFriends.count,
             offline: false
@@ -73,8 +70,7 @@ class FriendViewModel: ObservableObject {
     /// for each id of reversed order friend list.
     /// - Returns a list of recentry friends
     var recentlyFriends: [Friend] {
-        guard let ids = appVM.user?.friends else { return [] }
-        return ids.reversed().compactMap { id in
+        user.friends.reversed().compactMap { id in
             onlineFriends.first { $0.id == id } ?? offlineFriends.first { $0.id == id }
         }
     }

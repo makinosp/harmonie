@@ -15,14 +15,12 @@ class FavoriteViewModel: ObservableObject {
     typealias FavoriteFriend = (favoriteGroupId: String, friends: [Friend])
     @Published var favoriteGroups: [FavoriteGroup] = []
     @Published var favoriteFriends: [FavoriteFriend] = []
-    let appVM: AppViewModel
     let friendVM: FriendViewModel
     let service: any FavoriteServiceProtocol
 
     /// Initializes the view model with the specified HTTP client.
     /// - Parameter client: The `APIClient` instance used for making network requests.
-    init(appVM: AppViewModel, friendVM: FriendViewModel, service: any FavoriteServiceProtocol) {
-        self.appVM = appVM
+    init(friendVM: FriendViewModel, service: any FavoriteServiceProtocol) {
         self.friendVM = friendVM
         self.service = service
     }

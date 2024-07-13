@@ -10,17 +10,10 @@ import VRCKit
 
 struct LocationsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
-
-    var appVM: AppViewModel {
-        friendVM.appVM
-    }
-
-    var client: APIClient {
-        appVM.client
-    }
+    let appVM: AppViewModel
 
     var service: any InstanceServiceProtocol {
-        appVM.isDemoMode ? InstancePreviewService(client: client) : InstanceService(client: client)
+        appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
     }
 
     var body: some View {
