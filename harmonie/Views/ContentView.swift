@@ -11,7 +11,7 @@ import VRCKit
 struct ContentView: View {
     @EnvironmentObject var appVM: AppViewModel
     @EnvironmentObject var friendVM: FriendViewModel
-    // @EnvironmentObject var favoriteVM: FavoriteViewModel
+    @EnvironmentObject var favoriteVM: FavoriteViewModel
 
     var body: some View {
         switch appVM.step {
@@ -32,11 +32,9 @@ struct ContentView: View {
                     if appVM.demoMode {
                         friendVM.setDemoMode()
                     }
-                    async let fetchAllFriendsTask: () = friendVM.fetchAllFriends()
-                    // async let fetchFavoriteTask: () = favoriteVM.fetchFavorite()
-
                     do {
-                        let _ = try await (fetchAllFriendsTask)
+                        try await friendVM.fetchAllFriends()
+                        try await favoriteVM.fetchFavorite()
                     } catch {
                         appVM.handleError(error)
                     }
