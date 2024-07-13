@@ -39,9 +39,6 @@ struct MainTabView: View {
                 }
         }
         .task {
-            if appVM.demoMode {
-                friendVM.setDemoMode()
-            }
             do {
                 try await friendVM.fetchAllFriends()
                 try await favoriteVM.fetchFavorite()

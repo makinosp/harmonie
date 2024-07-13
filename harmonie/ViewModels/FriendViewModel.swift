@@ -15,13 +15,9 @@ class FriendViewModel: ObservableObject {
     var appVM: AppViewModel
     var service: any FriendServiceProtocol
 
-    init(appVM: AppViewModel) {
+    init(appVM: AppViewModel, service: any FriendServiceProtocol) {
         self.appVM = appVM
-        service = FriendService(client: appVM.client)
-    }
-
-    func setDemoMode() {
-        service = FriendPreviewService(client: appVM.client)
+        self.service = service
     }
 
     var allFriends: [Friend] {

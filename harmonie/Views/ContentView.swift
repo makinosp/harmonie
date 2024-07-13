@@ -25,7 +25,18 @@ struct ContentView: View {
             LoginView()
                 .errorAlert()
         case .done:
+            let friendVM = FriendViewModel(
+                appVM: appVM,
+                service: appVM.isDemoMode ? FriendPreviewService(client: appVM.client) : FriendService(client: appVM.client)
+            )
+            let favoriteVM = FavoriteViewModel(
+                appVM: appVM,
+                friendVM: friendVM,
+                service: FavoriteService(client: appVM.client)
+            )
             MainTabView()
+                .environmentObject(friendVM)
+                .environmentObject(favoriteVM)
                 .errorAlert()
         }
     }

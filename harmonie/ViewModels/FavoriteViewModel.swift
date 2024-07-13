@@ -21,10 +21,10 @@ class FavoriteViewModel: ObservableObject {
 
     /// Initializes the view model with the specified HTTP client.
     /// - Parameter client: The `APIClient` instance used for making network requests.
-    init(appVM: AppViewModel, friendVM: FriendViewModel) {
+    init(appVM: AppViewModel, friendVM: FriendViewModel, service: any FavoriteServiceProtocol) {
         self.appVM = appVM
         self.friendVM = friendVM
-        service = FavoriteService(client: appVM.client)
+        self.service = service
     }
 
     /// A filtered list of favorite groups that contain only friend-type groups.

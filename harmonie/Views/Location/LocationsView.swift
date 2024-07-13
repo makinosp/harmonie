@@ -20,7 +20,7 @@ struct LocationsView: View {
     }
 
     var service: any InstanceServiceProtocol {
-        appVM.demoMode ? InstancePreviewService(client: client) : InstanceService(client: client)
+        appVM.isDemoMode ? InstancePreviewService(client: client) : InstanceService(client: client)
     }
 
     var body: some View {

@@ -14,7 +14,7 @@ class AppViewModel: ObservableObject {
     @Published var step: Step = .initializing
     @Published var isPresentedAlert = false
     @Published var vrckError: VRCKitError? = nil
-    @Published var demoMode = false
+    @Published var isDemoMode = false
     var client = APIClient()
     var service: any AuthenticationServiceProtocol
 
@@ -27,7 +27,7 @@ class AppViewModel: ObservableObject {
     }
 
     func setDemoMode() {
-        demoMode = true
+        isDemoMode = true
         service = AuthenticationPreviewService(client: client)
     }
 
