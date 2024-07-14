@@ -239,8 +239,9 @@ struct UserDetailView: View {
     }
 
     func fetchUser() async {
+        let service = UserService(client: appVM.client)
         do {
-            user = try await UserService.fetchUser(appVM.client, userId: id)
+            user = try await service.fetchUser(userId: id)
         } catch {
             appVM.handleError(error)
         }
