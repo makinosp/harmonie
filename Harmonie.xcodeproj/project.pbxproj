@@ -34,14 +34,14 @@
 		208DB7EC2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */; };
 		208DB7ED2C1D5B6000ACD0AB /* HarmonieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */; };
 		208DB7EF2C1D5B8B00ACD0AB /* HarmonieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */; };
+		2094C4002C43BBC100F88986 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2094C3FF2C43BBC100F88986 /* VRCKit */; };
 		209938AA2C109C8C003B4A8A /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* HASection.swift */; };
 		209A78892C2FC0FA00BEFAE6 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78852C2FC0FA00BEFAE6 /* AppViewModel.swift */; };
 		209A788A2C2FC0FA00BEFAE6 /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78862C2FC0FA00BEFAE6 /* FavoriteViewModel.swift */; };
 		209A788B2C2FC0FA00BEFAE6 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */; };
 		209D77302C2251C200A11666 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D772F2C2251C200A11666 /* MainTabView.swift */; };
-		20BA10472C42564E0071839B /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20BA10462C42564E0071839B /* VRCKit */; };
+		20DB5D8A2C43BC4B00E5960B /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20DB5D892C43BC4B00E5960B /* VRCKit */; };
 		20DC3C292C422786001101DB /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20DC3C282C422786001101DB /* VRCKit */; };
-		20DC3C2D2C422F5A001101DB /* EnvironmentValues+DemoMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DC3C2C2C422F5A001101DB /* EnvironmentValues+DemoMode.swift */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
 /* End PBXBuildFile section */
 
@@ -102,8 +102,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				201B43102C27F48E00879A2F /* LicenseList in Frameworks */,
-				20BA10472C42564E0071839B /* VRCKit in Frameworks */,
+				2094C4002C43BBC100F88986 /* VRCKit in Frameworks */,
 				20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */,
+				20DB5D8A2C43BC4B00E5960B /* VRCKit in Frameworks */,
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
 				2014A0B32C3832690019C638 /* VRCKit in Frameworks */,
 				20DC3C292C422786001101DB /* VRCKit in Frameworks */,
@@ -278,7 +279,8 @@
 				201B430F2C27F48E00879A2F /* LicenseList */,
 				2014A0B22C3832690019C638 /* VRCKit */,
 				20DC3C282C422786001101DB /* VRCKit */,
-				20BA10462C42564E0071839B /* VRCKit */,
+				2094C3FF2C43BBC100F88986 /* VRCKit */,
+				20DB5D892C43BC4B00E5960B /* VRCKit */,
 			);
 			productName = harmonie;
 			productReference = 20395D912B945CD700003921 /* Harmonie.app */;
@@ -361,7 +363,7 @@
 				206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */,
 				20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */,
 				201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */,
-				20BA10452C42564E0071839B /* XCRemoteSwiftPackageReference "vrckit" */,
+				20DB5D882C43BC4A00E5960B /* XCRemoteSwiftPackageReference "vrckit" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -407,7 +409,6 @@
 			files = (
 				209A78892C2FC0FA00BEFAE6 /* AppViewModel.swift in Sources */,
 				209938AA2C109C8C003B4A8A /* HASection.swift in Sources */,
-				20DC3C2D2C422F5A001101DB /* EnvironmentValues+DemoMode.swift in Sources */,
 				205C9DAF2C20612500E3782C /* Binding+NilCoalescing.swift in Sources */,
 				202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */,
 				20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */,
@@ -785,7 +786,7 @@
 				version = 0.2.0;
 			};
 		};
-		20BA10452C42564E0071839B /* XCRemoteSwiftPackageReference "vrckit" */ = {
+		20DB5D882C43BC4A00E5960B /* XCRemoteSwiftPackageReference "vrckit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/makinosp/vrckit";
 			requirement = {
@@ -826,9 +827,13 @@
 			package = 206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */;
 			productName = AsyncSwiftUI;
 		};
-		20BA10462C42564E0071839B /* VRCKit */ = {
+		2094C3FF2C43BBC100F88986 /* VRCKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 20BA10452C42564E0071839B /* XCRemoteSwiftPackageReference "vrckit" */;
+			productName = VRCKit;
+		};
+		20DB5D892C43BC4B00E5960B /* VRCKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20DB5D882C43BC4A00E5960B /* XCRemoteSwiftPackageReference "vrckit" */;
 			productName = VRCKit;
 		};
 		20DC3C282C422786001101DB /* VRCKit */ = {
