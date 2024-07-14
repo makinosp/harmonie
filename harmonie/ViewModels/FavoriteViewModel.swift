@@ -15,14 +15,14 @@ class FavoriteViewModel: ObservableObject {
     typealias FavoriteFriend = (favoriteGroupId: String, friends: [Friend])
     @Published var favoriteGroups: [FavoriteGroup] = []
     @Published var favoriteFriends: [FavoriteFriend] = []
-    let appVM: AppViewModel
     let friendVM: FriendViewModel
+    let service: any FavoriteServiceProtocol
 
     /// Initializes the view model with the specified HTTP client.
     /// - Parameter client: The `APIClient` instance used for making network requests.
-    init(appVM: AppViewModel, friendVM: FriendViewModel) {
-        self.appVM = appVM
+    init(friendVM: FriendViewModel, service: any FavoriteServiceProtocol) {
         self.friendVM = friendVM
+        self.service = service
     }
 
     /// A filtered list of favorite groups that contain only friend-type groups.
@@ -34,9 +34,8 @@ class FavoriteViewModel: ObservableObject {
     /// Asynchronously fetches and updates the favorite groups and their details.
     /// - Throws: An error if any network request or decoding operation fails.
     func fetchFavorite() async throws {
-        favoriteGroups = try await FavoriteService.listFavoriteGroups(appVM.client)
-        let favoriteDetails: [FavoriteDetail] = try await FavoriteService.fetchFavoriteGroupDetails(
-            appVM.client,
+        favoriteGroups = try await service.listFavoriteGroups()
+        let favoriteDetails: [FavoriteDetail] = try await service.fetchFavoriteGroupDetails(
             favoriteGroups: favoriteGroups
         )
         let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
@@ -117,12 +116,11 @@ class FavoriteViewModel: ObservableObject {
         guard let friend = friendVM.getFriend(id: friendId) else { return }
         let sourceGroupId = findFavoriteGroupIdForFriend(friendId: friend.id)
         if let sourceGroupId = sourceGroupId {
-            _ = try await FavoriteService.removeFavorite(appVM.client, favoriteId: friend.id)
+            _ = try await service.removeFavorite(favoriteId: friend.id)
             removeFriendFromFavoriteGroup(friendId: friend.id, groupId: sourceGroupId)
         }
         if targetGroup.id != sourceGroupId {
-            _ = try await FavoriteService.addFavorite(
-                appVM.client,
+            _ = try await service.addFavorite(
                 type: .friend,
                 favoriteId: friend.id,
                 tag: targetGroup.name

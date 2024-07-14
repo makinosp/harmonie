@@ -11,10 +11,11 @@ import VRCKit
 struct MainTabView: View {
     @EnvironmentObject var appVM: AppViewModel
     @EnvironmentObject var friendVM: FriendViewModel
+    @EnvironmentObject var favoriteVM: FavoriteViewModel
 
     var body: some View {
         TabView {
-            LocationsView()
+            LocationsView(appVM: appVM)
                 .badge(friendVM.friendsLocations.count)
                 .tabItem {
                     Image(systemName: "location.fill")
@@ -36,6 +37,14 @@ struct MainTabView: View {
                     Image(systemName: "gear")
                     Text("Settings")
                 }
+        }
+        .task {
+            do {
+                try await friendVM.fetchAllFriends()
+                try await favoriteVM.fetchFavorite()
+            } catch {
+                appVM.handleError(error)
+            }
         }
     }
 }

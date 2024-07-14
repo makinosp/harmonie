@@ -14,7 +14,7 @@ class AppViewModel: ObservableObject {
     @Published var step: Step = .initializing
     @Published var isPresentedAlert = false
     @Published var vrckError: VRCKitError? = nil
-    @Published var demoMode = false
+    @Published var isDemoMode = false
     var client = APIClient()
     var service: any AuthenticationServiceProtocol
 
@@ -23,11 +23,11 @@ class AppViewModel: ObservableObject {
     }
 
     enum Step: Equatable {
-        case initializing, loggingIn, done
+        case initializing, loggingIn, done(User)
     }
 
     func setDemoMode() {
-        demoMode = true
+        isDemoMode = true
         service = AuthenticationPreviewService(client: client)
     }
 
@@ -52,7 +52,7 @@ class AppViewModel: ObservableObject {
                 return .loggingIn
             }
             self.user = user
-            return .done
+            return .done(user)
         } catch {
             handleError(error)
             return .loggingIn
@@ -67,11 +67,11 @@ class AppViewModel: ObservableObject {
         }
         do {
             switch try await service.loginUserInfo() {
-            case let value as VerifyType:
-                return value
-            case let value as User:
-                user = value
-                step = .done
+            case let verifyType as VerifyType:
+                return verifyType
+            case let user as User:
+                self.user = user
+                step = .done(user)
             default: break
             }
         } catch {
@@ -97,6 +97,16 @@ class AppViewModel: ObservableObject {
         } catch {
             handleError(error)
         }
+    }
+
+    func generateFriendVM(user: User) -> FriendViewModel {
+        let service = isDemoMode ? FriendPreviewService(client: client) : FriendService(client: client)
+        return FriendViewModel(user: user, service: service)
+    }
+
+    func generateFavoriteVM(friendVM: FriendViewModel) -> FavoriteViewModel {
+        let service = isDemoMode ? FavoritePreviewService(client: client) : FavoriteService(client: client)
+        return FavoriteViewModel(friendVM: friendVM, service: service)
     }
 
     func logout() async {

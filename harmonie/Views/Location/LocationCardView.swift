@@ -12,6 +12,7 @@ import VRCKit
 struct LocationCardView: View {
     @EnvironmentObject var appVM: AppViewModel
     @State var instance: Instance?
+    let service: any InstanceServiceProtocol
     let location: FriendsLocation
     let frameWidth: CGFloat = 120
     let iconSize = CGSize(width: 24, height: 24)
@@ -55,7 +56,6 @@ struct LocationCardView: View {
         }
         .frame(minHeight: 120)
         .task {
-            let service = InstanceService(client: appVM.client)
             do {
                 instance = try await service.fetchInstance(location: location.location)
             } catch {
