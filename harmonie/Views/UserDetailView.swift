@@ -268,9 +268,9 @@ struct UserDetailView: View {
     }
 
     func saveNote(_ user: UserDetail) async {
+        let service = UserNoteService(client: appVM.client)
         do {
-            _ = try await UserNoteService.updateUserNote(
-                appVM.client,
+            _ = try await service.updateUserNote(
                 targetUserId: user.id,
                 note: user.note
             )
