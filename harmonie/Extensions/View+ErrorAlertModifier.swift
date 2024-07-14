@@ -1,5 +1,5 @@
 //
-//  ErrorAlertViewModifier.swift
+//  View+ErrorAlertModifier.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/06/28.
@@ -7,7 +7,13 @@
 
 import SwiftUI
 
-struct ErrorAlertViewModifier: ViewModifier {
+extension View {
+    func errorAlert(_ action: @escaping () -> Void = {}) -> some View {
+        modifier(ErrorAlertModifier(action))
+    }
+}
+
+private struct ErrorAlertModifier: ViewModifier {
     @EnvironmentObject var userData: AppViewModel
     let action: () -> Void
 

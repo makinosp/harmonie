@@ -239,15 +239,16 @@ struct UserDetailView: View {
     }
 
     func fetchUser() async {
+        let service = appVM.isDemoMode ? UserPreviewService(client: appVM.client) : UserService(client: appVM.client)
         do {
-            user = try await UserService.fetchUser(appVM.client, userId: id)
+            user = try await service.fetchUser(userId: id)
         } catch {
             appVM.handleError(error)
         }
     }
 
     func fetchInstance(_ user: UserDetail) async {
-        let service = InstanceService(client: appVM.client)
+        let service = appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
         do {
             instance = try await service.fetchInstance(location: user.location)
         } catch {
@@ -267,9 +268,9 @@ struct UserDetailView: View {
     }
 
     func saveNote(_ user: UserDetail) async {
+        let service = appVM.isDemoMode ? UserNotePreviewService(client: appVM.client) : UserNoteService(client: appVM.client)
         do {
-            _ = try await UserNoteService.updateUserNote(
-                appVM.client,
+            _ = try await service.updateUserNote(
                 targetUserId: user.id,
                 note: user.note
             )

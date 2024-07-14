@@ -1,5 +1,5 @@
 //
-//  SizeViewModifier.swift
+//  View+SizeModifier.swift
 //  harmonie
 //
 //  Created by makinosp on 2024/03/09.
@@ -7,7 +7,13 @@
 
 import SwiftUI
 
-struct SizeViewModifier: ViewModifier {
+extension View {
+    func frame(size: CGSize, alignment: Alignment = .center) -> some View {
+        modifier(SizeModifier(size: size, alignment: alignment))
+    }
+}
+
+private struct SizeModifier: ViewModifier {
     let size: CGSize
     let alignment: Alignment
 
