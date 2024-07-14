@@ -239,7 +239,7 @@ struct UserDetailView: View {
     }
 
     func fetchUser() async {
-        let service = UserService(client: appVM.client)
+        let service = appVM.isDemoMode ? UserPreviewService(client: appVM.client) : UserService(client: appVM.client)
         do {
             user = try await service.fetchUser(userId: id)
         } catch {
@@ -248,7 +248,7 @@ struct UserDetailView: View {
     }
 
     func fetchInstance(_ user: UserDetail) async {
-        let service = InstanceService(client: appVM.client)
+        let service = appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
         do {
             instance = try await service.fetchInstance(location: user.location)
         } catch {
