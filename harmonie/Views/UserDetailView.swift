@@ -268,7 +268,7 @@ struct UserDetailView: View {
     }
 
     func saveNote(_ user: UserDetail) async {
-        let service = UserNoteService(client: appVM.client)
+        let service = appVM.isDemoMode ? UserNotePreviewService(client: appVM.client) : UserNoteService(client: appVM.client)
         do {
             _ = try await service.updateUserNote(
                 targetUserId: user.id,
