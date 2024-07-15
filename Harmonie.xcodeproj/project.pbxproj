@@ -11,6 +11,7 @@
 		200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */; };
 		200FA7B02C1D745B0001E655 /* LocationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AF2C1D745B0001E655 /* LocationCardView.swift */; };
 		20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20102BCE2C157C77007738D3 /* HarmonieApp.swift */; };
+		201067B82C4552B40083ECBC /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 201067B72C4552B40083ECBC /* AsyncSwiftUI */; };
 		2014A0B32C3832690019C638 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2014A0B22C3832690019C638 /* VRCKit */; };
 		201B430D2C27F44100879A2F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201B430C2C27F44100879A2F /* Errors.swift */; };
 		201B43102C27F48E00879A2F /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 201B430F2C27F48E00879A2F /* LicenseList */; };
@@ -23,11 +24,11 @@
 		20395DC22B945EEF00003921 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20395DC12B945EEF00003921 /* VRCKit */; };
 		20395DC42B94653100003921 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DC32B94653100003921 /* FriendsView.swift */; };
 		2044ADF02BC264240057BA6A /* StatusColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2044ADEF2BC264240057BA6A /* StatusColor.swift */; };
+		20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20592B022C45640D00E1C8B8 /* AsyncSwiftUI */; };
 		205B3BF22C00D51A0097D62A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B3BF12C00D51A0097D62A /* SettingsView.swift */; };
 		205B3BF42C00D8BF0097D62A /* ProgressScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B3BF32C00D8BF0097D62A /* ProgressScreen.swift */; };
 		205C9DAF2C20612500E3782C /* Binding+NilCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */; };
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
-		206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */; };
 		207FC6352C4256E60018E605 /* View+SizeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6322C4256E60018E605 /* View+SizeModifier.swift */; };
 		207FC6362C4256E60018E605 /* View+ErrorAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */; };
 		207FC6372C4256E60018E605 /* View+SectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6342C4256E60018E605 /* View+SectionModifier.swift */; };
@@ -103,13 +104,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				201B43102C27F48E00879A2F /* LicenseList in Frameworks */,
+				201067B82C4552B40083ECBC /* AsyncSwiftUI in Frameworks */,
 				2094C4002C43BBC100F88986 /* VRCKit in Frameworks */,
 				20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */,
 				20DB5D8A2C43BC4B00E5960B /* VRCKit in Frameworks */,
+				20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */,
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
 				2014A0B32C3832690019C638 /* VRCKit in Frameworks */,
 				20DC3C292C422786001101DB /* VRCKit in Frameworks */,
-				206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */,
 				206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,13 +278,14 @@
 			packageProductDependencies = (
 				20395DC12B945EEF00003921 /* VRCKit */,
 				206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */,
-				206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */,
 				20F213DC2C11FB470061DE29 /* NukeUI */,
 				201B430F2C27F48E00879A2F /* LicenseList */,
 				2014A0B22C3832690019C638 /* VRCKit */,
 				20DC3C282C422786001101DB /* VRCKit */,
 				2094C3FF2C43BBC100F88986 /* VRCKit */,
 				20DB5D892C43BC4B00E5960B /* VRCKit */,
+				201067B72C4552B40083ECBC /* AsyncSwiftUI */,
+				20592B022C45640D00E1C8B8 /* AsyncSwiftUI */,
 			);
 			productName = harmonie;
 			productReference = 20395D912B945CD700003921 /* Harmonie.app */;
@@ -362,10 +365,10 @@
 			);
 			mainGroup = 20395D882B945CD700003921;
 			packageReferences = (
-				206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */,
 				20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */,
 				201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */,
 				20DB5D882C43BC4A00E5960B /* XCRemoteSwiftPackageReference "vrckit" */,
+				20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -786,12 +789,12 @@
 				minimumVersion = 0.7.0;
 			};
 		};
-		206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */ = {
+		20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/treastrain/AsyncSwiftUI";
+			repositoryURL = "https://github.com/makinosp/async-swift-ui";
 			requirement = {
-				kind = exactVersion;
-				version = 0.2.0;
+				branch = "issue-10-adapt-to-SE-0409";
+				kind = branch;
 			};
 		};
 		20DB5D882C43BC4A00E5960B /* XCRemoteSwiftPackageReference "vrckit" */ = {
@@ -813,6 +816,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		201067B72C4552B40083ECBC /* AsyncSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AsyncSwiftUI;
+		};
 		2014A0B22C3832690019C638 /* VRCKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VRCKit;
@@ -826,13 +833,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = VRCKit;
 		};
-		206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */ = {
+		20592B022C45640D00E1C8B8 /* AsyncSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */;
 			productName = AsyncSwiftUI;
 		};
-		206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */ = {
+		206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */;
 			productName = AsyncSwiftUI;
 		};
 		2094C3FF2C43BBC100F88986 /* VRCKit */ = {
