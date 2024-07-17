@@ -10,7 +10,12 @@ import NukeUI
 import VRCKit
 
 struct LocationDetailView: View {
+    let instance: Instance
+
     var body: some View {
-        Text("LocationDetailView")
+        VStack {
+            Text("LocationDetailView")
+            Text(instance.id)
+        }
     }
 }
