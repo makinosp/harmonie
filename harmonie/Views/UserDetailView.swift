@@ -195,7 +195,7 @@ struct UserDetailView: View {
     }
 
     func locationSection(_ instance: Instance) -> some View {
-        HASection {
+        SectionView {
             Text("Location")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
@@ -205,7 +205,7 @@ struct UserDetailView: View {
     }
 
     var noteSection: some View {
-        HASection {
+        SectionView {
             Text("Note")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
@@ -215,7 +215,7 @@ struct UserDetailView: View {
     }
 
     func bioSection(_ bio: String) -> some View {
-        HASection {
+        SectionView {
             Text("Bio")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
@@ -225,7 +225,7 @@ struct UserDetailView: View {
     }
 
     func bioLinksSection(_ urls: [URL]) -> some View {
-        HASection {
+        SectionView {
             Text("Social Links")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
