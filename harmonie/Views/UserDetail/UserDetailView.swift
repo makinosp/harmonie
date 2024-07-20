@@ -45,6 +45,10 @@ struct UserDetailView: View {
         )
     }
 
+    func statusColor(_ user: UserDetail) -> Color {
+        user.state == .offline ? UserStatus.offline.color : user.status.color
+    }
+
     func profileImageContainer(_ user: UserDetail) -> some View {
         LazyImage(url: user.thumbnailUrl) { state in
             if let image = state.image {
@@ -110,7 +114,7 @@ struct UserDetailView: View {
                     Text(user.displayName)
                 } icon: {
                     Image(systemName: "circle.fill")
-                        .foregroundStyle(user.status.color)
+                        .foregroundStyle(statusColor(user))
                 }
                 .font(.headline)
                 Text(user.statusDescription)
