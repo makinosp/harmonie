@@ -16,13 +16,11 @@ struct MainTabView: View {
     var body: some View {
         TabView {
             LocationsView(appVM: appVM)
-                .badge(friendVM.friendsLocations.count)
                 .tabItem {
                     Image(systemName: "location.fill")
                     Text("Locations")
                 }
             FriendsView()
-                .badge(appVM.user?.onlineFriends.count ?? 0)
                 .tabItem {
                     Image(systemName: "person.2.fill")
                     Text("Friends")
