@@ -21,6 +21,7 @@ struct LocationDetailView: View {
         }
     }
 
+    @MainActor
     var imageContainer: some View {
         LazyImage(url: URL(string: instance.world.imageUrl)) { state in
             if let image = state.image {
