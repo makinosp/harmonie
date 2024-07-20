@@ -10,30 +10,23 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
-    @State var listSelection: FriendListType?
+    @State var listSelection: FriendListType? = .all
     @State var friendSelection: Friend?
     @State var searchString: String = ""
     let thumbnailSize = CGSize(width: 32, height: 32)
     let fetchRecentlyFriendsCount = 10
 
+    /// Defining friend list types and icons
+    enum FriendListType: Hashable {
+        case all, status(UserStatus), recently
+    }
+
     var body: some View {
-        NavigationSplitView {
-            List(FriendListType.allCases, selection: $listSelection) { item in
-                NavigationLink(value: item) {
-                    Label {
-                        Text(item.description)
-                    } icon: {
-                        item.icon
-                    }
-                }
-            }
-            .searchable(
-                text: $searchString,
-                placement: .navigationBarDrawer(displayMode: .always)
-            )
-            .navigationTitle("Friends")
-        } detail: {
+        NavigationStack {
             listView
+                .navigationTitle("Friends")
+                .searchable(text: $searchString)
+                .toolbar { toolbarContent }
         }
         .sheet(item: $friendSelection) { friend in
             UserDetailView(id: friend.id)
@@ -42,58 +35,37 @@ struct FriendsView: View {
         }
     }
 
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem {
+            Menu {
+                ForEach(FriendListType.allCases) { listType in
+                    Button(listType.description) {}
+                }
+            } label: {
+                Image(systemName: "line.3.horizontal.decrease")
+            }
+        }
+    }
+
     /// Friend List branched by list type
     var listView: some View {
         List {
-            if let listType = listSelection {
-                ForEach(friendVM.filterFriends(by: listType, searchString: searchString)) { friend in
-                    rowView(friend)
+            ForEach(friendVM.filterFriends(by: .recently, searchString: searchString)) { friend in
+                HStack {
+                    CircleURLImage(
+                        imageUrl: friend.userIconUrl,
+                        size: thumbnailSize
+                    )
+                    Text(friend.displayName)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    friendSelection = friend
                 }
             }
         }
         .listStyle(.inset)
-        .searchable(
-            text: $searchString,
-            placement: .navigationBarDrawer(displayMode: .always)
-        )
-        .navigationTitle(listSelection?.description ?? "")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-
-    /// Row view for friend list
-    func rowView(_ friend: Friend) -> some View {
-        HStack {
-            CircleURLImage(
-                imageUrl: friend.userIconUrl,
-                size: thumbnailSize
-            )
-            Text(friend.displayName)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            friendSelection = friend
-        }
-    }
-
-    /// Defining friend list types and icons
-    enum FriendListType: Hashable {
-        case all
-        case status(UserStatus)
-        case recently
-
-        @ViewBuilder
-        var icon: some View {
-            switch self {
-            case .all:
-                Image(systemName: "person.crop.rectangle.stack.fill")
-            case .status(let status):
-                Image(systemName: "person.crop.circle.fill")
-                    .foregroundStyle(status.color)
-            case .recently:
-                Image(systemName: "person.crop.circle.badge.clock.fill")
-            }
-        }
     }
 }
 
