@@ -110,7 +110,7 @@ struct UserDetailView: View {
                     Text(user.displayName)
                 } icon: {
                     Image(systemName: "circle.fill")
-                        .foregroundStyle(StatusColor.statusColor(user.status))
+                        .foregroundStyle(user.status.color)
                 }
                 .font(.headline)
                 Text(user.statusDescription)
@@ -165,7 +165,7 @@ struct UserDetailView: View {
                 Text(user.displayName)
             } icon: {
                 Image(systemName: "circle.fill")
-                    .foregroundStyle(StatusColor.statusColor(user.status))
+                    .foregroundStyle(user.status.color)
             }
             .font(.headline)
             Text(user.statusDescription)

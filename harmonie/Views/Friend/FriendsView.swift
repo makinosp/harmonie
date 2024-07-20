@@ -88,7 +88,8 @@ struct FriendsView: View {
             case .all:
                 Image(systemName: "person.crop.rectangle.stack.fill")
             case .status(let status):
-                StatusColor.statusIcon(status: status)
+                Image(systemName: "person.crop.circle.fill")
+                    .foregroundStyle(status.color)
             case .recently:
                 Image(systemName: "person.crop.circle.badge.clock.fill")
             }
@@ -124,7 +125,7 @@ extension FriendsView.FriendListType: CaseIterable {
             .status(.askMe),
             .status(.busy),
             .status(.offline),
-            .recently,
+            .recently
         ]
     }
 }
