@@ -1,6 +1,6 @@
 //
 //  View+SizeModifier.swift
-//  harmonie
+//  Harmonie
 //
 //  Created by makinosp on 2024/03/09.
 //

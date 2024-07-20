@@ -1,6 +1,6 @@
 //
 //  SectionView.swift
-//  harmonie
+//  Harmonie
 //
 //  Created by makinosp on 2024/06/05.
 //
