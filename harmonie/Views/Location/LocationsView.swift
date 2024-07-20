@@ -17,7 +17,7 @@ struct LocationsView: View {
     }
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             ScrollView {
                 LazyVStack {
                     ForEach(friendVM.friendsLocations) { location in
@@ -33,8 +33,13 @@ struct LocationsView: View {
             }
             .background(Color(UIColor.systemGroupedBackground))
             .navigationTitle("Locations")
-        } detail: {
-            EmptyView()
+        }
+        .refreshable {
+            do {
+                try await friendVM.fetchAllFriends()
+            } catch {
+                appVM.handleError(error)
+            }
         }
     }
 }
