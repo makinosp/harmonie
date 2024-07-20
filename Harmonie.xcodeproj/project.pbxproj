@@ -833,7 +833,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/makinosp/async-swift-ui";
 			requirement = {
-				branch = "issue-10-adapt-to-SE-0409";
+				branch = main;
 				kind = branch;
 			};
 		};

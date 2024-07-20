@@ -1,13 +1,13 @@
 {
-  "originHash" : "e5390ed68b822e75b8ea22b014d8075f7128c60d5a2f3b68309815bde3c12a34",
+  "originHash" : "02c0abcf2f704cc3042d152af53e5a2cf25c711cee34e978e7697ff04f0cab16",
   "pins" : [
     {
       "identity" : "async-swift-ui",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/makinosp/async-swift-ui",
       "state" : {
-        "branch" : "issue-10-adapt-to-SE-0409",
-        "revision" : "350d5b97c88c7b17e384659e6cf6252b4ce3b48a"
+        "branch" : "main",
+        "revision" : "bb845af15caece517ab20c565904a0cce031f705"
       }
     },
     {
