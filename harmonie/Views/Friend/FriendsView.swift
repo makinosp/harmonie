@@ -79,7 +79,7 @@ struct FriendsView: View {
     /// Defining friend list types and icons
     enum FriendListType: Hashable {
         case all
-        case status(User.Status)
+        case status(UserStatus)
         case recently
 
         @ViewBuilder

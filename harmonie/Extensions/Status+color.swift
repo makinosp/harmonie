@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-extension User.Status {
+extension UserStatus {
     var color: Color {
         switch self {
         case .joinMe:
