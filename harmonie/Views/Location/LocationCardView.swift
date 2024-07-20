@@ -1,6 +1,6 @@
 //
 //  LocationCardView.swift
-//  harmonie
+//  Harmonie
 //
 //  Created by makinosp on 2024/06/15.
 //
@@ -12,6 +12,7 @@ import VRCKit
 struct LocationCardView: View {
     @EnvironmentObject var appVM: AppViewModel
     @State var instance: Instance?
+    @State var isPresentedDetail = false
     let service: any InstanceServiceProtocol
     let location: FriendsLocation
     let frameWidth: CGFloat = 120
@@ -22,37 +23,15 @@ struct LocationCardView: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(UIColor.secondarySystemGroupedBackground))
             if let instance = instance {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading) {
-                        Text(instance.world.name)
-                            .font(.body)
-                        HStack {
-                            Text(instance.type.rawValue)
-                                .font(.footnote)
-                                .foregroundStyle(Color.gray)
-                            Spacer()
-                            Text(personAmount(instance))
-                                .font(.footnote)
-                                .foregroundStyle(Color.gray)
-                        }
-                        ScrollView(.horizontal) {
-                            HStack(spacing: 4) {
-                                ForEach(location.friends) { friend in
-                                    CircleURLImage(
-                                        imageUrl: friend.userIconUrl,
-                                        size: iconSize
-                                    )
-                                }
-                            }
-                        }
+                locationCardContent(instance: instance)
+                    .sheet(isPresented: $isPresentedDetail) {
+                        LocationDetailView(instance: instance)
+                            .presentationDetents([.medium, .large])
+                            .presentationBackground(Color(UIColor.systemGroupedBackground))
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    Spacer()
-                    locationThumbnail(URL(string: instance.world.imageUrl))
-                        .padding()
-                }
-            } else { ProgressView() }
+            } else {
+                ProgressView()
+            }
         }
         .frame(minHeight: 120)
         .task {
@@ -61,6 +40,42 @@ struct LocationCardView: View {
             } catch {
                 appVM.handleError(error)
             }
+        }
+    }
+
+    func locationCardContent(instance: Instance) -> some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                Text(instance.world.name)
+                    .font(.body)
+                HStack {
+                    Text(instance.type.rawValue)
+                        .font(.footnote)
+                        .foregroundStyle(Color.gray)
+                    Spacer()
+                    Text(personAmount(instance))
+                        .font(.footnote)
+                        .foregroundStyle(Color.gray)
+                }
+                ScrollView(.horizontal) {
+                    HStack(spacing: 4) {
+                        ForEach(location.friends) { friend in
+                            CircleURLImage(
+                                imageUrl: friend.userIconUrl,
+                                size: iconSize
+                            )
+                        }
+                    }
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Spacer()
+            locationThumbnail(URL(string: instance.world.imageUrl))
+                .onTapGesture {
+                    isPresentedDetail = true
+                }
+                .padding()
         }
     }
 

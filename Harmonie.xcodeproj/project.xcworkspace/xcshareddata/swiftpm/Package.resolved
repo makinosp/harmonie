@@ -1,13 +1,13 @@
 {
-  "originHash" : "518edb848a434b30e6fd0544629522d366644d8774d2a0fc887638cadae8ff85",
+  "originHash" : "02c0abcf2f704cc3042d152af53e5a2cf25c711cee34e978e7697ff04f0cab16",
   "pins" : [
     {
-      "identity" : "asyncswiftui",
+      "identity" : "async-swift-ui",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/treastrain/AsyncSwiftUI",
+      "location" : "https://github.com/makinosp/async-swift-ui",
       "state" : {
-        "revision" : "4295308ce0843d93c1c61cd29066191738164769",
-        "version" : "0.2.0"
+        "branch" : "main",
+        "revision" : "bb845af15caece517ab20c565904a0cce031f705"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kean/Nuke",
       "state" : {
-        "revision" : "2efd206503e99dd3a88a4dc433a76f98ce8cc198",
-        "version" : "12.7.1"
+        "revision" : "0ead44350d2737db384908569c012fe67c421e4d",
+        "version" : "12.8.0"
       }
     },
     {

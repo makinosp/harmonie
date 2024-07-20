@@ -1,6 +1,6 @@
 //
-//  LoginView.swift
-//  harmonie
+//  AuthenticationView.swift
+//  Harmonie
 //
 //  Created by makinosp on 2024/03/08.
 //
@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct LoginView: View {
+struct AuthenticationView: View {
     @EnvironmentObject var appVM: AppViewModel
     @State var verifyType: VerifyType?
     @State var username: String = ""

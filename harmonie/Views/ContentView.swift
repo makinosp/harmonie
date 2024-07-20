@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  harmonie
+//  Harmonie
 //
 //  Created by makinosp on 2024/03/03.
 //
@@ -22,7 +22,7 @@ struct ContentView: View {
                     Task { await appVM.logout() }
                 }
         case .loggingIn:
-            LoginView()
+            AuthenticationView()
                 .errorAlert()
         case .done(let user):
             let friendVM = appVM.generateFriendVM(user: user)

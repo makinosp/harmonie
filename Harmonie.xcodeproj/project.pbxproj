@@ -11,10 +11,11 @@
 		200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */; };
 		200FA7B02C1D745B0001E655 /* LocationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AF2C1D745B0001E655 /* LocationCardView.swift */; };
 		20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20102BCE2C157C77007738D3 /* HarmonieApp.swift */; };
+		201067B82C4552B40083ECBC /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 201067B72C4552B40083ECBC /* AsyncSwiftUI */; };
 		2014A0B32C3832690019C638 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2014A0B22C3832690019C638 /* VRCKit */; };
 		201B430D2C27F44100879A2F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201B430C2C27F44100879A2F /* Errors.swift */; };
 		201B43102C27F48E00879A2F /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 201B430F2C27F48E00879A2F /* LicenseList */; };
-		201E40E52B9B55E300321521 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201E40E42B9B55E300321521 /* LoginView.swift */; };
+		201E40E52B9B55E300321521 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201E40E42B9B55E300321521 /* AuthenticationView.swift */; };
 		202844C22BA5CC4F00357D09 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202844C12BA5CC4F00357D09 /* FavoritesView.swift */; };
 		202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202844C32BA5CE1B00357D09 /* LocationsView.swift */; };
 		20395D972B945CD700003921 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395D962B945CD700003921 /* ContentView.swift */; };
@@ -22,20 +23,21 @@
 		20395D9E2B945CD800003921 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20395D9D2B945CD800003921 /* Preview Assets.xcassets */; };
 		20395DC22B945EEF00003921 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20395DC12B945EEF00003921 /* VRCKit */; };
 		20395DC42B94653100003921 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395DC32B94653100003921 /* FriendsView.swift */; };
-		2044ADF02BC264240057BA6A /* StatusColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2044ADEF2BC264240057BA6A /* StatusColor.swift */; };
+		20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20592B022C45640D00E1C8B8 /* AsyncSwiftUI */; };
 		205B3BF22C00D51A0097D62A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B3BF12C00D51A0097D62A /* SettingsView.swift */; };
 		205B3BF42C00D8BF0097D62A /* ProgressScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B3BF32C00D8BF0097D62A /* ProgressScreen.swift */; };
 		205C9DAF2C20612500E3782C /* Binding+NilCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */; };
+		206088E92C48079900626DDC /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206088E82C48079900626DDC /* LocationDetailView.swift */; };
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
-		206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */; };
 		207FC6352C4256E60018E605 /* View+SizeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6322C4256E60018E605 /* View+SizeModifier.swift */; };
 		207FC6362C4256E60018E605 /* View+ErrorAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */; };
 		207FC6372C4256E60018E605 /* View+SectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6342C4256E60018E605 /* View+SectionModifier.swift */; };
 		208DB7EC2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */; };
 		208DB7ED2C1D5B6000ACD0AB /* HarmonieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */; };
 		208DB7EF2C1D5B8B00ACD0AB /* HarmonieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */; };
+		2090C6F32C4B7877009667CC /* Status+color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090C6F22C4B7877009667CC /* Status+color.swift */; };
 		2094C4002C43BBC100F88986 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2094C3FF2C43BBC100F88986 /* VRCKit */; };
-		209938AA2C109C8C003B4A8A /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* HASection.swift */; };
+		209938AA2C109C8C003B4A8A /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* SectionView.swift */; };
 		209A78892C2FC0FA00BEFAE6 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78852C2FC0FA00BEFAE6 /* AppViewModel.swift */; };
 		209A788A2C2FC0FA00BEFAE6 /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78862C2FC0FA00BEFAE6 /* FavoriteViewModel.swift */; };
 		209A788B2C2FC0FA00BEFAE6 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */; };
@@ -68,7 +70,7 @@
 		200FA7AF2C1D745B0001E655 /* LocationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCardView.swift; sourceTree = "<group>"; };
 		20102BCE2C157C77007738D3 /* HarmonieApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieApp.swift; sourceTree = "<group>"; };
 		201B430C2C27F44100879A2F /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		201E40E42B9B55E300321521 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		201E40E42B9B55E300321521 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		20281B032C43C84500F5704F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Harmonie/Info.plist; sourceTree = "<group>"; };
 		202844C12BA5CC4F00357D09 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		202844C32BA5CE1B00357D09 /* LocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsView.swift; sourceTree = "<group>"; };
@@ -79,22 +81,22 @@
 		20395DA32B945CD900003921 /* HarmonieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20395DAD2B945CD900003921 /* HarmonieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20395DC32B94653100003921 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
-		2044ADEF2BC264240057BA6A /* StatusColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusColor.swift; sourceTree = "<group>"; };
 		205B3BF12C00D51A0097D62A /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		205B3BF32C00D8BF0097D62A /* ProgressScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressScreen.swift; sourceTree = "<group>"; };
 		205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+NilCoalescing.swift"; sourceTree = "<group>"; };
+		206088E82C48079900626DDC /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
 		207FC6322C4256E60018E605 /* View+SizeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+SizeModifier.swift"; sourceTree = "<group>"; };
 		207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlertModifier.swift"; sourceTree = "<group>"; };
 		207FC6342C4256E60018E605 /* View+SectionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+SectionModifier.swift"; sourceTree = "<group>"; };
 		208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieUITests.swift; sourceTree = "<group>"; };
 		208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieTests.swift; sourceTree = "<group>"; };
-		209938A92C109C8C003B4A8A /* HASection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HASection.swift; sourceTree = "<group>"; };
+		2090C6F22C4B7877009667CC /* Status+color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Status+color.swift"; path = "Harmonie/Extensions/Status+color.swift"; sourceTree = SOURCE_ROOT; };
+		209938A92C109C8C003B4A8A /* SectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		209A78852C2FC0FA00BEFAE6 /* AppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		209A78862C2FC0FA00BEFAE6 /* FavoriteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
 		209D772F2C2251C200A11666 /* MainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
-		20DC3C2C2C422F5A001101DB /* EnvironmentValues+DemoMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+DemoMode.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,13 +105,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				201B43102C27F48E00879A2F /* LicenseList in Frameworks */,
+				201067B82C4552B40083ECBC /* AsyncSwiftUI in Frameworks */,
 				2094C4002C43BBC100F88986 /* VRCKit in Frameworks */,
 				20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */,
 				20DB5D8A2C43BC4B00E5960B /* VRCKit in Frameworks */,
+				20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */,
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
 				2014A0B32C3832690019C638 /* VRCKit in Frameworks */,
 				20DC3C292C422786001101DB /* VRCKit in Frameworks */,
-				206AC9042BFA087A00E0D5AE /* AsyncSwiftUI in Frameworks */,
 				206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				200FA7AF2C1D745B0001E655 /* LocationCardView.swift */,
+				206088E82C48079900626DDC /* LocationDetailView.swift */,
 				202844C32BA5CE1B00357D09 /* LocationsView.swift */,
 			);
 			path = Location;
@@ -143,14 +147,14 @@
 		2019D1E92B9C1BAE0094E358 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				206088EA2C4807EB00626DDC /* Authentication */,
+				206088EB2C48084800626DDC /* Favorite */,
+				206088EF2C4808B600626DDC /* Friend */,
 				200FA7AE2C1D74380001E655 /* Location */,
+				206088F02C4808C500626DDC /* Setting */,
+				206088EC2C48085000626DDC /* UserDetail */,
 				20395D962B945CD700003921 /* ContentView.swift */,
-				202844C12BA5CC4F00357D09 /* FavoritesView.swift */,
-				20395DC32B94653100003921 /* FriendsView.swift */,
-				201E40E42B9B55E300321521 /* LoginView.swift */,
 				209D772F2C2251C200A11666 /* MainTabView.swift */,
-				205B3BF12C00D51A0097D62A /* SettingsView.swift */,
-				200723962BA56377002C27E8 /* UserDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -158,8 +162,8 @@
 		2019D1EB2B9C3AD60094E358 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2090C6F22C4B7877009667CC /* Status+color.swift */,
 				205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */,
-				20DC3C2C2C422F5A001101DB /* EnvironmentValues+DemoMode.swift */,
 				207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */,
 				207FC6342C4256E60018E605 /* View+SectionModifier.swift */,
 				207FC6322C4256E60018E605 /* View+SizeModifier.swift */,
@@ -228,11 +232,50 @@
 			path = harmonieUITests;
 			sourceTree = "<group>";
 		};
+		206088EA2C4807EB00626DDC /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				201E40E42B9B55E300321521 /* AuthenticationView.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		206088EB2C48084800626DDC /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				202844C12BA5CC4F00357D09 /* FavoritesView.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
+		206088EC2C48085000626DDC /* UserDetail */ = {
+			isa = PBXGroup;
+			children = (
+				200723962BA56377002C27E8 /* UserDetailView.swift */,
+			);
+			path = UserDetail;
+			sourceTree = "<group>";
+		};
+		206088EF2C4808B600626DDC /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				20395DC32B94653100003921 /* FriendsView.swift */,
+			);
+			path = Friend;
+			sourceTree = "<group>";
+		};
+		206088F02C4808C500626DDC /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				205B3BF12C00D51A0097D62A /* SettingsView.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		208555112BF8E8BB0079A92F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				201B430C2C27F44100879A2F /* Errors.swift */,
-				2044ADEF2BC264240057BA6A /* StatusColor.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -242,7 +285,7 @@
 			children = (
 				200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */,
 				205B3BF32C00D8BF0097D62A /* ProgressScreen.swift */,
-				209938A92C109C8C003B4A8A /* HASection.swift */,
+				209938A92C109C8C003B4A8A /* SectionView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -276,13 +319,14 @@
 			packageProductDependencies = (
 				20395DC12B945EEF00003921 /* VRCKit */,
 				206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */,
-				206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */,
 				20F213DC2C11FB470061DE29 /* NukeUI */,
 				201B430F2C27F48E00879A2F /* LicenseList */,
 				2014A0B22C3832690019C638 /* VRCKit */,
 				20DC3C282C422786001101DB /* VRCKit */,
 				2094C3FF2C43BBC100F88986 /* VRCKit */,
 				20DB5D892C43BC4B00E5960B /* VRCKit */,
+				201067B72C4552B40083ECBC /* AsyncSwiftUI */,
+				20592B022C45640D00E1C8B8 /* AsyncSwiftUI */,
 			);
 			productName = harmonie;
 			productReference = 20395D912B945CD700003921 /* Harmonie.app */;
@@ -335,7 +379,7 @@
 					New,
 				);
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					20395D902B945CD700003921 = {
 						CreatedOnToolsVersion = 15.3;
@@ -362,10 +406,10 @@
 			);
 			mainGroup = 20395D882B945CD700003921;
 			packageReferences = (
-				206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */,
 				20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */,
 				201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */,
 				20DB5D882C43BC4A00E5960B /* XCRemoteSwiftPackageReference "vrckit" */,
+				20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -410,7 +454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				209A78892C2FC0FA00BEFAE6 /* AppViewModel.swift in Sources */,
-				209938AA2C109C8C003B4A8A /* HASection.swift in Sources */,
+				209938AA2C109C8C003B4A8A /* SectionView.swift in Sources */,
 				205C9DAF2C20612500E3782C /* Binding+NilCoalescing.swift in Sources */,
 				202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */,
 				20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */,
@@ -423,12 +467,13 @@
 				20395DC42B94653100003921 /* FriendsView.swift in Sources */,
 				207FC6352C4256E60018E605 /* View+SizeModifier.swift in Sources */,
 				207FC6362C4256E60018E605 /* View+ErrorAlertModifier.swift in Sources */,
-				2044ADF02BC264240057BA6A /* StatusColor.swift in Sources */,
-				201E40E52B9B55E300321521 /* LoginView.swift in Sources */,
+				206088E92C48079900626DDC /* LocationDetailView.swift in Sources */,
+				201E40E52B9B55E300321521 /* AuthenticationView.swift in Sources */,
 				200723972BA56377002C27E8 /* UserDetailView.swift in Sources */,
 				201B430D2C27F44100879A2F /* Errors.swift in Sources */,
 				202844C22BA5CC4F00357D09 /* FavoritesView.swift in Sources */,
 				209A788B2C2FC0FA00BEFAE6 /* FriendViewModel.swift in Sources */,
+				2090C6F32C4B7877009667CC /* Status+color.swift in Sources */,
 				205B3BF42C00D8BF0097D62A /* ProgressScreen.swift in Sources */,
 				205B3BF22C00D51A0097D62A /* SettingsView.swift in Sources */,
 			);
@@ -657,7 +702,6 @@
 		20395DBB2B945CD900003921 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -679,7 +723,6 @@
 		20395DBC2B945CD900003921 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -700,7 +743,6 @@
 		20395DBE2B945CD900003921 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -720,7 +762,6 @@
 		20395DBF2B945CD900003921 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -786,12 +827,12 @@
 				minimumVersion = 0.7.0;
 			};
 		};
-		206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */ = {
+		20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/treastrain/AsyncSwiftUI";
+			repositoryURL = "https://github.com/makinosp/async-swift-ui";
 			requirement = {
-				kind = exactVersion;
-				version = 0.2.0;
+				branch = main;
+				kind = branch;
 			};
 		};
 		20DB5D882C43BC4A00E5960B /* XCRemoteSwiftPackageReference "vrckit" */ = {
@@ -813,6 +854,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		201067B72C4552B40083ECBC /* AsyncSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AsyncSwiftUI;
+		};
 		2014A0B22C3832690019C638 /* VRCKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VRCKit;
@@ -826,13 +871,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = VRCKit;
 		};
-		206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */ = {
+		20592B022C45640D00E1C8B8 /* AsyncSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */;
 			productName = AsyncSwiftUI;
 		};
-		206AC9032BFA087A00E0D5AE /* AsyncSwiftUI */ = {
+		206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 206AC9022BFA087A00E0D5AE /* XCRemoteSwiftPackageReference "AsyncSwiftUI" */;
 			productName = AsyncSwiftUI;
 		};
 		2094C3FF2C43BBC100F88986 /* VRCKit */ = {
