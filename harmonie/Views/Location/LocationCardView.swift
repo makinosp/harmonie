@@ -16,7 +16,8 @@ struct LocationCardView: View {
     let service: any InstanceServiceProtocol
     let location: FriendsLocation
     let frameWidth: CGFloat = 120
-    let iconSize = CGSize(width: 24, height: 24)
+    let iconSize = CGSize(width: 28, height: 28)
+    let iconOuterSize = CGSize(width: 32, height: 32)
 
     var body: some View {
         ZStack {
@@ -58,12 +59,17 @@ struct LocationCardView: View {
                         .foregroundStyle(Color.gray)
                 }
                 ScrollView(.horizontal) {
-                    HStack(spacing: 4) {
+                    HStack(spacing: -8) {
                         ForEach(location.friends) { friend in
-                            CircleURLImage(
-                                imageUrl: friend.userIconUrl,
-                                size: iconSize
-                            )
+                            ZStack {
+                                Circle()
+                                    .foregroundStyle(friend.status.color)
+                                    .frame(size: iconOuterSize)
+                                CircleURLImage(
+                                    imageUrl: friend.userIconUrl,
+                                    size: iconSize
+                                )
+                            }
                         }
                     }
                 }
@@ -80,7 +86,11 @@ struct LocationCardView: View {
     }
 
     func personAmount(_ instance: Instance) -> String {
-        "\(location.friends.count.description) / \(instance.capacity.description)"
+        [
+            location.friends.count.description,
+            instance.userCount.description,
+            instance.capacity.description
+        ].joined(separator: " / ")
     }
 
     func locationThumbnail(_ url: URL?) -> some View {
