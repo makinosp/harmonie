@@ -50,7 +50,7 @@ struct LocationCardView: View {
                 Text(instance.world.name)
                     .font(.body)
                 HStack {
-                    Text(instance.type.rawValue)
+                    Text(instance.instanceType.description)
                         .font(.footnote)
                         .foregroundStyle(Color.gray)
                     Spacer()
