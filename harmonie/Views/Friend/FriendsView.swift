@@ -10,7 +10,7 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
-    @State var typeFilters: Set<FriendViewModel.FriendListType> = []
+    @State var typeFilters: Set<UserStatus> = []
     @State var friendSelection: Friend?
     @State var searchString: String = ""
     let thumbnailSize = CGSize(width: 32, height: 32)
@@ -59,23 +59,31 @@ struct FriendsView: View {
     }
 
     func statusFilterAction(_ listType: FriendViewModel.FriendListType) {
-        if listType == .all {
+        switch listType {
+        case .all:
             typeFilters.removeAll()
-        } else if typeFilters.contains(listType) {
-            typeFilters.remove(listType)
-        } else {
-            typeFilters.insert(listType)
+        case .status(let status):
+            if typeFilters.contains(status) {
+                typeFilters.remove(status)
+            } else {
+                typeFilters.insert(status)
+            }
         }
     }
 
     func isCheckedStatusFilter(_ listType: FriendViewModel.FriendListType) -> Bool {
-        (listType == .all && typeFilters.isEmpty) || typeFilters.contains(listType)
+        switch listType {
+        case .all:
+            typeFilters.isEmpty
+        case .status(let status):
+            typeFilters.contains(status)
+        }
     }
 
     /// Friend List branched by list type
     var listView: some View {
         List {
-            ForEach(friendVM.filterFriends(text: searchString, statuses: [])) { friend in
+            ForEach(friendVM.filterFriends(text: searchString, statuses: typeFilters)) { friend in
                 HStack {
                     CircleURLImage(
                         imageUrl: friend.userIconUrl,

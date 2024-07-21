@@ -62,9 +62,13 @@ class FriendViewModel: ObservableObject {
     /// - Parameter sort: The type of friend list to sort.
     /// - Returns: A filtered list of friends whose display names meet the criteria defined by `isIncluded`.
     func filterFriends(text: String, statuses: Set<UserStatus>, sort: FriendSortType = .default) -> [Friend] {
-        recentlyFriends.filter {
-            text.isEmpty || $0.displayName.range(of: text, options: .caseInsensitive) != nil
-        }
+        recentlyFriends
+            .filter {
+                statuses.isEmpty || statuses.contains($0.status)
+            }
+            .filter {
+                text.isEmpty || $0.displayName.range(of: text, options: .caseInsensitive) != nil
+            }
     }
 
     /// Returns a list of matches for either `onlineFriends` or `offlineFriends`
