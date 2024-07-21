@@ -14,6 +14,7 @@ struct FriendsView: View {
     @State var friendSelection: Friend?
     @State var searchString: String = ""
     let thumbnailSize = CGSize(width: 32, height: 32)
+    let iconOuterSize = CGSize(width: 36, height: 36)
     let fetchRecentlyFriendsCount = 10
 
     var body: some View {
@@ -85,10 +86,15 @@ struct FriendsView: View {
         List {
             ForEach(friendVM.filterFriends(text: searchString, statuses: typeFilters)) { friend in
                 HStack {
-                    CircleURLImage(
-                        imageUrl: friend.userIconUrl,
-                        size: thumbnailSize
-                    )
+                    ZStack {
+                        Circle()
+                            .foregroundStyle(friend.status.color)
+                            .frame(size: iconOuterSize)
+                        CircleURLImage(
+                            imageUrl: friend.userIconUrl,
+                            size: thumbnailSize
+                        )
+                    }
                     Text(friend.displayName)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
