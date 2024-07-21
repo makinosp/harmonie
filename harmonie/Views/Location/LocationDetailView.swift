@@ -11,12 +11,20 @@ import VRCKit
 
 struct LocationDetailView: View {
     let instance: Instance
+    let location: FriendsLocation
+    let thumbnailSize = CGSize(width: 28, height: 28)
+    let iconOuterSize = CGSize(width: 32, height: 32)
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                imageContainer
-//                contentStacks
+        NavigationStack {
+            List {
+                Section("World") {
+                    imageContainer
+                        .listRowInsets(EdgeInsets())
+                }
+                Section("Friends") {
+                    friendList
+                }
             }
         }
     }
@@ -28,11 +36,11 @@ struct LocationDetailView: View {
                 imageBuilder(image: image)
             } else if state.error != nil {
                 Image(systemName: "exclamationmark.circle")
-                    .frame(maxHeight: 250)
+                    .frame(maxHeight: 160)
             } else {
                 ZStack {
                     Color.clear
-                        .frame(height: 250)
+                        .frame(height: 160)
                     ProgressView()
                 }
             }
@@ -46,7 +54,7 @@ struct LocationDetailView: View {
         image
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(maxHeight: 250)
+            .frame(maxHeight: 160)
             .clipped()
             .overlay {
                 LinearGradient(
@@ -77,5 +85,24 @@ struct LocationDetailView: View {
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
         .foregroundStyle(Color.white)
+    }
+
+    var friendList: some View {
+        ForEach(location.friends) { friend in
+            HStack {
+                ZStack {
+                    Circle()
+                        .foregroundStyle(friend.status.color)
+                        .frame(size: iconOuterSize)
+                    CircleURLImage(
+                        imageUrl: friend.userIconUrl,
+                        size: thumbnailSize
+                    )
+                }
+                Text(friend.displayName)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+        }
     }
 }

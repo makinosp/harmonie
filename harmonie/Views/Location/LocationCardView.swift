@@ -25,8 +25,11 @@ struct LocationCardView: View {
                 .foregroundStyle(Color(UIColor.secondarySystemGroupedBackground))
             if let instance = instance {
                 locationCardContent(instance: instance)
+                    .onTapGesture {
+                        isPresentedDetail = true
+                    }
                     .sheet(isPresented: $isPresentedDetail) {
-                        LocationDetailView(instance: instance)
+                        LocationDetailView(instance: instance, location: location)
                             .presentationDetents([.medium, .large])
                             .presentationBackground(Color(UIColor.systemGroupedBackground))
                     }
@@ -78,9 +81,6 @@ struct LocationCardView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
             locationThumbnail(URL(string: instance.world.imageUrl))
-                .onTapGesture {
-                    isPresentedDetail = true
-                }
                 .padding()
         }
     }
