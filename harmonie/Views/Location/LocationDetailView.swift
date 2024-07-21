@@ -11,12 +11,15 @@ import VRCKit
 
 struct LocationDetailView: View {
     let instance: Instance
+    let location: FriendsLocation
+    let thumbnailSize = CGSize(width: 28, height: 28)
+    let iconOuterSize = CGSize(width: 32, height: 32)
 
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 imageContainer
-//                contentStacks
+                contentStacks
             }
         }
     }
@@ -77,5 +80,29 @@ struct LocationDetailView: View {
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
         .foregroundStyle(Color.white)
+    }
+
+    var contentStacks: some View {
+        VStack(spacing: 12) {
+            SectionView {
+                ForEach(location.friends) { friend in
+                    HStack {
+                        ZStack {
+                            Circle()
+                                .foregroundStyle(friend.status.color)
+                                .frame(size: iconOuterSize)
+                            CircleURLImage(
+                                imageUrl: friend.userIconUrl,
+                                size: thumbnailSize
+                            )
+                        }
+                        Text(friend.displayName)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+                }
+            }
+        }
+        .padding()
     }
 }
