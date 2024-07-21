@@ -10,16 +10,11 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
-    @State var listSelection: FriendListType? = .all
+    @State var typeFilters: Set<FriendViewModel.FriendListType> = []
     @State var friendSelection: Friend?
     @State var searchString: String = ""
     let thumbnailSize = CGSize(width: 32, height: 32)
     let fetchRecentlyFriendsCount = 10
-
-    /// Defining friend list types and icons
-    enum FriendListType: Hashable {
-        case all, status(UserStatus), recently
-    }
 
     var body: some View {
         NavigationStack {
@@ -38,19 +33,49 @@ struct FriendsView: View {
     var toolbarContent: some ToolbarContent {
         ToolbarItem {
             Menu {
-                ForEach(FriendListType.allCases) { listType in
-                    Button(listType.description) {}
-                }
+                statusFilter
             } label: {
                 Image(systemName: "line.3.horizontal.decrease")
             }
         }
     }
 
+    var statusFilter: some View {
+        Menu("Statuses") {
+            ForEach(FriendViewModel.FriendListType.allCases) { listType in
+                Button {
+                    statusFilterAction(listType)
+                } label: {
+                    Label {
+                        Text(listType.description)
+                    } icon: {
+                        if isCheckedStatusFilter(listType) {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    func statusFilterAction(_ listType: FriendViewModel.FriendListType) {
+        if listType == .all {
+            typeFilters.removeAll()
+        } else if typeFilters.contains(listType) {
+            typeFilters.remove(listType)
+        } else {
+            typeFilters.insert(listType)
+        }
+    }
+
+    func isCheckedStatusFilter(_ listType: FriendViewModel.FriendListType) -> Bool {
+        (listType == .all && typeFilters.isEmpty) || typeFilters.contains(listType)
+    }
+
     /// Friend List branched by list type
     var listView: some View {
         List {
-            ForEach(friendVM.filterFriends(by: .recently, searchString: searchString)) { friend in
+            ForEach(friendVM.filterFriends(text: searchString, statuses: [])) { friend in
                 HStack {
                     CircleURLImage(
                         imageUrl: friend.userIconUrl,
@@ -69,27 +94,8 @@ struct FriendsView: View {
     }
 }
 
-extension FriendsView.FriendListType: Identifiable {
-    var id: Int {
-        self.description.hash
-    }
-}
-
-extension FriendsView.FriendListType: CustomStringConvertible {
-    var description: String {
-        switch self {
-        case .all:
-            return "All Online"
-        case .status(let status):
-            return status.description
-        case .recently:
-            return "Recently"
-        }
-    }
-}
-
-extension FriendsView.FriendListType: CaseIterable {
-    static var allCases: [FriendsView.FriendListType] {
+extension FriendViewModel.FriendListType: CaseIterable {
+    static var allCases: [FriendViewModel.FriendListType] {
         [
             .all,
             .status(.active),
@@ -97,7 +103,6 @@ extension FriendsView.FriendListType: CaseIterable {
             .status(.askMe),
             .status(.busy),
             .status(.offline),
-            .recently
         ]
     }
 }
