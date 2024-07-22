@@ -12,8 +12,6 @@ import VRCKit
 struct LocationDetailView: View {
     let instance: Instance
     let location: FriendsLocation
-    let thumbnailSize = CGSize(width: 28, height: 28)
-    let iconOuterSize = CGSize(width: 32, height: 32)
 
     var body: some View {
         NavigationStack {
@@ -35,7 +33,7 @@ struct LocationDetailView: View {
             if let image = state.image {
                 imageBuilder(image: image)
             } else if state.error != nil {
-                Image(systemName: "exclamationmark.circle")
+                Image(systemName: Constants.IconName.exclamation)
                     .frame(maxHeight: 160)
             } else {
                 ZStack {
@@ -93,10 +91,10 @@ struct LocationDetailView: View {
                 ZStack {
                     Circle()
                         .foregroundStyle(friend.status.color)
-                        .frame(size: iconOuterSize)
+                        .frame(size: Constants.IconSize.thumbnailOutside)
                     CircleURLImage(
                         imageUrl: friend.userIconUrl,
-                        size: thumbnailSize
+                        size: Constants.IconSize.thumbnail
                     )
                 }
                 Text(friend.displayName)

@@ -13,8 +13,6 @@ struct FavoritesView: View {
     @State var friendSelection: Friend?
     @State var isFetching = false
 
-    let thumbnailSize = CGSize(width: 32, height: 32)
-
     var body: some View {
         NavigationSplitView {
             if !isFetching {
@@ -46,7 +44,7 @@ struct FavoritesView: View {
         HStack {
             CircleURLImage(
                 imageUrl: friend.userIconUrl,
-                size: thumbnailSize
+                size: Constants.IconSize.thumbnail
             )
             Text(friend.displayName)
         }

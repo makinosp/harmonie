@@ -17,22 +17,22 @@ struct MainTabView: View {
         TabView {
             LocationsView(appVM: appVM)
                 .tabItem {
-                    Image(systemName: "location.fill")
+                    Image(systemName: Constants.IconName.loctaion)
                     Text("Locations")
                 }
             FriendsView()
                 .tabItem {
-                    Image(systemName: "person.2.fill")
+                    Image(systemName: Constants.IconName.friends)
                     Text("Friends")
                 }
             FavoritesView()
                 .tabItem {
-                    Image(systemName: "star.fill")
+                    Image(systemName: Constants.IconName.favoriteFilled)
                     Text("Favorites")
                 }
             SettingsView()
                 .tabItem {
-                    Image(systemName: "gear")
+                    Image(systemName: Constants.IconName.setting)
                     Text("Settings")
                 }
         }

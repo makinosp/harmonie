@@ -46,6 +46,7 @@
 		209A788B2C2FC0FA00BEFAE6 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */; };
 		209D77302C2251C200A11666 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D772F2C2251C200A11666 /* MainTabView.swift */; };
 		20DC3C292C422786001101DB /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20DC3C282C422786001101DB /* VRCKit */; };
+		20E1902E2C4E820A003F39AF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E1902D2C4E820A003F39AF /* Constants.swift */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +100,7 @@
 		209A78862C2FC0FA00BEFAE6 /* FavoriteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
 		209D772F2C2251C200A11666 /* MainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		20E1902D2C4E820A003F39AF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Harmonie/Utils/Constants.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,6 +281,7 @@
 		208555112BF8E8BB0079A92F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				20E1902D2C4E820A003F39AF /* Constants.swift */,
 				201B430C2C27F44100879A2F /* Errors.swift */,
 			);
 			path = Utils;
@@ -482,6 +485,7 @@
 				2090C6F32C4B7877009667CC /* Status+color.swift in Sources */,
 				205B3BF42C00D8BF0097D62A /* ProgressScreen.swift in Sources */,
 				205B3BF22C00D51A0097D62A /* SettingsView.swift in Sources */,
+				20E1902E2C4E820A003F39AF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
