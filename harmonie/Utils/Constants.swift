@@ -14,14 +14,6 @@ enum Constants {
         static let ll = CGSize(width: 40, height: 40)
     }
 
-    enum Spacing {
-        static let s: CGFloat = 4
-        static let m: CGFloat = 8
-        static let l: CGFloat = 12
-        static let ll: CGFloat = 16
-        static let xl: CGFloat = 32
-    }
-
     enum IconName {
         static let check = "checkmark"
         static let circleFilled = "circle.fill"
