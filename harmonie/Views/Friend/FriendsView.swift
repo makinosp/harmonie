@@ -13,9 +13,6 @@ struct FriendsView: View {
     @State var typeFilters: Set<UserStatus> = []
     @State var friendSelection: Friend?
     @State var searchString: String = ""
-    let thumbnailSize = CGSize(width: 32, height: 32)
-    let iconOuterSize = CGSize(width: 36, height: 36)
-    let fetchRecentlyFriendsCount = 10
 
     var body: some View {
         NavigationStack {
@@ -36,7 +33,7 @@ struct FriendsView: View {
             Menu {
                 statusFilter
             } label: {
-                Image(systemName: "line.3.horizontal.decrease")
+                Image(systemName: Constants.IconName.filter)
             }
         }
     }
@@ -51,7 +48,7 @@ struct FriendsView: View {
                         Text(listType.description)
                     } icon: {
                         if isCheckedStatusFilter(listType) {
-                            Image(systemName: "checkmark")
+                            Image(systemName: Constants.IconName.check)
                         }
                     }
                 }
@@ -89,10 +86,10 @@ struct FriendsView: View {
                     ZStack {
                         Circle()
                             .foregroundStyle(friend.status.color)
-                            .frame(size: iconOuterSize)
+                            .frame(size: Constants.IconSize.thumbnailOutside)
                         CircleURLImage(
                             imageUrl: friend.userIconUrl,
-                            size: thumbnailSize
+                            size: Constants.IconSize.thumbnail
                         )
                     }
                     Text(friend.displayName)

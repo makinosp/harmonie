@@ -54,7 +54,7 @@ struct UserDetailView: View {
             if let image = state.image {
                 profileImage(image: image)
             } else if state.error != nil {
-                Image(systemName: "exclamationmark.circle")
+                Image(systemName: Constants.IconName.exclamation)
                     .frame(maxHeight: 250)
             } else {
                 ZStack {
@@ -113,7 +113,7 @@ struct UserDetailView: View {
                 Label {
                     Text(user.displayName)
                 } icon: {
-                    Image(systemName: "circle.fill")
+                    Image(systemName: Constants.IconName.circleFilled)
                         .foregroundStyle(statusColor(user))
                 }
                 .font(.headline)
@@ -136,7 +136,7 @@ struct UserDetailView: View {
                 favoriteMenuItem(user: user, group: group)
             }
         } label: {
-            Image(systemName: favoriteVM.isAdded(friendId: user.id) ? "star.fill" : "star")
+            Image(systemName: favoriteVM.isAdded(friendId: user.id) ? Constants.IconName.favoriteFilled : Constants.IconName.favorite)
                 .frame(size: CGSize(width: 12, height: 12))
                 .padding(12)
                 .background {
@@ -157,7 +157,7 @@ struct UserDetailView: View {
                     friendId: user.id,
                     groupId: group.id
                 ) {
-                    Image(systemName: "checkmark")
+                    Image(systemName: Constants.IconName.check)
                 }
             }
         }
@@ -168,7 +168,7 @@ struct UserDetailView: View {
             Label {
                 Text(user.displayName)
             } icon: {
-                Image(systemName: "circle.fill")
+                Image(systemName: Constants.IconName.circleFilled)
                     .foregroundStyle(user.status.color)
             }
             .font(.headline)

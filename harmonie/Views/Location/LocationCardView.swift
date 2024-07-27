@@ -16,8 +16,6 @@ struct LocationCardView: View {
     let service: any InstanceServiceProtocol
     let location: FriendsLocation
     let frameWidth: CGFloat = 120
-    let iconSize = CGSize(width: 28, height: 28)
-    let iconOuterSize = CGSize(width: 32, height: 32)
 
     var body: some View {
         ZStack {
@@ -67,10 +65,10 @@ struct LocationCardView: View {
                             ZStack {
                                 Circle()
                                     .foregroundStyle(friend.status.color)
-                                    .frame(size: iconOuterSize)
+                                    .frame(size: Constants.IconSize.thumbnailOutside)
                                 CircleURLImage(
                                     imageUrl: friend.userIconUrl,
-                                    size: iconSize
+                                    size: Constants.IconSize.thumbnail
                                 )
                             }
                         }
@@ -102,7 +100,7 @@ struct LocationCardView: View {
                     .frame(maxWidth: frameWidth)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             } else if state.error != nil {
-                Image(systemName: "exclamationmark.circle")
+                Image(systemName: Constants.IconName.exclamation)
                     .frame(maxWidth: frameWidth)
             } else {
                 ZStack {
