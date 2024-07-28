@@ -15,6 +15,14 @@ struct UserDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State var user: UserDetail
     @State var instance: Instance?
+    @State var editUserInfo: EditableUserInfo
+    private let initialValue: EditableUserInfo
+
+    init(user: UserDetail) {
+        _user = State(initialValue: user)
+        initialValue = EditableUserInfo(detail: user)
+        _editUserInfo = State(initialValue: initialValue)
+    }
 
     var body: some View {
         ScrollView {
@@ -30,16 +38,19 @@ struct UserDetailView: View {
         }
     }
 
+    var hasAnyDiff: Bool {
+        editUserInfo != initialValue
+    }
+
     var isOwned: Bool {
         user.id == appVM.user?.id
     }
 
-    func statusColor(_ user: UserDetail) -> Color {
+    var statusColor: Color {
         user.state == .offline ? UserStatus.offline.color : user.status.color
     }
 
-    @ViewBuilder
-    var profileImageContainer: some View {
+    @ViewBuilder var profileImageContainer: some View {
         if let url = user.thumbnailUrl {
             GradientOverlayImageView(
                 url: url,
@@ -53,6 +64,15 @@ struct UserDetailView: View {
     var topBar: some View {
         HStack {
             Spacer()
+            if hasAnyDiff {
+                saveButton
+            }
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+    }
+
+    var saveButton: some View {
             AsyncButton("Save") {
                 await saveNote()
             }
@@ -60,9 +80,6 @@ struct UserDetailView: View {
             .buttonStyle(.borderedProminent)
             .tint(Material.regularMaterial)
             .buttonBorderShape(.capsule)
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
     }
 
     var bottomBar: some View {
@@ -72,7 +89,7 @@ struct UserDetailView: View {
                     Text(user.displayName)
                 } icon: {
                     Image(systemName: Constants.IconName.circleFilled)
-                        .foregroundStyle(statusColor(user))
+                        .foregroundStyle(statusColor)
                 }
                 .font(.headline)
                 statusDescription
@@ -87,8 +104,7 @@ struct UserDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    @ViewBuilder
-    var statusDescription: some View {
+    @ViewBuilder var statusDescription: some View {
         if isOwned {
             TextField("StatusDescription", text: $user.statusDescription)
                 .font(.subheadline)
@@ -105,7 +121,9 @@ struct UserDetailView: View {
     }
 
     var favoriteIconName: String {
-        favoriteVM.isAdded(friendId: user.id) ? Constants.IconName.favoriteFilled : Constants.IconName.favorite
+        favoriteVM.isAdded(friendId: user.id)
+        ? Constants.IconName.favoriteFilled
+        : Constants.IconName.favorite
     }
 
     var favoriteMenu: some View {
@@ -221,7 +239,9 @@ struct UserDetailView: View {
     }
 
     func fetchInstance() async {
-        let service = appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
+        let service = appVM.isDemoMode
+        ? InstancePreviewService(client: appVM.client)
+        : InstanceService(client: appVM.client)
         do {
             instance = try await service.fetchInstance(location: user.location)
         } catch {
@@ -241,7 +261,9 @@ struct UserDetailView: View {
     }
 
     func saveNote() async {
-        let service = appVM.isDemoMode ? UserNotePreviewService(client: appVM.client) : UserNoteService(client: appVM.client)
+        let service = appVM.isDemoMode
+        ? UserNotePreviewService(client: appVM.client)
+        : UserNoteService(client: appVM.client)
         do {
             _ = try await service.updateUserNote(
                 targetUserId: user.id,
