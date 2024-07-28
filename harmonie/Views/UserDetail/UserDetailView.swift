@@ -13,40 +13,25 @@ struct UserDetailView: View {
     @EnvironmentObject var appVM: AppViewModel
     @EnvironmentObject var favoriteVM: FavoriteViewModel
     @Environment(\.dismiss) private var dismiss
-    @State var user: UserDetail?
+    @State var user: UserDetail
     @State var instance: Instance?
-    let id: String
 
     var body: some View {
-        if let user = user {
-            ScrollView {
-                VStack(spacing: 0) {
-                    profileImageContainer(user)
-                    contentStacks(user)
-                }
+        ScrollView {
+            VStack(spacing: 0) {
+                profileImageContainer(user)
+                contentStacks(user)
             }
-            .task {
-                if user.isVisible {
-                    await fetchInstance(user)
-                }
+        }
+        .task {
+            if user.isVisible {
+                await fetchInstance(user)
             }
-        } else {
-            ProgressView()
-                .task {
-                    await fetchUser()
-                }
         }
     }
 
-    var note: Binding<String?> {
-        .init(
-            get: { user?.note },
-            set: { value in user?.note = value ?? "" }
-        )
-    }
-
     var isOwned: Bool {
-        user?.id == appVM.user?.id
+        user.id == appVM.user?.id
     }
 
     func statusColor(_ user: UserDetail) -> Color {
@@ -212,7 +197,7 @@ struct UserDetailView: View {
             Text("Note")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
-            TextField("Enter note", text: note ?? "", axis: .vertical)
+            TextField("Enter note", text: $user.note, axis: .vertical)
                 .font(.body)
         }
     }
@@ -238,15 +223,6 @@ struct UserDetailView: View {
                         .font(.body)
                 }
             }
-        }
-    }
-
-    func fetchUser() async {
-        let service = appVM.isDemoMode ? UserPreviewService(client: appVM.client) : UserService(client: appVM.client)
-        do {
-            user = try await service.fetchUser(userId: id)
-        } catch {
-            appVM.handleError(error)
         }
     }
 

@@ -40,7 +40,7 @@ struct SettingsView: View {
         switch sheetType {
         case .userDetail:
             if let user = appVM.user {
-                UserDetailView(id: user.id)
+                UserDetailPresentationView(id: user.id)
                     .presentationDetents([.medium, .large])
                     .presentationBackground(Color(UIColor.systemGroupedBackground))
             }

@@ -11,7 +11,7 @@ import VRCKit
 struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
     @State var typeFilters: Set<UserStatus> = []
-    @State var friendSelection: Friend?
+    @State var selected: Selected?
     @State var searchString: String = ""
 
     var body: some View {
@@ -21,8 +21,8 @@ struct FriendsView: View {
                 .searchable(text: $searchString)
                 .toolbar { toolbarContent }
         }
-        .sheet(item: $friendSelection) { friend in
-            UserDetailView(id: friend.id)
+        .sheet(item: $selected) { selected in
+            UserDetailPresentationView(id: selected.id)
                 .presentationDetents([.medium, .large])
                 .presentationBackground(Color(UIColor.systemGroupedBackground))
         }
@@ -97,7 +97,7 @@ struct FriendsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    friendSelection = friend
+                    selected = Selected(id: friend.id)
                 }
             }
         }
