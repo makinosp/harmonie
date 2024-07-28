@@ -46,32 +46,6 @@ struct UserDetailView: View {
                 maxHeight: 250,
                 topContent: { topBar },
                 bottomContent: { bottomBar }
-            )
-        } else {
-            EmptyView()
-        }
-    }
-
-    @ViewBuilder
-    func profileImage(image: Image) -> some View {
-        let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
-        image
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(maxHeight: 250)
-            .clipped()
-            .overlay {
-                LinearGradient(
-                    gradient: gradient,
-                    startPoint: .top,
-                    endPoint: .center
-                )
-            }
-            .overlay {
-                LinearGradient(
-                    gradient: gradient,
-                    startPoint: .bottom,
-                    endPoint: .center
                 )
             }
     }
