@@ -49,23 +49,18 @@ struct UserDetailView: View {
         user.state == .offline ? UserStatus.offline.color : user.status.color
     }
 
+    @ViewBuilder
     func profileImageContainer(_ user: UserDetail) -> some View {
-        LazyImage(url: user.thumbnailUrl) { state in
-            if let image = state.image {
-                profileImage(image: image)
-            } else if state.error != nil {
-                Image(systemName: Constants.IconName.exclamation)
-                    .frame(maxHeight: 250)
-            } else {
-                ZStack {
-                    Color.clear
-                        .frame(height: 250)
-                    ProgressView()
-                }
-            }
+        if let url = user.thumbnailUrl {
+            GradientOverlayImageView(
+                url: url,
+                maxHeight: 250,
+                topContent: { topBar(user) },
+                bottomContent: { bottomBar(user) }
+            )
+        } else {
+            EmptyView()
         }
-        .overlay(alignment: .top) { topBar(user) }
-        .overlay(alignment: .bottom) { bottomBar(user) }
     }
 
     @ViewBuilder
