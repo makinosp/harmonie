@@ -78,7 +78,7 @@ struct LocationCardView: View {
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
-            locationThumbnail(URL(string: instance.world.imageUrl))
+            locationThumbnail(instance.world.imageUrl.url)
                 .padding()
         }
     }
@@ -91,7 +91,7 @@ struct LocationCardView: View {
         ].joined(separator: " / ")
     }
 
-    func locationThumbnail(_ url: URL?) -> some View {
+    func locationThumbnail(_ url: URL) -> some View {
         LazyImage(url: url) { state in
             if let image = state.image {
                 image

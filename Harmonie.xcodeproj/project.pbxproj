@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -37,6 +37,7 @@
 		208DB7EC2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */; };
 		208DB7ED2C1D5B6000ACD0AB /* HarmonieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */; };
 		208DB7EF2C1D5B8B00ACD0AB /* HarmonieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */; };
+		208E6E752C55FF9F00B61822 /* GradientOverlayImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208E6E742C55FF9F00B61822 /* GradientOverlayImageView.swift */; };
 		2090C6F32C4B7877009667CC /* Status+color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090C6F22C4B7877009667CC /* Status+color.swift */; };
 		2094C4002C43BBC100F88986 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2094C3FF2C43BBC100F88986 /* VRCKit */; };
 		2096016D2C4BD30100D905AF /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2096016C2C4BD30100D905AF /* VRCKit */; };
@@ -94,6 +95,7 @@
 		208DB7EA2C1D5B6000ACD0AB /* HarmonieUITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		208DB7EB2C1D5B6000ACD0AB /* HarmonieUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieUITests.swift; sourceTree = "<group>"; };
 		208DB7EE2C1D5B8B00ACD0AB /* HarmonieTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieTests.swift; sourceTree = "<group>"; };
+		208E6E742C55FF9F00B61822 /* GradientOverlayImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GradientOverlayImageView.swift; path = Harmonie/Components/GradientOverlayImageView.swift; sourceTree = SOURCE_ROOT; };
 		2090C6F22C4B7877009667CC /* Status+color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Status+color.swift"; path = "Harmonie/Extensions/Status+color.swift"; sourceTree = SOURCE_ROOT; };
 		209938A92C109C8C003B4A8A /* SectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		209A78852C2FC0FA00BEFAE6 /* AppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 		209A78842C2FC06700BEFAE6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				208E6E742C55FF9F00B61822 /* GradientOverlayImageView.swift */,
 				200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */,
 				205B3BF32C00D8BF0097D62A /* ProgressScreen.swift */,
 				209938A92C109C8C003B4A8A /* SectionView.swift */,
@@ -478,6 +481,7 @@
 				207FC6362C4256E60018E605 /* View+ErrorAlertModifier.swift in Sources */,
 				206088E92C48079900626DDC /* LocationDetailView.swift in Sources */,
 				201E40E52B9B55E300321521 /* AuthenticationView.swift in Sources */,
+				208E6E752C55FF9F00B61822 /* GradientOverlayImageView.swift in Sources */,
 				200723972BA56377002C27E8 /* UserDetailView.swift in Sources */,
 				201B430D2C27F44100879A2F /* Errors.swift in Sources */,
 				202844C22BA5CC4F00357D09 /* FavoritesView.swift in Sources */,
