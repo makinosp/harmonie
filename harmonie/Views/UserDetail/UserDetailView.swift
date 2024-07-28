@@ -101,8 +101,7 @@ struct UserDetailView: View {
                         .foregroundStyle(statusColor(user))
                 }
                 .font(.headline)
-                Text(user.statusDescription)
-                    .font(.subheadline)
+                statusDescription
             }
             Spacer()
             if user.isFriend  {
@@ -112,6 +111,23 @@ struct UserDetailView: View {
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
         .foregroundStyle(Color.white)
+    }
+
+    @ViewBuilder
+    var statusDescription: some View {
+        if isOwned {
+            TextField("StatusDescription", text: $user.statusDescription)
+                .font(.subheadline)
+                .padding(.vertical, 4)
+                .padding(.horizontal, 8)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundStyle(Color(UIColor.systemBackground).opacity(0.25))
+                )
+        } else {
+            Text(user.statusDescription)
+                .font(.subheadline)
+        }
     }
 
     var favoriteIconName: String {
