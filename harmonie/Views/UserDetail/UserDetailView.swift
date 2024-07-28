@@ -15,13 +15,17 @@ struct UserDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State var user: UserDetail
     @State var instance: Instance?
-    @State var editUserInfo: EditableUserInfo
+    @State var editingUserInfo: EditableUserInfo
+    @State var note: String
     private let initialValue: EditableUserInfo
+    private let initialNoteValue: String
 
     init(user: UserDetail) {
         _user = State(initialValue: user)
         initialValue = EditableUserInfo(detail: user)
-        _editUserInfo = State(initialValue: initialValue)
+        _editingUserInfo = State(initialValue: initialValue)
+        initialNoteValue = user.note
+        _note = State(initialValue: initialNoteValue)
     }
 
     var body: some View {
@@ -39,7 +43,8 @@ struct UserDetailView: View {
     }
 
     var hasAnyDiff: Bool {
-        editUserInfo != initialValue
+        editingUserInfo != initialValue ||
+        note != initialNoteValue
     }
 
     var isOwned: Bool {
@@ -57,8 +62,8 @@ struct UserDetailView: View {
                 maxHeight: 250,
                 topContent: { topBar },
                 bottomContent: { bottomBar }
-                )
-            }
+            )
+        }
     }
 
     var topBar: some View {
@@ -73,13 +78,18 @@ struct UserDetailView: View {
     }
 
     var saveButton: some View {
-            AsyncButton("Save") {
+        AsyncButton("Save") {
+            if editingUserInfo != initialValue {
+                await saveUserInfo()
+            }
+            if note != initialNoteValue {
                 await saveNote()
             }
-            .foregroundStyle(Color.accentColor)
-            .buttonStyle(.borderedProminent)
-            .tint(Material.regularMaterial)
-            .buttonBorderShape(.capsule)
+        }
+        .foregroundStyle(Color.accentColor)
+        .buttonStyle(.borderedProminent)
+        .tint(Material.regularMaterial)
+        .buttonBorderShape(.capsule)
     }
 
     var bottomBar: some View {
@@ -106,7 +116,7 @@ struct UserDetailView: View {
 
     @ViewBuilder var statusDescription: some View {
         if isOwned {
-            TextField("StatusDescription", text: $user.statusDescription)
+            TextField("StatusDescription", text: $editingUserInfo.statusDescription)
                 .font(.subheadline)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 8)
@@ -209,7 +219,7 @@ struct UserDetailView: View {
             Text("Note")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
-            TextField("Enter note", text: $user.note, axis: .vertical)
+            TextField("Enter note", text: $note, axis: .vertical)
                 .font(.body)
         }
     }
@@ -260,15 +270,33 @@ struct UserDetailView: View {
         }
     }
 
+    func saveUserInfo() async {
+        let service = appVM.isDemoMode
+        ? UserPreviewService(client: appVM.client)
+        : UserService(client: appVM.client)
+        do {
+            let result = try await service.updateUser(
+                id: user.id,
+                editedInfo: editingUserInfo
+            )
+        } catch {
+            appVM.handleError(error)
+        }
+    }
+
     func saveNote() async {
         let service = appVM.isDemoMode
         ? UserNotePreviewService(client: appVM.client)
         : UserNoteService(client: appVM.client)
         do {
-            _ = try await service.updateUserNote(
-                targetUserId: user.id,
-                note: user.note
-            )
+            if user.note.isEmpty {
+                try await service.clearUserNote(targetUserId: user.id)
+            } else {
+                _ = try await service.updateUserNote(
+                    targetUserId: user.id,
+                    note: note
+                )
+            }
         } catch {
             appVM.handleError(error)
         }
