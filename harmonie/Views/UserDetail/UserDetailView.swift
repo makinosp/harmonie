@@ -19,13 +19,13 @@ struct UserDetailView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                profileImageContainer(user)
-                contentStacks(user)
+                profileImageContainer
+                contentStacks
             }
         }
         .task {
             if user.isVisible {
-                await fetchInstance(user)
+                await fetchInstance()
             }
         }
     }
@@ -39,13 +39,13 @@ struct UserDetailView: View {
     }
 
     @ViewBuilder
-    func profileImageContainer(_ user: UserDetail) -> some View {
+    var profileImageContainer: some View {
         if let url = user.thumbnailUrl {
             GradientOverlayImageView(
                 url: url,
                 maxHeight: 250,
-                topContent: { topBar(user) },
-                bottomContent: { bottomBar(user) }
+                topContent: { topBar },
+                bottomContent: { bottomBar }
             )
         } else {
             EmptyView()
@@ -76,11 +76,11 @@ struct UserDetailView: View {
             }
     }
 
-    func topBar(_ user: UserDetail) -> some View {
+    var topBar: some View {
         HStack {
             Spacer()
             AsyncButton("Save") {
-                await saveNote(user)
+                await saveNote()
             }
             .foregroundStyle(Color.accentColor)
             .buttonStyle(.borderedProminent)
@@ -91,7 +91,7 @@ struct UserDetailView: View {
         .padding(.horizontal, 12)
     }
 
-    func bottomBar(_ user: UserDetail) -> some View {
+    var bottomBar: some View {
         HStack {
             HStack(alignment: .bottom) {
                 Label {
@@ -106,7 +106,7 @@ struct UserDetailView: View {
             }
             Spacer()
             if user.isFriend  {
-                favoriteMenu(user)
+                favoriteMenu
             }
         }
         .padding(.vertical, 8)
@@ -114,13 +114,17 @@ struct UserDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    func favoriteMenu(_ user: UserDetail) -> some View {
+    var favoriteIconName: String {
+        favoriteVM.isAdded(friendId: user.id) ? Constants.IconName.favoriteFilled : Constants.IconName.favorite
+    }
+
+    var favoriteMenu: some View {
         Menu {
             ForEach(favoriteVM.favoriteFriendGroups) { group in
-                favoriteMenuItem(user: user, group: group)
+                favoriteMenuItem(group: group)
             }
         } label: {
-            Image(systemName: favoriteVM.isAdded(friendId: user.id) ? Constants.IconName.favoriteFilled : Constants.IconName.favorite)
+            Image(systemName: favoriteIconName)
                 .frame(size: CGSize(width: 12, height: 12))
                 .padding(12)
                 .background {
@@ -130,7 +134,7 @@ struct UserDetailView: View {
         }
     }
 
-    func favoriteMenuItem(user: UserDetail, group: FavoriteGroup) -> some View {
+    func favoriteMenuItem(group: FavoriteGroup) -> some View {
         AsyncButton {
             await updateFavorite(friendId: user.id, group: group)
         } label: {
@@ -147,7 +151,7 @@ struct UserDetailView: View {
         }
     }
 
-    func displayStatusAndName(_ user: UserDetail) -> some View {
+    var displayStatusAndName: some View {
         HStack(alignment: .bottom) {
             Label {
                 Text(user.displayName)
@@ -163,7 +167,7 @@ struct UserDetailView: View {
         .padding(8)
     }
 
-    func contentStacks(_ user: UserDetail) -> some View {
+    var contentStacks: some View {
         VStack(spacing: 12) {
             if let instance = instance {
                 locationSection(instance)
@@ -226,7 +230,7 @@ struct UserDetailView: View {
         }
     }
 
-    func fetchInstance(_ user: UserDetail) async {
+    func fetchInstance() async {
         let service = appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
         do {
             instance = try await service.fetchInstance(location: user.location)
@@ -246,7 +250,7 @@ struct UserDetailView: View {
         }
     }
 
-    func saveNote(_ user: UserDetail) async {
+    func saveNote() async {
         let service = appVM.isDemoMode ? UserNotePreviewService(client: appVM.client) : UserNoteService(client: appVM.client)
         do {
             _ = try await service.updateUserNote(
