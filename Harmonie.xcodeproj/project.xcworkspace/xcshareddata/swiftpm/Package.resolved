@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/makinosp/vrckit",
       "state" : {
-        "branch" : "main",
-        "revision" : "74c76cff349f69aecf4c69611b7a0ecd06207286"
+        "branch" : "develop",
+        "revision" : "24473f83cb5fa39e74f23e24d04fcf04ace98386"
       }
     }
   ],
