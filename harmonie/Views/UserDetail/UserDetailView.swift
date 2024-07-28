@@ -275,7 +275,7 @@ struct UserDetailView: View {
         ? UserPreviewService(client: appVM.client)
         : UserService(client: appVM.client)
         do {
-            let result = try await service.updateUser(
+            try await service.updateUser(
                 id: user.id,
                 editedInfo: editingUserInfo
             )
