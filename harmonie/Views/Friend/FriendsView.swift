@@ -101,7 +101,6 @@ struct FriendsView: View {
                 }
             }
         }
-        .listStyle(.inset)
     }
 }
 
