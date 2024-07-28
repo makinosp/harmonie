@@ -45,6 +45,10 @@ struct UserDetailView: View {
         )
     }
 
+    var isOwned: Bool {
+        user?.id == appVM.user?.id
+    }
+
     func statusColor(_ user: UserDetail) -> Color {
         user.state == .offline ? UserStatus.offline.color : user.status.color
     }
