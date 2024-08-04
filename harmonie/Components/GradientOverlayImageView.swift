@@ -5,10 +5,10 @@
 //  Created by makinosp on 2024/07/28.
 //
 
-import SwiftUI
 import NukeUI
+import SwiftUI
 
-struct GradientOverlayImageView<TopContent, BottomContent> : View where TopContent: View, BottomContent: View {
+struct GradientOverlayImageView<TopContent, BottomContent>: View where TopContent: View, BottomContent: View {
     let url: URL?
     let maxHeight: CGFloat
     let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
@@ -43,8 +43,7 @@ struct GradientOverlayImageView<TopContent, BottomContent> : View where TopConte
             }
     }
 
-    @MainActor
-    var lazyImage: some View {
+    @MainActor var lazyImage: some View {
         LazyImage(url: url) { state in
             if let image = state.image {
                 image

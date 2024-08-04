@@ -112,7 +112,7 @@ extension FriendViewModel.FriendListType: CaseIterable {
             .status(.joinMe),
             .status(.askMe),
             .status(.busy),
-            .status(.offline),
+            .status(.offline)
         ]
     }
 }

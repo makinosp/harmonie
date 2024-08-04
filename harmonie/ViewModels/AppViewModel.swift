@@ -13,7 +13,7 @@ class AppViewModel: ObservableObject {
     @Published var user: User?
     @Published var step: Step = .initializing
     @Published var isPresentedAlert = false
-    @Published var vrckError: VRCKitError? = nil
+    @Published var vrckError: VRCKitError?
     @Published var isDemoMode = false
     var client = APIClient()
     var service: any AuthenticationServiceProtocol
