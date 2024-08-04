@@ -9,14 +9,14 @@ import SwiftUI
 import NukeUI
 
 struct GradientOverlayImageView<TopContent, BottomContent> : View where TopContent: View, BottomContent: View {
-    let url: URL
+    let url: URL?
     let maxHeight: CGFloat
     let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
     let topContent: () -> TopContent
     let bottomContent: () -> BottomContent
 
     init(
-        url: URL,
+        url: URL?,
         maxHeight: CGFloat,
         @ViewBuilder topContent: @escaping () -> TopContent = { EmptyView() },
         @ViewBuilder bottomContent: @escaping () -> BottomContent

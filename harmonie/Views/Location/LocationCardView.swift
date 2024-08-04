@@ -51,7 +51,7 @@ struct LocationCardView: View {
                 Text(instance.world.name)
                     .font(.body)
                 HStack {
-                    Text(instance.instanceType.description)
+                    Text(instance.typeDescription)
                         .font(.footnote)
                         .foregroundStyle(Color.gray)
                     Spacer()
@@ -78,7 +78,7 @@ struct LocationCardView: View {
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
-            locationThumbnail(instance.world.imageUrl.url)
+            locationThumbnail(instance.world.imageUrl)
                 .padding()
         }
     }
@@ -91,7 +91,7 @@ struct LocationCardView: View {
         ].joined(separator: " / ")
     }
 
-    func locationThumbnail(_ url: URL) -> some View {
+    func locationThumbnail(_ url: URL?) -> some View {
         LazyImage(url: url) { state in
             if let image = state.image {
                 image

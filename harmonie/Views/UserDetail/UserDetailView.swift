@@ -194,11 +194,9 @@ struct UserDetailView: View {
             if let bio = user.bio {
                 bioSection(bio)
             }
-            if let bioLinks = user.bioLinks {
-                let bioUrls = bioLinks.compactMap { URL(string: $0) }
-                if !bioUrls.isEmpty {
-                    bioLinksSection(bioUrls)
-                }
+            let urls = user.bioLinks.elements
+            if !urls.isEmpty {
+                bioLinksSection(urls)
             }
         }
         .padding()
