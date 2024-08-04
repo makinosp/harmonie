@@ -10,10 +10,8 @@ import SwiftUI
 
 struct FavoritesView: View {
     @EnvironmentObject var favoriteVM: FavoriteViewModel
-    @State var friendSelection: Friend?
+    @State var selected: Selected?
     @State var isFetching = false
-
-    let thumbnailSize = CGSize(width: 32, height: 32)
 
     var body: some View {
         NavigationSplitView {
@@ -29,8 +27,8 @@ struct FavoritesView: View {
                         }
                     }
                 }
-                .sheet(item: $friendSelection) { friend in
-                    UserDetailView(id: friend.id)
+                .sheet(item: $selected) { selected in
+                    UserDetailPresentationView(id: selected.id)
                         .presentationDetents([.medium, .large])
                         .presentationBackground(Color(UIColor.systemGroupedBackground))
                 }
@@ -46,14 +44,14 @@ struct FavoritesView: View {
         HStack {
             CircleURLImage(
                 imageUrl: friend.userIconUrl,
-                size: thumbnailSize
+                size: Constants.IconSize.thumbnail
             )
             Text(friend.displayName)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
         .onTapGesture {
-            friendSelection = friend
+            selected = Selected(id: friend.id)
         }
     }
 }

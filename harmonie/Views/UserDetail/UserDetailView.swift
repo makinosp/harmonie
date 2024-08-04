@@ -13,112 +13,100 @@ struct UserDetailView: View {
     @EnvironmentObject var appVM: AppViewModel
     @EnvironmentObject var favoriteVM: FavoriteViewModel
     @Environment(\.dismiss) private var dismiss
-    @State var user: UserDetail?
+    @State var user: UserDetail
     @State var instance: Instance?
-    let id: String
+    @State var editingUserInfo: EditableUserInfo
+    @State var note: String
+    private let initialValue: EditableUserInfo
+    private let initialNoteValue: String
+
+    init(user: UserDetail) {
+        _user = State(initialValue: user)
+        initialValue = EditableUserInfo(detail: user)
+        _editingUserInfo = State(initialValue: initialValue)
+        initialNoteValue = user.note
+        _note = State(initialValue: initialNoteValue)
+    }
 
     var body: some View {
-        if let user = user {
-            ScrollView {
-                VStack(spacing: 0) {
-                    profileImageContainer(user)
-                    contentStacks(user)
-                }
+        ScrollView {
+            VStack(spacing: 0) {
+                profileImageContainer
+                contentStacks
             }
-            .task {
-                if user.isVisible {
-                    await fetchInstance(user)
-                }
+        }
+        .task {
+            if user.isVisible {
+                await fetchInstance()
             }
-        } else {
-            ProgressView()
-                .task {
-                    await fetchUser()
-                }
         }
     }
 
-    var note: Binding<String?> {
-        .init(
-            get: { user?.note },
-            set: { value in user?.note = value ?? "" }
-        )
+    var hasAnyDiff: Bool {
+        editingUserInfo != initialValue ||
+        note != initialNoteValue
     }
 
-    func profileImageContainer(_ user: UserDetail) -> some View {
-        LazyImage(url: user.thumbnailUrl) { state in
-            if let image = state.image {
-                profileImage(image: image)
-            } else if state.error != nil {
-                Image(systemName: "exclamationmark.circle")
-                    .frame(maxHeight: 250)
-            } else {
-                ZStack {
-                    Color.clear
-                        .frame(height: 250)
-                    ProgressView()
-                }
-            }
+    var isOwned: Bool {
+        user.id == appVM.user?.id
+    }
+
+    var statusColor: Color {
+        user.state == .offline ? UserStatus.offline.color : user.status.color
+    }
+
+    @ViewBuilder var profileImageContainer: some View {
+        if let url = user.thumbnailUrl {
+            GradientOverlayImageView(
+                url: url,
+                maxHeight: 250,
+                topContent: { topBar },
+                bottomContent: { bottomBar }
+            )
         }
-        .overlay(alignment: .top) { topBar(user) }
-        .overlay(alignment: .bottom) { bottomBar(user) }
     }
 
-    @ViewBuilder
-    func profileImage(image: Image) -> some View {
-        let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
-        image
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(maxHeight: 250)
-            .clipped()
-            .overlay {
-                LinearGradient(
-                    gradient: gradient,
-                    startPoint: .top,
-                    endPoint: .center
-                )
-            }
-            .overlay {
-                LinearGradient(
-                    gradient: gradient,
-                    startPoint: .bottom,
-                    endPoint: .center
-                )
-            }
-    }
-
-    func topBar(_ user: UserDetail) -> some View {
+    var topBar: some View {
         HStack {
             Spacer()
-            AsyncButton("Save") {
-                await saveNote(user)
+            if hasAnyDiff {
+                saveButton
             }
-            .foregroundStyle(Color.accentColor)
-            .buttonStyle(.borderedProminent)
-            .tint(Material.regularMaterial)
-            .buttonBorderShape(.capsule)
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
     }
 
-    func bottomBar(_ user: UserDetail) -> some View {
+    var saveButton: some View {
+        AsyncButton("Save") {
+            if editingUserInfo != initialValue {
+                await saveUserInfo()
+            }
+            if note != initialNoteValue {
+                await saveNote()
+            }
+        }
+        .foregroundStyle(Color.accentColor)
+        .buttonStyle(.borderedProminent)
+        .tint(Material.regularMaterial)
+        .buttonBorderShape(.capsule)
+    }
+
+    var bottomBar: some View {
         HStack {
             HStack(alignment: .bottom) {
                 Label {
                     Text(user.displayName)
                 } icon: {
-                    Image(systemName: "circle.fill")
-                        .foregroundStyle(user.status.color)
+                    Image(systemName: Constants.IconName.circleFilled)
+                        .foregroundStyle(statusColor)
                 }
                 .font(.headline)
-                Text(user.statusDescription)
-                    .font(.subheadline)
+                statusDescription
             }
             Spacer()
             if user.isFriend  {
-                favoriteMenu(user)
+                favoriteMenu
             }
         }
         .padding(.vertical, 8)
@@ -126,13 +114,35 @@ struct UserDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    func favoriteMenu(_ user: UserDetail) -> some View {
+    @ViewBuilder var statusDescription: some View {
+        if isOwned {
+            TextField("StatusDescription", text: $editingUserInfo.statusDescription)
+                .font(.subheadline)
+                .padding(.vertical, 4)
+                .padding(.horizontal, 8)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundStyle(Color(UIColor.systemBackground).opacity(0.25))
+                )
+        } else {
+            Text(user.statusDescription)
+                .font(.subheadline)
+        }
+    }
+
+    var favoriteIconName: String {
+        favoriteVM.isAdded(friendId: user.id)
+        ? Constants.IconName.favoriteFilled
+        : Constants.IconName.favorite
+    }
+
+    var favoriteMenu: some View {
         Menu {
             ForEach(favoriteVM.favoriteFriendGroups) { group in
-                favoriteMenuItem(user: user, group: group)
+                favoriteMenuItem(group: group)
             }
         } label: {
-            Image(systemName: favoriteVM.isAdded(friendId: user.id) ? "star.fill" : "star")
+            Image(systemName: favoriteIconName)
                 .frame(size: CGSize(width: 12, height: 12))
                 .padding(12)
                 .background {
@@ -142,7 +152,7 @@ struct UserDetailView: View {
         }
     }
 
-    func favoriteMenuItem(user: UserDetail, group: FavoriteGroup) -> some View {
+    func favoriteMenuItem(group: FavoriteGroup) -> some View {
         AsyncButton {
             await updateFavorite(friendId: user.id, group: group)
         } label: {
@@ -153,18 +163,18 @@ struct UserDetailView: View {
                     friendId: user.id,
                     groupId: group.id
                 ) {
-                    Image(systemName: "checkmark")
+                    Image(systemName: Constants.IconName.check)
                 }
             }
         }
     }
 
-    func displayStatusAndName(_ user: UserDetail) -> some View {
+    var displayStatusAndName: some View {
         HStack(alignment: .bottom) {
             Label {
                 Text(user.displayName)
             } icon: {
-                Image(systemName: "circle.fill")
+                Image(systemName: Constants.IconName.circleFilled)
                     .foregroundStyle(user.status.color)
             }
             .font(.headline)
@@ -175,7 +185,7 @@ struct UserDetailView: View {
         .padding(8)
     }
 
-    func contentStacks(_ user: UserDetail) -> some View {
+    var contentStacks: some View {
         VStack(spacing: 12) {
             if let instance = instance {
                 locationSection(instance)
@@ -184,11 +194,9 @@ struct UserDetailView: View {
             if let bio = user.bio {
                 bioSection(bio)
             }
-            if let bioLinks = user.bioLinks {
-                let bioUrls = bioLinks.compactMap { URL(string: $0) }
-                if !bioUrls.isEmpty {
-                    bioLinksSection(bioUrls)
-                }
+            let urls = user.bioLinks.elements
+            if !urls.isEmpty {
+                bioLinksSection(urls)
             }
         }
         .padding()
@@ -209,7 +217,7 @@ struct UserDetailView: View {
             Text("Note")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
-            TextField("Enter note", text: note ?? "", axis: .vertical)
+            TextField("Enter note", text: $note, axis: .vertical)
                 .font(.body)
         }
     }
@@ -238,17 +246,10 @@ struct UserDetailView: View {
         }
     }
 
-    func fetchUser() async {
-        let service = appVM.isDemoMode ? UserPreviewService(client: appVM.client) : UserService(client: appVM.client)
-        do {
-            user = try await service.fetchUser(userId: id)
-        } catch {
-            appVM.handleError(error)
-        }
-    }
-
-    func fetchInstance(_ user: UserDetail) async {
-        let service = appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
+    func fetchInstance() async {
+        let service = appVM.isDemoMode
+        ? InstancePreviewService(client: appVM.client)
+        : InstanceService(client: appVM.client)
         do {
             instance = try await service.fetchInstance(location: user.location)
         } catch {
@@ -267,13 +268,33 @@ struct UserDetailView: View {
         }
     }
 
-    func saveNote(_ user: UserDetail) async {
-        let service = appVM.isDemoMode ? UserNotePreviewService(client: appVM.client) : UserNoteService(client: appVM.client)
+    func saveUserInfo() async {
+        let service = appVM.isDemoMode
+        ? UserPreviewService(client: appVM.client)
+        : UserService(client: appVM.client)
         do {
-            _ = try await service.updateUserNote(
-                targetUserId: user.id,
-                note: user.note
+            try await service.updateUser(
+                id: user.id,
+                editedInfo: editingUserInfo
             )
+        } catch {
+            appVM.handleError(error)
+        }
+    }
+
+    func saveNote() async {
+        let service = appVM.isDemoMode
+        ? UserNotePreviewService(client: appVM.client)
+        : UserNoteService(client: appVM.client)
+        do {
+            if user.note.isEmpty {
+                try await service.clearUserNote(targetUserId: user.id)
+            } else {
+                _ = try await service.updateUserNote(
+                    targetUserId: user.id,
+                    note: note
+                )
+            }
         } catch {
             appVM.handleError(error)
         }

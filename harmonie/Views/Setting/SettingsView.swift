@@ -12,7 +12,6 @@ import VRCKit
 struct SettingsView: View {
     @EnvironmentObject var appVM: AppViewModel
     @State var sheetType: SheetType?
-    let thumbnailSize = CGSize(width: 40, height: 40)
 
     enum SheetType: Identifiable {
         case userDetail, license
@@ -41,7 +40,7 @@ struct SettingsView: View {
         switch sheetType {
         case .userDetail:
             if let user = appVM.user {
-                UserDetailView(id: user.id)
+                UserDetailPresentationView(id: user.id)
                     .presentationDetents([.medium, .large])
                     .presentationBackground(Color(UIColor.systemGroupedBackground))
             }
@@ -62,7 +61,7 @@ struct SettingsView: View {
                         HStack {
                             CircleURLImage(
                                 imageUrl: user.userIconUrl,
-                                size: thumbnailSize
+                                size: Constants.IconSize.ll
                             )
                             Text(user.displayName)
                         }

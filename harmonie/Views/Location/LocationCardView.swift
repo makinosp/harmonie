@@ -16,8 +16,6 @@ struct LocationCardView: View {
     let service: any InstanceServiceProtocol
     let location: FriendsLocation
     let frameWidth: CGFloat = 120
-    let iconSize = CGSize(width: 28, height: 28)
-    let iconOuterSize = CGSize(width: 32, height: 32)
 
     var body: some View {
         ZStack {
@@ -25,8 +23,11 @@ struct LocationCardView: View {
                 .foregroundStyle(Color(UIColor.secondarySystemGroupedBackground))
             if let instance = instance {
                 locationCardContent(instance: instance)
+                    .onTapGesture {
+                        isPresentedDetail = true
+                    }
                     .sheet(isPresented: $isPresentedDetail) {
-                        LocationDetailView(instance: instance)
+                        LocationDetailView(instance: instance, location: location)
                             .presentationDetents([.medium, .large])
                             .presentationBackground(Color(UIColor.systemGroupedBackground))
                     }
@@ -50,7 +51,7 @@ struct LocationCardView: View {
                 Text(instance.world.name)
                     .font(.body)
                 HStack {
-                    Text(instance.type.rawValue)
+                    Text(instance.typeDescription)
                         .font(.footnote)
                         .foregroundStyle(Color.gray)
                     Spacer()
@@ -64,10 +65,10 @@ struct LocationCardView: View {
                             ZStack {
                                 Circle()
                                     .foregroundStyle(friend.status.color)
-                                    .frame(size: iconOuterSize)
+                                    .frame(size: Constants.IconSize.thumbnailOutside)
                                 CircleURLImage(
                                     imageUrl: friend.userIconUrl,
-                                    size: iconSize
+                                    size: Constants.IconSize.thumbnail
                                 )
                             }
                         }
@@ -77,10 +78,7 @@ struct LocationCardView: View {
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
-            locationThumbnail(URL(string: instance.world.imageUrl))
-                .onTapGesture {
-                    isPresentedDetail = true
-                }
+            locationThumbnail(instance.world.imageUrl)
                 .padding()
         }
     }
@@ -102,7 +100,7 @@ struct LocationCardView: View {
                     .frame(maxWidth: frameWidth)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             } else if state.error != nil {
-                Image(systemName: "exclamationmark.circle")
+                Image(systemName: Constants.IconName.exclamation)
                     .frame(maxWidth: frameWidth)
             } else {
                 ZStack {
