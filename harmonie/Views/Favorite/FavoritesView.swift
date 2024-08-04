@@ -5,8 +5,8 @@
 //  Created by makinosp on 2024/03/16.
 //
 
-import VRCKit
 import SwiftUI
+import VRCKit
 
 struct FavoritesView: View {
     @EnvironmentObject var favoriteVM: FavoriteViewModel
@@ -37,7 +37,9 @@ struct FavoritesView: View {
                 ProgressScreen()
                     .navigationTitle("Favorites")
             }
-        } detail: { EmptyView() }
+        } detail: {
+            EmptyView()
+        }
     }
 
     func rowView(_ friend: Friend) -> some View {
