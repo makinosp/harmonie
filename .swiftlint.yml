@@ -67,3 +67,5 @@ analyzer_rules:
 
 excluded:
   - .build
+  - HarmonieTests
+  - HarmonieUITests
