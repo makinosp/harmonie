@@ -11,15 +11,14 @@ import VRCKit
 
 struct SettingsView: View {
     @EnvironmentObject var appVM: AppViewModel
-    @State var sheetType: SheetType?
 
-    enum SheetType: Identifiable {
+    enum Destination: Identifiable {
         case userDetail, license
         var id: Int { hashValue }
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationSplitView {
             VStack {
                 settingsContent
                 HStack {
@@ -28,26 +27,24 @@ struct SettingsView: View {
                 }
                 .font(.footnote)
             }
+            .navigationDestination(for: Destination.self) { destination in
+                presentDestination(destination)
+            }
             .navigationTitle("Settings")
-        }
-        .sheet(item: $sheetType) { sheetType in
-            presentSheet(sheetType)
+        } detail: {
+            presentDestination(.userDetail)
         }
     }
 
     @ViewBuilder
-    func presentSheet(_ sheetType: SheetType) -> some View {
-        switch sheetType {
+    func presentDestination(_ destination: Destination) -> some View {
+        switch destination {
         case .userDetail:
             if let user = appVM.user {
                 UserDetailPresentationView(id: user.id)
-                    .presentationDetents([.medium, .large])
-                    .presentationBackground(Color(UIColor.systemGroupedBackground))
             }
         case .license:
-            licenseView
-                .presentationDetents([.large])
-                .presentationBackground(Color(UIColor.systemGroupedBackground))
+            LicenseListView()
         }
     }
 
@@ -55,9 +52,7 @@ struct SettingsView: View {
         List {
             if let user = appVM.user {
                 Section(header: Text("My Profile")) {
-                    Button {
-                        sheetType = .userDetail
-                    } label: {
+                    NavigationLink(value: Destination.userDetail) {
                         HStack {
                             CircleURLImage(
                                 imageUrl: user.userIconUrl,
@@ -79,9 +74,7 @@ struct SettingsView: View {
                         Image(systemName: "curlybraces.square.fill")
                     }
                 }
-                Button {
-                    sheetType = .license
-                } label: {
+                NavigationLink(value: Destination.license) {
                     Label {
                         Text("Third Party Licence")
                     } icon: {
@@ -103,13 +96,6 @@ struct SettingsView: View {
                     }
                 }
             }
-        }
-    }
-
-    var licenseView: some View {
-        NavigationView {
-            LicenseListView()
-                .navigationTitle("LICENSE")
         }
     }
 
