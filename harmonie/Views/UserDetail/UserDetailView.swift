@@ -199,6 +199,7 @@ struct UserDetailView: View {
             if !urls.isEmpty {
                 bioLinksSection(urls)
             }
+            lastLoginSection
         }
         .padding()
     }
@@ -244,6 +245,23 @@ struct UserDetailView: View {
                         .font(.body)
                 }
             }
+        }
+    }
+
+    var lastLoginDateString: String {
+        [
+            DateUtil.shared.formatToyyyyMMdd(from: user.lastActivity),
+            DateUtil.shared.formatToHHmm(from: user.lastActivity)
+        ].joined(separator: " ")
+    }
+
+    var lastLoginSection: some View {
+        SectionView {
+            Text("Last Activity")
+                .font(.subheadline)
+                .foregroundStyle(Color.gray)
+            Text(lastLoginDateString)
+                .font(.body)
         }
     }
 
