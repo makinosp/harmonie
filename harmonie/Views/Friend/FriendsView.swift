@@ -15,17 +15,12 @@ struct FriendsView: View {
     @State var searchString: String = ""
 
     var body: some View {
-        NavigationStack {
+        NavigationSplitView(columnVisibility: .constant(.all)) {
             listView
-                .navigationTitle("Friends")
-                .searchable(text: $searchString)
-                .toolbar { toolbarContent }
+        } detail: {
+            Text("Select a friend")
         }
-        .sheet(item: $selected) { selected in
-            UserDetailPresentationView(id: selected.id)
-                .presentationDetents([.medium, .large])
-                .presentationBackground(Color(UIColor.systemGroupedBackground))
-        }
+        .navigationSplitViewStyle(.balanced)
     }
 
     var toolbarContent: some ToolbarContent {
@@ -80,8 +75,10 @@ struct FriendsView: View {
 
     /// Friend List branched by list type
     var listView: some View {
-        List {
-            ForEach(friendVM.filterFriends(text: searchString, statuses: typeFilters)) { friend in
+        List(friendVM.filterFriends(text: searchString, statuses: typeFilters)) { friend in
+            Button {
+                selected = Selected(id: friend.id)
+            } label: {
                 HStack {
                     ZStack {
                         Circle()
@@ -93,13 +90,18 @@ struct FriendsView: View {
                         )
                     }
                     Text(friend.displayName)
+                    Spacer()
+                    Image(systemName: "chevron.right")
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
-                .onTapGesture {
-                    selected = Selected(id: friend.id)
-                }
             }
+        }
+        .navigationTitle("Friends")
+        .searchable(text: $searchString)
+        .toolbar { toolbarContent }
+        .navigationDestination(item: $selected) { selected in
+            UserDetailPresentationView(id: selected.id)
         }
     }
 }
