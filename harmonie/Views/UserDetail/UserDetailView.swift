@@ -13,7 +13,6 @@ import VRCKit
 struct UserDetailView: View {
     @EnvironmentObject var appVM: AppViewModel
     @EnvironmentObject var favoriteVM: FavoriteViewModel
-    // swiftlint:disable:next attributes
     @Environment(\.dismiss) private var dismiss
     @State var user: UserDetail
     @State var instance: Instance?

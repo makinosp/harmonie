@@ -19,7 +19,7 @@ extension NavigationSplitView {
     init(
         columnVisibility: Binding<NavigationSplitViewVisibility>,
         @ViewBuilder sidebar: () -> Sidebar
-    ) where Content == EmptyView,  Detail == EmptyView {
+    ) where Content == EmptyView, Detail == EmptyView {
         self.init(columnVisibility: columnVisibility, sidebar: sidebar) {
             EmptyView()
         }

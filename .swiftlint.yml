@@ -4,7 +4,8 @@ disabled_rules:
 
 opt_in_rules:
   - array_init
-  - attributes
+  - attributes:
+    attributes_with_arguments_always_on_line_above: false
   - closure_end_indentation
   - closure_spacing
   - collection_alignment
