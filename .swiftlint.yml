@@ -68,5 +68,6 @@ analyzer_rules:
 
 excluded:
   - .build
+  - Harmonie.xcodeproj
   - HarmonieTests
   - HarmonieUITests

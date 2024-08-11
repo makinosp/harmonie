@@ -9,7 +9,7 @@ import Foundation
 
 class DateUtil {
     static let shared = DateUtil()
-    
+
     private let yyyyMMddDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")

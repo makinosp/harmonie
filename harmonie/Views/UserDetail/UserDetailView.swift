@@ -9,7 +9,6 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-// swiftlint:disable:next type_body_length
 struct UserDetailView: View {
     @EnvironmentObject var appVM: AppViewModel
     @EnvironmentObject var favoriteVM: FavoriteViewModel
