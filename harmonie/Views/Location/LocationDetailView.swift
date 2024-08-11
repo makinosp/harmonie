@@ -19,9 +19,8 @@ struct LocationDetailView: View {
                 Section("World") {
                     GradientOverlayImageView(
                         url: instance.world.imageUrl,
-                        maxHeight: 160,
-                        bottomContent: { bottomBar }
-                    )
+                        maxHeight: 160
+                    ) { bottomBar }
                     .listRowInsets(EdgeInsets())
                 }
                 Section("Friends") {
