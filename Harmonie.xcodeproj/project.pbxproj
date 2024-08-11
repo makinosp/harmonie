@@ -48,6 +48,7 @@
 		209A788A2C2FC0FA00BEFAE6 /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78862C2FC0FA00BEFAE6 /* FavoriteViewModel.swift */; };
 		209A788B2C2FC0FA00BEFAE6 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */; };
 		209D77302C2251C200A11666 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D772F2C2251C200A11666 /* MainTabView.swift */; };
+		20AD8D982C68C5C300140232 /* NavigationSplitView+initializers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AD8D972C68C5C300140232 /* NavigationSplitView+initializers.swift */; };
 		20DC3C292C422786001101DB /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20DC3C282C422786001101DB /* VRCKit */; };
 		20E1902E2C4E820A003F39AF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E1902D2C4E820A003F39AF /* Constants.swift */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
@@ -106,6 +107,7 @@
 		209A78862C2FC0FA00BEFAE6 /* FavoriteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
 		209D772F2C2251C200A11666 /* MainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		20AD8D972C68C5C300140232 /* NavigationSplitView+initializers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NavigationSplitView+initializers.swift"; path = "Harmonie/Extensions/NavigationSplitView+initializers.swift"; sourceTree = SOURCE_ROOT; };
 		20E1902D2C4E820A003F39AF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Harmonie/Utils/Constants.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -176,6 +178,7 @@
 			children = (
 				2090C6F22C4B7877009667CC /* Status+color.swift */,
 				205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */,
+				20AD8D972C68C5C300140232 /* NavigationSplitView+initializers.swift */,
 				207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */,
 				207FC6342C4256E60018E605 /* View+SectionModifier.swift */,
 				207FC6322C4256E60018E605 /* View+SizeModifier.swift */,
@@ -489,6 +492,7 @@
 				206088E92C48079900626DDC /* LocationDetailView.swift in Sources */,
 				20460CB02C56215700B276E3 /* Selected.swift in Sources */,
 				201E40E52B9B55E300321521 /* AuthenticationView.swift in Sources */,
+				20AD8D982C68C5C300140232 /* NavigationSplitView+initializers.swift in Sources */,
 				208E6E752C55FF9F00B61822 /* GradientOverlayImageView.swift in Sources */,
 				200723972BA56377002C27E8 /* UserDetailView.swift in Sources */,
 				201B430D2C27F44100879A2F /* Errors.swift in Sources */,
