@@ -11,14 +11,14 @@ import VRCKit
 
 struct SettingsView: View {
     @EnvironmentObject var appVM: AppViewModel
+    @State var destination: Destination? = .userDetail
 
-    enum Destination: Identifiable {
+    enum Destination: Hashable {
         case userDetail, license
-        var id: Int { hashValue }
     }
 
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: .constant(.all)) {
             VStack {
                 settingsContent
                 HStack {
@@ -27,13 +27,12 @@ struct SettingsView: View {
                 }
                 .font(.footnote)
             }
-            .navigationDestination(for: Destination.self) { destination in
+            .navigationDestination(item: $destination) { destination in
                 presentDestination(destination)
             }
             .navigationTitle("Settings")
-        } detail: {
-            presentDestination(.userDetail)
         }
+        .navigationSplitViewStyle(.balanced)
     }
 
     @ViewBuilder
@@ -52,7 +51,9 @@ struct SettingsView: View {
         List {
             if let user = appVM.user {
                 Section(header: Text("My Profile")) {
-                    NavigationLink(value: Destination.userDetail) {
+                    Button {
+                        destination = .userDetail
+                    } label: {
                         HStack {
                             CircleURLImage(
                                 imageUrl: user.userIconUrl,
@@ -74,7 +75,9 @@ struct SettingsView: View {
                         Image(systemName: "curlybraces.square.fill")
                     }
                 }
-                NavigationLink(value: Destination.license) {
+                Button {
+                    destination = .license
+                } label: {
                     Label {
                         Text("Third Party Licence")
                     } icon: {
