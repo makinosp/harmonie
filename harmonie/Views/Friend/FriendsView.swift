@@ -102,6 +102,7 @@ struct FriendsView: View {
         .toolbar { toolbarContent }
         .navigationDestination(item: $selected) { selected in
             UserDetailPresentationView(id: selected.id)
+                .id(selected.id)
         }
     }
 }
