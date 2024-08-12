@@ -10,9 +10,9 @@ import SwiftUI
 import VRCKit
 
 struct LocationCardView: View {
-    @EnvironmentObject var appVM: AppViewModel
-    @State var instance: Instance?
-    @State var isPresentedDetail = false
+    @EnvironmentObject private var appVM: AppViewModel
+    @Binding var selected: InstanceLocation?
+    @State private var instance: Instance?
     let service: any InstanceServiceProtocol
     let location: FriendsLocation
     let frameWidth: CGFloat = 120
@@ -24,12 +24,7 @@ struct LocationCardView: View {
             if let instance = instance {
                 locationCardContent(instance: instance)
                     .onTapGesture {
-                        isPresentedDetail = true
-                    }
-                    .sheet(isPresented: $isPresentedDetail) {
-                        LocationDetailView(instance: instance, location: location)
-                            .presentationDetents([.medium, .large])
-                            .presentationBackground(Color(UIColor.systemGroupedBackground))
+                        selected = InstanceLocation(location: location, instance: instance)
                     }
             } else {
                 ProgressView()

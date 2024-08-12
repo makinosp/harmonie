@@ -14,18 +14,16 @@ struct LocationDetailView: View {
     let location: FriendsLocation
 
     var body: some View {
-        NavigationStack {
-            List {
-                Section("World") {
-                    GradientOverlayImageView(
-                        url: instance.world.imageUrl,
-                        maxHeight: 160
-                    ) { bottomBar }
+        List {
+            Section("World") {
+                GradientOverlayImageView(
+                    url: instance.world.imageUrl,
+                    maxHeight: 160
+                ) { bottomBar }
                     .listRowInsets(EdgeInsets())
-                }
-                Section("Friends") {
-                    friendList
-                }
+            }
+            Section("Friends") {
+                friendList
             }
         }
     }

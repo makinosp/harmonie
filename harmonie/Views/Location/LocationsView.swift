@@ -8,8 +8,15 @@
 import SwiftUI
 import VRCKit
 
+struct InstanceLocation: Hashable, Identifiable {
+    var location: FriendsLocation
+    var instance: Instance
+    var id: Int { hashValue }
+}
+
 struct LocationsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
+    @State var selected: InstanceLocation?
     let appVM: AppViewModel
 
     var service: any InstanceServiceProtocol {
@@ -17,23 +24,20 @@ struct LocationsView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVStack {
-                    ForEach(friendVM.friendsLocations) { location in
-                        if location.isVisible {
-                            LocationCardView(
-                                service: service,
-                                location: location
-                            )
-                        }
-                    }
+        NavigationSplitView {
+            locationList
+                .background(Color(UIColor.systemGroupedBackground))
+                .navigationTitle("Locations")
+                .navigationDestination(item: $selected) { selected in
+                    LocationDetailView(
+                        instance: selected.instance,
+                        location: selected.location
+                    )
                 }
-                .padding(.horizontal, 8)
-            }
-            .background(Color(UIColor.systemGroupedBackground))
-            .navigationTitle("Locations")
+        } detail: {
+            Text("Select a location")
         }
+        .navigationSplitViewStyle(.balanced)
         .refreshable {
             do {
                 try await friendVM.fetchAllFriends()
@@ -41,5 +45,22 @@ struct LocationsView: View {
                 appVM.handleError(error)
             }
         }
+    }
+
+    var locationList: some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(friendVM.friendsLocations) { location in
+                    if location.isVisible {
+                        locatoinItem(location)
+                    }
+                }
+            }
+            .padding(.horizontal, 8)
+        }
+    }
+
+    func locatoinItem(_ location: FriendsLocation) -> some View {
+        LocationCardView(selected: $selected, service: service, location: location)
     }
 }
