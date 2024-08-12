@@ -24,9 +24,9 @@ struct LocationsView: View {
     }
 
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: .constant(.all)) {
             locationList
-                .background(Color(UIColor.systemGroupedBackground))
+                .background(Color(UIColor.secondarySystemGroupedBackground))
                 .navigationTitle("Locations")
                 .navigationDestination(item: $selected) { selected in
                     LocationDetailView(

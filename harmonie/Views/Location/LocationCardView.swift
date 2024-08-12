@@ -20,7 +20,7 @@ struct LocationCardView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(Color(UIColor.secondarySystemGroupedBackground))
+                .foregroundStyle(Color(UIColor.tertiarySystemGroupedBackground))
             if let instance = instance {
                 locationCardContent(instance: instance)
                     .onTapGesture {
