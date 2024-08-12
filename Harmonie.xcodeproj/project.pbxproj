@@ -54,6 +54,7 @@
 		20E1902E2C4E820A003F39AF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E1902D2C4E820A003F39AF /* Constants.swift */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
 		20F95D282C69BC2D002CDC5F /* UserDetailView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F95D272C69BC2D002CDC5F /* UserDetailView+Actions.swift */; };
+		20F95D2A2C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F95D292C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		20AFBC832C68EE5D006E9239 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateUtil.swift; path = Harmonie/Utils/DateUtil.swift; sourceTree = SOURCE_ROOT; };
 		20E1902D2C4E820A003F39AF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Harmonie/Utils/Constants.swift; sourceTree = SOURCE_ROOT; };
 		20F95D272C69BC2D002CDC5F /* UserDetailView+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UserDetailView+Actions.swift"; path = "Harmonie/Views/UserDetail/UserDetailView+Actions.swift"; sourceTree = SOURCE_ROOT; };
+		20F95D292C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserDetailView+ActivitySection.swift"; path = "Harmonie/Views/UserDetail/UserDetailView+ActivitySection.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +274,7 @@
 			children = (
 				200723962BA56377002C27E8 /* UserDetailView.swift */,
 				20F95D272C69BC2D002CDC5F /* UserDetailView+Actions.swift */,
+				20F95D292C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift */,
 				20460CAD2C561ED200B276E3 /* UserDetailPresentationView.swift */,
 			);
 			path = UserDetail;
@@ -493,6 +496,7 @@
 				200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */,
 				200FA7B02C1D745B0001E655 /* LocationCardView.swift in Sources */,
 				209D77302C2251C200A11666 /* MainTabView.swift in Sources */,
+				20F95D2A2C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift in Sources */,
 				20395DC42B94653100003921 /* FriendsView.swift in Sources */,
 				207FC6352C4256E60018E605 /* View+SizeModifier.swift in Sources */,
 				207FC6362C4256E60018E605 /* View+ErrorAlertModifier.swift in Sources */,
