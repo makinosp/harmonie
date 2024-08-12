@@ -25,6 +25,11 @@ class FriendViewModel: ObservableObject {
         var id: Int { self.hashValue }
     }
 
+    enum FilterFavoriteGroups: Hashable, Identifiable {
+        case all, favoriteGroup(FavoriteGroup)
+        var id: Int { hashValue }
+    }
+
     enum FriendSortType: Hashable, Identifiable {
         case `default`
         var id: Int { self.hashValue }

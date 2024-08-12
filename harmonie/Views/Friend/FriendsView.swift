@@ -10,7 +10,9 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
+    @EnvironmentObject private var favoriteVM: FavoriteViewModel
     @State var typeFilters: Set<UserStatus> = []
+    @State var filterFavoriteGroups: Set<FavoriteGroup> = []
     @State var selected: Selected?
     @State var searchString: String = ""
 
@@ -26,14 +28,14 @@ struct FriendsView: View {
     var toolbarContent: some ToolbarContent {
         ToolbarItem {
             Menu {
-                statusFilter
+                filter
             } label: {
                 Image(systemName: Constants.IconName.filter)
             }
         }
     }
 
-    var statusFilter: some View {
+    @ViewBuilder var filter: some View {
         Menu("Statuses") {
             ForEach(FriendViewModel.FriendListType.allCases) { listType in
                 Button {
@@ -49,6 +51,13 @@ struct FriendsView: View {
                 }
             }
         }
+        Menu("Favorite Groups") {
+            ForEach(favoriteVM.favoriteFriendGroups) { group in
+                Button {} label: {
+                    Text(group.displayName)
+                }
+            }
+        }
     }
 
     func statusFilterAction(_ listType: FriendViewModel.FriendListType) {
@@ -60,6 +69,19 @@ struct FriendsView: View {
                 typeFilters.remove(status)
             } else {
                 typeFilters.insert(status)
+            }
+        }
+    }
+
+    func filterFavoriteGroupAction(_ type: FriendViewModel.FilterFavoriteGroups) {
+        switch type {
+        case .all:
+            filterFavoriteGroups.removeAll()
+        case .favoriteGroup(let favoriteGroup):
+            if filterFavoriteGroups.contains(favoriteGroup) {
+                filterFavoriteGroups.remove(favoriteGroup)
+            } else {
+                filterFavoriteGroups.insert(favoriteGroup)
             }
         }
     }
