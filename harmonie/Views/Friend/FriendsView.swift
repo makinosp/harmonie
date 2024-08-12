@@ -68,16 +68,3 @@ struct FriendsView: View {
         }
     }
 }
-
-extension FriendViewModel.FriendListType: CaseIterable {
-    static var allCases: [FriendViewModel.FriendListType] {
-        [
-            .all,
-            .status(.active),
-            .status(.joinMe),
-            .status(.askMe),
-            .status(.busy),
-            .status(.offline)
-        ]
-    }
-}
