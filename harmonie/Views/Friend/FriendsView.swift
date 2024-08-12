@@ -10,7 +10,7 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
-    @EnvironmentObject private var favoriteVM: FavoriteViewModel
+    @EnvironmentObject var favoriteVM: FavoriteViewModel
     @State var typeFilters: Set<UserStatus> = []
     @State var filterFavoriteGroups: Set<FavoriteGroup> = []
     @State var selected: Selected?
@@ -32,73 +32,6 @@ struct FriendsView: View {
             } label: {
                 Image(systemName: Constants.IconName.filter)
             }
-        }
-    }
-
-    @ViewBuilder var filter: some View {
-        Menu("Statuses") {
-            ForEach(FriendViewModel.FriendListType.allCases) { listType in
-                Button {
-                    statusFilterAction(listType)
-                } label: {
-                    Label {
-                        Text(listType.description)
-                    } icon: {
-                        if isCheckedStatusFilter(listType) {
-                            Image(systemName: Constants.IconName.check)
-                        }
-                    }
-                }
-            }
-        }
-        Menu("Favorite Groups") {
-            Button {
-                filterFavoriteGroupAction(.all)
-            } label: {
-                Text("All")
-            }
-            ForEach(favoriteVM.favoriteFriendGroups) { group in
-                Button {
-                    filterFavoriteGroupAction(.favoriteGroup(group))
-                } label: {
-                    Text(group.displayName)
-                }
-            }
-        }
-    }
-
-    func statusFilterAction(_ listType: FriendViewModel.FriendListType) {
-        switch listType {
-        case .all:
-            typeFilters.removeAll()
-        case .status(let status):
-            if typeFilters.contains(status) {
-                typeFilters.remove(status)
-            } else {
-                typeFilters.insert(status)
-            }
-        }
-    }
-
-    func filterFavoriteGroupAction(_ type: FriendViewModel.FilterFavoriteGroups) {
-        switch type {
-        case .all:
-            filterFavoriteGroups.removeAll()
-        case .favoriteGroup(let favoriteGroup):
-            if filterFavoriteGroups.contains(favoriteGroup) {
-                filterFavoriteGroups.remove(favoriteGroup)
-            } else {
-                filterFavoriteGroups.insert(favoriteGroup)
-            }
-        }
-    }
-
-    func isCheckedStatusFilter(_ listType: FriendViewModel.FriendListType) -> Bool {
-        switch listType {
-        case .all:
-            typeFilters.isEmpty
-        case .status(let status):
-            typeFilters.contains(status)
         }
     }
 

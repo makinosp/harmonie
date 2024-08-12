@@ -18,6 +18,7 @@
 		201E40E52B9B55E300321521 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201E40E42B9B55E300321521 /* AuthenticationView.swift */; };
 		202844C22BA5CC4F00357D09 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202844C12BA5CC4F00357D09 /* FavoritesView.swift */; };
 		202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202844C32BA5CE1B00357D09 /* LocationsView.swift */; };
+		202B9E372C6A426500B981C9 /* FriendsView+Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202B9E362C6A426500B981C9 /* FriendsView+Filters.swift */; };
 		20395D972B945CD700003921 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20395D962B945CD700003921 /* ContentView.swift */; };
 		20395D9B2B945CD800003921 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20395D9A2B945CD800003921 /* Assets.xcassets */; };
 		20395D9E2B945CD800003921 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20395D9D2B945CD800003921 /* Preview Assets.xcassets */; };
@@ -84,6 +85,7 @@
 		20281B032C43C84500F5704F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Harmonie/Info.plist; sourceTree = "<group>"; };
 		202844C12BA5CC4F00357D09 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		202844C32BA5CE1B00357D09 /* LocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsView.swift; sourceTree = "<group>"; };
+		202B9E362C6A426500B981C9 /* FriendsView+Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FriendsView+Filters.swift"; path = "Harmonie/Views/Friend/FriendsView+Filters.swift"; sourceTree = SOURCE_ROOT; };
 		20395D912B945CD700003921 /* Harmonie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harmonie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20395D962B945CD700003921 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		20395D9A2B945CD800003921 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				20395DC32B94653100003921 /* FriendsView.swift */,
+				202B9E362C6A426500B981C9 /* FriendsView+Filters.swift */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				2090C6F32C4B7877009667CC /* Status+color.swift in Sources */,
 				205B3BF42C00D8BF0097D62A /* ProgressScreen.swift in Sources */,
 				205B3BF22C00D51A0097D62A /* SettingsView.swift in Sources */,
+				202B9E372C6A426500B981C9 /* FriendsView+Filters.swift in Sources */,
 				20E1902E2C4E820A003F39AF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
