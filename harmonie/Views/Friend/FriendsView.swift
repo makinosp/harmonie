@@ -52,8 +52,15 @@ struct FriendsView: View {
             }
         }
         Menu("Favorite Groups") {
+            Button {
+                filterFavoriteGroupAction(.all)
+            } label: {
+                Text("All")
+            }
             ForEach(favoriteVM.favoriteFriendGroups) { group in
-                Button {} label: {
+                Button {
+                    filterFavoriteGroupAction(.favoriteGroup(group))
+                } label: {
                     Text(group.displayName)
                 }
             }
