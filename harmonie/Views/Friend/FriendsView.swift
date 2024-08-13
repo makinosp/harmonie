@@ -37,7 +37,12 @@ struct FriendsView: View {
 
     /// Friend List branched by list type
     var listView: some View {
-        List(friendVM.filterFriends(text: searchString, statuses: typeFilters)) { friend in
+        List(friendVM.filterFriends(
+            text: searchString,
+            statuses: typeFilters,
+            filterFavoriteGroups: filterFavoriteGroups,
+            favoriteFriends: favoriteVM.favoriteFriends
+        )) { friend in
             Button {
                 selected = Selected(id: friend.id)
             } label: {

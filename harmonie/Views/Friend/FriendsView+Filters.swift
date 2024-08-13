@@ -29,13 +29,25 @@ extension FriendsView {
             Button {
                 filterFavoriteGroupAction(.all)
             } label: {
-                Text("All")
+                Label {
+                    Text("All")
+                } icon: {
+                    if isCheckedFilterFavoriteGroups(.all) {
+                        Image(systemName: Constants.IconName.check)
+                    }
+                }
             }
             ForEach(favoriteVM.favoriteFriendGroups) { group in
                 Button {
                     filterFavoriteGroupAction(.favoriteGroup(group))
                 } label: {
-                    Text(group.displayName)
+                    Label {
+                        Text(group.displayName)
+                    } icon: {
+                        if isCheckedFilterFavoriteGroups(.favoriteGroup(group)) {
+                            Image(systemName: Constants.IconName.check)
+                        }
+                    }
                 }
             }
         }
@@ -73,6 +85,15 @@ extension FriendsView {
             typeFilters.isEmpty
         case .status(let status):
             typeFilters.contains(status)
+        }
+    }
+
+    func isCheckedFilterFavoriteGroups(_ listType: FriendViewModel.FilterFavoriteGroups) -> Bool {
+        switch listType {
+        case .all:
+            filterFavoriteGroups.isEmpty
+        case .favoriteGroup(let favoriteGroup):
+            filterFavoriteGroups.contains(favoriteGroup)
         }
     }
 }
