@@ -11,7 +11,7 @@ import VRCKit
 
 struct SettingsView: View {
     @EnvironmentObject var appVM: AppViewModel
-    @State var destination: Destination? = .userDetail
+    @State var destination: Destination?
 
     enum Destination: Hashable {
         case userDetail, license

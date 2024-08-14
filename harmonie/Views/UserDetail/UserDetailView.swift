@@ -9,7 +9,6 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-// swiftlint:disable:next type_body_length
 struct UserDetailView: View {
     @EnvironmentObject var appVM: AppViewModel
     @EnvironmentObject var favoriteVM: FavoriteViewModel
@@ -199,7 +198,7 @@ struct UserDetailView: View {
             if !urls.isEmpty {
                 bioLinksSection(urls)
             }
-            lastLoginSection
+            activitySection
         }
         .padding()
     }
@@ -245,23 +244,6 @@ struct UserDetailView: View {
                         .font(.body)
                 }
             }
-        }
-    }
-
-    var lastLoginDateString: String {
-        [
-            DateUtil.shared.formatToyyyyMMdd(from: user.lastActivity),
-            DateUtil.shared.formatToHHmm(from: user.lastActivity)
-        ].joined(separator: " ")
-    }
-
-    var lastLoginSection: some View {
-        SectionView {
-            Text("Last Activity")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
-            Text(lastLoginDateString)
-                .font(.body)
         }
     }
 }

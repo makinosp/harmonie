@@ -1,5 +1,5 @@
 //
-//  UserDetail+Actions.swift
+//  UserDetailView+Actions.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/08/11.

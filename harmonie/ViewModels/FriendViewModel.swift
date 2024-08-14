@@ -12,22 +12,15 @@ import VRCKit
 class FriendViewModel: ObservableObject {
     @Published var onlineFriends: [Friend] = []
     @Published var offlineFriends: [Friend] = []
+    @Published var filterUserStatus: Set<UserStatus> = []
+    @Published var filterFavoriteGroups: Set<FavoriteGroup> = []
+    @Published var filterText: String = ""
     let user: User
-    var service: any FriendServiceProtocol
+    private let service: any FriendServiceProtocol
 
     init(user: User, service: any FriendServiceProtocol) {
         self.user = user
         self.service = service
-    }
-
-    enum FriendListType: Hashable, Identifiable {
-        case all, status(UserStatus)
-        var id: Int { self.hashValue }
-    }
-
-    enum FriendSortType: Hashable, Identifiable {
-        case `default`
-        var id: Int { self.hashValue }
     }
 
     var allFriends: [Friend] {
@@ -42,6 +35,15 @@ class FriendViewModel: ObservableObject {
         service.friendsGroupedByLocation(onlineFriends)
     }
 
+    /// Returns a list of matches for either `onlineFriends` or `offlineFriends`
+    /// for each id of reversed order friend list.
+    /// - Returns a list of recentry friends
+    var recentlyFriends: [Friend] {
+        user.friends.reversed().compactMap { id in
+            onlineFriends.first { $0.id == id } ?? offlineFriends.first { $0.id == id }
+        }
+    }
+
     /// Fetch friends from API
     func fetchAllFriends() async throws {
         async let onlineFriendsTask = service.fetchFriends(
@@ -54,40 +56,5 @@ class FriendViewModel: ObservableObject {
         )
         onlineFriends = try await onlineFriendsTask
         offlineFriends = try await offlineFriendsTask
-    }
-
-    /// Filters the list of friends based on the specified list type.
-    /// - Parameter text: The text of friend list to filter.
-    /// - Parameter statuses: The statuses of set of friend list to filter.
-    /// - Parameter sort: The type of friend list to sort.
-    /// - Returns: A filtered list of friends whose display names meet the criteria defined by `isIncluded`.
-    func filterFriends(text: String, statuses: Set<UserStatus>, sort: FriendSortType = .default) -> [Friend] {
-        recentlyFriends
-            .filter {
-                statuses.isEmpty || statuses.contains($0.status)
-            }
-            .filter {
-                text.isEmpty || $0.displayName.range(of: text, options: .caseInsensitive) != nil
-            }
-    }
-
-    /// Returns a list of matches for either `onlineFriends` or `offlineFriends`
-    /// for each id of reversed order friend list.
-    /// - Returns a list of recentry friends
-    var recentlyFriends: [Friend] {
-        user.friends.reversed().compactMap { id in
-            onlineFriends.first { $0.id == id } ?? offlineFriends.first { $0.id == id }
-        }
-    }
-}
-
-extension FriendViewModel.FriendListType: CustomStringConvertible {
-    var description: String {
-        switch self {
-        case .all:
-            return "All"
-        case .status(let status):
-            return status.description
-        }
     }
 }
