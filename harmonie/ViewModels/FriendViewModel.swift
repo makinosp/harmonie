@@ -14,6 +14,7 @@ class FriendViewModel: ObservableObject {
     @Published var offlineFriends: [Friend] = []
     @Published var filterUserStatus: Set<UserStatus> = []
     @Published var filterFavoriteGroups: Set<FavoriteGroup> = []
+    @Published var filterText: String = ""
     let user: User
     private let service: any FriendServiceProtocol
 

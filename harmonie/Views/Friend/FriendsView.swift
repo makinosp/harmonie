@@ -12,7 +12,6 @@ struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
     @EnvironmentObject var favoriteVM: FavoriteViewModel
     @State var selected: Selected?
-    @State var searchString: String = ""
 
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
@@ -36,10 +35,7 @@ struct FriendsView: View {
 
     /// Friend List branched by list type
     var listView: some View {
-        List(friendVM.filterFriends(
-            text: searchString,
-            favoriteFriends: favoriteVM.favoriteFriends
-        )) { friend in
+        List(friendVM.filterFriends(favoriteFriends: favoriteVM.favoriteFriends)) { friend in
             Button {
                 selected = Selected(id: friend.id)
             } label: {
@@ -62,7 +58,7 @@ struct FriendsView: View {
             }
         }
         .navigationTitle("Friends")
-        .searchable(text: $searchString)
+        .searchable(text: $friendVM.filterText)
         .toolbar { toolbarContent }
         .navigationDestination(item: $selected) { selected in
             UserDetailPresentationView(id: selected.id)

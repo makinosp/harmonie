@@ -25,16 +25,9 @@ extension FriendViewModel {
     }
 
     /// Filters the list of friends based on the specified list type.
-    /// - Parameter text: The text of friend list to filter.
-    /// - Parameter statuses: The statuses of set of friend list to filter.
-    /// - Parameter favoriteGroups: The favorite groups of set of friend list to filter.
-    /// - Parameter sort: The type of friend list to sort.
+    /// - Parameter favoriteFriends: Favorite friends information.
     /// - Returns: A filtered list of friends whose display names meet the criteria defined by `isIncluded`.
-    func filterFriends(
-        text: String,
-        favoriteFriends: [FavoriteViewModel.FavoriteFriend],
-        sort: SortType = .default
-    ) -> [Friend] {
+    func filterFriends(favoriteFriends: [FavoriteViewModel.FavoriteFriend]) -> [Friend] {
         recentlyFriends
             .filter { friend in
                 filterFavoriteGroups.isEmpty || filterFavoriteGroups.contains { favoriteGroup in
@@ -47,7 +40,7 @@ extension FriendViewModel {
                 filterUserStatus.isEmpty || filterUserStatus.contains($0.status)
             }
             .filter {
-                text.isEmpty || $0.displayName.range(of: text, options: .caseInsensitive) != nil
+                filterText.isEmpty || $0.displayName.range(of: filterText, options: .caseInsensitive) != nil
             }
     }
 
