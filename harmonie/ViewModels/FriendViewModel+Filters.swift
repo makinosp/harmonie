@@ -27,11 +27,11 @@ extension FriendViewModel {
     /// Filters the list of friends based on the specified list type.
     /// - Parameter favoriteFriends: Favorite friends information.
     /// - Returns: A filtered list of friends whose display names meet the criteria defined by `isIncluded`.
-    func filterFriends(favoriteFriends: [FavoriteViewModel.FavoriteFriend]) -> [Friend] {
+    func filterFriends(favoriteFriends: [FavoriteFriend]) -> [Friend] {
         recentlyFriends
             .filter { friend in
                 filterFavoriteGroups.isEmpty || filterFavoriteGroups.contains { favoriteGroup in
-                    let predicate: ((FavoriteViewModel.FavoriteFriend) -> Bool) = { $0.favoriteGroupId == favoriteGroup.id }
+                    let predicate: ((FavoriteFriend) -> Bool) = { $0.favoriteGroupId == favoriteGroup.id }
                     guard let favoriteFriend = favoriteFriends.first(where: predicate) else { return true }
                     return favoriteFriend.friends.contains(friend)
                 }
