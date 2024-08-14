@@ -9,12 +9,18 @@ import Foundation
 import VRCKit
 
 extension FriendViewModel {
-    enum FriendListType: Hashable, Identifiable {
+    enum FilterUserStatus: Hashable, Identifiable {
         case all, status(UserStatus)
-        var id: Int { self.hashValue }
+        var id: Int { hashValue }
     }
+
     enum FilterFavoriteGroups: Hashable, Identifiable {
         case all, favoriteGroup(FavoriteGroup)
+        var id: Int { hashValue }
+    }
+
+    enum SortType: Hashable, Identifiable {
+        case `default`
         var id: Int { hashValue }
     }
 
@@ -26,10 +32,8 @@ extension FriendViewModel {
     /// - Returns: A filtered list of friends whose display names meet the criteria defined by `isIncluded`.
     func filterFriends(
         text: String,
-        statuses: Set<UserStatus>,
-        filterFavoriteGroups: Set<FavoriteGroup>,
         favoriteFriends: [FavoriteViewModel.FavoriteFriend],
-        sort: FriendSortType = .default
+        sort: SortType = .default
     ) -> [Friend] {
         recentlyFriends
             .filter { friend in
@@ -40,24 +44,59 @@ extension FriendViewModel {
                 }
             }
             .filter {
-                statuses.isEmpty || statuses.contains($0.status)
+                filterUserStatus.isEmpty || filterUserStatus.contains($0.status)
             }
             .filter {
                 text.isEmpty || $0.displayName.range(of: text, options: .caseInsensitive) != nil
             }
     }
 
-    /// Returns a list of matches for either `onlineFriends` or `offlineFriends`
-    /// for each id of reversed order friend list.
-    /// - Returns a list of recentry friends
-    var recentlyFriends: [Friend] {
-        user.friends.reversed().compactMap { id in
-            onlineFriends.first { $0.id == id } ?? offlineFriends.first { $0.id == id }
+    func applyFilterUserStatus(_ listType: FilterUserStatus) {
+        switch listType {
+        case .all:
+            filterUserStatus.removeAll()
+        case .status(let status):
+            if filterUserStatus.contains(status) {
+                filterUserStatus.remove(status)
+            } else {
+                filterUserStatus.insert(status)
+            }
+        }
+    }
+
+    func applyFilterFavoriteGroup(_ type: FilterFavoriteGroups) {
+        switch type {
+        case .all:
+            filterFavoriteGroups.removeAll()
+        case .favoriteGroup(let favoriteGroup):
+            if filterFavoriteGroups.contains(favoriteGroup) {
+                filterFavoriteGroups.remove(favoriteGroup)
+            } else {
+                filterFavoriteGroups.insert(favoriteGroup)
+            }
+        }
+    }
+
+    func isCheckedFilterUserStatus(_ listType: FilterUserStatus) -> Bool {
+        switch listType {
+        case .all:
+            filterUserStatus.isEmpty
+        case .status(let status):
+            filterUserStatus.contains(status)
+        }
+    }
+
+    func isCheckedFilterFavoriteGroups(_ listType: FilterFavoriteGroups) -> Bool {
+        switch listType {
+        case .all:
+            filterFavoriteGroups.isEmpty
+        case .favoriteGroup(let favoriteGroup):
+            filterFavoriteGroups.contains(favoriteGroup)
         }
     }
 }
 
-extension FriendViewModel.FriendListType: CustomStringConvertible {
+extension FriendViewModel.FilterUserStatus: CustomStringConvertible {
     var description: String {
         switch self {
         case .all:
@@ -68,8 +107,8 @@ extension FriendViewModel.FriendListType: CustomStringConvertible {
     }
 }
 
-extension FriendViewModel.FriendListType: CaseIterable {
-    static var allCases: [FriendViewModel.FriendListType] {
+extension FriendViewModel.FilterUserStatus: CaseIterable {
+    static var allCases: [FriendViewModel.FilterUserStatus] {
         [
             .all,
             .status(.active),

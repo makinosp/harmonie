@@ -9,91 +9,50 @@ import SwiftUI
 import VRCKit
 
 extension FriendsView {
-    @ViewBuilder var filter: some View {
+    var filterUserStatus: some View {
         Menu("Statuses") {
-            ForEach(FriendViewModel.FriendListType.allCases) { listType in
+            ForEach(FriendViewModel.FilterUserStatus.allCases) { filterUserStatus in
                 Button {
-                    statusFilterAction(listType)
+                    friendVM.applyFilterUserStatus(filterUserStatus)
                 } label: {
                     Label {
-                        Text(listType.description)
+                        Text(filterUserStatus.description)
                     } icon: {
-                        if isCheckedStatusFilter(listType) {
+                        if friendVM.isCheckedFilterUserStatus(filterUserStatus) {
                             Image(systemName: Constants.IconName.check)
                         }
                     }
                 }
             }
         }
+    }
+
+    var filterFavoriteGroups: some View {
         Menu("Favorite Groups") {
             Button {
-                filterFavoriteGroupAction(.all)
+                friendVM.applyFilterFavoriteGroup(.all)
             } label: {
                 Label {
                     Text("All")
                 } icon: {
-                    if isCheckedFilterFavoriteGroups(.all) {
+                    if friendVM.isCheckedFilterFavoriteGroups(.all) {
                         Image(systemName: Constants.IconName.check)
                     }
                 }
             }
-            ForEach(favoriteVM.favoriteFriendGroups) { group in
+            ForEach(favoriteVM.favoriteFriendGroups) { favoriteGroup in
                 Button {
-                    filterFavoriteGroupAction(.favoriteGroup(group))
+                    friendVM.applyFilterFavoriteGroup(.favoriteGroup(favoriteGroup))
                 } label: {
                     Label {
-                        Text(group.displayName)
+                        Text(favoriteGroup.displayName)
                     } icon: {
-                        if isCheckedFilterFavoriteGroups(.favoriteGroup(group)) {
+                        if friendVM.isCheckedFilterFavoriteGroups(.favoriteGroup(favoriteGroup)) {
                             Image(systemName: Constants.IconName.check)
                         }
                     }
                 }
             }
-        }
-    }
-
-    func filterFavoriteGroupAction(_ type: FriendViewModel.FilterFavoriteGroups) {
-        switch type {
-        case .all:
-            filterFavoriteGroups.removeAll()
-        case .favoriteGroup(let favoriteGroup):
-            if filterFavoriteGroups.contains(favoriteGroup) {
-                filterFavoriteGroups.remove(favoriteGroup)
-            } else {
-                filterFavoriteGroups.insert(favoriteGroup)
-            }
-        }
-    }
-
-    func statusFilterAction(_ listType: FriendViewModel.FriendListType) {
-        switch listType {
-        case .all:
-            typeFilters.removeAll()
-        case .status(let status):
-            if typeFilters.contains(status) {
-                typeFilters.remove(status)
-            } else {
-                typeFilters.insert(status)
-            }
-        }
-    }
-
-    func isCheckedStatusFilter(_ listType: FriendViewModel.FriendListType) -> Bool {
-        switch listType {
-        case .all:
-            typeFilters.isEmpty
-        case .status(let status):
-            typeFilters.contains(status)
-        }
-    }
-
-    func isCheckedFilterFavoriteGroups(_ listType: FriendViewModel.FilterFavoriteGroups) -> Bool {
-        switch listType {
-        case .all:
-            filterFavoriteGroups.isEmpty
-        case .favoriteGroup(let favoriteGroup):
-            filterFavoriteGroups.contains(favoriteGroup)
         }
     }
 }

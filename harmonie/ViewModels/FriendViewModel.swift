@@ -12,17 +12,14 @@ import VRCKit
 class FriendViewModel: ObservableObject {
     @Published var onlineFriends: [Friend] = []
     @Published var offlineFriends: [Friend] = []
+    @Published var filterUserStatus: Set<UserStatus> = []
+    @Published var filterFavoriteGroups: Set<FavoriteGroup> = []
     let user: User
-    var service: any FriendServiceProtocol
+    private let service: any FriendServiceProtocol
 
     init(user: User, service: any FriendServiceProtocol) {
         self.user = user
         self.service = service
-    }
-
-    enum FriendSortType: Hashable, Identifiable {
-        case `default`
-        var id: Int { self.hashValue }
     }
 
     var allFriends: [Friend] {
@@ -35,6 +32,15 @@ class FriendViewModel: ObservableObject {
 
     var friendsLocations: [FriendsLocation] {
         service.friendsGroupedByLocation(onlineFriends)
+    }
+
+    /// Returns a list of matches for either `onlineFriends` or `offlineFriends`
+    /// for each id of reversed order friend list.
+    /// - Returns a list of recentry friends
+    var recentlyFriends: [Friend] {
+        user.friends.reversed().compactMap { id in
+            onlineFriends.first { $0.id == id } ?? offlineFriends.first { $0.id == id }
+        }
     }
 
     /// Fetch friends from API

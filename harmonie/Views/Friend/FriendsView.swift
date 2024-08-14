@@ -11,8 +11,6 @@ import VRCKit
 struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
     @EnvironmentObject var favoriteVM: FavoriteViewModel
-    @State var typeFilters: Set<UserStatus> = []
-    @State var filterFavoriteGroups: Set<FavoriteGroup> = []
     @State var selected: Selected?
     @State var searchString: String = ""
 
@@ -28,7 +26,8 @@ struct FriendsView: View {
     var toolbarContent: some ToolbarContent {
         ToolbarItem {
             Menu {
-                filter
+                filterUserStatus
+                filterFavoriteGroups
             } label: {
                 Image(systemName: Constants.IconName.filter)
             }
@@ -39,8 +38,6 @@ struct FriendsView: View {
     var listView: some View {
         List(friendVM.filterFriends(
             text: searchString,
-            statuses: typeFilters,
-            filterFavoriteGroups: filterFavoriteGroups,
             favoriteFriends: favoriteVM.favoriteFriends
         )) { friend in
             Button {
