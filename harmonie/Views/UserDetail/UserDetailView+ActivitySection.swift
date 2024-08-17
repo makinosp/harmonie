@@ -25,6 +25,15 @@ extension UserDetailView {
                     Text(lastActivityText)
                         .font(.body)
                 }
+                if let dateJoined = user.dateJoined {
+                    VStack(alignment: .leading) {
+                        Text("Date Joined")
+                            .font(.subheadline)
+                            .foregroundStyle(Color.gray)
+                        Text(DateUtil.shared.formatToyyyyMMdd(from: dateJoined))
+                            .font(.body)
+                    }
+                }
             }
         }
     }

@@ -35,7 +35,9 @@ struct LocationsView: View {
                     )
                 }
         } detail: {
-            Text("Select a location")
+            NavigationStack {
+                Text("Select a location")
+            }
         }
         .navigationSplitViewStyle(.balanced)
         .refreshable {

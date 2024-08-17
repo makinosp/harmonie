@@ -26,6 +26,10 @@ struct LocationDetailView: View {
                 friendList
             }
         }
+        .navigationDestination(for: Selected.self) { selected in
+            UserDetailPresentationView(id: selected.id)
+                .id(selected.id)
+        }
     }
 
     var bottomBar: some View {
@@ -45,20 +49,22 @@ struct LocationDetailView: View {
 
     var friendList: some View {
         ForEach(location.friends) { friend in
-            HStack {
-                ZStack {
-                    Circle()
-                        .foregroundStyle(friend.status.color)
-                        .frame(size: Constants.IconSize.thumbnailOutside)
-                    CircleURLImage(
-                        imageUrl: friend.userIconUrl,
-                        size: Constants.IconSize.thumbnail
-                    )
+            NavigationLink(value: Selected(id: friend.id)) {
+                HStack {
+                    ZStack {
+                        Circle()
+                            .foregroundStyle(friend.status.color)
+                            .frame(size: Constants.IconSize.thumbnailOutside)
+                        CircleURLImage(
+                            imageUrl: friend.userIconUrl,
+                            size: Constants.IconSize.thumbnail
+                        )
+                    }
+                    Text(friend.displayName)
                 }
-                Text(friend.displayName)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
         }
     }
 }

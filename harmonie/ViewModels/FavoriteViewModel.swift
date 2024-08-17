@@ -36,9 +36,7 @@ class FavoriteViewModel: ObservableObject {
     /// - Throws: An error if any network request or decoding operation fails.
     func fetchFavorite() async throws {
         favoriteGroups = try await service.listFavoriteGroups()
-        let favoriteDetails: [FavoriteDetail] = try await service.fetchFavoriteGroupDetails(
-            favoriteGroups: favoriteGroups
-        )
+        let favoriteDetails = try await service.fetchFavoriteGroupDetails(favoriteGroups: favoriteGroups)
         let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
         favoriteFriends = favoriteDetailsOfFriends.map { favoriteDetail in
             (
