@@ -47,7 +47,7 @@ class FriendViewModel: ObservableObject {
     /// Fetch friends from API
     func fetchAllFriends() async throws {
         async let onlineFriendsTask = service.fetchFriends(
-            count: user.onlineFriends.count,
+            count: user.onlineFriends.count + user.activeFriends.count,
             offline: false
         )
         async let offlineFriendsTask = service.fetchFriends(
