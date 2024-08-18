@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIIntrospect
 import VRCKit
 
 struct InstanceLocation: Hashable, Identifiable {
@@ -56,6 +57,10 @@ struct LocationsView: View {
             } catch {
                 appVM.handleError(error)
             }
+        }
+        .introspect(.navigationSplitView, on: .iOS(.v17, .v18)) { splitView in
+            splitView.maximumPrimaryColumnWidth = .infinity
+            splitView.preferredPrimaryColumnWidthFraction = 1 / 2
         }
     }
 
