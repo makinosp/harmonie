@@ -11,16 +11,11 @@ import VRCKit
 extension UserStatus {
     var color: Color {
         switch self {
-        case .joinMe:
-            return .cyan
-        case .active:
-            return .green
-        case .askMe:
-            return .orange
-        case .busy:
-            return .red
-        case .offline:
-            return .gray
+        case .joinMe: .cyan
+        case .active: .green
+        case .askMe: .orange
+        case .busy: .red
+        case .offline: .gray
         }
     }
 }

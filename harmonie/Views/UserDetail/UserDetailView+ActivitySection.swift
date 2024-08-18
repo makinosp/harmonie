@@ -15,14 +15,14 @@ extension UserDetailView {
                     Text("Last Login")
                         .font(.subheadline)
                         .foregroundStyle(Color.gray)
-                    Text(lastLoginText)
+                    Text(DateUtil.shared.formattedDateTime(from: user.lastLogin))
                         .font(.body)
                 }
                 VStack(alignment: .leading) {
                     Text("Last Activity")
                         .font(.subheadline)
                         .foregroundStyle(Color.gray)
-                    Text(lastActivityText)
+                    Text(DateUtil.shared.formattedDateTime(from: user.lastActivity))
                         .font(.body)
                 }
                 if let dateJoined = user.dateJoined {
@@ -36,19 +36,5 @@ extension UserDetailView {
                 }
             }
         }
-    }
-
-    var lastLoginText: String {
-        [
-            DateUtil.shared.formatToyyyyMMdd(from: user.lastLogin),
-            DateUtil.shared.formatToHHmm(from: user.lastLogin)
-        ].joined(separator: " ")
-    }
-
-    var lastActivityText: String {
-        [
-            DateUtil.shared.formatToyyyyMMdd(from: user.lastActivity),
-            DateUtil.shared.formatToHHmm(from: user.lastActivity)
-        ].joined(separator: " ")
     }
 }

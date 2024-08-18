@@ -88,11 +88,9 @@ struct LocationCardView: View {
     }
 
     func personAmount(_ instance: Instance) -> String {
-        [
-            location.friends.count.description,
-            instance.userCount.description,
-            instance.capacity.description
-        ].joined(separator: " / ")
+        [location.friends.count, instance.userCount, instance.capacity]
+            .map { $0.description }
+            .joined(separator: " / ")
     }
 
     func locationThumbnail(_ url: URL?) -> some View {
