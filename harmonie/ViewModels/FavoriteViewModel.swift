@@ -19,7 +19,7 @@ class FavoriteViewModel: ObservableObject {
     @Published var segment: Segment = .friend
     let friendVM: FriendViewModel
     let service: any FavoriteServiceProtocol
-    
+
     enum Segment {
         case friend, world
     }
