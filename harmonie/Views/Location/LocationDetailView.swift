@@ -56,7 +56,7 @@ struct LocationDetailView: View {
                             .foregroundStyle(friend.status.color)
                             .frame(size: Constants.IconSize.thumbnailOutside)
                         CircleURLImage(
-                            imageUrl: friend.userIconUrl,
+                            imageUrl: friend.thumbnailUrl,
                             size: Constants.IconSize.thumbnail
                         )
                     }

@@ -24,6 +24,11 @@ class DateUtil {
         return dateFormatter
     }()
 
+    func formattedDateTime(from date: Date) -> String {
+        [formatToyyyyMMdd(from: date), formatToHHmm(from: date)]
+            .joined(separator: " ")
+    }
+
     func formatToyyyyMMdd(from date: Date) -> String {
         return yyyyMMddDateFormatter.string(from: date)
     }

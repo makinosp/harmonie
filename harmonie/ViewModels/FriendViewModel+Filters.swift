@@ -93,9 +93,9 @@ extension FriendViewModel.FilterUserStatus: CustomStringConvertible {
     var description: String {
         switch self {
         case .all:
-            return "All"
+            "All"
         case .status(let status):
-            return status.description
+            status.description
         }
     }
 }

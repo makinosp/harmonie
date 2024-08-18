@@ -56,7 +56,7 @@ struct SettingsView: View {
                     } label: {
                         HStack {
                             CircleURLImage(
-                                imageUrl: user.userIconUrl,
+                                imageUrl: user.thumbnailUrl,
                                 size: Constants.IconSize.ll
                             )
                             Text(user.displayName)

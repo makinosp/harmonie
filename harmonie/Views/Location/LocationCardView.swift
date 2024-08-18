@@ -17,10 +17,19 @@ struct LocationCardView: View {
     let location: FriendsLocation
     let frameWidth: CGFloat = 120
 
+    var backGroundColor: Color {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            Color(UIColor.tertiarySystemGroupedBackground)
+        default:
+            Color(UIColor.secondarySystemGroupedBackground)
+        }
+    }
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(Color(UIColor.tertiarySystemGroupedBackground))
+                .foregroundStyle(backGroundColor)
             if let instance = instance {
                 locationCardContent(instance: instance)
                     .onTapGesture {
@@ -62,7 +71,7 @@ struct LocationCardView: View {
                                     .foregroundStyle(friend.status.color)
                                     .frame(size: Constants.IconSize.thumbnailOutside)
                                 CircleURLImage(
-                                    imageUrl: friend.userIconUrl,
+                                    imageUrl: friend.thumbnailUrl,
                                     size: Constants.IconSize.thumbnail
                                 )
                             }
@@ -79,11 +88,9 @@ struct LocationCardView: View {
     }
 
     func personAmount(_ instance: Instance) -> String {
-        [
-            location.friends.count.description,
-            instance.userCount.description,
-            instance.capacity.description
-        ].joined(separator: " / ")
+        [location.friends.count, instance.userCount, instance.capacity]
+            .map { $0.description }
+            .joined(separator: " / ")
     }
 
     func locationThumbnail(_ url: URL?) -> some View {
