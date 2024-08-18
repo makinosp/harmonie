@@ -32,6 +32,16 @@ struct FavoritesView: View {
                         .presentationDetents([.medium, .large])
                         .presentationBackground(Color(UIColor.systemGroupedBackground))
                 }
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Picker("", selection: $favoriteVM.segment) {
+                            ForEach(FavoriteViewModel.Segment.allCases) { segment in
+                                Text(segment.description).tag(segment)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                }
                 .navigationTitle("Favorites")
             } else {
                 ProgressScreen()

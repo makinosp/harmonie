@@ -16,8 +16,13 @@ typealias FavoriteFriend = (favoriteGroupId: String, friends: [Friend])
 class FavoriteViewModel: ObservableObject {
     @Published var favoriteGroups: [FavoriteGroup] = []
     @Published var favoriteFriends: [FavoriteFriend] = []
+    @Published var segment: Segment = .friend
     let friendVM: FriendViewModel
     let service: any FavoriteServiceProtocol
+    
+    enum Segment {
+        case friend, world
+    }
 
     /// Initializes the view model with the specified HTTP client.
     /// - Parameter client: The `APIClient` instance used for making network requests.
@@ -125,6 +130,25 @@ class FavoriteViewModel: ObservableObject {
                 tag: targetGroup.name
             )
             addFriendToFavoriteGroup(friend: friend, groupId: targetGroup.id)
+        }
+    }
+}
+
+extension FavoriteViewModel.Segment: Identifiable {
+    var id: Int { hashValue }
+}
+
+extension FavoriteViewModel.Segment: CaseIterable {
+    var allCases: [FavoriteViewModel.Segment] {
+        [.friend, .world]
+    }
+}
+
+extension FavoriteViewModel.Segment: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .friend: "Friend"
+        case .world: "World"
         }
     }
 }
