@@ -23,10 +23,19 @@ struct LocationsView: View {
         appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
     }
 
+    var backGroundColor: Color {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            Color(UIColor.secondarySystemGroupedBackground)
+        default:
+            Color(UIColor.systemGroupedBackground)
+        }
+    }
+
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
             locationList
-                .background(Color(UIColor.secondarySystemGroupedBackground))
+                .background(backGroundColor)
                 .navigationTitle("Locations")
                 .navigationDestination(item: $selected) { selected in
                     LocationDetailView(
@@ -40,6 +49,7 @@ struct LocationsView: View {
             }
         }
         .navigationSplitViewStyle(.balanced)
+        .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 8 : .zero)
         .refreshable {
             do {
                 try await friendVM.fetchAllFriends()

@@ -17,10 +17,19 @@ struct LocationCardView: View {
     let location: FriendsLocation
     let frameWidth: CGFloat = 120
 
+    var backGroundColor: Color {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            Color(UIColor.tertiarySystemGroupedBackground)
+        default:
+            Color(UIColor.secondarySystemGroupedBackground)
+        }
+    }
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(Color(UIColor.tertiarySystemGroupedBackground))
+                .foregroundStyle(backGroundColor)
             if let instance = instance {
                 locationCardContent(instance: instance)
                     .onTapGesture {
