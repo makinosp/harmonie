@@ -20,9 +20,9 @@ struct LocationCardView: View {
     var backGroundColor: Color {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
-            Color(UIColor.tertiarySystemGroupedBackground)
+            Color(uiColor: .tertiarySystemGroupedBackground)
         default:
-            Color(UIColor.secondarySystemGroupedBackground)
+            Color(uiColor: .secondarySystemGroupedBackground)
         }
     }
 

@@ -20,7 +20,7 @@ private struct SectionModifier: ViewModifier {
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: 8)
-                    .foregroundStyle(Color(UIColor.secondarySystemGroupedBackground))
+                    .foregroundStyle(Color(uiColor: .secondarySystemGroupedBackground))
             }
     }
 }

@@ -122,7 +122,7 @@ struct UserDetailView: View {
                 .padding(.horizontal, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(Color(UIColor.systemBackground).opacity(0.25))
+                        .foregroundStyle(Color(uiColor: .systemBackground).opacity(0.25))
                 )
         } else {
             Text(user.statusDescription)

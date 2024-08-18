@@ -63,7 +63,7 @@ struct AuthenticationView: View {
         .padding(.horizontal, 8)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .foregroundStyle(Color(UIColor.systemBackground))
+                .foregroundStyle(Color(uiColor: .systemBackground))
         )
     }
 
