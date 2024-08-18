@@ -14,7 +14,7 @@ struct FavoritesView: View {
     @State var isFetching = false
 
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: .constant(.all)) {
             if !isFetching {
                 List {
                     ForEach(favoriteVM.favoriteFriendGroups) { group in
@@ -27,10 +27,8 @@ struct FavoritesView: View {
                         }
                     }
                 }
-                .sheet(item: $selected) { selected in
+                .navigationDestination(item: $selected) { selected in
                     UserDetailPresentationView(id: selected.id)
-                        .presentationDetents([.medium, .large])
-                        .presentationBackground(Color(UIColor.systemGroupedBackground))
                 }
                 .toolbar {
                     ToolbarItem(placement: .principal) {
@@ -48,22 +46,28 @@ struct FavoritesView: View {
                     .navigationTitle("Favorites")
             }
         } detail: {
-            EmptyView()
+            Text("Select a friend")
         }
+        .navigationSplitViewStyle(.balanced)
     }
 
     func rowView(_ friend: Friend) -> some View {
-        HStack {
-            CircleURLImage(
-                imageUrl: friend.thumbnailUrl,
-                size: Constants.IconSize.thumbnail
-            )
-            Text(friend.displayName)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle())
-        .onTapGesture {
+        Button {
             selected = Selected(id: friend.id)
+        } label: {
+            HStack {
+                CircleURLImage(
+                    imageUrl: friend.thumbnailUrl,
+                    size: Constants.IconSize.thumbnail
+                )
+                Text(friend.displayName)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(Color(uiColor: .systemGray))
+                    .imageScale(.small)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
         }
     }
 }
