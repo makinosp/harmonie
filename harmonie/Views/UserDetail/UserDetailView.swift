@@ -35,6 +35,27 @@ struct UserDetailView: View {
                 contentStacks
             }
         }
+        .navigationTitle(user.displayName)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu("Actions", systemImage: Constants.IconName.dots) {
+                    if user.isFriend {
+                        Menu {
+                            ForEach(favoriteVM.favoriteFriendGroups) { group in
+                                favoriteMenuItem(group: group)
+                            }
+                        } label: {
+                            Label {
+                                Text("Favorite")
+                            } icon: {
+                                Image(systemName: favoriteIconName)
+                            }
+                        }
+                    }
+                }
+            }
+        }
         .task {
             if user.isVisible {
                 await fetchInstance()
@@ -104,10 +125,6 @@ struct UserDetailView: View {
                 .font(.headline)
                 statusDescription
             }
-            Spacer()
-            if user.isFriend {
-                favoriteMenu
-            }
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
@@ -126,6 +143,7 @@ struct UserDetailView: View {
                 )
         } else {
             Text(user.statusDescription)
+                .lineLimit(1)
                 .font(.subheadline)
         }
     }
@@ -134,22 +152,6 @@ struct UserDetailView: View {
         favoriteVM.isAdded(friendId: user.id)
         ? Constants.IconName.favoriteFilled
         : Constants.IconName.favorite
-    }
-
-    var favoriteMenu: some View {
-        Menu {
-            ForEach(favoriteVM.favoriteFriendGroups) { group in
-                favoriteMenuItem(group: group)
-            }
-        } label: {
-            Image(systemName: favoriteIconName)
-                .frame(size: CGSize(width: 12, height: 12))
-                .padding(12)
-                .background {
-                    Circle()
-                        .foregroundStyle(Material.regularMaterial)
-                }
-        }
     }
 
     func favoriteMenuItem(group: FavoriteGroup) -> some View {
