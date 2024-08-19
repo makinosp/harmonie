@@ -29,6 +29,7 @@
 		20460CB02C56215700B276E3 /* Selected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20460CAF2C56215700B276E3 /* Selected.swift */; };
 		2052C7AE2C4BC97100B341D1 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2052C7AD2C4BC97100B341D1 /* VRCKit */; };
 		20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20592B022C45640D00E1C8B8 /* AsyncSwiftUI */; };
+		205AA45E2C72E61B008CCC8A /* UserDetailView+Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205AA45D2C72E61B008CCC8A /* UserDetailView+Toolbar.swift */; };
 		205B3BF22C00D51A0097D62A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B3BF12C00D51A0097D62A /* SettingsView.swift */; };
 		205B3BF42C00D8BF0097D62A /* ProgressScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B3BF32C00D8BF0097D62A /* ProgressScreen.swift */; };
 		205C9DAF2C20612500E3782C /* Binding+NilCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */; };
@@ -98,6 +99,7 @@
 		20395DC32B94653100003921 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		20460CAD2C561ED200B276E3 /* UserDetailPresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDetailPresentationView.swift; path = harmonie/Views/UserDetail/UserDetailPresentationView.swift; sourceTree = SOURCE_ROOT; };
 		20460CAF2C56215700B276E3 /* Selected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Selected.swift; path = Harmonie/Utils/Selected.swift; sourceTree = SOURCE_ROOT; };
+		205AA45D2C72E61B008CCC8A /* UserDetailView+Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserDetailView+Toolbar.swift"; path = "Harmonie/Views/UserDetail/UserDetailView+Toolbar.swift"; sourceTree = SOURCE_ROOT; };
 		205B3BF12C00D51A0097D62A /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		205B3BF32C00D8BF0097D62A /* ProgressScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressScreen.swift; sourceTree = "<group>"; };
 		205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+NilCoalescing.swift"; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				200723962BA56377002C27E8 /* UserDetailView.swift */,
 				20F95D272C69BC2D002CDC5F /* UserDetailView+Actions.swift */,
 				20F95D292C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift */,
+				205AA45D2C72E61B008CCC8A /* UserDetailView+Toolbar.swift */,
 				20460CAD2C561ED200B276E3 /* UserDetailPresentationView.swift */,
 			);
 			path = UserDetail;
@@ -501,6 +504,7 @@
 				20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */,
 				20460CAE2C561ED200B276E3 /* UserDetailPresentationView.swift in Sources */,
 				209A788A2C2FC0FA00BEFAE6 /* FavoriteViewModel.swift in Sources */,
+				205AA45E2C72E61B008CCC8A /* UserDetailView+Toolbar.swift in Sources */,
 				207FC6372C4256E60018E605 /* View+SectionModifier.swift in Sources */,
 				20395D972B945CD700003921 /* ContentView.swift in Sources */,
 				200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */,

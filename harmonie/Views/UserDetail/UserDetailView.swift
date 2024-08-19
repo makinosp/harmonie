@@ -37,25 +37,7 @@ struct UserDetailView: View {
         }
         .navigationTitle(user.displayName)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Menu("Actions", systemImage: Constants.IconName.dots) {
-                    if user.isFriend {
-                        Menu {
-                            ForEach(favoriteVM.favoriteFriendGroups) { group in
-                                favoriteMenuItem(group: group)
-                            }
-                        } label: {
-                            Label {
-                                Text("Favorite")
-                            } icon: {
-                                Image(systemName: favoriteIconName)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        .toolbar { toolbar }
         .task {
             if user.isVisible {
                 await fetchInstance()
@@ -145,29 +127,6 @@ struct UserDetailView: View {
             Text(user.statusDescription)
                 .lineLimit(1)
                 .font(.subheadline)
-        }
-    }
-
-    var favoriteIconName: String {
-        favoriteVM.isAdded(friendId: user.id)
-        ? Constants.IconName.favoriteFilled
-        : Constants.IconName.favorite
-    }
-
-    func favoriteMenuItem(group: FavoriteGroup) -> some View {
-        AsyncButton {
-            await updateFavorite(friendId: user.id, group: group)
-        } label: {
-            Label {
-                Text(group.displayName)
-            } icon: {
-                if favoriteVM.isFriendInFavoriteGroup(
-                    friendId: user.id,
-                    groupId: group.id
-                ) {
-                    Image(systemName: Constants.IconName.check)
-                }
-            }
         }
     }
 
