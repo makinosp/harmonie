@@ -60,9 +60,7 @@ struct FavoritesView: View {
                 )
                 Text(friend.displayName)
                 Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(Color(uiColor: .systemGray))
-                    .imageScale(.small)
+                Constants.Icon.forward
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())

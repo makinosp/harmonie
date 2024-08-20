@@ -5,9 +5,17 @@
 //  Created by makinosp on 2024/07/22.
 //
 
-import Foundation
+import SwiftUI
 
 enum Constants {
+    enum Icon {
+        static var forward: some View {
+            Image(systemName: "chevron.forward")
+                .foregroundStyle(Color(uiColor: .systemGray))
+                .imageScale(.small)
+        }
+    }
+    
     enum IconSize {
         static let thumbnail = CGSize(width: 28, height: 28)
         static let thumbnailOutside = CGSize(width: 32, height: 32)
