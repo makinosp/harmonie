@@ -50,22 +50,7 @@ struct SettingsView: View {
     var settingsContent: some View {
         List {
             if let user = appVM.user {
-                Section(header: Text("My Profile")) {
-                    Button {
-                        destination = .userDetail
-                    } label: {
-                        HStack {
-                            CircleURLImage(
-                                imageUrl: user.thumbnailUrl,
-                                size: Constants.IconSize.ll
-                            )
-                            Text(user.displayName)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .contentShape(Rectangle())
-                    }
-                }
-                .textCase(nil)
+                profileSection(user: user)
             }
             Section(header: Text("Open Source License Notice")) {
                 Link(destination: URL(string: "https://github.com/makinosp/harmonie")!) {
@@ -100,6 +85,55 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+    
+    func profileSection(user: User) -> some View {
+        Section(header: Text("My Profile")) {
+            Button {
+                destination = .userDetail
+            } label: {
+                HStack(alignment: .center) {
+                    Label {
+                        Text(user.displayName)
+                    } icon: {
+                        CircleURLImage(
+                            imageUrl: user.thumbnailUrl,
+                            size: Constants.IconSize.ll
+                        )
+                    }
+                    Spacer()
+                    Constants.Icon.forward
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+            }
+            Button {} label: {
+                HStack(alignment: .center) {
+                    Label {
+                        Text("Status")
+                    } icon: {
+                        Image(systemName: Constants.IconName.circleFilled)
+                            .foregroundStyle(user.status.color)
+                    }
+                    Spacer()
+                    Text(user.status.description)
+                        .foregroundStyle(Color(uiColor: .secondaryLabel))
+                        .font(.callout)
+                    Constants.Icon.forward
+                }
+            }
+            Button {} label: {
+                HStack(alignment: .center) {
+                    Label("Description", systemImage: "quote.bubble")
+                    Spacer()
+                    Text(user.statusDescription)
+                        .foregroundStyle(Color(uiColor: .secondaryLabel))
+                        .font(.callout)
+                    Constants.Icon.forward
+                }
+            }
+        }
+        .textCase(nil)
     }
 
     var appName: String {
