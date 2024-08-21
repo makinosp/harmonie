@@ -36,6 +36,7 @@
 		205C9DAF2C20612500E3782C /* Binding+NilCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */; };
 		205D81A62C71B9D70047C1CC /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 205D81A52C71B9D70047C1CC /* SwiftUIIntrospect */; };
 		206088E92C48079900626DDC /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206088E82C48079900626DDC /* LocationDetailView.swift */; };
+		20634BC32C760A2D00D57D57 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20634BC22C760A2D00D57D57 /* ProfileEditView.swift */; };
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
 		207FC6352C4256E60018E605 /* View+SizeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6322C4256E60018E605 /* View+SizeModifier.swift */; };
 		207FC6362C4256E60018E605 /* View+ErrorAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */; };
@@ -106,6 +107,7 @@
 		205B3BF32C00D8BF0097D62A /* ProgressScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressScreen.swift; sourceTree = "<group>"; };
 		205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+NilCoalescing.swift"; sourceTree = "<group>"; };
 		206088E82C48079900626DDC /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
+		20634BC22C760A2D00D57D57 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileEditView.swift; path = Harmonie/Views/Setting/ProfileEditView.swift; sourceTree = SOURCE_ROOT; };
 		207FC6322C4256E60018E605 /* View+SizeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+SizeModifier.swift"; sourceTree = "<group>"; };
 		207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlertModifier.swift"; sourceTree = "<group>"; };
 		207FC6342C4256E60018E605 /* View+SectionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+SectionModifier.swift"; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 		206088F02C4808C500626DDC /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				20634BC22C760A2D00D57D57 /* ProfileEditView.swift */,
 				205B3BF12C00D51A0097D62A /* SettingsView.swift */,
 				200BC2D62C74B49A0025872B /* SettingsView+ProfileSection.swift */,
 			);
@@ -509,6 +512,7 @@
 				209A788A2C2FC0FA00BEFAE6 /* FavoriteViewModel.swift in Sources */,
 				205AA45E2C72E61B008CCC8A /* UserDetailView+Toolbar.swift in Sources */,
 				207FC6372C4256E60018E605 /* View+SectionModifier.swift in Sources */,
+				20634BC32C760A2D00D57D57 /* ProfileEditView.swift in Sources */,
 				20395D972B945CD700003921 /* ContentView.swift in Sources */,
 				200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */,
 				200FA7B02C1D745B0001E655 /* LocationCardView.swift in Sources */,
