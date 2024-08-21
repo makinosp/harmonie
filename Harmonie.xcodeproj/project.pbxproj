@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		200723972BA56377002C27E8 /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200723962BA56377002C27E8 /* UserDetailView.swift */; };
+		200BC2D72C74B49A0025872B /* SettingsView+ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200BC2D62C74B49A0025872B /* SettingsView+ProfileSection.swift */; };
 		200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */; };
 		200FA7B02C1D745B0001E655 /* LocationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FA7AF2C1D745B0001E655 /* LocationCardView.swift */; };
 		20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20102BCE2C157C77007738D3 /* HarmonieApp.swift */; };
@@ -80,6 +81,7 @@
 
 /* Begin PBXFileReference section */
 		200723962BA56377002C27E8 /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
+		200BC2D62C74B49A0025872B /* SettingsView+ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SettingsView+ProfileSection.swift"; path = "Harmonie/Views/Setting/SettingsView+ProfileSection.swift"; sourceTree = SOURCE_ROOT; };
 		200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleURLImage.swift; sourceTree = "<group>"; };
 		200FA7AF2C1D745B0001E655 /* LocationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCardView.swift; sourceTree = "<group>"; };
 		20102BCE2C157C77007738D3 /* HarmonieApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieApp.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				205B3BF12C00D51A0097D62A /* SettingsView.swift */,
+				200BC2D62C74B49A0025872B /* SettingsView+ProfileSection.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				205B3BF42C00D8BF0097D62A /* ProgressScreen.swift in Sources */,
 				205B3BF22C00D51A0097D62A /* SettingsView.swift in Sources */,
 				202B9E372C6A426500B981C9 /* FriendsView+Filters.swift in Sources */,
+				200BC2D72C74B49A0025872B /* SettingsView+ProfileSection.swift in Sources */,
 				20E1902E2C4E820A003F39AF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
