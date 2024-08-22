@@ -56,6 +56,7 @@
 		209D77302C2251C200A11666 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D772F2C2251C200A11666 /* MainTabView.swift */; };
 		20AD8D982C68C5C300140232 /* NavigationSplitView+initializers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AD8D972C68C5C300140232 /* NavigationSplitView+initializers.swift */; };
 		20AFBC842C68EE5D006E9239 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AFBC832C68EE5D006E9239 /* DateUtil.swift */; };
+		20D50FA72C77F94F00F89B4F /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D50FA62C77F94F00F89B4F /* LanguagePickerView.swift */; };
 		20DC3C292C422786001101DB /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20DC3C282C422786001101DB /* VRCKit */; };
 		20E1902E2C4E820A003F39AF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E1902D2C4E820A003F39AF /* Constants.swift */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
@@ -123,6 +124,7 @@
 		209D772F2C2251C200A11666 /* MainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		20AD8D972C68C5C300140232 /* NavigationSplitView+initializers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NavigationSplitView+initializers.swift"; path = "Harmonie/Extensions/NavigationSplitView+initializers.swift"; sourceTree = SOURCE_ROOT; };
 		20AFBC832C68EE5D006E9239 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateUtil.swift; path = Harmonie/Utils/DateUtil.swift; sourceTree = SOURCE_ROOT; };
+		20D50FA62C77F94F00F89B4F /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LanguagePickerView.swift; path = Harmonie/Views/Setting/LanguagePickerView.swift; sourceTree = SOURCE_ROOT; };
 		20E1902D2C4E820A003F39AF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Harmonie/Utils/Constants.swift; sourceTree = SOURCE_ROOT; };
 		20F95D272C69BC2D002CDC5F /* UserDetailView+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UserDetailView+Actions.swift"; path = "Harmonie/Views/UserDetail/UserDetailView+Actions.swift"; sourceTree = SOURCE_ROOT; };
 		20F95D292C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserDetailView+ActivitySection.swift"; path = "Harmonie/Views/UserDetail/UserDetailView+ActivitySection.swift"; sourceTree = SOURCE_ROOT; };
@@ -305,6 +307,7 @@
 		206088F02C4808C500626DDC /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				20D50FA62C77F94F00F89B4F /* LanguagePickerView.swift */,
 				20634BC22C760A2D00D57D57 /* ProfileEditView.swift */,
 				205B3BF12C00D51A0097D62A /* SettingsView.swift */,
 				200BC2D62C74B49A0025872B /* SettingsView+ProfileSection.swift */,
@@ -511,6 +514,7 @@
 				20460CAE2C561ED200B276E3 /* UserDetailPresentationView.swift in Sources */,
 				209A788A2C2FC0FA00BEFAE6 /* FavoriteViewModel.swift in Sources */,
 				205AA45E2C72E61B008CCC8A /* UserDetailView+Toolbar.swift in Sources */,
+				20D50FA72C77F94F00F89B4F /* LanguagePickerView.swift in Sources */,
 				207FC6372C4256E60018E605 /* View+SectionModifier.swift in Sources */,
 				20634BC32C760A2D00D57D57 /* ProfileEditView.swift in Sources */,
 				20395D972B945CD700003921 /* ContentView.swift in Sources */,

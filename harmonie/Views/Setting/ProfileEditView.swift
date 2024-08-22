@@ -11,7 +11,7 @@ import VRCKit
 struct ProfileEditView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isPresentedLanguagePicker = false
-    @State private var addedLanguage: LanguageTag?
+    @State private var selectedLanguage: LanguageTag?
     @State var status: UserStatus
     @State var statusDescription: String
     @State var bio: String
@@ -66,24 +66,13 @@ struct ProfileEditView: View {
             .toolbar { toolbarContents }
         }
         .sheet(isPresented: $isPresentedLanguagePicker) {
-            languagePicker.presentationDetents([.medium])
+            LanguagePickerView(selectedLanguage: $selectedLanguage)
+                .presentationDetents([.medium])
         }
-    }
-
-    var languagePicker: some View {
-        Form {
-            Picker("Languages", selection: $addedLanguage) {
-                ForEach(LanguageTag.allCases) { languageTag in
-                    Text(languageTag.description)
-                        .tag(LanguageTag?.some(languageTag))
-                }
-            }
-            .pickerStyle(.inline)
-        }
-        .onChange(of: addedLanguage) {
-            if let addedLanguage = addedLanguage, !languageTags.contains(addedLanguage) {
-                languageTags.append(addedLanguage)
-                self.addedLanguage = nil
+        .onChange(of: selectedLanguage) {
+            if let selectedLanguage = selectedLanguage, !languageTags.contains(selectedLanguage) {
+                languageTags.append(selectedLanguage)
+                self.selectedLanguage = nil
             }
         }
     }
