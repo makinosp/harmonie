@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import harmonie
+@testable import Harmonie
 
 final class HarmonieTests: XCTestCase {
 
