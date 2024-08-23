@@ -37,6 +37,7 @@
 		205D81A62C71B9D70047C1CC /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 205D81A52C71B9D70047C1CC /* SwiftUIIntrospect */; };
 		206088E92C48079900626DDC /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206088E82C48079900626DDC /* LocationDetailView.swift */; };
 		20634BC32C760A2D00D57D57 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20634BC22C760A2D00D57D57 /* ProfileEditView.swift */; };
+		2065F8702C788A59007F132B /* ProfileEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2065F86F2C788A59007F132B /* ProfileEditViewModel.swift */; };
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
 		207FC6352C4256E60018E605 /* View+SizeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6322C4256E60018E605 /* View+SizeModifier.swift */; };
 		207FC6362C4256E60018E605 /* View+ErrorAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */; };
@@ -110,6 +111,7 @@
 		205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+NilCoalescing.swift"; sourceTree = "<group>"; };
 		206088E82C48079900626DDC /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
 		20634BC22C760A2D00D57D57 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileEditView.swift; path = Harmonie/Views/Setting/ProfileEditView.swift; sourceTree = SOURCE_ROOT; };
+		2065F86F2C788A59007F132B /* ProfileEditViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileEditViewModel.swift; path = Harmonie/ViewModels/ProfileEditViewModel.swift; sourceTree = SOURCE_ROOT; };
 		207FC6322C4256E60018E605 /* View+SizeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+SizeModifier.swift"; sourceTree = "<group>"; };
 		207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlertModifier.swift"; sourceTree = "<group>"; };
 		207FC6342C4256E60018E605 /* View+SectionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+SectionModifier.swift"; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				209A78862C2FC0FA00BEFAE6 /* FavoriteViewModel.swift */,
 				209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */,
 				202B9E382C6A430900B981C9 /* FriendViewModel+Filters.swift */,
+				2065F86F2C788A59007F132B /* ProfileEditViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				209938AA2C109C8C003B4A8A /* SectionView.swift in Sources */,
 				205C9DAF2C20612500E3782C /* Binding+NilCoalescing.swift in Sources */,
 				202844C42BA5CE1B00357D09 /* LocationsView.swift in Sources */,
+				2065F8702C788A59007F132B /* ProfileEditViewModel.swift in Sources */,
 				20102BCF2C157C77007738D3 /* HarmonieApp.swift in Sources */,
 				20460CAE2C561ED200B276E3 /* UserDetailPresentationView.swift in Sources */,
 				209A788A2C2FC0FA00BEFAE6 /* FavoriteViewModel.swift in Sources */,

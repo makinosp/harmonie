@@ -9,23 +9,16 @@ import SwiftUI
 import VRCKit
 
 struct ProfileEditView: View {
+    @EnvironmentObject var appVM: AppViewModel
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var profileEditVM: ProfileEditViewModel
     @State private var isPresentedLanguagePicker = false
     @State private var selectedLanguage: LanguageTag?
-    @State var status: UserStatus
-    @State var statusDescription: String
-    @State var bio: String
-    @State var languageTags: [LanguageTag]
-    @State var bioLinks: [URL]
-
+    
     init(user: User) {
-        _status = State(initialValue: user.status)
-        _statusDescription = State(initialValue: user.statusDescription)
-        _bio = State(initialValue: user.bio ?? "")
-        _languageTags = State(initialValue: user.tags.languageTags)
-        _bioLinks = State(initialValue: user.bioLinks.elements)
+        _profileEditVM = StateObject(wrappedValue: ProfileEditViewModel(user: user))
     }
-
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -43,8 +36,9 @@ struct ProfileEditView: View {
                 .presentationDetents([.medium])
         }
         .onChange(of: selectedLanguage) {
-            if let selectedLanguage = selectedLanguage, !languageTags.contains(selectedLanguage) {
-                languageTags.append(selectedLanguage)
+            if let selectedLanguage = selectedLanguage,
+               !profileEditVM.editingUserInfo.tags.languageTags.contains(selectedLanguage) {
+                profileEditVM.editingUserInfo.tags.languageTags.append(selectedLanguage)
                 self.selectedLanguage = nil
             }
         }
@@ -52,7 +46,7 @@ struct ProfileEditView: View {
     
     var statusSection: some View {
         Section("Status") {
-            Picker(selection: $status) {
+            Picker(selection: $profileEditVM.editingUserInfo.status) {
                 ForEach(UserStatus.allCases) { status in
                     Text(status.description).tag(status)
                 }
@@ -61,22 +55,22 @@ struct ProfileEditView: View {
                     Text("Status")
                 } icon: {
                     Image(systemName: "circle.fill")
-                        .foregroundStyle(status.color)
+                        .foregroundStyle(profileEditVM.editingUserInfo.status.color)
                 }
             }
-            TextField("Status Description", text: $statusDescription)
+            TextField("Status Description", text: $profileEditVM.editingUserInfo.statusDescription)
         }
     }
     
     var descriptionSection: some View {
         Section("Description") {
-            TextEditor(text: $bio)
+            TextEditor(text: $profileEditVM.editingUserInfo.bio)
         }
     }
     
     @ViewBuilder var languageSection: some View {
         Section("Language") {
-            ForEach(languageTags) { tag in
+            ForEach(profileEditVM.editingUserInfo.tags.languageTags) { tag in
                 Text(tag.description)
                     .swipeActions {
                         Button(role: .destructive) {
@@ -99,7 +93,7 @@ struct ProfileEditView: View {
     
     @ViewBuilder var bioLinksSection: some View {
         Section("Bio Links") {
-            ForEach(bioLinks) { url in
+            ForEach(profileEditVM.editingUserInfo.bioLinks) { url in
                 Link(url.description, destination: url)
             }
         }
@@ -111,7 +105,7 @@ struct ProfileEditView: View {
         }
         .listSectionSpacing(.compact)
     }
-
+    
     @ToolbarContentBuilder var toolbarContents: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button {
@@ -126,6 +120,20 @@ struct ProfileEditView: View {
             } label: {
                 Text("Save")
             }
+        }
+    }
+    
+    func saveUserInfo(id: String) async {
+        let service = appVM.isDemoMode
+        ? UserPreviewService(client: appVM.client)
+        : UserService(client: appVM.client)
+        do {
+            try await service.updateUser(
+                id: id,
+                editedInfo: profileEditVM.editingUserInfo
+            )
+        } catch {
+            appVM.handleError(error)
         }
     }
 }
