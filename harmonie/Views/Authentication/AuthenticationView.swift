@@ -9,12 +9,12 @@ import AsyncSwiftUI
 import VRCKit
 
 struct AuthenticationView: View {
-    @EnvironmentObject var appVM: AppViewModel
-    @State var verifyType: VerifyType?
-    @State var username: String = ""
-    @State var password: String = ""
-    @State var code: String = ""
-    @State var isRunning = false
+    @EnvironmentObject private var appVM: AppViewModel
+    @State private var verifyType: VerifyType?
+    @State private var username: String = ""
+    @State private var password: String = ""
+    @State private var code: String = ""
+    @State private var isRequesting = false
 
     var body: some View {
         VStack(spacing: 16) {
@@ -34,7 +34,7 @@ struct AuthenticationView: View {
         .ignoresSafeArea(.keyboard)
     }
 
-    var usernamePasswordFields: some View {
+    private var usernamePasswordFields: some View {
         VStack(spacing: 8) {
             HStack {
                 Image(systemName: "at")
@@ -53,7 +53,7 @@ struct AuthenticationView: View {
         }
     }
 
-    var otpField: some View {
+    private var otpField: some View {
         HStack {
             Image(systemName: "ellipsis")
                 .foregroundStyle(Color.gray)
@@ -68,16 +68,13 @@ struct AuthenticationView: View {
     }
 
     @ViewBuilder
-    func loginButton(
-        _ text: String,
-        _ action: @escaping () async -> Void
-    ) -> some View {
+    private func loginButton(_ text: String, action: @escaping () async -> Void) -> some View {
         AsyncButton {
-            isRunning = true
+            defer { isRequesting = false }
+            isRequesting = true
             await action()
-            isRunning = false
         } label: {
-            if isRunning {
+            if isRequesting {
                 ProgressView()
             } else {
                 Text(text)
@@ -85,6 +82,6 @@ struct AuthenticationView: View {
         }
         .buttonStyle(.bordered)
         .buttonBorderShape(.capsule)
-        .disabled(isRunning)
+        .disabled(isRequesting)
     }
 }
