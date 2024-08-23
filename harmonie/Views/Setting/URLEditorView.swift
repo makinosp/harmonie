@@ -44,3 +44,8 @@ struct URLEditorView: View {
         }
     }
 }
+
+#Preview {
+    @State var inputtedURL: String = ""
+    return URLEditorView(inputtedURL: $inputtedURL)
+}
