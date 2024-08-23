@@ -13,8 +13,10 @@ struct ProfileEditView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var profileEditVM: ProfileEditViewModel
     @State private var isPresentedLanguagePicker = false
+    @State private var isPresentedURLEditor = false
     @State private var isRequesting = false
     @State private var selectedLanguage: LanguageTag?
+    @State private var inputtedURL: String = ""
 
     init(user: User) {
         _profileEditVM = StateObject(wrappedValue: ProfileEditViewModel(user: user))
@@ -34,6 +36,10 @@ struct ProfileEditView: View {
         }
         .sheet(isPresented: $isPresentedLanguagePicker) {
             LanguagePickerView(selectedLanguage: $selectedLanguage)
+                .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $isPresentedURLEditor) {
+            URLEditorView(inputtedURL: $inputtedURL)
                 .presentationDetents([.medium])
         }
         .onChange(of: selectedLanguage) {
@@ -100,6 +106,7 @@ struct ProfileEditView: View {
         }
         Section {
             Button {
+                isPresentedURLEditor = true
             } label: {
                 Label("Add", systemImage: "plus")
             }
@@ -125,6 +132,7 @@ struct ProfileEditView: View {
                     Text("Save")
                 }
             }
+            .disabled(isRequesting)
         }
     }
 
