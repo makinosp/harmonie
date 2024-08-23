@@ -24,7 +24,6 @@ struct LanguagePickerView: View {
                     }
                 }
             }
-            .labelsHidden()
             .navigationTitle("Languages")
             .toolbarTitleDisplayMode(.inline)
             .toolbar {

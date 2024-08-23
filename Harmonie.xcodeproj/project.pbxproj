@@ -50,6 +50,7 @@
 		2094C4002C43BBC100F88986 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2094C3FF2C43BBC100F88986 /* VRCKit */; };
 		2096016D2C4BD30100D905AF /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2096016C2C4BD30100D905AF /* VRCKit */; };
 		209938AA2C109C8C003B4A8A /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209938A92C109C8C003B4A8A /* SectionView.swift */; };
+		2099A4582C78326600104842 /* URL+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099A4572C78326600104842 /* URL+Identifiable.swift */; };
 		209A78892C2FC0FA00BEFAE6 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78852C2FC0FA00BEFAE6 /* AppViewModel.swift */; };
 		209A788A2C2FC0FA00BEFAE6 /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78862C2FC0FA00BEFAE6 /* FavoriteViewModel.swift */; };
 		209A788B2C2FC0FA00BEFAE6 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */; };
@@ -118,6 +119,7 @@
 		208E6E742C55FF9F00B61822 /* GradientOverlayImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GradientOverlayImageView.swift; path = Harmonie/Components/GradientOverlayImageView.swift; sourceTree = SOURCE_ROOT; };
 		2090C6F22C4B7877009667CC /* Status+color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Status+color.swift"; path = "Harmonie/Extensions/Status+color.swift"; sourceTree = SOURCE_ROOT; };
 		209938A92C109C8C003B4A8A /* SectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
+		2099A4572C78326600104842 /* URL+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "URL+Identifiable.swift"; path = "Harmonie/Extensions/URL+Identifiable.swift"; sourceTree = SOURCE_ROOT; };
 		209A78852C2FC0FA00BEFAE6 /* AppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		209A78862C2FC0FA00BEFAE6 /* FavoriteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		209A78872C2FC0FA00BEFAE6 /* FriendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */,
 				207FC6342C4256E60018E605 /* View+SectionModifier.swift */,
 				207FC6322C4256E60018E605 /* View+SizeModifier.swift */,
+				2099A4572C78326600104842 /* URL+Identifiable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 				205AA45E2C72E61B008CCC8A /* UserDetailView+Toolbar.swift in Sources */,
 				20D50FA72C77F94F00F89B4F /* LanguagePickerView.swift in Sources */,
 				207FC6372C4256E60018E605 /* View+SectionModifier.swift in Sources */,
+				2099A4582C78326600104842 /* URL+Identifiable.swift in Sources */,
 				20634BC32C760A2D00D57D57 /* ProfileEditView.swift in Sources */,
 				20395D972B945CD700003921 /* ContentView.swift in Sources */,
 				200FA7AD2C1D61AB0001E655 /* CircleURLImage.swift in Sources */,

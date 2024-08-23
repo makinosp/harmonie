@@ -16,12 +16,14 @@ struct ProfileEditView: View {
     @State var statusDescription: String
     @State var bio: String
     @State var languageTags: [LanguageTag]
+    @State var bioLinks: [URL]
 
     init(user: User) {
         _status = State(initialValue: user.status)
         _statusDescription = State(initialValue: user.statusDescription)
         _bio = State(initialValue: user.bio ?? "")
         _languageTags = State(initialValue: user.tags.languageTags)
+        _bioLinks = State(initialValue: user.bioLinks.elements)
     }
 
     var body: some View {
@@ -57,13 +59,30 @@ struct ProfileEditView: View {
                             }
                     }
                 }
-                Button {
-                    isPresentedLanguagePicker = true
-                } label: {
-                    Label("Add", systemImage: "plus")
+                Section {
+                    Button {
+                        isPresentedLanguagePicker = true
+                    } label: {
+                        Label("Add", systemImage: "plus")
+                    }
                 }
+                .listSectionSpacing(.compact)
+                Section("Bio Links") {
+                    ForEach(bioLinks) { url in
+                        Link(url.description, destination: url)
+                    }
+                }
+                Section {
+                    Button {
+                    } label: {
+                        Label("Add", systemImage: "plus")
+                    }
+                }
+                .listSectionSpacing(.compact)
             }
             .toolbar { toolbarContents }
+            .navigationTitle("Edit Profile")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .sheet(isPresented: $isPresentedLanguagePicker) {
             LanguagePickerView(selectedLanguage: $selectedLanguage)
