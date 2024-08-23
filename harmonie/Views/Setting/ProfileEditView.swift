@@ -5,20 +5,21 @@
 //  Created by makinosp on 2024/08/21.
 //
 
-import SwiftUI
+import AsyncSwiftUI
 import VRCKit
 
 struct ProfileEditView: View {
-    @EnvironmentObject var appVM: AppViewModel
+    @EnvironmentObject private var appVM: AppViewModel
     @Environment(\.dismiss) private var dismiss
     @StateObject private var profileEditVM: ProfileEditViewModel
     @State private var isPresentedLanguagePicker = false
+    @State private var isRequesting = false
     @State private var selectedLanguage: LanguageTag?
-    
+
     init(user: User) {
         _profileEditVM = StateObject(wrappedValue: ProfileEditViewModel(user: user))
     }
-    
+
     var body: some View {
         NavigationStack {
             Form {
@@ -43,7 +44,7 @@ struct ProfileEditView: View {
             }
         }
     }
-    
+
     var statusSection: some View {
         Section("Status") {
             Picker(selection: $profileEditVM.editingUserInfo.status) {
@@ -61,13 +62,13 @@ struct ProfileEditView: View {
             TextField("Status Description", text: $profileEditVM.editingUserInfo.statusDescription)
         }
     }
-    
+
     var descriptionSection: some View {
         Section("Description") {
             TextEditor(text: $profileEditVM.editingUserInfo.bio)
         }
     }
-    
+
     @ViewBuilder var languageSection: some View {
         Section("Language") {
             ForEach(profileEditVM.editingUserInfo.tags.languageTags) { tag in
@@ -90,7 +91,7 @@ struct ProfileEditView: View {
         }
         .listSectionSpacing(.compact)
     }
-    
+
     @ViewBuilder var bioLinksSection: some View {
         Section("Bio Links") {
             ForEach(profileEditVM.editingUserInfo.bioLinks) { url in
@@ -105,7 +106,7 @@ struct ProfileEditView: View {
         }
         .listSectionSpacing(.compact)
     }
-    
+
     @ToolbarContentBuilder var toolbarContents: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button {
@@ -115,23 +116,27 @@ struct ProfileEditView: View {
             }
         }
         ToolbarItem {
-            Button {
-                print("Saving!")
+            AsyncButton {
+                await saveProfileAction()
             } label: {
-                Text("Save")
+                if isRequesting {
+                    ProgressView()
+                } else {
+                    Text("Save")
+                }
             }
         }
     }
-    
-    func saveUserInfo(id: String) async {
+
+    private func saveProfileAction() async {
         let service = appVM.isDemoMode
         ? UserPreviewService(client: appVM.client)
         : UserService(client: appVM.client)
+        isRequesting = true
         do {
-            try await service.updateUser(
-                id: id,
-                editedInfo: profileEditVM.editingUserInfo
-            )
+            defer { isRequesting = false }
+            try await profileEditVM.saveProfile(service: service)
+            dismiss()
         } catch {
             appVM.handleError(error)
         }
