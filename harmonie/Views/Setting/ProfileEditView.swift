@@ -29,56 +29,10 @@ struct ProfileEditView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Status") {
-                    Picker(selection: $status) {
-                        ForEach(UserStatus.allCases) { status in
-                            Text(status.description).tag(status)
-                        }
-                    } label: {
-                        Label {
-                            Text("Status")
-                        } icon: {
-                            Image(systemName: "circle.fill")
-                                .foregroundStyle(status.color)
-                        }
-                    }
-                    TextField("Status Description", text: $statusDescription)
-                }
-                Section("Description") {
-                    TextEditor(text: $bio)
-                }
-                Section("Language") {
-                    ForEach(languageTags) { tag in
-                        Text(tag.description)
-                            .swipeActions {
-                                Button(role: .destructive) {
-                                    // Delete action
-                                } label: {
-                                    Text("Delete")
-                                }
-                            }
-                    }
-                }
-                Section {
-                    Button {
-                        isPresentedLanguagePicker = true
-                    } label: {
-                        Label("Add", systemImage: "plus")
-                    }
-                }
-                .listSectionSpacing(.compact)
-                Section("Bio Links") {
-                    ForEach(bioLinks) { url in
-                        Link(url.description, destination: url)
-                    }
-                }
-                Section {
-                    Button {
-                    } label: {
-                        Label("Add", systemImage: "plus")
-                    }
-                }
-                .listSectionSpacing(.compact)
+                statusSection
+                descriptionSection
+                languageSection
+                bioLinksSection
             }
             .toolbar { toolbarContents }
             .navigationTitle("Edit Profile")
@@ -94,6 +48,68 @@ struct ProfileEditView: View {
                 self.selectedLanguage = nil
             }
         }
+    }
+    
+    var statusSection: some View {
+        Section("Status") {
+            Picker(selection: $status) {
+                ForEach(UserStatus.allCases) { status in
+                    Text(status.description).tag(status)
+                }
+            } label: {
+                Label {
+                    Text("Status")
+                } icon: {
+                    Image(systemName: "circle.fill")
+                        .foregroundStyle(status.color)
+                }
+            }
+            TextField("Status Description", text: $statusDescription)
+        }
+    }
+    
+    var descriptionSection: some View {
+        Section("Description") {
+            TextEditor(text: $bio)
+        }
+    }
+    
+    @ViewBuilder var languageSection: some View {
+        Section("Language") {
+            ForEach(languageTags) { tag in
+                Text(tag.description)
+                    .swipeActions {
+                        Button(role: .destructive) {
+                                // Delete action
+                        } label: {
+                            Text("Delete")
+                        }
+                    }
+            }
+        }
+        Section {
+            Button {
+                isPresentedLanguagePicker = true
+            } label: {
+                Label("Add", systemImage: "plus")
+            }
+        }
+        .listSectionSpacing(.compact)
+    }
+    
+    @ViewBuilder var bioLinksSection: some View {
+        Section("Bio Links") {
+            ForEach(bioLinks) { url in
+                Link(url.description, destination: url)
+            }
+        }
+        Section {
+            Button {
+            } label: {
+                Label("Add", systemImage: "plus")
+            }
+        }
+        .listSectionSpacing(.compact)
     }
 
     @ToolbarContentBuilder var toolbarContents: some ToolbarContent {
