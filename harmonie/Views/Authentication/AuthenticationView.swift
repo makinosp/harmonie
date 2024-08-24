@@ -40,14 +40,15 @@ struct AuthenticationView: View {
                 Image(systemName: "at")
                     .foregroundStyle(Color.gray)
                 TextField("UserName", text: $username)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textInputAutocapitalization(.never)
+                    .textFieldStyle(.roundedBorder)
             }
             .padding(.horizontal, 8)
             HStack {
                 Image(systemName: "lock")
                     .foregroundStyle(Color.gray)
                 SecureField("Password", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textFieldStyle(.roundedBorder)
             }
             .padding(.horizontal, 8)
         }
@@ -58,7 +59,8 @@ struct AuthenticationView: View {
             Image(systemName: "ellipsis")
                 .foregroundStyle(Color.gray)
             TextField("Code", text: $code)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .keyboardType(.decimalPad)
+                .textFieldStyle(.roundedBorder)
         }
         .padding(.horizontal, 8)
         .background(
