@@ -10,7 +10,7 @@ import SwiftUI
 struct ProgressScreen: View {
     var body: some View {
         ZStack {
-            Color(UIColor.systemBackground)
+            Color(uiColor: .systemBackground)
             ProgressView()
                 .controlSize(.large)
         }

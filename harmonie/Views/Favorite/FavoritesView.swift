@@ -11,59 +11,59 @@ import VRCKit
 struct FavoritesView: View {
     @EnvironmentObject var favoriteVM: FavoriteViewModel
     @State var selected: Selected?
-    @State var isFetching = false
 
     var body: some View {
-        NavigationSplitView {
-            if !isFetching {
-                List {
-                    ForEach(favoriteVM.favoriteFriendGroups) { group in
-                        if let friends = favoriteVM.getFavoriteFriends(group.id) {
-                            Section(header: Text(group.displayName)) {
-                                ForEach(friends) { friend in
-                                    rowView(friend)
-                                }
-                            }
-                        }
-                    }
-                }
-                .sheet(item: $selected) { selected in
-                    UserDetailPresentationView(id: selected.id)
-                        .presentationDetents([.medium, .large])
-                        .presentationBackground(Color(UIColor.systemGroupedBackground))
-                }
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Picker("", selection: $favoriteVM.segment) {
-                            ForEach(FavoriteViewModel.Segment.allCases) { segment in
-                                Text(segment.description).tag(segment)
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                    }
-                }
-                .navigationTitle("Favorites")
-            } else {
-                ProgressScreen()
-                    .navigationTitle("Favorites")
-            }
+        NavigationSplitView(columnVisibility: .constant(.all)) {
+            listView
         } detail: {
-            EmptyView()
+            Text("Select a friend")
         }
+        .navigationSplitViewStyle(.balanced)
+    }
+
+    var listView: some View {
+        List {
+            ForEach(favoriteVM.favoriteFriendGroups) { group in
+                if let friends = favoriteVM.getFavoriteFriends(group.id) {
+                    Section(header: Text(group.displayName)) {
+                        ForEach(friends) { friend in
+                            rowView(friend)
+                        }
+                    }
+                }
+            }
+        }
+        .navigationDestination(item: $selected) { selected in
+            UserDetailPresentationView(id: selected.id)
+        }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Picker("", selection: $favoriteVM.segment) {
+                    ForEach(FavoriteViewModel.Segment.allCases) { segment in
+                        Text(segment.description).tag(segment)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+            }
+        }
+        .navigationTitle("Favorites")
     }
 
     func rowView(_ friend: Friend) -> some View {
-        HStack {
-            CircleURLImage(
-                imageUrl: friend.thumbnailUrl,
-                size: Constants.IconSize.thumbnail
-            )
-            Text(friend.displayName)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle())
-        .onTapGesture {
+        Button {
             selected = Selected(id: friend.id)
+        } label: {
+            HStack {
+                CircleURLImage(
+                    imageUrl: friend.thumbnailUrl,
+                    size: Constants.IconSize.thumbnail
+                )
+                Text(friend.displayName)
+                Spacer()
+                Constants.Icon.forward
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
         }
     }
 }

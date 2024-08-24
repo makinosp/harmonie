@@ -12,6 +12,7 @@ import VRCKit
 struct SettingsView: View {
     @EnvironmentObject var appVM: AppViewModel
     @State var destination: Destination?
+    @State var isPresentedForm = false
 
     enum Destination: Hashable {
         case userDetail, license
@@ -33,6 +34,16 @@ struct SettingsView: View {
             .navigationTitle("Settings")
         }
         .navigationSplitViewStyle(.balanced)
+        .onAppear {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                destination = .userDetail
+            }
+        }
+        .sheet(isPresented: $isPresentedForm) {
+            if let user = appVM.user {
+                ProfileEditView(user: user)
+            }
+        }
     }
 
     @ViewBuilder
@@ -50,22 +61,7 @@ struct SettingsView: View {
     var settingsContent: some View {
         List {
             if let user = appVM.user {
-                Section(header: Text("My Profile")) {
-                    Button {
-                        destination = .userDetail
-                    } label: {
-                        HStack {
-                            CircleURLImage(
-                                imageUrl: user.thumbnailUrl,
-                                size: Constants.IconSize.ll
-                            )
-                            Text(user.displayName)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .contentShape(Rectangle())
-                    }
-                }
-                .textCase(nil)
+                profileSection(user: user)
             }
             Section(header: Text("Open Source License Notice")) {
                 Link(destination: URL(string: "https://github.com/makinosp/harmonie")!) {

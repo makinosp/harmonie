@@ -27,9 +27,9 @@ struct LocationsView: View {
     var backGroundColor: Color {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
-            Color(UIColor.secondarySystemGroupedBackground)
+            Color(uiColor: .secondarySystemGroupedBackground)
         default:
-            Color(UIColor.systemGroupedBackground)
+            Color(uiColor: .systemGroupedBackground)
         }
     }
 

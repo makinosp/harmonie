@@ -35,6 +35,9 @@ struct UserDetailView: View {
                 contentStacks
             }
         }
+        .navigationTitle(user.displayName)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar { toolbar }
         .task {
             if user.isVisible {
                 await fetchInstance()
@@ -104,10 +107,6 @@ struct UserDetailView: View {
                 .font(.headline)
                 statusDescription
             }
-            Spacer()
-            if user.isFriend {
-                favoriteMenu
-            }
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
@@ -122,50 +121,12 @@ struct UserDetailView: View {
                 .padding(.horizontal, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(Color(UIColor.systemBackground).opacity(0.25))
+                        .foregroundStyle(Color(uiColor: .systemBackground).opacity(0.25))
                 )
         } else {
             Text(user.statusDescription)
+                .lineLimit(1)
                 .font(.subheadline)
-        }
-    }
-
-    var favoriteIconName: String {
-        favoriteVM.isAdded(friendId: user.id)
-        ? Constants.IconName.favoriteFilled
-        : Constants.IconName.favorite
-    }
-
-    var favoriteMenu: some View {
-        Menu {
-            ForEach(favoriteVM.favoriteFriendGroups) { group in
-                favoriteMenuItem(group: group)
-            }
-        } label: {
-            Image(systemName: favoriteIconName)
-                .frame(size: CGSize(width: 12, height: 12))
-                .padding(12)
-                .background {
-                    Circle()
-                        .foregroundStyle(Material.regularMaterial)
-                }
-        }
-    }
-
-    func favoriteMenuItem(group: FavoriteGroup) -> some View {
-        AsyncButton {
-            await updateFavorite(friendId: user.id, group: group)
-        } label: {
-            Label {
-                Text(group.displayName)
-            } icon: {
-                if favoriteVM.isFriendInFavoriteGroup(
-                    friendId: user.id,
-                    groupId: group.id
-                ) {
-                    Image(systemName: Constants.IconName.check)
-                }
-            }
         }
     }
 

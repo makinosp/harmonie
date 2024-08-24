@@ -51,7 +51,7 @@ struct FriendsView: View {
                     }
                     Text(friend.displayName)
                     Spacer()
-                    Image(systemName: "chevron.right")
+                    Constants.Icon.forward
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
