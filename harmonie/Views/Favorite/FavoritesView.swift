@@ -59,10 +59,15 @@ struct FavoritesView: View {
                 Label {
                     Text(friend.displayName)
                 } icon: {
-                    CircleURLImage(
-                        imageUrl: friend.thumbnailUrl,
-                        size: Constants.IconSize.thumbnail
-                    )
+                    ZStack {
+                        Circle()
+                            .foregroundStyle(friend.status.color)
+                            .frame(size: Constants.IconSize.thumbnailOutside)
+                        CircleURLImage(
+                            imageUrl: friend.thumbnailUrl,
+                            size: Constants.IconSize.thumbnail
+                        )
+                    } 
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
