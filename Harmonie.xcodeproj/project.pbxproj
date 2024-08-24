@@ -86,7 +86,7 @@
 
 /* Begin PBXFileReference section */
 		200723962BA56377002C27E8 /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
-		200BC2D62C74B49A0025872B /* SettingsView+ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SettingsView+ProfileSection.swift"; path = "Harmonie/Views/Setting/SettingsView+ProfileSection.swift"; sourceTree = SOURCE_ROOT; };
+		200BC2D62C74B49A0025872B /* SettingsView+ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SettingsView+ProfileSection.swift"; path = "harmonie/Views/Setting/Profile/SettingsView+ProfileSection.swift"; sourceTree = SOURCE_ROOT; };
 		200FA7AC2C1D61AB0001E655 /* CircleURLImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleURLImage.swift; sourceTree = "<group>"; };
 		200FA7AF2C1D745B0001E655 /* LocationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCardView.swift; sourceTree = "<group>"; };
 		20102BCE2C157C77007738D3 /* HarmonieApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonieApp.swift; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		202844C32BA5CE1B00357D09 /* LocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsView.swift; sourceTree = "<group>"; };
 		202B9E362C6A426500B981C9 /* FriendsView+Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FriendsView+Filters.swift"; path = "Harmonie/Views/Friend/FriendsView+Filters.swift"; sourceTree = SOURCE_ROOT; };
 		202B9E382C6A430900B981C9 /* FriendViewModel+Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "FriendViewModel+Filters.swift"; path = "Harmonie/ViewModels/FriendViewModel+Filters.swift"; sourceTree = SOURCE_ROOT; };
-		2033B9402C78C0CA0005BD36 /* URLEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLEditorView.swift; path = Harmonie/Views/Setting/URLEditorView.swift; sourceTree = SOURCE_ROOT; };
+		2033B9402C78C0CA0005BD36 /* URLEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLEditorView.swift; path = harmonie/Views/Setting/Profile/URLEditorView.swift; sourceTree = SOURCE_ROOT; };
 		20395D912B945CD700003921 /* Harmonie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harmonie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20395D962B945CD700003921 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		20395D9A2B945CD800003921 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 		205B3BF32C00D8BF0097D62A /* ProgressScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressScreen.swift; sourceTree = "<group>"; };
 		205C9DAE2C20612500E3782C /* Binding+NilCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+NilCoalescing.swift"; sourceTree = "<group>"; };
 		206088E82C48079900626DDC /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
-		20634BC22C760A2D00D57D57 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileEditView.swift; path = Harmonie/Views/Setting/ProfileEditView.swift; sourceTree = SOURCE_ROOT; };
+		20634BC22C760A2D00D57D57 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileEditView.swift; path = harmonie/Views/Setting/Profile/ProfileEditView.swift; sourceTree = SOURCE_ROOT; };
 		2065F86F2C788A59007F132B /* ProfileEditViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileEditViewModel.swift; path = Harmonie/ViewModels/ProfileEditViewModel.swift; sourceTree = SOURCE_ROOT; };
 		207FC6322C4256E60018E605 /* View+SizeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+SizeModifier.swift"; sourceTree = "<group>"; };
 		207FC6332C4256E60018E605 /* View+ErrorAlertModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlertModifier.swift"; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 		209D772F2C2251C200A11666 /* MainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		20AD8D972C68C5C300140232 /* NavigationSplitView+initializers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NavigationSplitView+initializers.swift"; path = "Harmonie/Extensions/NavigationSplitView+initializers.swift"; sourceTree = SOURCE_ROOT; };
 		20AFBC832C68EE5D006E9239 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateUtil.swift; path = Harmonie/Utils/DateUtil.swift; sourceTree = SOURCE_ROOT; };
-		20D50FA62C77F94F00F89B4F /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LanguagePickerView.swift; path = Harmonie/Views/Setting/LanguagePickerView.swift; sourceTree = SOURCE_ROOT; };
+		20D50FA62C77F94F00F89B4F /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LanguagePickerView.swift; path = harmonie/Views/Setting/Profile/LanguagePickerView.swift; sourceTree = SOURCE_ROOT; };
 		20E1902D2C4E820A003F39AF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Harmonie/Utils/Constants.swift; sourceTree = SOURCE_ROOT; };
 		20F95D272C69BC2D002CDC5F /* UserDetailView+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UserDetailView+Actions.swift"; path = "Harmonie/Views/UserDetail/UserDetailView+Actions.swift"; sourceTree = SOURCE_ROOT; };
 		20F95D292C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserDetailView+ActivitySection.swift"; path = "Harmonie/Views/UserDetail/UserDetailView+ActivitySection.swift"; sourceTree = SOURCE_ROOT; };
@@ -314,13 +314,21 @@
 		206088F02C4808C500626DDC /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				207836FB2C798A8C00659C91 /* Profile */,
+				205B3BF12C00D51A0097D62A /* SettingsView.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		207836FB2C798A8C00659C91 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
 				20D50FA62C77F94F00F89B4F /* LanguagePickerView.swift */,
 				20634BC22C760A2D00D57D57 /* ProfileEditView.swift */,
-				205B3BF12C00D51A0097D62A /* SettingsView.swift */,
 				200BC2D62C74B49A0025872B /* SettingsView+ProfileSection.swift */,
 				2033B9402C78C0CA0005BD36 /* URLEditorView.swift */,
 			);
-			path = Setting;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		208555112BF8E8BB0079A92F /* Utils */ = {
