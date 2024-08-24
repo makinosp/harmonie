@@ -16,7 +16,7 @@ struct ProfileEditView: View {
     @State private var isPresentedURLEditor = false
     @State private var isRequesting = false
     @State private var selectedLanguage: LanguageTag?
-    @State private var inputtedURL: String = ""
+    @State private var inputtedURL: URL?
 
     init(user: User) {
         _profileEditVM = StateObject(wrappedValue: ProfileEditViewModel(user: user))
@@ -48,6 +48,11 @@ struct ProfileEditView: View {
                 profileEditVM.editingUserInfo.tags.languageTags.append(selectedLanguage)
                 self.selectedLanguage = nil
             }
+        }
+        .onChange(of: inputtedURL) {
+            guard let inputtedURL = inputtedURL else { return }
+            profileEditVM.editingUserInfo.bioLinks.append(inputtedURL)
+            self.inputtedURL = nil
         }
     }
 

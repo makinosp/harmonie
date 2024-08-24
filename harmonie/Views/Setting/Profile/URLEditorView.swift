@@ -10,13 +10,13 @@ import VRCKit
 
 struct URLEditorView: View {
     @Environment(\.dismiss) private var dismiss
-    @Binding private var inputtedURL: String
+    @Binding private var inputtedURL: URL?
     @State private var urlString: String
     @State private var isInvalid = false
 
-    init(inputtedURL: Binding<String>) {
+    init(inputtedURL: Binding<URL?>, urlString: String = "") {
         _inputtedURL = inputtedURL
-        _urlString = State(initialValue: inputtedURL.wrappedValue)
+        _urlString = State(initialValue: urlString)
     }
 
     var body: some View {
@@ -52,7 +52,7 @@ struct URLEditorView: View {
         }
         ToolbarItem {
             Button {
-                inputtedURL = urlString
+                inputtedURL = URL(string: urlString)
                 dismiss()
             } label: {
                 Text("Confirm")
@@ -63,6 +63,6 @@ struct URLEditorView: View {
 }
 
 #Preview {
-    @State var inputtedURL: String = ""
+    @State var inputtedURL: URL?
     return URLEditorView(inputtedURL: $inputtedURL)
 }
