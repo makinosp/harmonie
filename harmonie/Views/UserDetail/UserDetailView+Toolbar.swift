@@ -28,7 +28,7 @@ extension UserDetailView {
             }
         }
     }
-    
+
     func favoriteMenuItem(group: FavoriteGroup) -> some View {
         AsyncButton {
             await updateFavorite(friendId: user.id, group: group)
@@ -45,7 +45,7 @@ extension UserDetailView {
             }
         }
     }
-    
+
     var favoriteIconName: String {
         favoriteVM.isAdded(friendId: user.id)
         ? Constants.IconName.favoriteFilled

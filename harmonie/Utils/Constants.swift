@@ -15,7 +15,7 @@ enum Constants {
                 .imageScale(.small)
         }
     }
-    
+
     enum IconSize {
         static let thumbnail = CGSize(width: 28, height: 28)
         static let thumbnailOutside = CGSize(width: 32, height: 32)

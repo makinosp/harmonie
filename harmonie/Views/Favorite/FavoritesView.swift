@@ -20,7 +20,7 @@ struct FavoritesView: View {
         }
         .navigationSplitViewStyle(.balanced)
     }
-    
+
     var listView: some View {
         List {
             ForEach(favoriteVM.favoriteFriendGroups) { group in
