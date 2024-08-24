@@ -29,7 +29,7 @@ extension UserDetailView {
         }
     }
 
-    func favoriteMenuItem(group: FavoriteGroup) -> some View {
+    private func favoriteMenuItem(group: FavoriteGroup) -> some View {
         AsyncButton {
             await updateFavorite(friendId: user.id, group: group)
         } label: {

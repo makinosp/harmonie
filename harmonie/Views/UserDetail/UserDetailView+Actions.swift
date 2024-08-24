@@ -30,20 +30,6 @@ extension UserDetailView {
         }
     }
 
-    func saveUserInfo() async {
-        let service = appVM.isDemoMode
-        ? UserPreviewService(client: appVM.client)
-        : UserService(client: appVM.client)
-        do {
-            try await service.updateUser(
-                id: user.id,
-                editedInfo: editingUserInfo
-            )
-        } catch {
-            appVM.handleError(error)
-        }
-    }
-
     func saveNote() async {
         let service = appVM.isDemoMode
         ? UserNotePreviewService(client: appVM.client)

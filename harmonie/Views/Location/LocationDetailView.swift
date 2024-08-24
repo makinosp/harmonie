@@ -50,7 +50,9 @@ struct LocationDetailView: View {
     var friendList: some View {
         ForEach(location.friends) { friend in
             NavigationLink(value: Selected(id: friend.id)) {
-                HStack {
+                Label {
+                    Text(friend.displayName)
+                } icon: {
                     ZStack {
                         Circle()
                             .foregroundStyle(friend.status.color)
@@ -60,7 +62,6 @@ struct LocationDetailView: View {
                             size: Constants.IconSize.thumbnail
                         )
                     }
-                    Text(friend.displayName)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())

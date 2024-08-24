@@ -51,40 +51,41 @@ struct LocationCardView: View {
 
     func locationCardContent(instance: Instance) -> some View {
         HStack(alignment: .top) {
-            VStack(alignment: .leading) {
-                Text(instance.world.name)
-                    .font(.body)
-                HStack {
-                    Text(instance.typeDescription)
-                        .font(.footnote)
-                        .foregroundStyle(Color.gray)
-                    Spacer()
-                    Text(personAmount(instance))
-                        .font(.footnote)
-                        .foregroundStyle(Color.gray)
-                }
-                ScrollView(.horizontal) {
-                    HStack(spacing: -8) {
-                        ForEach(location.friends) { friend in
-                            ZStack {
-                                Circle()
-                                    .foregroundStyle(friend.status.color)
-                                    .frame(size: Constants.IconSize.thumbnailOutside)
-                                CircleURLImage(
-                                    imageUrl: friend.thumbnailUrl,
-                                    size: Constants.IconSize.thumbnail
-                                )
+            locationThumbnail(instance.world.imageUrl)
+            Spacer()
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(instance.world.name)
+                        .font(.body)
+                    HStack {
+                        Text(instance.typeDescription)
+                            .font(.footnote)
+                            .foregroundStyle(Color.gray)
+                        Text(personAmount(instance))
+                            .font(.footnote)
+                            .foregroundStyle(Color.gray)
+                    }
+                    ScrollView(.horizontal) {
+                        HStack(spacing: -8) {
+                            ForEach(location.friends) { friend in
+                                ZStack {
+                                    Circle()
+                                        .foregroundStyle(friend.status.color)
+                                        .frame(size: Constants.IconSize.thumbnailOutside)
+                                    CircleURLImage(
+                                        imageUrl: friend.thumbnailUrl,
+                                        size: Constants.IconSize.thumbnail
+                                    )
+                                }
                             }
                         }
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Constants.Icon.forward
             }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            Spacer()
-            locationThumbnail(instance.world.imageUrl)
-                .padding()
         }
+        .padding()
     }
 
     func personAmount(_ instance: Instance) -> String {

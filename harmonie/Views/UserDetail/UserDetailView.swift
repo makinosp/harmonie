@@ -15,23 +15,23 @@ struct UserDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State var user: UserDetail
     @State var instance: Instance?
-    @State var editingUserInfo: EditableUserInfo
     @State var note: String
     private let initialValue: EditableUserInfo
     private let initialNoteValue: String
 
     init(user: UserDetail) {
         _user = State(initialValue: user)
-        initialValue = EditableUserInfo(detail: user)
-        _editingUserInfo = State(initialValue: initialValue)
         initialNoteValue = user.note
         _note = State(initialValue: initialNoteValue)
+        initialValue = EditableUserInfo(detail: user)
     }
 
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                profileImageContainer
+                if let url = user.thumbnailUrl {
+                    profileImageContainer(url: url)
+                }
                 contentStacks
             }
         }
@@ -45,34 +45,23 @@ struct UserDetailView: View {
         }
     }
 
-    var hasAnyDiff: Bool {
-        editingUserInfo != initialValue ||
-        note != initialNoteValue
-    }
-
-    var isOwned: Bool {
-        user.id == appVM.user?.id
-    }
-
     var statusColor: Color {
         user.state == .offline ? UserStatus.offline.color : user.status.color
     }
 
-    @ViewBuilder var profileImageContainer: some View {
-        if let url = user.thumbnailUrl {
-            GradientOverlayImageView(
-                url: url,
-                maxHeight: 250,
-                topContent: { topBar },
-                bottomContent: { bottomBar }
-            )
-        }
+    func profileImageContainer(url: URL) -> some View {
+        GradientOverlayImageView(
+            url: url,
+            maxHeight: 250,
+            topContent: { topBar },
+            bottomContent: { bottomBar }
+        )
     }
 
     var topBar: some View {
         HStack {
             Spacer()
-            if hasAnyDiff {
+            if note != initialNoteValue {
                 saveButton
             }
         }
@@ -82,9 +71,6 @@ struct UserDetailView: View {
 
     var saveButton: some View {
         AsyncButton("Save") {
-            if editingUserInfo != initialValue {
-                await saveUserInfo()
-            }
             if note != initialNoteValue {
                 await saveNote()
             }
@@ -107,27 +93,16 @@ struct UserDetailView: View {
                 .font(.headline)
                 statusDescription
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
-        .foregroundStyle(Color.white)
     }
 
-    @ViewBuilder var statusDescription: some View {
-        if isOwned {
-            TextField("StatusDescription", text: $editingUserInfo.statusDescription)
-                .font(.subheadline)
-                .padding(.vertical, 4)
-                .padding(.horizontal, 8)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(Color(uiColor: .systemBackground).opacity(0.25))
-                )
-        } else {
-            Text(user.statusDescription)
-                .lineLimit(1)
-                .font(.subheadline)
-        }
+    var statusDescription: some View {
+        Text(user.statusDescription)
+            .lineLimit(1)
+            .font(.subheadline)
     }
 
     var displayStatusAndName: some View {

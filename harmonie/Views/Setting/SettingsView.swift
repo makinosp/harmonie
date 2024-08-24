@@ -15,23 +15,16 @@ struct SettingsView: View {
     @State var isPresentedForm = false
 
     enum Destination: Hashable {
-        case userDetail, license
+        case userDetail, about, license
     }
 
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
-            VStack {
-                settingsContent
-                HStack {
-                    Text(appName)
-                    Text(appVersion)
+            settingsContent
+                .navigationDestination(item: $destination) { destination in
+                    presentDestination(destination)
                 }
-                .font(.footnote)
-            }
-            .navigationDestination(item: $destination) { destination in
-                presentDestination(destination)
-            }
-            .navigationTitle("Settings")
+                .navigationTitle("Settings")
         }
         .navigationSplitViewStyle(.balanced)
         .onAppear {
@@ -53,6 +46,8 @@ struct SettingsView: View {
             if let user = appVM.user {
                 UserDetailPresentationView(id: user.id)
             }
+        case .about:
+            aboutThisApp
         case .license:
             LicenseListView()
         }
@@ -63,25 +58,7 @@ struct SettingsView: View {
             if let user = appVM.user {
                 profileSection(user: user)
             }
-            Section(header: Text("Open Source License Notice")) {
-                Link(destination: URL(string: "https://github.com/makinosp/harmonie")!) {
-                    Label {
-                        Text("Source Code")
-                    } icon: {
-                        Image(systemName: "curlybraces.square.fill")
-                    }
-                }
-                Button {
-                    destination = .license
-                } label: {
-                    Label {
-                        Text("Third Party Licence")
-                    } icon: {
-                        Image(systemName: "info.circle.fill")
-                    }
-                }
-            }
-            .textCase(nil)
+            aboutSection
             Section {
                 AsyncButton {
                     await appVM.logout()
@@ -96,13 +73,5 @@ struct SettingsView: View {
                 }
             }
         }
-    }
-
-    var appName: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
-    }
-
-    var appVersion: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
     }
 }

@@ -53,14 +53,22 @@ struct FavoritesView: View {
         Button {
             selected = Selected(id: friend.id)
         } label: {
-            HStack {
-                CircleURLImage(
-                    imageUrl: friend.thumbnailUrl,
-                    size: Constants.IconSize.thumbnail
-                )
-                Text(friend.displayName)
-                Spacer()
+            LabeledContent {
                 Constants.Icon.forward
+            } label: {
+                Label {
+                    Text(friend.displayName)
+                } icon: {
+                    ZStack {
+                        Circle()
+                            .foregroundStyle(friend.status.color)
+                            .frame(size: Constants.IconSize.thumbnailOutside)
+                        CircleURLImage(
+                            imageUrl: friend.thumbnailUrl,
+                            size: Constants.IconSize.thumbnail
+                        )
+                    }
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
