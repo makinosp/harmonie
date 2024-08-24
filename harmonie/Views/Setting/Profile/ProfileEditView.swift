@@ -65,7 +65,10 @@ struct ProfileEditView: View {
                         .foregroundStyle(profileEditVM.editingUserInfo.status.color)
                 }
             }
-            TextField("Status Description", text: $profileEditVM.editingUserInfo.statusDescription)
+            TextField(
+                "Status Description",
+                text: $profileEditVM.editingUserInfo.statusDescription
+            )
         }
     }
 
@@ -101,7 +104,25 @@ struct ProfileEditView: View {
     @ViewBuilder var bioLinksSection: some View {
         Section("Bio Links") {
             ForEach(profileEditVM.editingUserInfo.bioLinks) { url in
-                Link(url.description, destination: url)
+                Link(destination: url) {
+                    Label {
+                        Text(url.description)
+                    } icon: {
+                        Image(systemName: "link")
+                            .foregroundStyle(Color(uiColor: .label))
+                    }
+                }
+                .swipeActions {
+                    Button(role: .destructive) {
+                            // Delete action
+                    } label: {
+                        Label {
+                            Text("Delete")
+                        } icon: {
+                            Image(systemName: "message.badge")
+                        }
+                    }
+                }
             }
         }
         Section {
