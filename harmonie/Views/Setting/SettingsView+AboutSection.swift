@@ -8,6 +8,14 @@
 import SwiftUI
 
 extension SettingsView {
+    var appName: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
+    }
+
+    var appVersion: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
+    }
+
     var aboutSection: some View {
         Section("About") {
             LabeledContent {
@@ -44,5 +52,22 @@ extension SettingsView {
                 }
             }
         }
+    }
+
+    var aboutThisApp: some View {
+        List {
+            LabeledContent {
+                Text(appName)
+            } label: {
+                Text("App Name")
+            }
+            LabeledContent {
+                Text(appVersion)
+            } label: {
+                Text("App Version")
+            }
+        }
+        .navigationTitle("About")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

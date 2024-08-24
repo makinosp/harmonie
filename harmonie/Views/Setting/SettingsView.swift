@@ -21,17 +21,17 @@ struct SettingsView: View {
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
             VStack {
-                settingsContent
+            settingsContent
                 HStack {
                     Text(appName)
                     Text(appVersion)
                 }
                 .font(.footnote)
             }
-            .navigationDestination(item: $destination) { destination in
-                presentDestination(destination)
-            }
-            .navigationTitle("Settings")
+                .navigationDestination(item: $destination) { destination in
+                    presentDestination(destination)
+                }
+                .navigationTitle("Settings")
         }
         .navigationSplitViewStyle(.balanced)
         .onAppear {
@@ -54,7 +54,7 @@ struct SettingsView: View {
                 UserDetailPresentationView(id: user.id)
             }
         case .about:
-            Text("about!")
+            aboutThisApp
         case .license:
             LicenseListView()
         }
@@ -80,13 +80,5 @@ struct SettingsView: View {
                 }
             }
         }
-    }
-
-    var appName: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
-    }
-
-    var appVersion: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
     }
 }
