@@ -15,7 +15,7 @@ struct SettingsView: View {
     @State var isPresentedForm = false
 
     enum Destination: Hashable {
-        case userDetail, license
+        case userDetail, about, license
     }
 
     var body: some View {
@@ -53,6 +53,8 @@ struct SettingsView: View {
             if let user = appVM.user {
                 UserDetailPresentationView(id: user.id)
             }
+        case .about:
+            Text("about!")
         case .license:
             LicenseListView()
         }
@@ -63,25 +65,41 @@ struct SettingsView: View {
             if let user = appVM.user {
                 profileSection(user: user)
             }
-            Section(header: Text("Open Source License Notice")) {
+            Section("About") {
+                LabeledContent {
+                    Constants.Icon.forward
+                } label: {
+                    Button {
+                        destination = .about
+                    } label: {
+                        Label {
+                            Text("About This App")
+                        } icon: {
+                            Image(systemName: "info.circle")
+                        }
+                    }
+                }
                 Link(destination: URL(string: "https://github.com/makinosp/harmonie")!) {
                     Label {
                         Text("Source Code")
                     } icon: {
-                        Image(systemName: "curlybraces.square.fill")
+                        Image(systemName: "curlybraces")
                     }
                 }
-                Button {
-                    destination = .license
+                LabeledContent {
+                    Constants.Icon.forward
                 } label: {
-                    Label {
-                        Text("Third Party Licence")
-                    } icon: {
-                        Image(systemName: "info.circle.fill")
+                    Button {
+                        destination = .license
+                    } label: {
+                        Label {
+                            Text("Third Party Licence")
+                        } icon: {
+                            Image(systemName: "lightbulb")
+                        }
                     }
                 }
             }
-            .textCase(nil)
             Section {
                 AsyncButton {
                     await appVM.logout()
