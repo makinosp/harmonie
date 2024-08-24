@@ -29,7 +29,9 @@ struct UserDetailView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                profileImageContainer
+                if let url = user.thumbnailUrl {
+                    profileImageContainer(url: url)
+                }
                 contentStacks
             }
         }
@@ -47,15 +49,13 @@ struct UserDetailView: View {
         user.state == .offline ? UserStatus.offline.color : user.status.color
     }
 
-    @ViewBuilder var profileImageContainer: some View {
-        if let url = user.thumbnailUrl {
-            GradientOverlayImageView(
-                url: url,
-                maxHeight: 250,
-                topContent: { topBar },
-                bottomContent: { bottomBar }
-            )
-        }
+    func profileImageContainer(url: URL) -> some View {
+        GradientOverlayImageView(
+            url: url,
+            maxHeight: 250,
+            topContent: { topBar },
+            bottomContent: { bottomBar }
+        )
     }
 
     var topBar: some View {
@@ -93,10 +93,10 @@ struct UserDetailView: View {
                 .font(.headline)
                 statusDescription
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
-        .foregroundStyle(Color.white)
     }
 
     var statusDescription: some View {
