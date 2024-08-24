@@ -67,7 +67,7 @@ struct FavoritesView: View {
                             imageUrl: friend.thumbnailUrl,
                             size: Constants.IconSize.thumbnail
                         )
-                    } 
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
