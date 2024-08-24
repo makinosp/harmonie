@@ -15,17 +15,15 @@ struct UserDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State var user: UserDetail
     @State var instance: Instance?
-    @State var editingUserInfo: EditableUserInfo
     @State var note: String
     private let initialValue: EditableUserInfo
     private let initialNoteValue: String
 
     init(user: UserDetail) {
         _user = State(initialValue: user)
-        initialValue = EditableUserInfo(detail: user)
-        _editingUserInfo = State(initialValue: initialValue)
         initialNoteValue = user.note
         _note = State(initialValue: initialNoteValue)
+        initialValue = EditableUserInfo(detail: user)
     }
 
     var body: some View {
@@ -43,15 +41,6 @@ struct UserDetailView: View {
                 await fetchInstance()
             }
         }
-    }
-
-    var hasAnyDiff: Bool {
-        editingUserInfo != initialValue ||
-        note != initialNoteValue
-    }
-
-    var isOwned: Bool {
-        user.id == appVM.user?.id
     }
 
     var statusColor: Color {
@@ -72,7 +61,7 @@ struct UserDetailView: View {
     var topBar: some View {
         HStack {
             Spacer()
-            if hasAnyDiff {
+            if note != initialNoteValue {
                 saveButton
             }
         }
@@ -82,9 +71,6 @@ struct UserDetailView: View {
 
     var saveButton: some View {
         AsyncButton("Save") {
-            if editingUserInfo != initialValue {
-                await saveUserInfo()
-            }
             if note != initialNoteValue {
                 await saveNote()
             }
@@ -113,21 +99,10 @@ struct UserDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    @ViewBuilder var statusDescription: some View {
-        if isOwned {
-            TextField("StatusDescription", text: $editingUserInfo.statusDescription)
-                .font(.subheadline)
-                .padding(.vertical, 4)
-                .padding(.horizontal, 8)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(Color(uiColor: .systemBackground).opacity(0.25))
-                )
-        } else {
-            Text(user.statusDescription)
-                .lineLimit(1)
-                .font(.subheadline)
-        }
+    var statusDescription: some View {
+        Text(user.statusDescription)
+            .lineLimit(1)
+            .font(.subheadline)
     }
 
     var displayStatusAndName: some View {
