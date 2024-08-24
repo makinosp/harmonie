@@ -20,14 +20,7 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
-            VStack {
             settingsContent
-                HStack {
-                    Text(appName)
-                    Text(appVersion)
-                }
-                .font(.footnote)
-            }
                 .navigationDestination(item: $destination) { destination in
                     presentDestination(destination)
                 }
