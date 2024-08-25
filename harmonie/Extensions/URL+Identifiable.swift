@@ -7,6 +7,6 @@
 
 import Foundation
 
-extension URL: Identifiable {
+extension URL: @retroactive Identifiable {
     public var id: Int { hashValue }
 }
