@@ -11,16 +11,16 @@
 		2014A0B32C3832690019C638 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2014A0B22C3832690019C638 /* VRCKit */; };
 		201B43102C27F48E00879A2F /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 201B430F2C27F48E00879A2F /* LicenseList */; };
 		20395DC22B945EEF00003921 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20395DC12B945EEF00003921 /* VRCKit */; };
+		204709A32C7B47E100A56DF8 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 208899AA2C4BB26D00BCE9C5 /* VRCKit */; };
+		204709A42C7B47E100A56DF8 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2052C7AD2C4BC97100B341D1 /* VRCKit */; };
+		204709A52C7B47E100A56DF8 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2096016C2C4BD30100D905AF /* VRCKit */; };
+		204709A62C7B47E100A56DF8 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 205D81A52C71B9D70047C1CC /* SwiftUIIntrospect */; };
 		20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20592B022C45640D00E1C8B8 /* AsyncSwiftUI */; };
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
 		2094C4002C43BBC100F88986 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2094C3FF2C43BBC100F88986 /* VRCKit */; };
 		20C7F8BB2C480E6800AC7A56 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 20C7F89E2C480E6800AC7A56 /* LICENSE */; };
-		20DB5D8A2C43BC4B00E5960B /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20DB5D892C43BC4B00E5960B /* VRCKit */; };
 		20DC3C292C422786001101DB /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20DC3C282C422786001101DB /* VRCKit */; };
-		20E1902E2C4E820A003F39AF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E1902D2C4E820A003F39AF /* Constants.swift */; };
 		20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20F213DC2C11FB470061DE29 /* NukeUI */; };
-		20F95D282C69BC2D002CDC5F /* UserDetailView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F95D272C69BC2D002CDC5F /* UserDetailView+Actions.swift */; };
-		20F95D2A2C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F95D292C69BC4B002CDC5F /* UserDetailView+ActivitySection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,19 +66,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				204709A62C7B47E100A56DF8 /* SwiftUIIntrospect in Frameworks */,
+				204709A52C7B47E100A56DF8 /* VRCKit in Frameworks */,
+				204709A42C7B47E100A56DF8 /* VRCKit in Frameworks */,
+				204709A32C7B47E100A56DF8 /* VRCKit in Frameworks */,
 				201B43102C27F48E00879A2F /* LicenseList in Frameworks */,
 				201067B82C4552B40083ECBC /* AsyncSwiftUI in Frameworks */,
 				2094C4002C43BBC100F88986 /* VRCKit in Frameworks */,
 				20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */,
 				20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */,
-				208899AB2C4BB26D00BCE9C5 /* VRCKit in Frameworks */,
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
 				2014A0B32C3832690019C638 /* VRCKit in Frameworks */,
 				20DC3C292C422786001101DB /* VRCKit in Frameworks */,
-				2096016D2C4BD30100D905AF /* VRCKit in Frameworks */,
 				206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */,
-				2052C7AE2C4BC97100B341D1 /* VRCKit in Frameworks */,
-				205D81A62C71B9D70047C1CC /* SwiftUIIntrospect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,7 +631,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/makinosp/async-swift-ui";
 			requirement = {
-				branch = main;
+				branch = "issue-10-adapt-to-SE-0409";
 				kind = branch;
 			};
 		};
