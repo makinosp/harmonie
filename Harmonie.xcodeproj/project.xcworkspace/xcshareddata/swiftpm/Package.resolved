@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/makinosp/async-swift-ui",
       "state" : {
-        "branch" : "main",
-        "revision" : "bb845af15caece517ab20c565904a0cce031f705"
+        "branch" : "issue-10-adapt-to-SE-0409",
+        "revision" : "350d5b97c88c7b17e384659e6cf6252b4ce3b48a"
       }
     },
     {
