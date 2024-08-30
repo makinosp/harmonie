@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct FriendsView: View {
-    @EnvironmentObject var friendVM: FriendViewModel
+    @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
     @State var selected: Selected?
 
@@ -20,6 +20,11 @@ struct FriendsView: View {
             Text("Select a friend")
         }
         .navigationSplitViewStyle(.balanced)
+    }
+
+    var bindFilterText: Binding<String> {
+        @Bindable var friendVM = friendVM
+        return $friendVM.filterText
     }
 
     var toolbarContent: some ToolbarContent {
@@ -61,7 +66,7 @@ struct FriendsView: View {
             }
         }
         .navigationTitle("Friends")
-        .searchable(text: $friendVM.filterText)
+        .searchable(text: bindFilterText)
         .toolbar { toolbarContent }
         .navigationDestination(item: $selected) { selected in
             UserDetailPresentationView(id: selected.id)
