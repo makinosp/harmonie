@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import Observation
 import VRCKit
 
-class ProfileEditViewModel: ObservableObject {
-    @Published var editingUserInfo: EditableUserInfo
-    private let id: String
+@Observable
+class ProfileEditViewModel {
+    var editingUserInfo: EditableUserInfo
+    @ObservationIgnored private let id: String
 
     init(user: User) {
         editingUserInfo = EditableUserInfo(detail: user)

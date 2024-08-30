@@ -11,16 +11,12 @@ import VRCKit
 struct ProfileEditView: View {
     @Environment(AppViewModel.self) private var appVM: AppViewModel
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var profileEditVM: ProfileEditViewModel
+    @State var profileEditVM: ProfileEditViewModel
     @State private var isPresentedLanguagePicker = false
     @State private var isPresentedURLEditor = false
     @State private var isRequesting = false
     @State private var selectedLanguage: LanguageTag?
     @State private var inputtedURL: URL?
-
-    init(user: User) {
-        _profileEditVM = StateObject(wrappedValue: ProfileEditViewModel(user: user))
-    }
 
     var body: some View {
         NavigationStack {

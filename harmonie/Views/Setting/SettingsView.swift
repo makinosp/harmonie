@@ -34,7 +34,7 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $isPresentedForm) {
             if let user = appVM.user {
-                ProfileEditView(user: user)
+                ProfileEditView(profileEditVM: ProfileEditViewModel(user: user))
             }
         }
     }
