@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import VRCKit
 
 struct ContentView: View {
-    @EnvironmentObject var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM: AppViewModel
 
     var body: some View {
         switch appVM.step {

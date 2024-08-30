@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import VRCKit
 
 struct ProfileEditView: View {
-    @EnvironmentObject private var appVM: AppViewModel
+    @Environment(AppViewModel.self) private var appVM: AppViewModel
     @Environment(\.dismiss) private var dismiss
     @StateObject private var profileEditVM: ProfileEditViewModel
     @State private var isPresentedLanguagePicker = false

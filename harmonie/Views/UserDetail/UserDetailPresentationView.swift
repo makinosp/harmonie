@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct UserDetailPresentationView: View {
-    @EnvironmentObject var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM: AppViewModel
     @State var userDetail: UserDetail?
     let id: String
 

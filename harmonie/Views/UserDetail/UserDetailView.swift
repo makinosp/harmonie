@@ -10,7 +10,7 @@ import NukeUI
 import VRCKit
 
 struct UserDetailView: View {
-    @EnvironmentObject var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM: AppViewModel
     @EnvironmentObject var favoriteVM: FavoriteViewModel
     @Environment(\.dismiss) private var dismiss
     @State var user: UserDetail

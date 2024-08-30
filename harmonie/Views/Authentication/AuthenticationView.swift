@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import VRCKit
 
 struct AuthenticationView: View {
-    @EnvironmentObject private var appVM: AppViewModel
+    @Environment(AppViewModel.self) private var appVM: AppViewModel
     @State private var verifyType: VerifyType?
     @State private var username: String = ""
     @State private var password: String = ""
