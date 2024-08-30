@@ -29,7 +29,7 @@ struct ContentView: View {
             let favoriteVM = appVM.generateFavoriteVM(friendVM: friendVM)
             MainTabView()
                 .environmentObject(friendVM)
-                .environmentObject(favoriteVM)
+                .environment(favoriteVM)
                 .errorAlert()
         }
     }

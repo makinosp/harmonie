@@ -11,7 +11,7 @@ import VRCKit
 struct MainTabView: View {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @EnvironmentObject var friendVM: FriendViewModel
-    @EnvironmentObject var favoriteVM: FavoriteViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
 
     var body: some View {
         TabView {

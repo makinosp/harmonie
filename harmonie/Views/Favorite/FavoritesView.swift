@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct FavoritesView: View {
-    @EnvironmentObject var favoriteVM: FavoriteViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
     @State var selected: Selected?
 
     var body: some View {
@@ -38,6 +38,7 @@ struct FavoritesView: View {
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
+                @Bindable var favoriteVM = favoriteVM
                 Picker("", selection: $favoriteVM.segment) {
                     ForEach(FavoriteViewModel.Segment.allCases) { segment in
                         Text(segment.description).tag(segment)

@@ -10,7 +10,7 @@ import VRCKit
 
 struct FriendsView: View {
     @EnvironmentObject var friendVM: FriendViewModel
-    @EnvironmentObject var favoriteVM: FavoriteViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
     @State var selected: Selected?
 
     var body: some View {
