@@ -110,7 +110,7 @@ class AppViewModel {
 
     func generateFavoriteVM(friendVM: FriendViewModel) -> FavoriteViewModel {
         let service = isDemoMode ? FavoritePreviewService(client: client) : FavoriteService(client: client)
-        return FavoriteViewModel(friendVM: friendVM, service: service)
+        return FavoriteViewModel(service: service)
     }
 
     func logout() async {

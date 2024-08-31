@@ -9,6 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct FriendsView: View {
+    @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
     @State var selected: Selected?
@@ -18,6 +19,13 @@ struct FriendsView: View {
             listView
         } detail: {
             Text("Select a friend")
+        }
+        .refreshable {
+            do {
+                try await friendVM.fetchAllFriends()
+            } catch {
+                appVM.handleError(error)
+            }
         }
         .navigationSplitViewStyle(.balanced)
     }
@@ -67,4 +75,26 @@ struct FriendsView: View {
                 .id(selected.id)
         }
     }
+}
+
+#Preview {
+    let appVM = AppViewModel()
+    let friendVM = FriendViewModel(
+        user: PreviewDataProvider.shared.previewUser,
+        service: FriendPreviewService(client: appVM.client)
+    )
+    let favoriteVM = FavoriteViewModel(
+        service: FavoritePreviewService(client: appVM.client)
+    )
+    FriendsView()
+        .task {
+            do {
+                try await friendVM.fetchAllFriends()
+                try await favoriteVM.fetchFavorite(friendVM: friendVM)
+            } catch {
+                appVM.handleError(error)
+            }
+        }
+        .environment(friendVM)
+        .environment(favoriteVM)
 }

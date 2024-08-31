@@ -20,9 +20,10 @@ extension UserDetailView {
     }
 
     func updateFavorite(friendId: String, group: FavoriteGroup) async {
+        guard let friend = friendVM.getFriend(id: friendId) else { return }
         do {
             try await favoriteVM.updateFavorite(
-                friendId: friendId,
+                friend: friend,
                 targetGroup: group
             )
         } catch {
