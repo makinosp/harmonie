@@ -29,14 +29,7 @@ struct FriendsView: View {
 
     @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
         ToolbarItem { sortMenu }
-        ToolbarItem {
-            Menu {
-                filterUserStatus
-                filterFavoriteGroups
-            } label: {
-                Image(systemName: Constants.IconName.filter)
-            }
-        }
+        ToolbarItem { filterMenu }
     }
 
     /// Friend List branched by list type

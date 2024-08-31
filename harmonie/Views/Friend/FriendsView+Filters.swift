@@ -9,7 +9,16 @@ import SwiftUI
 import VRCKit
 
 extension FriendsView {
-    var filterUserStatus: some View {
+    var filterMenu: some View {
+        Menu {
+            filterUserStatusMenu
+            filterFavoriteGroupsMenu
+        } label: {
+            Image(systemName: Constants.IconName.filter)
+        }
+    }
+
+    var filterUserStatusMenu: some View {
         Menu("Statuses") {
             ForEach(FriendViewModel.FilterUserStatus.allCases) { filterUserStatus in
                 Button {
@@ -27,39 +36,7 @@ extension FriendsView {
         }
     }
 
-    var sortArrowIconName: String {
-        switch friendVM.sortOrder {
-        case .asc: Constants.IconName.arrowUp
-        case .desc: Constants.IconName.arrowDown
-        }
-    }
-
-    var sortMenu: some View {
-        Menu {
-            ForEach(FriendViewModel.SortType.allCases) { sortType in
-                Button {
-                    if friendVM.sortType == sortType {
-                        friendVM.sortOrder.toggle()
-                    } else {
-                        friendVM.sortType = sortType
-                        friendVM.sortOrder = .asc
-                    }
-                } label: {
-                    Label {
-                        Text(sortType.description)
-                    } icon: {
-                        if friendVM.sortType == sortType {
-                            Image(systemName: sortArrowIconName)
-                        }
-                    }
-                }
-            }
-        } label: {
-            Image(systemName: Constants.IconName.sort)
-        }
-    }
-
-    var filterFavoriteGroups: some View {
+    var filterFavoriteGroupsMenu: some View {
         Menu("Favorite Groups") {
             Button {
                 friendVM.applyFilterFavoriteGroup(.all)
