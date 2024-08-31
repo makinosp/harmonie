@@ -9,9 +9,10 @@ import AsyncSwiftUI
 import VRCKit
 
 struct AuthenticationView: View {
+    @AppStorage(Constants.Keys.isSavedOnKeyChain) private var isSavedOnKeyChain = false
+    @AppStorage(Constants.Keys.username) private var username: String = ""
     @EnvironmentObject private var appVM: AppViewModel
     @State private var verifyType: VerifyType?
-    @State private var username: String = ""
     @State private var password: String = ""
     @State private var code: String = ""
     @State private var isRequesting = false
@@ -20,8 +21,17 @@ struct AuthenticationView: View {
         VStack(spacing: 16) {
             if verifyType == nil {
                 usernamePasswordFields
+                Toggle(
+                    "Save in Keychain",
+                    systemImage: "key.icloud",
+                    isOn: $isSavedOnKeyChain
+                )
                 loginButton("Login") {
-                    verifyType = await appVM.login(username, password)
+                    verifyType = await appVM.login(
+                        username: username,
+                        password: password,
+                        isSavedOnKeyChain: isSavedOnKeyChain
+                    )
                 }
             } else {
                 otpField
@@ -32,6 +42,12 @@ struct AuthenticationView: View {
         }
         .padding(32)
         .ignoresSafeArea(.keyboard)
+        .onAppear {
+            if isSavedOnKeyChain,
+               let password = KeychainService.shared.getPassword(for: username) {
+                self.password = password
+            }
+        }
     }
 
     private var usernamePasswordFields: some View {
@@ -86,4 +102,8 @@ struct AuthenticationView: View {
         .buttonBorderShape(.capsule)
         .disabled(isRequesting)
     }
+}
+
+#Preview {
+    AuthenticationView()
 }
