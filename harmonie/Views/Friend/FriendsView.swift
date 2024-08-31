@@ -68,3 +68,26 @@ struct FriendsView: View {
         }
     }
 }
+
+#Preview {
+    let appVM = AppViewModel()
+    let friendVM = FriendViewModel(
+        user: PreviewDataProvider.shared.previewUser,
+        service: FriendPreviewService(client: appVM.client)
+    )
+    let favoriteVM = FavoriteViewModel(
+        friendVM: friendVM,
+        service: FavoritePreviewService(client: appVM.client)
+    )
+    FriendsView()
+        .task {
+            do {
+                try await friendVM.fetchAllFriends()
+                try await favoriteVM.fetchFavorite()
+            } catch {
+                appVM.handleError(error)
+            }
+        }
+        .environment(friendVM)
+        .environment(favoriteVM)
+}
