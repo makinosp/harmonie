@@ -1,5 +1,5 @@
 //
-//  KeychainService.swift
+//  KeychainUtil.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/08/25.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class KeychainService {
-    static let shared = KeychainService()
+final class KeychainUtil {
+    static let shared = KeychainUtil()
     private init() {}
 
     func savePassword(_ password: String, for account: String) -> Bool {

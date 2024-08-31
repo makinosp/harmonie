@@ -66,7 +66,7 @@ class AppViewModel: ObservableObject {
             client.setCledentials(username: username, password: password)
         }
         if isSavedOnKeyChain {
-           _ = KeychainService.shared.savePassword(password, for: username)
+           _ = KeychainUtil.shared.savePassword(password, for: username)
         }
         do {
             switch try await service.loginUserInfo() {

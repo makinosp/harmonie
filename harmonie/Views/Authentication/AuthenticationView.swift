@@ -44,7 +44,7 @@ struct AuthenticationView: View {
         .ignoresSafeArea(.keyboard)
         .onAppear {
             if isSavedOnKeyChain,
-               let password = KeychainService.shared.getPassword(for: username) {
+               let password = KeychainUtil.shared.getPassword(for: username) {
                 self.password = password
             }
         }
