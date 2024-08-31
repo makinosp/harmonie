@@ -12,6 +12,7 @@ import VRCKit
 struct UserDetailView: View {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(\.dismiss) private var dismiss
     @State var user: UserDetail
     @State var instance: Instance?

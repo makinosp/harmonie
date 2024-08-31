@@ -39,7 +39,7 @@ struct MainTabView: View {
         .task {
             do {
                 try await friendVM.fetchAllFriends()
-                try await favoriteVM.fetchFavorite()
+                try await favoriteVM.fetchFavorite(friendVM: friendVM)
             } catch {
                 appVM.handleError(error)
             }
