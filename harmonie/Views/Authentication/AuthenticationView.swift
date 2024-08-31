@@ -11,7 +11,7 @@ import VRCKit
 struct AuthenticationView: View {
     @AppStorage(Constants.Keys.isSavedOnKeyChain) private var isSavedOnKeyChain = false
     @AppStorage(Constants.Keys.username) private var username: String = ""
-    @EnvironmentObject private var appVM: AppViewModel
+    @Environment(AppViewModel.self) private var appVM: AppViewModel
     @State private var verifyType: VerifyType?
     @State private var password: String = ""
     @State private var code: String = ""

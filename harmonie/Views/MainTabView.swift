@@ -9,9 +9,9 @@ import SwiftUI
 import VRCKit
 
 struct MainTabView: View {
-    @EnvironmentObject var appVM: AppViewModel
-    @EnvironmentObject var friendVM: FriendViewModel
-    @EnvironmentObject var favoriteVM: FavoriteViewModel
+    @Environment(AppViewModel.self) var appVM: AppViewModel
+    @Environment(FriendViewModel.self) var friendVM: FriendViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
 
     var body: some View {
         TabView {

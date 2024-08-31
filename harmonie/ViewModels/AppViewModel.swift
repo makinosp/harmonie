@@ -6,17 +6,18 @@
 //
 
 import Foundation
+import Observation
 import VRCKit
 
-@MainActor
-class AppViewModel: ObservableObject {
-    @Published var user: User?
-    @Published var step: Step = .initializing
-    @Published var isPresentedAlert = false
-    @Published var vrckError: VRCKitError?
-    @Published var isDemoMode = false
-    var client = APIClient()
-    var service: any AuthenticationServiceProtocol
+@MainActor @Observable
+class AppViewModel {
+    var user: User?
+    var step: Step = .initializing
+    var isPresentedAlert = false
+    var vrckError: VRCKitError?
+    var isDemoMode = false
+    @ObservationIgnored var client = APIClient()
+    @ObservationIgnored var service: any AuthenticationServiceProtocol
 
     init() {
         self.service = AuthenticationService(client: client)
