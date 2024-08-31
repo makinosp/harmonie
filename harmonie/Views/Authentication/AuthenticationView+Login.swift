@@ -52,7 +52,6 @@ extension AuthenticationView {
     }
 }
 
-
 #Preview {
     AuthenticationView()
         .environment(AppViewModel())
