@@ -46,6 +46,18 @@ extension FriendViewModel {
             .filter {
                 filterText.isEmpty || $0.displayName.range(of: filterText, options: .caseInsensitive) != nil
             }
+            .sorted {
+                switch (sortType, sortOrder) {
+                case (.default, .asc): false
+                case (.default, .desc): true
+                case (.displayName, .asc): $0.displayName < $1.displayName
+                case (.displayName, .desc): $0.displayName > $1.displayName
+                case (.lastLogin, .asc): $0.lastLogin < $1.lastLogin
+                case (.lastLogin, .desc): $0.lastLogin > $1.lastLogin
+                case (.status, .asc): $0.status.rawValue < $1.status.rawValue
+                case (.status, .desc): $0.status.rawValue > $1.status.rawValue
+                }
+            }
     }
 
     func applyFilterUserStatus(_ listType: FilterUserStatus) {
@@ -123,6 +135,17 @@ extension FriendViewModel.SortType: CustomStringConvertible {
         case .displayName: "Name"
         case .lastLogin: "Last Login"
         default: rawValue.localizedCapitalized
+        }
+    }
+}
+
+extension FriendViewModel.SortOrder {
+    mutating func toggle() {
+        switch self {
+        case .asc:
+            self = .desc
+        case .desc:
+            self = .asc
         }
     }
 }

@@ -38,7 +38,12 @@ extension FriendsView {
         Menu {
             ForEach(FriendViewModel.SortType.allCases) { sortType in
                 Button {
-                    // sort action
+                    if friendVM.sortType == sortType {
+                        friendVM.sortOrder.toggle()
+                    } else {
+                        friendVM.sortType = sortType
+                        friendVM.sortOrder = .asc
+                    }
                 } label: {
                     Label {
                         Text(sortType.description)
