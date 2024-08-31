@@ -28,6 +28,8 @@ enum Constants {
     }
 
     enum IconName {
+        static let arrowDown = "arrow.down"
+        static let arrowUp = "arrow.up"
         static let check = "checkmark"
         static let circleFilled = "circle.fill"
         static let dots = "ellipsis.circle"
@@ -38,5 +40,6 @@ enum Constants {
         static let favoriteFilled = "star.fill"
         static let friends = "person.2.fill"
         static let setting = "gear"
+        static let sort = "arrow.up.arrow.down"
     }
 }

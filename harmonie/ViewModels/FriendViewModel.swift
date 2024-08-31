@@ -16,6 +16,8 @@ class FriendViewModel {
     var filterUserStatus: Set<UserStatus> = []
     var filterFavoriteGroups: Set<FavoriteGroup> = []
     var filterText: String = ""
+    var sortType: SortType = .default
+    var sortOrder: SortOrder = .asc
     @ObservationIgnored let user: User
     @ObservationIgnored private let service: any FriendServiceProtocol
 

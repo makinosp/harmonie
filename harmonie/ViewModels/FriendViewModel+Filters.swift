@@ -19,9 +19,13 @@ extension FriendViewModel {
         var id: Int { hashValue }
     }
 
-    enum SortType: Hashable, Identifiable {
-        case `default`
+    enum SortType: String, Hashable, Identifiable, CaseIterable {
+        case `default`, displayName, lastLogin, status
         var id: Int { hashValue }
+    }
+
+    enum SortOrder {
+        case asc, desc
     }
 
     /// Filters the list of friends based on the specified list type.
@@ -41,6 +45,18 @@ extension FriendViewModel {
             }
             .filter {
                 filterText.isEmpty || $0.displayName.range(of: filterText, options: .caseInsensitive) != nil
+            }
+            .sorted {
+                switch (sortType, sortOrder) {
+                case (.default, .asc): false
+                case (.default, .desc): true
+                case (.displayName, .asc): $0.displayName < $1.displayName
+                case (.displayName, .desc): $0.displayName > $1.displayName
+                case (.lastLogin, .asc): $0.lastLogin < $1.lastLogin
+                case (.lastLogin, .desc): $0.lastLogin > $1.lastLogin
+                case (.status, .asc): $0.status.rawValue < $1.status.rawValue
+                case (.status, .desc): $0.status.rawValue > $1.status.rawValue
+                }
             }
     }
 
@@ -110,5 +126,26 @@ extension FriendViewModel.FilterUserStatus: CaseIterable {
             .status(.busy),
             .status(.offline)
         ]
+    }
+}
+
+extension FriendViewModel.SortType: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .displayName: "Name"
+        case .lastLogin: "Last Login"
+        default: rawValue.localizedCapitalized
+        }
+    }
+}
+
+extension FriendViewModel.SortOrder {
+    mutating func toggle() {
+        switch self {
+        case .asc:
+            self = .desc
+        case .desc:
+            self = .asc
+        }
     }
 }
