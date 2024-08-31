@@ -19,9 +19,13 @@ extension FriendViewModel {
         var id: Int { hashValue }
     }
 
-    enum SortType: Hashable, Identifiable {
-        case `default`
+    enum SortType: Hashable, Identifiable, CaseIterable {
+        case `default`, displayName, lastLogin, status
         var id: Int { hashValue }
+    }
+
+    enum SortOrder {
+        case asc, desc
     }
 
     /// Filters the list of friends based on the specified list type.
