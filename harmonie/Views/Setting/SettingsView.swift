@@ -10,7 +10,7 @@ import LicenseList
 import VRCKit
 
 struct SettingsView: View {
-    @EnvironmentObject var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM: AppViewModel
     @State var destination: Destination?
     @State var isPresentedForm = false
 
@@ -34,7 +34,7 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $isPresentedForm) {
             if let user = appVM.user {
-                ProfileEditView(user: user)
+                ProfileEditView(profileEditVM: ProfileEditViewModel(user: user))
             }
         }
     }

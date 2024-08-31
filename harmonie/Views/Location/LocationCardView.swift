@@ -10,7 +10,7 @@ import SwiftUI
 import VRCKit
 
 struct LocationCardView: View {
-    @EnvironmentObject private var appVM: AppViewModel
+    @Environment(AppViewModel.self) private var appVM: AppViewModel
     @Binding var selected: InstanceLocation?
     @State private var instance: Instance?
     let service: any InstanceServiceProtocol

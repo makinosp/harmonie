@@ -5,18 +5,20 @@
 //  Created by makinosp on 2024/06/09.
 //
 
-import Foundation
+import Observation
 import VRCKit
 
-@MainActor
-class FriendViewModel: ObservableObject {
-    @Published var onlineFriends: [Friend] = []
-    @Published var offlineFriends: [Friend] = []
-    @Published var filterUserStatus: Set<UserStatus> = []
-    @Published var filterFavoriteGroups: Set<FavoriteGroup> = []
-    @Published var filterText: String = ""
-    let user: User
-    private let service: any FriendServiceProtocol
+@MainActor @Observable
+class FriendViewModel {
+    var onlineFriends: [Friend] = []
+    var offlineFriends: [Friend] = []
+    var filterUserStatus: Set<UserStatus> = []
+    var filterFavoriteGroups: Set<FavoriteGroup> = []
+    var filterText: String = ""
+    var sortType: SortType = .default
+    var sortOrder: SortOrder = .asc
+    @ObservationIgnored let user: User
+    @ObservationIgnored private let service: any FriendServiceProtocol
 
     init(user: User, service: any FriendServiceProtocol) {
         self.user = user

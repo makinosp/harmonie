@@ -14,7 +14,7 @@ extension View {
 }
 
 private struct ErrorAlertModifier: ViewModifier {
-    @EnvironmentObject var userData: AppViewModel
+    @Environment(AppViewModel.self) var userData: AppViewModel
     let action: () -> Void
 
     init(_ action: @escaping () -> Void) {
@@ -22,6 +22,7 @@ private struct ErrorAlertModifier: ViewModifier {
     }
 
     func body(content: Content) -> some View {
+        @Bindable var userData = userData
         content
             .alert(
                 isPresented: $userData.isPresentedAlert,

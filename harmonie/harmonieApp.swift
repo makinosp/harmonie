@@ -12,7 +12,7 @@ struct HarmonieApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(AppViewModel())
+                .environment(AppViewModel())
         }
     }
 }

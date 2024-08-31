@@ -5,20 +5,20 @@
 //  Created by makinosp on 2024/06/09.
 //
 
-import Foundation
+import Observation
 import VRCKit
 
 typealias FavoriteFriend = (favoriteGroupId: String, friends: [Friend])
 
 /// View model for managing favorite groups and their associated details.
 /// Acts as an interface between the UI and backend services for handling favorite group operations.
-@MainActor
-class FavoriteViewModel: ObservableObject {
-    @Published var favoriteGroups: [FavoriteGroup] = []
-    @Published var favoriteFriends: [FavoriteFriend] = []
-    @Published var segment: Segment = .friend
-    let friendVM: FriendViewModel
-    let service: any FavoriteServiceProtocol
+@MainActor @Observable
+class FavoriteViewModel {
+    var favoriteGroups: [FavoriteGroup] = []
+    var favoriteFriends: [FavoriteFriend] = []
+    var segment: Segment = .friend
+    @ObservationIgnored let friendVM: FriendViewModel
+    @ObservationIgnored let service: any FavoriteServiceProtocol
 
     enum Segment {
         case friend, world

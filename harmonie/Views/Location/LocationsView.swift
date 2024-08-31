@@ -16,7 +16,7 @@ struct InstanceLocation: Hashable, Identifiable {
 }
 
 struct LocationsView: View {
-    @EnvironmentObject var friendVM: FriendViewModel
+    @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @State var selected: InstanceLocation?
     let appVM: AppViewModel
 

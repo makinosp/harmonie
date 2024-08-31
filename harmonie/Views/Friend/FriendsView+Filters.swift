@@ -9,7 +9,16 @@ import SwiftUI
 import VRCKit
 
 extension FriendsView {
-    var filterUserStatus: some View {
+    var filterMenu: some View {
+        Menu {
+            filterUserStatusMenu
+            filterFavoriteGroupsMenu
+        } label: {
+            Image(systemName: Constants.IconName.filter)
+        }
+    }
+
+    var filterUserStatusMenu: some View {
         Menu("Statuses") {
             ForEach(FriendViewModel.FilterUserStatus.allCases) { filterUserStatus in
                 Button {
@@ -27,7 +36,7 @@ extension FriendsView {
         }
     }
 
-    var filterFavoriteGroups: some View {
+    var filterFavoriteGroupsMenu: some View {
         Menu("Favorite Groups") {
             Button {
                 friendVM.applyFilterFavoriteGroup(.all)

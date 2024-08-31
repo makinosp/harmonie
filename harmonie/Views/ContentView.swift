@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import VRCKit
 
 struct ContentView: View {
-    @EnvironmentObject var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM: AppViewModel
 
     var body: some View {
         switch appVM.step {
@@ -28,8 +28,8 @@ struct ContentView: View {
             let friendVM = appVM.generateFriendVM(user: user)
             let favoriteVM = appVM.generateFavoriteVM(friendVM: friendVM)
             MainTabView()
-                .environmentObject(friendVM)
-                .environmentObject(favoriteVM)
+                .environment(friendVM)
+                .environment(favoriteVM)
                 .errorAlert()
         }
     }

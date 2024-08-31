@@ -62,7 +62,7 @@ struct URLEditorView: View {
     }
 }
 
-#Preview {
-    @State var inputtedURL: URL?
+#Preview("URLEditorView") {
+    @Previewable @State var inputtedURL: URL?
     return URLEditorView(inputtedURL: $inputtedURL)
 }
