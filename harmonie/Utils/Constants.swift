@@ -8,6 +8,11 @@
 import SwiftUI
 
 enum Constants {
+    enum Keys {
+        static let isSavedOnKeyChain = "isSavedOnKeyChain"
+        static let username = "username"
+    }
+
     enum Icon {
         static var forward: some View {
             Image(systemName: "chevron.forward")

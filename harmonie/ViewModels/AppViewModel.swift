@@ -60,11 +60,14 @@ class AppViewModel {
         }
     }
 
-    func login(_ username: String, _ password: String) async -> VerifyType? {
+    func login(username: String, password: String, isSavedOnKeyChain: Bool) async -> VerifyType? {
         if username == "demo" && password == "demo" {
             setDemoMode()
         } else {
             client.setCledentials(username: username, password: password)
+        }
+        if isSavedOnKeyChain {
+           _ = KeychainUtil.shared.savePassword(password, for: username)
         }
         do {
             switch try await service.loginUserInfo() {
