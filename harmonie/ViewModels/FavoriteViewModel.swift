@@ -5,7 +5,6 @@
 //  Created by makinosp on 2024/06/09.
 //
 
-import Foundation
 import Observation
 import VRCKit
 
