@@ -27,6 +27,33 @@ extension FriendsView {
         }
     }
 
+    var sortArrowIconName: String {
+        switch friendVM.sortOrder {
+        case .asc: Constants.IconName.arrowUp
+        case .desc: Constants.IconName.arrowDown
+        }
+    }
+
+    var sortMenu: some View {
+        Menu {
+            ForEach(FriendViewModel.SortType.allCases) { sortType in
+                Button {
+                    // sort action
+                } label: {
+                    Label {
+                        Text(sortType.description)
+                    } icon: {
+                        if friendVM.sortType == sortType {
+                            Image(systemName: sortArrowIconName)
+                        }
+                    }
+                }
+            }
+        } label: {
+            Image(systemName: Constants.IconName.sort)
+        }
+    }
+
     var filterFavoriteGroups: some View {
         Menu("Favorite Groups") {
             Button {

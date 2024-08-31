@@ -27,7 +27,8 @@ struct FriendsView: View {
         return $friendVM.filterText
     }
 
-    var toolbarContent: some ToolbarContent {
+    @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
+        ToolbarItem { sortMenu }
         ToolbarItem {
             Menu {
                 filterUserStatus
