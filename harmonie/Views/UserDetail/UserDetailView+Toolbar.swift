@@ -9,8 +9,8 @@ import AsyncSwiftUI
 import VRCKit
 
 extension UserDetailView {
-    var toolbar: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+    @ToolbarContentBuilder var toolbar: some ToolbarContent {
+        ToolbarItem {
             Menu {
                 if user.isFriend {
                     Menu {
@@ -31,6 +31,13 @@ extension UserDetailView {
                 }
             } label: {
                 Constants.Icon.dots
+            }
+        }
+        ToolbarItem(placement: .keyboard) {
+            AsyncButton("Save") {
+                if note != initialNoteValue {
+                    await saveNote()
+                }
             }
         }
     }
