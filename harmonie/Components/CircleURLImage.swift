@@ -21,7 +21,7 @@ struct CircleURLImage: View {
                     .frame(size: size)
                     .clipShape(Circle())
             } else if state.error != nil {
-                Image(systemName: Constants.IconName.exclamation)
+                Constants.Icon.exclamation
                     .frame(size: size)
             } else {
                 ProgressView()

@@ -17,8 +17,8 @@ struct UserDetailView: View {
     @State var user: UserDetail
     @State var instance: Instance?
     @State var note: String
-    private let initialValue: EditableUserInfo
-    private let initialNoteValue: String
+    let initialValue: EditableUserInfo
+    let initialNoteValue: String
 
     init(user: UserDetail) {
         _user = State(initialValue: user)
@@ -54,20 +54,8 @@ struct UserDetailView: View {
         GradientOverlayImageView(
             url: url,
             maxHeight: 250,
-            topContent: { topBar },
             bottomContent: { bottomBar }
         )
-    }
-
-    var topBar: some View {
-        HStack {
-            Spacer()
-            if note != initialNoteValue {
-                saveButton
-            }
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
     }
 
     var saveButton: some View {
@@ -88,7 +76,7 @@ struct UserDetailView: View {
                 Label {
                     Text(user.displayName)
                 } icon: {
-                    Image(systemName: Constants.IconName.circleFilled)
+                    Constants.Icon.circleFilled
                         .foregroundStyle(statusColor)
                 }
                 .font(.headline)
@@ -111,7 +99,7 @@ struct UserDetailView: View {
             Label {
                 Text(user.displayName)
             } icon: {
-                Image(systemName: Constants.IconName.circleFilled)
+                Constants.Icon.circleFilled
                     .foregroundStyle(user.status.color)
             }
             .font(.headline)

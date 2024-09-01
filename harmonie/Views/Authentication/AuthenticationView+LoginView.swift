@@ -8,14 +8,24 @@
 import AsyncSwiftUI
 
 extension AuthenticationView {
-    @ViewBuilder var loginViewGroup: some View {
-        loginFields
-        loginButton("Login") {
-            verifyType = await appVM.login(
-                username: username,
-                password: password,
-                isSavedOnKeyChain: isSavedOnKeyChain
-            )
+    var loginView: some View {
+        VStack(spacing: 16) {
+            loginFields
+            loginButton("Login") {
+                verifyType = await appVM.login(
+                    username: username,
+                    password: password,
+                    isSavedOnKeyChain: isSavedOnKeyChain
+                )
+            }
+        }
+        .padding(32)
+        .ignoresSafeArea(.keyboard)
+        .onAppear {
+            if isSavedOnKeyChain,
+               let password = KeychainUtil.shared.getPassword(for: username) {
+                self.password = password
+            }
         }
     }
 
@@ -39,7 +49,7 @@ extension AuthenticationView {
                         Image(systemName: "questionmark.circle")
                     }
                     .popover(isPresented: $isPresentedPopover) {
-                        Text(helpText)
+                        Text(Constants.Messages.helpWithStoringKeychain)
                             .padding()
                             .presentationDetents([.fraction(1/4)])
                     }

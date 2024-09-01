@@ -8,13 +8,6 @@
 import SwiftUI
 
 extension FriendsView {
-    var sortArrowIconName: String {
-        switch friendVM.sortOrder {
-        case .asc: Constants.IconName.arrowUp
-        case .desc: Constants.IconName.arrowDown
-        }
-    }
-
     var sortMenu: some View {
         Menu {
             ForEach(FriendViewModel.SortType.allCases) { sortType in
@@ -30,13 +23,16 @@ extension FriendsView {
                         Text(sortType.description)
                     } icon: {
                         if friendVM.sortType == sortType {
-                            Image(systemName: sortArrowIconName)
+                            switch friendVM.sortOrder {
+                            case .asc: Constants.Icon.up
+                            case .desc: Constants.Icon.down
+                            }
                         }
                     }
                 }
             }
         } label: {
-            Image(systemName: Constants.IconName.sort)
+            Constants.Icon.sort
         }
     }
 }

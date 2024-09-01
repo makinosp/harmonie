@@ -9,21 +9,40 @@ import AsyncSwiftUI
 import VRCKit
 
 extension UserDetailView {
-    var toolbar: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Menu("Actions", systemImage: Constants.IconName.dots) {
-                if user.isFriend {
-                    Menu {
-                        ForEach(favoriteVM.favoriteFriendGroups) { group in
-                            favoriteMenuItem(group: group)
-                        }
-                    } label: {
-                        Label {
-                            Text("Favorite")
-                        } icon: {
-                            Image(systemName: favoriteIconName)
-                        }
-                    }
+    @ToolbarContentBuilder var toolbar: some ToolbarContent {
+        if user.isFriend {
+            ToolbarItem { friendMenu }
+        }
+        ToolbarItem(placement: .keyboard) {
+            AsyncButton("Save") {
+                if note != initialNoteValue {
+                    await saveNote()
+                }
+            }
+        }
+    }
+
+    private var friendMenu: some View {
+        Menu {
+            favoriteMenu
+        } label: {
+            Constants.Icon.dots
+        }
+    }
+
+    private var favoriteMenu: some View {
+        Menu {
+            ForEach(favoriteVM.favoriteFriendGroups) { group in
+                favoriteMenuItem(group: group)
+            }
+        } label: {
+            Label {
+                Text("Favorite")
+            } icon: {
+                if favoriteVM.isAdded(friendId: user.id) {
+                    Constants.Icon.favoriteFilled
+                } else {
+                    Constants.Icon.favorite
                 }
             }
         }
@@ -40,15 +59,9 @@ extension UserDetailView {
                     friendId: user.id,
                     groupId: group.id
                 ) {
-                    Image(systemName: Constants.IconName.check)
+                    Constants.Icon.check
                 }
             }
         }
-    }
-
-    var favoriteIconName: String {
-        favoriteVM.isAdded(friendId: user.id)
-        ? Constants.IconName.favoriteFilled
-        : Constants.IconName.favorite
     }
 }
