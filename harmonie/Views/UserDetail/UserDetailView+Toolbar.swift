@@ -13,12 +13,23 @@ extension UserDetailView {
         if user.isFriend {
             ToolbarItem { friendMenu }
         }
-        ToolbarItem(placement: .keyboard) {
-            AsyncButton("Save") {
+        ToolbarItemGroup(placement: .keyboard) {
+            Spacer()
+            AsyncButton {
                 if note != user.note {
+                    isRequesting = true
                     await saveNote()
+                    isRequesting = false
+                }
+                isFocusedNoteField = false
+            } label: {
+                if isRequesting {
+                    ProgressView()
+                } else {
+                    Text("Save")
                 }
             }
+            .disabled(isRequesting)
         }
     }
 

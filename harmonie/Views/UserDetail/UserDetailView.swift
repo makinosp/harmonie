@@ -14,9 +14,11 @@ struct UserDetailView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(\.dismiss) private var dismiss
+    @FocusState var isFocusedNoteField
     @State var user: UserDetail
     @State var instance: Instance?
     @State var note: String
+    @State var isRequesting = false
 
     init(user: UserDetail) {
         _user = State(initialValue: user)
@@ -128,6 +130,7 @@ struct UserDetailView: View {
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
             TextField("Enter note", text: $note, axis: .vertical)
+                .focused($isFocusedNoteField)
                 .font(.body)
         }
     }
