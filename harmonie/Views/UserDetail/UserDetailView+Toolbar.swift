@@ -15,7 +15,7 @@ extension UserDetailView {
         }
         ToolbarItem(placement: .keyboard) {
             AsyncButton("Save") {
-                if note != initialNoteValue {
+                if note != user.note {
                     await saveNote()
                 }
             }

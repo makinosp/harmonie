@@ -17,14 +17,10 @@ struct UserDetailView: View {
     @State var user: UserDetail
     @State var instance: Instance?
     @State var note: String
-    let initialValue: EditableUserInfo
-    let initialNoteValue: String
 
     init(user: UserDetail) {
         _user = State(initialValue: user)
-        initialNoteValue = user.note
-        _note = State(initialValue: initialNoteValue)
-        initialValue = EditableUserInfo(detail: user)
+        _note = State(initialValue: user.note)
     }
 
     var body: some View {
@@ -56,18 +52,6 @@ struct UserDetailView: View {
             maxHeight: 250,
             bottomContent: { bottomBar }
         )
-    }
-
-    var saveButton: some View {
-        AsyncButton("Save") {
-            if note != initialNoteValue {
-                await saveNote()
-            }
-        }
-        .foregroundStyle(Color.accentColor)
-        .buttonStyle(.borderedProminent)
-        .tint(Material.regularMaterial)
-        .buttonBorderShape(.capsule)
     }
 
     var bottomBar: some View {
