@@ -14,7 +14,28 @@ struct FavoritesView: View {
 
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
-            listView
+            Group {
+                if favoriteVM.segment == .friend {
+                    listView
+                } else if favoriteVM.segment == .world {
+                    Text("Work in progress!")
+                }
+            }
+            .navigationDestination(item: $selected) { selected in
+                UserDetailPresentationView(id: selected.id)
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    @Bindable var favoriteVM = favoriteVM
+                    Picker("", selection: $favoriteVM.segment) {
+                        ForEach(FavoriteViewModel.Segment.allCases) { segment in
+                            Text(segment.description).tag(segment)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                }
+            }
+            .navigationTitle("Favorites")
         } detail: {
             Text("Select a friend")
         }
@@ -33,21 +54,6 @@ struct FavoritesView: View {
                 }
             }
         }
-        .navigationDestination(item: $selected) { selected in
-            UserDetailPresentationView(id: selected.id)
-        }
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                @Bindable var favoriteVM = favoriteVM
-                Picker("", selection: $favoriteVM.segment) {
-                    ForEach(FavoriteViewModel.Segment.allCases) { segment in
-                        Text(segment.description).tag(segment)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-            }
-        }
-        .navigationTitle("Favorites")
     }
 
     func rowView(_ friend: Friend) -> some View {
