@@ -16,6 +16,9 @@ struct UserDetailPresentationView: View {
     var body: some View {
         if let userDetail = userDetail {
             UserDetailView(user: userDetail)
+                .refreshable {
+                    await fetchUser(id: id)
+                }
         } else {
             ProgressView()
                 .task(id: id) {
