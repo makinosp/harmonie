@@ -6,8 +6,6 @@ PBXPROJ_PATH="${PROJECT_PATH}/Harmonie.xcodeproj/project.pbxproj"
 PRODUCT_BUNDLE_IDENTIFIER="net.nemushee.harmonie"
 
 AWK_SCRIPT_PATH="${PROJECT_PATH}/Scripts/extract_version.awk"
-MARKETING_VERSION=$(awk -f ${AWK_SCRIPT_PATH} ${PBXPROJ_PATH})
-
 MARKETING_VERSION=$(awk '
   /PRODUCT_BUNDLE_IDENTIFIER = '${PRODUCT_BUNDLE_IDENTIFIER}';/ {
     if (prev_line ~ /MARKETING_VERSION =/) {
