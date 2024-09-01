@@ -9,12 +9,6 @@ import SwiftUI
 import SwiftUIIntrospect
 import VRCKit
 
-struct InstanceLocation: Hashable, Identifiable {
-    var location: FriendsLocation
-    var instance: Instance
-    var id: Int { hashValue }
-}
-
 struct LocationsView: View {
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @State var selected: InstanceLocation?
