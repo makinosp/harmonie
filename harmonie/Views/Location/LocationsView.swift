@@ -10,9 +10,9 @@ import SwiftUIIntrospect
 import VRCKit
 
 struct LocationsView: View {
+    @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @State var selected: InstanceLocation?
-    let appVM: AppViewModel
 
     var service: any InstanceServiceProtocol {
         appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)

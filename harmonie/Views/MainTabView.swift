@@ -15,26 +15,14 @@ struct MainTabView: View {
 
     var body: some View {
         TabView {
-            LocationsView(appVM: appVM)
-                .tabItem {
-                    Constants.Icon.location
-                    Text("Locations")
-                }
-            FriendsView()
-                .tabItem {
-                    Constants.Icon.friends
-                    Text("Friends")
-                }
-            FavoritesView()
-                .tabItem {
-                    Constants.Icon.favorite
-                    Text("Favorites")
-                }
-            SettingsView()
-                .tabItem {
-                    Constants.Icon.setting
-                    Text("Settings")
-                }
+            ForEach(Tab.allCases) { tab in
+                tab.content
+                    .tag(tab)
+                    .tabItem {
+                        tab.icon
+                        Text(tab.description)
+                    }
+            }
         }
         .task {
             do {
@@ -44,5 +32,43 @@ struct MainTabView: View {
                 appVM.handleError(error)
             }
         }
+    }
+}
+
+extension MainTabView {
+    enum Tab: String, CaseIterable {
+        case locations, friends, favorites, settings
+    }
+}
+
+extension MainTabView.Tab {
+    @ViewBuilder var content: some View {
+        switch self {
+        case .locations: LocationsView()
+        case .friends: FriendsView()
+        case .favorites: FavoritesView()
+        case .settings: SettingsView()
+        }
+    }
+
+    @ViewBuilder var icon: some View {
+        switch self {
+        case .locations: Constants.Icon.location
+        case .friends: Constants.Icon.friends
+        case .favorites: Constants.Icon.favorite
+        case .settings: Constants.Icon.setting
+        }
+    }
+}
+
+extension MainTabView.Tab: CustomStringConvertible {
+    var description: String {
+        rawValue.capitalized
+    }
+}
+
+extension MainTabView.Tab: Identifiable {
+    var id: Int {
+        hashValue
     }
 }
