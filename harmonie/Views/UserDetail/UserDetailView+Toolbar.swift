@@ -11,7 +11,7 @@ import VRCKit
 extension UserDetailView {
     var toolbar: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Menu("Actions", systemImage: Constants.IconName.dots) {
+            Menu {
                 if user.isFriend {
                     Menu {
                         ForEach(favoriteVM.favoriteFriendGroups) { group in
@@ -21,10 +21,16 @@ extension UserDetailView {
                         Label {
                             Text("Favorite")
                         } icon: {
-                            Image(systemName: favoriteIconName)
+                            if favoriteVM.isAdded(friendId: user.id) {
+                                Constants.Icon.favoriteFilled
+                            } else {
+                                Constants.Icon.favorite
+                            }
                         }
                     }
                 }
+            } label: {
+                Constants.Icon.dots
             }
         }
     }
@@ -40,15 +46,9 @@ extension UserDetailView {
                     friendId: user.id,
                     groupId: group.id
                 ) {
-                    Image(systemName: Constants.IconName.check)
+                    Constants.Icon.check
                 }
             }
         }
-    }
-
-    var favoriteIconName: String {
-        favoriteVM.isAdded(friendId: user.id)
-        ? Constants.IconName.favoriteFilled
-        : Constants.IconName.favorite
     }
 }

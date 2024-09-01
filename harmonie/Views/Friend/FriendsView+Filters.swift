@@ -14,7 +14,7 @@ extension FriendsView {
             filterUserStatusMenu
             filterFavoriteGroupsMenu
         } label: {
-            Image(systemName: Constants.IconName.filter)
+            Constants.Icon.filter
         }
     }
 
@@ -28,7 +28,7 @@ extension FriendsView {
                         Text(filterUserStatus.description)
                     } icon: {
                         if friendVM.isCheckedFilterUserStatus(filterUserStatus) {
-                            Image(systemName: Constants.IconName.check)
+                            Constants.Icon.check
                         }
                     }
                 }
@@ -45,7 +45,7 @@ extension FriendsView {
                     Text("All")
                 } icon: {
                     if friendVM.isCheckedFilterFavoriteGroups(.all) {
-                        Image(systemName: Constants.IconName.check)
+                        Constants.Icon.check
                     }
                 }
             }
@@ -57,7 +57,7 @@ extension FriendsView {
                         Text(favoriteGroup.displayName)
                     } icon: {
                         if friendVM.isCheckedFilterFavoriteGroups(.favoriteGroup(favoriteGroup)) {
-                            Image(systemName: Constants.IconName.check)
+                            Constants.Icon.check
                         }
                     }
                 }

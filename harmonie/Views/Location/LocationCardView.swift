@@ -103,7 +103,7 @@ struct LocationCardView: View {
                     .frame(maxWidth: frameWidth)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             } else if state.error != nil {
-                Image(systemName: Constants.IconName.exclamation)
+                Constants.Icon.exclamation
                     .frame(maxWidth: frameWidth)
             } else {
                 ZStack {

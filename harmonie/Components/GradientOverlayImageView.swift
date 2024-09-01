@@ -52,7 +52,7 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
                     .frame(maxHeight: maxHeight)
                     .clipped()
             } else if state.error != nil {
-                Image(systemName: Constants.IconName.exclamation)
+                Constants.Icon.exclamation
                     .frame(height: maxHeight)
             } else {
                 ZStack {

@@ -88,7 +88,7 @@ struct UserDetailView: View {
                 Label {
                     Text(user.displayName)
                 } icon: {
-                    Image(systemName: Constants.IconName.circleFilled)
+                    Constants.Icon.circleFilled
                         .foregroundStyle(statusColor)
                 }
                 .font(.headline)
@@ -111,7 +111,7 @@ struct UserDetailView: View {
             Label {
                 Text(user.displayName)
             } icon: {
-                Image(systemName: Constants.IconName.circleFilled)
+                Constants.Icon.circleFilled
                     .foregroundStyle(user.status.color)
             }
             .font(.headline)
