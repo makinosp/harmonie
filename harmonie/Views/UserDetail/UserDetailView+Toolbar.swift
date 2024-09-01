@@ -10,33 +10,39 @@ import VRCKit
 
 extension UserDetailView {
     @ToolbarContentBuilder var toolbar: some ToolbarContent {
-        ToolbarItem {
-            Menu {
-                if user.isFriend {
-                    Menu {
-                        ForEach(favoriteVM.favoriteFriendGroups) { group in
-                            favoriteMenuItem(group: group)
-                        }
-                    } label: {
-                        Label {
-                            Text("Favorite")
-                        } icon: {
-                            if favoriteVM.isAdded(friendId: user.id) {
-                                Constants.Icon.favoriteFilled
-                            } else {
-                                Constants.Icon.favorite
-                            }
-                        }
-                    }
-                }
-            } label: {
-                Constants.Icon.dots
-            }
+        if user.isFriend {
+            ToolbarItem { friendMenu }
         }
         ToolbarItem(placement: .keyboard) {
             AsyncButton("Save") {
                 if note != initialNoteValue {
                     await saveNote()
+                }
+            }
+        }
+    }
+
+    private var friendMenu: some View {
+        Menu {
+            favoriteMenu
+        } label: {
+            Constants.Icon.dots
+        }
+    }
+
+    private var favoriteMenu: some View {
+        Menu {
+            ForEach(favoriteVM.favoriteFriendGroups) { group in
+                favoriteMenuItem(group: group)
+            }
+        } label: {
+            Label {
+                Text("Favorite")
+            } icon: {
+                if favoriteVM.isAdded(friendId: user.id) {
+                    Constants.Icon.favoriteFilled
+                } else {
+                    Constants.Icon.favorite
                 }
             }
         }
