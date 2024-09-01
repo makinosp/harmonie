@@ -16,7 +16,7 @@ enum Constants {
     enum Icon {
         static var forward: some View {
             Image(systemName: "chevron.forward")
-                .foregroundStyle(Color(uiColor: .systemGray))
+                .foregroundStyle(Color(uiColor: .tertiaryLabel))
                 .imageScale(.small)
         }
     }
