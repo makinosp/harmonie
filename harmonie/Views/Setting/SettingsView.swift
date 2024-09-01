@@ -50,6 +50,8 @@ struct SettingsView: View {
             aboutThisApp
         case .license:
             LicenseListView()
+                .navigationTitle("Third Party Licence")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 
