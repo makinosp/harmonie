@@ -17,28 +17,13 @@ struct AuthenticationView: View {
     @State var code: String = ""
     @State private var isRequesting = false
     @State var isPresentedPopover = false
-    let helpText = """
-            Using iCloud Keychain to securely store your passwords. \
-            iCloud Keychain is built on security technologies provided by Apple, \
-            ensuring that your passwords are encrypted \
-            and protected from unauthorized access.
-            """
 
     var body: some View {
-        VStack(spacing: 16) {
-            if verifyType == nil {
-                loginViewGroup
-            } else {
-                otpViewGroup
-            }
-        }
-        .padding(32)
-        .ignoresSafeArea(.keyboard)
-        .onAppear {
-            if isSavedOnKeyChain,
-               let password = KeychainUtil.shared.getPassword(for: username) {
-                self.password = password
-            }
+        NavigationStack {
+            loginView
+                .navigationDestination(item: $verifyType) { _ in
+                    otpView
+                }
         }
     }
 

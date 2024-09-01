@@ -65,4 +65,13 @@ enum Constants {
         static let thumbnailOutside = CGSize(width: 32, height: 32)
         static let ll = CGSize(width: 40, height: 40)
     }
+
+    enum Messages {
+        static let helpWithStoringKeychain = """
+            Using iCloud Keychain to securely store your passwords. \
+            iCloud Keychain is built on security technologies provided by Apple, \
+            ensuring that your passwords are encrypted \
+            and protected from unauthorized access.
+            """
+    }
 }
