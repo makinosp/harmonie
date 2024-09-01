@@ -36,7 +36,7 @@ extension UserDetailView {
         ? UserNotePreviewService(client: appVM.client)
         : UserNoteService(client: appVM.client)
         do {
-            if user.note.isEmpty {
+            if note.isEmpty {
                 try await service.clearUserNote(targetUserId: user.id)
             } else {
                 _ = try await service.updateUserNote(
