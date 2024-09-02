@@ -1,5 +1,5 @@
 //
-//  InstanceLocation.swift
+//  InstanceLocationModel.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/09/01.
