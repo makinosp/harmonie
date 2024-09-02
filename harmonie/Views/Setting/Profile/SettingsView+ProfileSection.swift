@@ -19,7 +19,7 @@ extension SettingsView {
                         Text(user.displayName)
                     } icon: {
                         CircleURLImage(
-                            imageUrl: user.thumbnailUrl,
+                            imageUrl: user.imageUrl(.x256),
                             size: Constants.IconSize.ll
                         )
                     }

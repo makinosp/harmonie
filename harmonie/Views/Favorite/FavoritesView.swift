@@ -71,7 +71,7 @@ struct FavoritesView: View {
                             .foregroundStyle(friend.status.color)
                             .frame(size: Constants.IconSize.thumbnailOutside)
                         CircleURLImage(
-                            imageUrl: friend.thumbnailUrl,
+                            imageUrl: friend.imageUrl(.x256),
                             size: Constants.IconSize.thumbnail
                         )
                     }

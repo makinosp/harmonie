@@ -30,14 +30,11 @@ extension FriendViewModel {
     /// Filters the list of friends based on the specified list type.
     /// - Parameter favoriteFriends: Favorite friends information.
     /// - Returns: A filtered list of friends whose display names meet the criteria defined by `isIncluded`.
-    func filterFriends(favoriteFriends: [FavoriteFriend]) -> [Friend] {
+    func filterFriends(favoriteFriends: [FavoriteViewModel.FavoriteFriend]) -> [Friend] {
         recentlyFriends
             .filter { friend in
-                filterFavoriteGroups.isEmpty || filterFavoriteGroups.contains { favoriteGroup in
-                    let predicate: ((FavoriteFriend) -> Bool) = { $0.favoriteGroupId == favoriteGroup.id }
-                    guard let favoriteFriend = favoriteFriends.first(where: predicate) else { return true }
-                    return favoriteFriend.friends.contains(friend)
-                }
+                filterFavoriteGroups.isEmpty ||
+                isFriendContainedInFilterFavoriteGroups(friend: friend, favoriteFriends: favoriteFriends)
             }
             .filter {
                 filterUserStatus.isEmpty || filterUserStatus.contains($0.status)
@@ -57,6 +54,20 @@ extension FriendViewModel {
                 case (.status, .desc): $0.status.rawValue > $1.status.rawValue
                 }
             }
+    }
+
+    func isFriendContainedInFilterFavoriteGroups(
+        friend: Friend,
+        favoriteFriends: [FavoriteViewModel.FavoriteFriend]
+    ) -> Bool {
+        filterFavoriteGroups.contains { favoriteGroup in
+            guard let favoriteFriend = favoriteFriends.first(where: { favoriteFriend in
+                favoriteFriend.favoriteGroupId == favoriteGroup.id
+            }) else {
+                return true
+            }
+            return favoriteFriend.friends.contains(friend)
+        }
     }
 
     func applyFilterUserStatus(_ listType: FilterUserStatus) {

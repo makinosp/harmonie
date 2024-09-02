@@ -28,7 +28,7 @@ struct UserDetailView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                if let url = user.thumbnailUrl {
+                if let url = user.imageUrl(.origin) {
                     profileImageContainer(url: url)
                 }
                 contentStacks
@@ -41,6 +41,9 @@ struct UserDetailView: View {
             if user.isVisible {
                 await fetchInstance()
             }
+        }
+        .onAppear {
+            print(user.userIcon ?? "")
         }
     }
 

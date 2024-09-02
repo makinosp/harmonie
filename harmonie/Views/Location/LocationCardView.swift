@@ -51,7 +51,7 @@ struct LocationCardView: View {
 
     func locationCardContent(instance: Instance) -> some View {
         HStack(alignment: .top) {
-            locationThumbnail(instance.world.imageUrl)
+            locationThumbnail(instance.world.imageUrl(.x512))
             Spacer()
             HStack {
                 VStack(alignment: .leading) {
@@ -73,7 +73,7 @@ struct LocationCardView: View {
                                         .foregroundStyle(friend.status.color)
                                         .frame(size: Constants.IconSize.thumbnailOutside)
                                     CircleURLImage(
-                                        imageUrl: friend.thumbnailUrl,
+                                        imageUrl: friend.imageUrl(.x256),
                                         size: Constants.IconSize.thumbnail
                                     )
                                 }

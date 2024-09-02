@@ -17,7 +17,7 @@ struct LocationDetailView: View {
         List {
             Section("World") {
                 GradientOverlayImageView(
-                    url: instance.world.imageUrl,
+                    url: instance.world.imageUrl(.x1024),
                     maxHeight: 160
                 ) { bottomBar }
                     .listRowInsets(EdgeInsets())
@@ -58,7 +58,7 @@ struct LocationDetailView: View {
                             .foregroundStyle(friend.status.color)
                             .frame(size: Constants.IconSize.thumbnailOutside)
                         CircleURLImage(
-                            imageUrl: friend.thumbnailUrl,
+                            imageUrl: friend.imageUrl(.x256),
                             size: Constants.IconSize.thumbnail
                         )
                     }
