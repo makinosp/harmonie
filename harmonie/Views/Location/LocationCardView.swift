@@ -51,7 +51,7 @@ struct LocationCardView: View {
 
     func locationCardContent(instance: Instance) -> some View {
         HStack(alignment: .top) {
-            locationThumbnail(instance.world.imageUrl)
+            locationThumbnail(instance.world.imageUrl(.x512))
             Spacer()
             HStack {
                 VStack(alignment: .leading) {

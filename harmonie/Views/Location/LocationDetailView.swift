@@ -17,7 +17,7 @@ struct LocationDetailView: View {
         List {
             Section("World") {
                 GradientOverlayImageView(
-                    url: instance.world.imageUrl,
+                    url: instance.world.imageUrl(.x1024),
                     maxHeight: 160
                 ) { bottomBar }
                     .listRowInsets(EdgeInsets())
