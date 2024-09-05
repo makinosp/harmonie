@@ -13,9 +13,10 @@ struct LocationCardView: View {
     @Environment(AppViewModel.self) private var appVM: AppViewModel
     @Binding var selected: InstanceLocation?
     @State private var instance: Instance?
+    @State private var isImageLoaded = false
     let service: any InstanceServiceProtocol
     let location: FriendsLocation
-    let frameWidth: CGFloat = 120
+    let frameWidth: CGFloat = 100
 
     var backGroundColor: Color {
         switch UIDevice.current.userInterfaceIdiom {
@@ -50,13 +51,13 @@ struct LocationCardView: View {
     }
 
     func locationCardContent(instance: Instance) -> some View {
-        HStack(alignment: .top) {
+        HStack(spacing: 16) {
             locationThumbnail(instance.world.imageUrl(.x512))
-            Spacer()
             HStack {
                 VStack(alignment: .leading) {
                     Text(instance.world.name)
                         .font(.body)
+                        .lineLimit(1)
                     HStack {
                         Text(instance.typeDescription)
                             .font(.footnote)
@@ -68,15 +69,7 @@ struct LocationCardView: View {
                     ScrollView(.horizontal) {
                         HStack(spacing: -8) {
                             ForEach(location.friends) { friend in
-                                ZStack {
-                                    Circle()
-                                        .foregroundStyle(friend.status.color)
-                                        .frame(size: Constants.IconSize.thumbnailOutside)
-                                    CircleURLImage(
-                                        imageUrl: friend.imageUrl(.x256),
-                                        size: Constants.IconSize.thumbnail
-                                    )
-                                }
+                                friendThumbnail(friend: friend)
                             }
                         }
                     }
@@ -94,24 +87,35 @@ struct LocationCardView: View {
             .joined(separator: " / ")
     }
 
+    func friendThumbnail(friend: Friend) -> some View {
+        ZStack {
+            Circle()
+                .foregroundStyle(friend.status.color)
+                .frame(size: Constants.IconSize.thumbnailOutside)
+            CircleURLImage(
+                imageUrl: friend.imageUrl(.x256),
+                size: Constants.IconSize.thumbnail
+            )
+        }
+    }
+
     func locationThumbnail(_ url: URL?) -> some View {
         LazyImage(url: url) { state in
             if let image = state.image {
                 image
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: frameWidth)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .scaledToFill()
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
             } else if state.error != nil {
                 Constants.Icon.exclamation
-                    .frame(maxWidth: frameWidth)
             } else {
-                ZStack {
-                    Color.clear
-                        .frame(maxWidth: frameWidth)
-                    ProgressView()
-                }
+                EmptyView()
+                    .onDisappear {
+                        isImageLoaded = true
+                    }
             }
         }
+        .frame(width: frameWidth, height: frameWidth * 3/4)
+        .redacted(reason: isImageLoaded ? .placeholder : [])
     }
 }
