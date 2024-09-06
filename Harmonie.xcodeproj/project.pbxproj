@@ -363,7 +363,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -421,7 +421,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -456,7 +456,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.4.2;
-				PRODUCT_BUNDLE_IDENTIFIER = net.nemushee.harmonie;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.mknn.harmonie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -490,7 +490,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.4.2;
-				PRODUCT_BUNDLE_IDENTIFIER = net.nemushee.harmonie;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.mknn.harmonie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
