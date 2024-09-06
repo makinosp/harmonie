@@ -56,6 +56,7 @@ struct UserDetailView: View {
             if let bio = user.bio {
                 bioSection(bio)
             }
+            languageSection
             let urls = user.bioLinks.elements
             if !urls.isEmpty {
                 bioLinksSection(urls)
