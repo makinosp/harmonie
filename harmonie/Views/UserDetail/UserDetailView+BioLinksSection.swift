@@ -15,7 +15,7 @@ extension UserDetailView {
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
             VStack(alignment: .leading) {
-                ForEach(urls, id: \.self) { url in
+                ForEach(urls) { url in
                     Link(url.description, destination: url)
                         .font(.body)
                 }
