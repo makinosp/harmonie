@@ -10,9 +10,7 @@ import VRCKit
 
 extension UserDetailView {
     @ToolbarContentBuilder var toolbar: some ToolbarContent {
-        if user.isFriend {
-            ToolbarItem { friendMenu }
-        }
+        ToolbarItem { toolbarMenu }
         ToolbarItemGroup(placement: .keyboard) {
             Spacer()
             AsyncButton {
@@ -33,9 +31,14 @@ extension UserDetailView {
         }
     }
 
-    private var friendMenu: some View {
+    private var toolbarMenu: some View {
         Menu {
-            favoriteMenu
+            if user.isFriend {
+                favoriteMenu
+            }
+            if let url = user.url {
+                ShareLink(item: url)
+            }
         } label: {
             Constants.Icon.dots
         }
