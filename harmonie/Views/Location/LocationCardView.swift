@@ -13,10 +13,8 @@ struct LocationCardView: View {
     @Environment(AppViewModel.self) private var appVM: AppViewModel
     @Binding var selected: InstanceLocation?
     @State private var instance: Instance?
-    @State private var isImageLoaded = false
     let service: any InstanceServiceProtocol
     let location: FriendsLocation
-    let frameWidth: CGFloat = 100
 
     var backGroundColor: Color {
         switch UIDevice.current.userInterfaceIdiom {
@@ -52,7 +50,7 @@ struct LocationCardView: View {
 
     func locationCardContent(instance: Instance) -> some View {
         HStack(spacing: 16) {
-            locationThumbnail(instance.world.imageUrl(.x512))
+            SquareURLImage(url: instance.world.imageUrl(.x512))
             HStack {
                 VStack(alignment: .leading) {
                     Text(instance.world.name)
@@ -97,25 +95,5 @@ struct LocationCardView: View {
                 size: Constants.IconSize.thumbnail
             )
         }
-    }
-
-    func locationThumbnail(_ url: URL?) -> some View {
-        LazyImage(url: url) { state in
-            if let image = state.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-            } else if state.error != nil {
-                Constants.Icon.exclamation
-            } else {
-                EmptyView()
-                    .onDisappear {
-                        isImageLoaded = true
-                    }
-            }
-        }
-        .frame(width: frameWidth, height: frameWidth * 3/4)
-        .redacted(reason: isImageLoaded ? .placeholder : [])
     }
 }

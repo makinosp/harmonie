@@ -49,9 +49,7 @@ struct UserDetailView: View {
 
     var contentStacks: some View {
         VStack(spacing: 12) {
-            if let instance = instance {
-                locationSection(instance)
-            }
+            locationSection
             noteSection
             if let bio = user.bio {
                 bioSection(bio)
