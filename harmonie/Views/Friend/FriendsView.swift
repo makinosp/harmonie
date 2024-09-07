@@ -42,7 +42,7 @@ struct FriendsView: View {
 
     /// Friend List branched by list type
     var listView: some View {
-        List(friendVM.filterFriends(favoriteFriends: favoriteVM.favoriteFriends)) { friend in
+        List(filterdFriends) { friend in
             Button {
                 selected = Selected(id: friend.id)
             } label: {
@@ -65,6 +65,21 @@ struct FriendsView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
+            }
+        }
+        .overlay {
+            if filterdFriends.isEmpty {
+                if friendVM.isEmptyAllFilters {
+                    ContentUnavailableView {
+                        Label {
+                            Text("No Friends")
+                        } icon: {
+                            Constants.Icon.friends
+                        }
+                    }
+                } else {
+                    ContentUnavailableView.search
+                }
             }
         }
         .navigationTitle("Friends")

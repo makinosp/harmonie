@@ -9,6 +9,10 @@ import SwiftUI
 import VRCKit
 
 extension FriendsView {
+    var filterdFriends: [Friend] {
+        friendVM.filterFriends(favoriteFriends: favoriteVM.favoriteFriends)
+    }
+
     var filterMenu: some View {
         Menu {
             filterUserStatusMenu

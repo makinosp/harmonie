@@ -56,6 +56,10 @@ extension FriendViewModel {
             }
     }
 
+    var isEmptyAllFilters: Bool {
+        [ filterUserStatus.isEmpty, filterFavoriteGroups.isEmpty, filterText.isEmpty ].allSatisfy(\.self)
+    }
+
     func isFriendContainedInFilterFavoriteGroups(
         friend: Friend,
         favoriteFriends: [FavoriteViewModel.FavoriteFriend]
