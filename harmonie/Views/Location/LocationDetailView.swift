@@ -18,14 +18,48 @@ struct LocationDetailView: View {
             Section("World") {
                 GradientOverlayImageView(
                     url: instance.world.imageUrl(.x1024),
-                    maxHeight: 160
+                    maxHeight: 80
                 ) { bottomBar }
                     .listRowInsets(EdgeInsets())
             }
             Section("Friends") {
                 friendList
             }
+            Section("Information") {
+                LabeledContent {
+                    Text(instance.typeDescription)
+                } label: {
+                    Text("Instance Type")
+                }
+                LabeledContent {
+                    Text(location.friends.count.description)
+                } label: {
+                    Text("Friends")
+                }
+                LabeledContent {
+                    Text(instance.userCount.description)
+                } label: {
+                    Text("Users")
+                }
+                LabeledContent {
+                    Text(instance.capacity.description)
+                } label: {
+                    Text("Capacity")
+                }
+                LabeledContent {
+                    Text(instance.region.rawValue.uppercased())
+                } label: {
+                    Text("Region")
+                }
+                LabeledContent {
+                    Text(instance.userPlatforms.map(\.description).joined(separator: ", "))
+                } label: {
+                    Text("Platform")
+                }
+            }
         }
+        .navigationTitle(instance.world.name)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Selected.self) { selected in
             UserDetailPresentationView(id: selected.id)
                 .id(selected.id)
@@ -33,15 +67,11 @@ struct LocationDetailView: View {
     }
 
     var bottomBar: some View {
-        HStack {
-            HStack(alignment: .bottom) {
-                Text(instance.world.name)
-                    .font(.headline)
-                Text(instance.region.rawValue)
-                    .font(.subheadline)
-            }
-            Spacer()
+        VStack(alignment: .leading) {
+            Text(instance.world.name)
+                .font(.headline)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
         .foregroundStyle(Color.white)

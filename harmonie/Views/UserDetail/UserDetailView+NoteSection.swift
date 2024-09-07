@@ -1,5 +1,5 @@
 //
-//  UesrDetailView+NoteSection.swift
+//  UserDetailView+NoteSection.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/09/06.

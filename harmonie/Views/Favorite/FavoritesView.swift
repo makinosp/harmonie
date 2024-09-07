@@ -54,6 +54,17 @@ struct FavoritesView: View {
                 }
             }
         }
+        .overlay {
+            if favoriteVM.favoriteFriendGroups.isEmpty {
+                ContentUnavailableView {
+                    Label {
+                        Text("No Favorites")
+                    } icon: {
+                        Constants.Icon.favorite
+                    }
+                }
+            }
+        }
     }
 
     func rowView(_ friend: Friend) -> some View {
