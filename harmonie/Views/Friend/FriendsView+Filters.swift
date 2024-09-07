@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 extension FriendsView {
-    var filterdFriends: [Friend] {
+    var filteredFriends: [Friend] {
         friendVM.filterFriends(favoriteFriends: favoriteVM.favoriteFriends)
     }
 

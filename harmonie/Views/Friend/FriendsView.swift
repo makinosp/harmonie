@@ -42,7 +42,7 @@ struct FriendsView: View {
 
     /// Friend List branched by list type
     var listView: some View {
-        List(filterdFriends) { friend in
+        List(filteredFriends) { friend in
             Button {
                 selected = Selected(id: friend.id)
             } label: {
@@ -68,7 +68,7 @@ struct FriendsView: View {
             }
         }
         .overlay {
-            if filterdFriends.isEmpty {
+            if filteredFriends.isEmpty {
                 if friendVM.isEmptyAllFilters {
                     ContentUnavailableView {
                         Label {
