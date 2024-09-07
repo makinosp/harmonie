@@ -38,20 +38,17 @@ struct UserDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbar }
         .task {
+            isRequesting = true
             if user.isVisible {
                 await fetchInstance()
             }
-        }
-        .onAppear {
-            print(user.userIcon ?? "")
+            isRequesting = false
         }
     }
 
     var contentStacks: some View {
         VStack(spacing: 12) {
-            if let instance = instance {
-                locationSection(instance)
-            }
+            locationSection
             noteSection
             if let bio = user.bio {
                 bioSection(bio)
