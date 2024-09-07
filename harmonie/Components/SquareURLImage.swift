@@ -20,23 +20,31 @@ struct SquareURLImage: View {
         self.cornerRadius = cornerRadius
     }
 
+    var rect: some Shape {
+        RoundedRectangle(cornerRadius: cornerRadius)
+    }
+
+    var placeholder: some View {
+        rect.fill(.gray).frame(width: frameWidth, height: frameWidth * 3/4)
+    }
+
     var body: some View {
         LazyImage(url: url) { state in
             if let image = state.image {
                 image
                     .resizable()
                     .scaledToFill()
-                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-            } else if state.error != nil {
+                    .clipShape(rect)
+            } else if url != nil && state.error != nil {
                 Constants.Icon.exclamation
             } else {
-                EmptyView()
+                placeholder
                     .onDisappear {
                         isImageLoaded = true
                     }
             }
         }
         .frame(width: frameWidth, height: frameWidth * 3/4)
-        .redacted(reason: isImageLoaded ? .placeholder : [])
+        .redacted(reason: isImageLoaded ? [] : .placeholder)
     }
 }

@@ -38,12 +38,11 @@ struct UserDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbar }
         .task {
+            isRequesting = true
             if user.isVisible {
                 await fetchInstance()
             }
-        }
-        .onAppear {
-            print(user.userIcon ?? "")
+            isRequesting = false
         }
     }
 

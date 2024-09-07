@@ -10,13 +10,15 @@ import SwiftUI
 import VRCKit
 
 extension UserDetailView {
-    var locationDescription: String? {
+    var locationDescription: String {
         if let instance = instance {
             instance.world.name
-        } else if user.location == "private" || user.location == "offline" {
+        } else if !user.isVisible {
             user.location.capitalized
+        } else if isRequesting {
+            String(repeating: " ", count: 15)
         } else {
-            nil
+            ""
         }
     }
 
@@ -26,14 +28,11 @@ extension UserDetailView {
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
             HStack {
-                if let instance = instance {
-                    SquareURLImage(url: instance.world.imageUrl(.x256))
-                }
-                if let location = locationDescription {
-                    Text(location)
-                        .font(.body)
-                }
+                SquareURLImage(url: instance?.world.imageUrl(.x256))
+                Text(locationDescription)
+                    .font(.body)
             }
+            .redacted(reason: isRequesting ? .placeholder : [])
         }
     }
 }
