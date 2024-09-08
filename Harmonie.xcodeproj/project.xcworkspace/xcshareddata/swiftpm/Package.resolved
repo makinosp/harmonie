@@ -1,5 +1,5 @@
 {
-  "originHash" : "5ac745f7f9c40777e40d8d6c2e5b85bdbb75e2605590fe0e8e417a7638770875",
+  "originHash" : "3af81fba53312a9bf207661172fc1fe957ee2d72891f7537035a4ae61ae39934",
   "pins" : [
     {
       "identity" : "async-swift-ui",
@@ -61,7 +61,7 @@
       "location" : "https://github.com/makinosp/vrckit",
       "state" : {
         "branch" : "develop",
-        "revision" : "13928be0bcbd85e5e42ad9bc09cdfbb283dfc1c3"
+        "revision" : "2371372b625c197e928215e4c9ae912de24e5835"
       }
     }
   ],
