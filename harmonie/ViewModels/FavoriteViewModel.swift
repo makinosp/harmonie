@@ -123,7 +123,7 @@ final class FavoriteViewModel {
         }
     }
 
-    func fetchFavoritedWorlds(service: any WorldServiceProtocol) async throws {
+    func fetchFavoritedWorlds(service: WorldServiceProtocol) async throws {
         favoriteWorlds = try await service.fetchFavoritedWorlds()
     }
 }

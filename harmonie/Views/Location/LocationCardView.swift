@@ -15,7 +15,7 @@ struct LocationCardView: View {
     @Binding var selected: InstanceLocation?
     @State private var instance: Instance?
     @State private var isRequesting = true
-    let service: any InstanceServiceProtocol
+    let service: InstanceServiceProtocol
     let location: FriendsLocation
 
     private var backGroundColor: Color {

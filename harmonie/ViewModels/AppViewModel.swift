@@ -25,7 +25,7 @@ final class AppViewModel {
     /// Check the authentication status of the user,
     /// fetch the user information, and perform the initialization process.
     /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
-    func setup(service: any AuthenticationServiceProtocol) async -> Step {
+    func setup(service: AuthenticationServiceProtocol) async -> Step {
         // check local data
         guard !client.cookieManager.cookies.isEmpty else {
             return .loggingIn
@@ -72,7 +72,7 @@ final class AppViewModel {
     }
 
     func verifyTwoFA(
-        service: any AuthenticationServiceProtocol,
+        service: AuthenticationServiceProtocol,
         verifyType: VerifyType?,
         code: String
     ) async {
@@ -94,7 +94,7 @@ final class AppViewModel {
         }
     }
 
-    func logout(service: any AuthenticationServiceProtocol) async {
+    func logout(service: AuthenticationServiceProtocol) async {
         do {
             try await service.logout()
             reset()

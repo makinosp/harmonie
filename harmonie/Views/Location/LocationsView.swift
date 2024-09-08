@@ -14,7 +14,7 @@ struct LocationsView: View, FriendServicePresentable {
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @State var selected: InstanceLocation?
 
-    var service: any InstanceServiceProtocol {
+    var service: InstanceServiceProtocol {
         appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
     }
 
