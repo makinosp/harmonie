@@ -46,7 +46,7 @@ extension UserDetailView {
             HStack {
                 SquareURLImage(url: locationImageUrl)
                 Text(locationDescription)
-                    .font(.body)
+                    .font(.headline)
             }
             .redacted(reason: isRequesting ? .placeholder : [])
         }
