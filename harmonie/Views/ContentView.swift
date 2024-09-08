@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct ContentView: View {
+struct ContentView: View, AuthenticationServicePresentable, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
 
     var body: some View {
@@ -16,20 +16,18 @@ struct ContentView: View {
         case .initializing:
             ProgressScreen()
                 .task {
-                    appVM.step = await appVM.setup()
+                    appVM.step = await appVM.setup(service: authenticationService)
                 }
                 .errorAlert {
-                    Task { await appVM.logout() }
+                    Task { await appVM.logout(service: authenticationService) }
                 }
         case .loggingIn:
             AuthenticationView()
                 .errorAlert()
         case .done(let user):
-            let friendVM = appVM.generateFriendVM(user: user)
-            let favoriteVM = appVM.generateFavoriteVM(friendVM: friendVM)
             MainTabView()
-                .environment(friendVM)
-                .environment(favoriteVM)
+                .environment(FriendViewModel(user: user))
+                .environment(FavoriteViewModel())
                 .errorAlert()
         }
     }

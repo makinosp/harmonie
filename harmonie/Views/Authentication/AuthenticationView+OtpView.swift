@@ -15,7 +15,11 @@ extension AuthenticationView {
                 .textFieldStyle(.roundedBorder)
                 .padding(.horizontal, 8)
             loginButton("Continue") {
-                await appVM.verifyTwoFA(verifyType, code)
+                await appVM.verifyTwoFA(
+                    service: authenticationService,
+                    verifyType: verifyType,
+                    code: code
+                )
             }
         }
         .padding(32)

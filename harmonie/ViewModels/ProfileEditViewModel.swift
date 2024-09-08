@@ -9,7 +9,7 @@ import Observation
 import VRCKit
 
 @Observable
-class ProfileEditViewModel {
+final class ProfileEditViewModel {
     var editingUserInfo: EditableUserInfo
     @ObservationIgnored private let id: String
 

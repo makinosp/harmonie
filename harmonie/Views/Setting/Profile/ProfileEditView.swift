@@ -52,7 +52,7 @@ struct ProfileEditView: View {
         }
     }
 
-    var statusSection: some View {
+    private var statusSection: some View {
         Section("Status") {
             Picker(selection: $profileEditVM.editingUserInfo.status) {
                 ForEach(UserStatus.allCases) { status in
@@ -73,13 +73,13 @@ struct ProfileEditView: View {
         }
     }
 
-    var descriptionSection: some View {
+    private var descriptionSection: some View {
         Section("Description") {
             TextEditor(text: $profileEditVM.editingUserInfo.bio)
         }
     }
 
-    @ViewBuilder var languageSection: some View {
+    @ViewBuilder private var languageSection: some View {
         Section("Language") {
             ForEach(profileEditVM.editingUserInfo.tags.languageTags) { tag in
                 Text(tag.description)
@@ -102,7 +102,7 @@ struct ProfileEditView: View {
         .listSectionSpacing(.compact)
     }
 
-    @ViewBuilder var bioLinksSection: some View {
+    @ViewBuilder private var bioLinksSection: some View {
         Section("Bio Links") {
             ForEach(profileEditVM.editingUserInfo.bioLinks) { url in
                 Link(destination: url) {
@@ -136,7 +136,7 @@ struct ProfileEditView: View {
         .listSectionSpacing(.compact)
     }
 
-    @ToolbarContentBuilder var toolbarContents: some ToolbarContent {
+    @ToolbarContentBuilder private var toolbarContents: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button {
                 dismiss()

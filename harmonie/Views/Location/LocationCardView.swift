@@ -18,7 +18,7 @@ struct LocationCardView: View {
     let service: any InstanceServiceProtocol
     let location: FriendsLocation
 
-    var backGroundColor: Color {
+    private var backGroundColor: Color {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             Color(uiColor: .tertiarySystemGroupedBackground)
@@ -55,7 +55,7 @@ struct LocationCardView: View {
         }
     }
 
-    func locationCardContent(instance: Instance) -> some View {
+    private func locationCardContent(instance: Instance) -> some View {
         HStack(spacing: 16) {
             SquareURLImage(url: instance.world.imageUrl(.x512))
             HStack {
@@ -86,13 +86,13 @@ struct LocationCardView: View {
         .padding()
     }
 
-    func personAmount(_ instance: Instance) -> String {
+    private func personAmount(_ instance: Instance) -> String {
         [location.friends.count, instance.userCount, instance.capacity]
             .map { $0.description }
             .joined(separator: " / ")
     }
 
-    func friendThumbnail(friend: Friend) -> some View {
+    private func friendThumbnail(friend: Friend) -> some View {
         ZStack {
             Circle()
                 .foregroundStyle(friend.status.color)

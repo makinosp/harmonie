@@ -8,10 +8,11 @@
 import SwiftUI
 import VRCKit
 
-struct FriendsView: View {
+struct FriendsView: View, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @State private var searchText = ""
     @State var selected: Selected?
 
     var body: some View {
@@ -22,7 +23,7 @@ struct FriendsView: View {
         }
         .refreshable {
             do {
-                try await friendVM.fetchAllFriends()
+                try await friendVM.fetchAllFriends(service: friendService)
             } catch {
                 appVM.handleError(error)
             }
@@ -83,29 +84,30 @@ struct FriendsView: View {
             }
         }
         .navigationTitle("Friends")
-        .searchable(text: bindFilterText)
         .toolbar { toolbarContent }
         .navigationDestination(item: $selected) { selected in
             UserDetailPresentationView(id: selected.id)
                 .id(selected.id)
+        }
+        .searchable(text: $searchText)
+        .onSubmit(of: .search) {
+            friendVM.filterText = searchText
         }
     }
 }
 
 #Preview {
     let appVM = AppViewModel()
-    let friendVM = FriendViewModel(
-        user: PreviewDataProvider.shared.previewUser,
-        service: FriendPreviewService(client: appVM.client)
-    )
-    let favoriteVM = FavoriteViewModel(
-        service: FavoritePreviewService(client: appVM.client)
-    )
+    let friendVM = FriendViewModel(user: PreviewDataProvider.shared.previewUser)
+    let favoriteVM = FavoriteViewModel()
     FriendsView()
         .task {
             do {
-                try await friendVM.fetchAllFriends()
-                try await favoriteVM.fetchFavorite(friendVM: friendVM)
+                try await friendVM.fetchAllFriends(service: FriendPreviewService(client: appVM.client))
+                try await favoriteVM.fetchFavorite(
+                    service: FavoritePreviewService(client: appVM.client),
+                    friendVM: friendVM
+                )
             } catch {
                 appVM.handleError(error)
             }

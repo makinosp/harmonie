@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftUIIntrospect
 import VRCKit
 
-struct LocationsView: View {
+struct LocationsView: View, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @State var selected: InstanceLocation?
@@ -18,7 +18,7 @@ struct LocationsView: View {
         appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
     }
 
-    var backGroundColor: Color {
+    private var backGroundColor: Color {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             Color(uiColor: .secondarySystemGroupedBackground)
@@ -47,7 +47,7 @@ struct LocationsView: View {
         .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 8 : .zero)
         .refreshable {
             do {
-                try await friendVM.fetchAllFriends()
+                try await friendVM.fetchAllFriends(service: friendService)
             } catch {
                 appVM.handleError(error)
             }
@@ -58,7 +58,7 @@ struct LocationsView: View {
         }
     }
 
-    var locationList: some View {
+    private var locationList: some View {
         ScrollView {
             LazyVStack {
                 ForEach(friendVM.friendsLocations) { location in
@@ -84,7 +84,7 @@ struct LocationsView: View {
         }
     }
 
-    func locatoinItem(_ location: FriendsLocation) -> some View {
+    private func locatoinItem(_ location: FriendsLocation) -> some View {
         LocationCardView(selected: $selected, service: service, location: location)
     }
 }

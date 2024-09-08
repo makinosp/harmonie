@@ -8,10 +8,14 @@
 import SwiftUI
 import VRCKit
 
-struct MainTabView: View {
+struct MainTabView: View, FriendServicePresentable, FavoriteServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+
+    enum Tab: String, CaseIterable {
+        case locations, friends, favorites, settings
+    }
 
     var body: some View {
         TabView {
@@ -27,22 +31,28 @@ struct MainTabView: View {
         .task {
             do {
                 defer { friendVM.isRequesting = false }
-                try await friendVM.fetchAllFriends()
+                try await friendVM.fetchAllFriends(service: friendService)
             } catch {
                 appVM.handleError(error)
             }
             do {
-                try await favoriteVM.fetchFavorite(friendVM: friendVM)
+                try await favoriteVM.fetchFavorite(
+                    service: favoriteService,
+                    friendVM: friendVM
+                )
             } catch {
                 appVM.handleError(error)
             }
         }
-    }
-}
-
-extension MainTabView {
-    enum Tab: String, CaseIterable {
-        case locations, friends, favorites, settings
+        .task {
+            do {
+                try await favoriteVM.fetchFavoritedWorlds(
+                    service: WorldService(client: appVM.client)
+                )
+            } catch {
+                appVM.handleError(error)
+            }
+        }
     }
 }
 

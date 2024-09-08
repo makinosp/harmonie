@@ -27,6 +27,11 @@ extension FriendViewModel {
         case asc, desc
     }
 
+    func clearFilters() {
+        filterUserStatus = []
+        filterFavoriteGroups = []
+    }
+
     /// Filters the list of friends based on the specified list type.
     /// - Parameter favoriteFriends: Favorite friends information.
     /// - Returns: A filtered list of friends whose display names meet the criteria defined by `isIncluded`.

@@ -66,3 +66,6 @@ playground.xcworkspace
 # fastlane/Preview.html
 # fastlane/screenshots/**/*.png
 # fastlane/test_output
+
+# macOS
+.DS_Store

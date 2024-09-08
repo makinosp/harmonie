@@ -8,11 +8,11 @@
 import SwiftUI
 
 extension SettingsView {
-    var appName: String {
+    private var appName: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
     }
 
-    var appVersion: String {
+    private var appVersion: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
     }
 
