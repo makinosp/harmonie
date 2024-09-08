@@ -6,6 +6,7 @@
 //
 
 import NukeUI
+import Shimmer
 import SwiftUI
 import VRCKit
 
@@ -13,6 +14,7 @@ struct LocationCardView: View {
     @Environment(AppViewModel.self) private var appVM: AppViewModel
     @Binding var selected: InstanceLocation?
     @State private var instance: Instance?
+    @State private var isRequesting = true
     let service: any InstanceServiceProtocol
     let location: FriendsLocation
 
@@ -29,19 +31,22 @@ struct LocationCardView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(backGroundColor)
-            if let instance = instance {
+            if isRequesting {
+                locationCardContent(instance: PreviewDataProvider.generateInstance())
+                    .redacted(reason: .placeholder)
+                    .shimmering()
+            } else if let instance = instance {
                 locationCardContent(instance: instance)
                     .onTapGesture {
                         selected = InstanceLocation(location: location, instance: instance)
                     }
-            } else {
-                ProgressView()
             }
         }
         .frame(minHeight: 120)
         .task {
             if case let .id(id) = location.location {
                 do {
+                    defer { withAnimation { isRequesting = false } }
                     instance = try await service.fetchInstance(location: id)
                 } catch {
                     appVM.handleError(error)

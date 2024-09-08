@@ -12,11 +12,13 @@ import VRCKit
 class FriendViewModel {
     var onlineFriends: [Friend] = []
     var offlineFriends: [Friend] = []
+    var friendsLocations: [FriendsLocation] = []
     var filterUserStatus: Set<UserStatus> = []
     var filterFavoriteGroups: Set<FavoriteGroup> = []
     var filterText: String = ""
     var sortType: SortType = .default
     var sortOrder: SortOrder = .asc
+    var isRequesting = true
     @ObservationIgnored let user: User
     @ObservationIgnored private let service: any FriendServiceProtocol
 
@@ -31,10 +33,6 @@ class FriendViewModel {
 
     func getFriend(id: String) -> Friend? {
         allFriends.first { $0.id == id }
-    }
-
-    var friendsLocations: [FriendsLocation] {
-        service.friendsGroupedByLocation(onlineFriends)
     }
 
     /// Returns a list of matches for either `onlineFriends` or `offlineFriends`
@@ -58,5 +56,6 @@ class FriendViewModel {
         )
         onlineFriends = try await onlineFriendsTask
         offlineFriends = try await offlineFriendsTask
+        friendsLocations = service.friendsGroupedByLocation(onlineFriends)
     }
 }

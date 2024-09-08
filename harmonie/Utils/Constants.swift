@@ -52,6 +52,9 @@ enum Constants {
         static var setting: some View {
             Image(systemName: "gear")
         }
+        static var shield: some View {
+            Image(systemName: "shield.fill")
+        }
         static var sort: some View {
             Image(systemName: "arrow.up.arrow.down")
         }

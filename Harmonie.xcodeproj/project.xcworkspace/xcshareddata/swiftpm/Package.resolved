@@ -1,5 +1,5 @@
 {
-  "originHash" : "f0fb8ceb3ffd5128d02593ebef3a373aa7fe9597383061f9f65348fd33476726",
+  "originHash" : "3af81fba53312a9bf207661172fc1fe957ee2d72891f7537035a4ae61ae39934",
   "pins" : [
     {
       "identity" : "async-swift-ui",
@@ -47,12 +47,21 @@
       }
     },
     {
+      "identity" : "swiftui-shimmer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/markiv/SwiftUI-Shimmer",
+      "state" : {
+        "revision" : "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version" : "1.5.1"
+      }
+    },
+    {
       "identity" : "vrckit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/makinosp/vrckit",
       "state" : {
         "branch" : "develop",
-        "revision" : "13928be0bcbd85e5e42ad9bc09cdfbb283dfc1c3"
+        "revision" : "2371372b625c197e928215e4c9ae912de24e5835"
       }
     }
   ],

@@ -22,42 +22,52 @@ extension UserDetailView {
     }
 
     var bottomBar: some View {
-        HStack {
-            HStack(alignment: .bottom) {
-                Label {
-                    Text(user.displayName)
-                } icon: {
-                    Constants.Icon.circleFilled
-                        .foregroundStyle(statusColor)
-                }
+        VStack(alignment: .leading) {
+            Text(user.displayName)
                 .font(.headline)
+            HStack {
                 statusDescription
+                Spacer()
+                trustRankLabel
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
     }
 
     var statusDescription: some View {
-        Text(user.statusDescription)
-            .lineLimit(1)
-            .font(.subheadline)
+        Label {
+            Text(user.statusDescription.isEmpty ?  user.status.description : user.statusDescription)
+        } icon: {
+            Constants.Icon.circleFilled
+                .foregroundStyle(statusColor)
+        }
+        .lineLimit(1)
+        .font(.subheadline)
     }
 
-    var displayStatusAndName: some View {
-        HStack(alignment: .bottom) {
-            Label {
-                Text(user.displayName)
-            } icon: {
-                Constants.Icon.circleFilled
-                    .foregroundStyle(user.status.color)
-            }
-            .font(.headline)
-            Text(user.statusDescription)
-                .font(.subheadline)
-            Spacer()
+    var trustRankLabel: some View {
+        Label {
+            Text(user.trustRank.description)
+        } icon: {
+            Constants.Icon.shield
         }
-        .padding(8)
+        .font(.footnote.bold())
+        .padding(.horizontal, 12)
+        .padding(.vertical, 4)
+        .background(trustRankColor(user.trustRank).opacity(0.5))
+        .background(.thinMaterial)
+        .cornerRadius(8)
+    }
+
+    func trustRankColor(_ trustRank: TrustRank) -> Color {
+        switch trustRank {
+        case .trusted: .indigo
+        case .known: .orange
+        case .user: .green
+        case .newUser: .blue
+        case .visitor, .unknown: .gray
+        }
     }
 }
