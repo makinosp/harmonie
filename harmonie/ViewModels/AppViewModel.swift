@@ -102,11 +102,6 @@ class AppViewModel {
         }
     }
 
-    func generateFriendVM(user: User) -> FriendViewModel {
-        let service = isDemoMode ? FriendPreviewService(client: client) : FriendService(client: client)
-        return FriendViewModel(user: user, service: service)
-    }
-
     func generateFavoriteVM(friendVM: FriendViewModel) -> FavoriteViewModel {
         let service = isDemoMode ? FavoritePreviewService(client: client) : FavoriteService(client: client)
         return FavoriteViewModel(service: service)

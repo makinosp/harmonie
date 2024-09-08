@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-struct MainTabView: View {
+struct MainTabView: View, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
@@ -27,7 +27,7 @@ struct MainTabView: View {
         .task {
             do {
                 defer { friendVM.isRequesting = false }
-                try await friendVM.fetchAllFriends()
+                try await friendVM.fetchAllFriends(service: friendService)
             } catch {
                 appVM.handleError(error)
             }

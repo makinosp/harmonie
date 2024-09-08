@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftUIIntrospect
 import VRCKit
 
-struct LocationsView: View {
+struct LocationsView: View, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @State var selected: InstanceLocation?
@@ -47,7 +47,7 @@ struct LocationsView: View {
         .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 8 : .zero)
         .refreshable {
             do {
-                try await friendVM.fetchAllFriends()
+                try await friendVM.fetchAllFriends(service: friendService)
             } catch {
                 appVM.handleError(error)
             }

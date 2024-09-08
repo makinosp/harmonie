@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-struct FriendsView: View {
+struct FriendsView: View, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
@@ -23,7 +23,7 @@ struct FriendsView: View {
         }
         .refreshable {
             do {
-                try await friendVM.fetchAllFriends()
+                try await friendVM.fetchAllFriends(service: friendService)
             } catch {
                 appVM.handleError(error)
             }
@@ -99,8 +99,7 @@ struct FriendsView: View {
 #Preview {
     let appVM = AppViewModel()
     let friendVM = FriendViewModel(
-        user: PreviewDataProvider.shared.previewUser,
-        service: FriendPreviewService(client: appVM.client)
+        user: PreviewDataProvider.shared.previewUser
     )
     let favoriteVM = FavoriteViewModel(
         service: FavoritePreviewService(client: appVM.client)
@@ -108,7 +107,7 @@ struct FriendsView: View {
     FriendsView()
         .task {
             do {
-                try await friendVM.fetchAllFriends()
+                try await friendVM.fetchAllFriends(service: FriendPreviewService(client: appVM.client))
                 try await favoriteVM.fetchFavorite(friendVM: friendVM)
             } catch {
                 appVM.handleError(error)

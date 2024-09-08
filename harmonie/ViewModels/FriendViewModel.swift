@@ -20,11 +20,9 @@ class FriendViewModel {
     var sortOrder: SortOrder = .asc
     var isRequesting = true
     @ObservationIgnored let user: User
-    @ObservationIgnored private let service: any FriendServiceProtocol
 
-    init(user: User, service: any FriendServiceProtocol) {
+    init(user: User) {
         self.user = user
-        self.service = service
     }
 
     var allFriends: [Friend] {
@@ -45,7 +43,7 @@ class FriendViewModel {
     }
 
     /// Fetch friends from API
-    func fetchAllFriends() async throws {
+    func fetchAllFriends(service: FriendServiceProtocol) async throws {
         async let onlineFriendsTask = service.fetchFriends(
             count: user.onlineFriends.count + user.activeFriends.count,
             offline: false

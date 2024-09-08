@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct ContentView: View, AuthenticationServicePresentable {
+struct ContentView: View, AuthenticationServicePresentable, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
 
     var body: some View {
@@ -25,7 +25,7 @@ struct ContentView: View, AuthenticationServicePresentable {
             AuthenticationView()
                 .errorAlert()
         case .done(let user):
-            let friendVM = appVM.generateFriendVM(user: user)
+            let friendVM = FriendViewModel(user: user)
             let favoriteVM = appVM.generateFavoriteVM(friendVM: friendVM)
             MainTabView()
                 .environment(friendVM)
