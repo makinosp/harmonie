@@ -38,11 +38,9 @@ struct UserDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbar }
         .task {
-            isRequesting = true
-            if user.isVisible {
-                await fetchInstance()
+            if case let .id(id) = user.location {
+                await fetchInstance(id: id)
             }
-            isRequesting = false
         }
     }
 
