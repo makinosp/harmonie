@@ -6,7 +6,6 @@
 //
 
 import NukeUI
-import Shimmer
 import SwiftUI
 import VRCKit
 
@@ -34,7 +33,6 @@ struct LocationCardView: View {
             if isRequesting {
                 locationCardContent(instance: PreviewDataProvider.generateInstance())
                     .redacted(reason: .placeholder)
-                    .shimmering()
             } else if let instance = instance {
                 locationCardContent(instance: instance)
                     .onTapGesture {
