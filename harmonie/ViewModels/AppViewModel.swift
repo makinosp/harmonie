@@ -44,12 +44,7 @@ final class AppViewModel {
         }
     }
 
-    func login(
-        service: any AuthenticationServiceProtocol,
-        username: String,
-        password: String,
-        isSavedOnKeyChain: Bool
-    ) async -> VerifyType? {
+    func login(username: String, password: String, isSavedOnKeyChain: Bool) async -> VerifyType? {
         if username == "demo" && password == "demo" {
             isDemoMode = true
         } else {
@@ -58,6 +53,9 @@ final class AppViewModel {
         if isSavedOnKeyChain {
            _ = KeychainUtil.shared.savePassword(password, for: username)
         }
+        let service = isDemoMode
+            ? AuthenticationPreviewService(client: client)
+            : AuthenticationService(client: client)
         do {
             switch try await service.loginUserInfo() {
             case let verifyType as VerifyType:

@@ -13,7 +13,6 @@ extension AuthenticationView {
             loginFields
             loginButton("Login") {
                 verifyType = await appVM.login(
-                    service: authenticationService,
                     username: username,
                     password: password,
                     isSavedOnKeyChain: isSavedOnKeyChain
