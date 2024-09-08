@@ -130,6 +130,7 @@
 				20395D8D2B945CD700003921 /* Sources */,
 				20395D8E2B945CD700003921 /* Frameworks */,
 				20395D8F2B945CD700003921 /* Resources */,
+				20A26A662C8D6DF0004310E6 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -275,6 +276,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		20A26A662C8D6DF0004310E6 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nSWIFT_PACKAGE_DIR=\"${BUILD_DIR%Build/*}SourcePackages/artifacts\"\nSWIFTLINT_CMD=$(ls \"$SWIFT_PACKAGE_DIR\"/swiftlintplugins/SwiftLintBinary/SwiftLintBinary.artifactbundle/swiftlint-*/bin/swiftlint | head -n 1)\n\nif test -f \"$SWIFTLINT_CMD\" 2>&1\nthen\n    \"$SWIFTLINT_CMD\"\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		20395D8D2B945CD700003921 /* Sources */ = {
@@ -445,6 +468,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"harmonie/Preview Content\"";
 				DEVELOPMENT_TEAM = CJHK4FP72G;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Harmonie/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Harmonie;
@@ -479,6 +503,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"harmonie/Preview Content\"";
 				DEVELOPMENT_TEAM = CJHK4FP72G;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Harmonie/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Harmonie;
