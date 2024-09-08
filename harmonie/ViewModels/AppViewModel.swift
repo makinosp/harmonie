@@ -124,13 +124,19 @@ class AppViewModel {
 
     func handleError(_ error: Error) {
         if let error = error as? VRCKitError {
-            vrckError = error
-        } else if (error as NSError?)?.isCancelled ?? false {
-            return
-        } else {
-            vrckError = .unexpectedError
+            if error == .unauthorized {
+                step = .loggingIn
+            } else {
+                vrckError = error
+            }
+        } else if !isCancelled(error) {
+            vrckError = .unexpected
         }
-        isPresentedAlert = true
+        isPresentedAlert = vrckError != nil
+    }
+
+    func isCancelled(_ error: Error) -> Bool {
+        (error as NSError?)?.isCancelled ?? false
     }
 }
 
