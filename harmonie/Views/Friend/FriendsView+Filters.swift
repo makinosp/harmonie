@@ -15,6 +15,9 @@ extension FriendsView {
 
     var filterMenu: some View {
         Menu {
+            Button("Clear") {
+                friendVM.clearFilters()
+            }
             filterUserStatusMenu
             filterFavoriteGroupsMenu
         } label: {
