@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-struct MainTabView: View, FriendServicePresentable {
+struct MainTabView: View, FriendServicePresentable, FavoriteServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
@@ -32,7 +32,10 @@ struct MainTabView: View, FriendServicePresentable {
                 appVM.handleError(error)
             }
             do {
-                try await favoriteVM.fetchFavorite(friendVM: friendVM)
+                try await favoriteVM.fetchFavorite(
+                    service: favoriteService,
+                    friendVM: friendVM
+                )
             } catch {
                 appVM.handleError(error)
             }

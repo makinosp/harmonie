@@ -98,17 +98,16 @@ struct FriendsView: View, FriendServicePresentable {
 
 #Preview {
     let appVM = AppViewModel()
-    let friendVM = FriendViewModel(
-        user: PreviewDataProvider.shared.previewUser
-    )
-    let favoriteVM = FavoriteViewModel(
-        service: FavoritePreviewService(client: appVM.client)
-    )
+    let friendVM = FriendViewModel(user: PreviewDataProvider.shared.previewUser)
+    let favoriteVM = FavoriteViewModel()
     FriendsView()
         .task {
             do {
                 try await friendVM.fetchAllFriends(service: FriendPreviewService(client: appVM.client))
-                try await favoriteVM.fetchFavorite(friendVM: friendVM)
+                try await favoriteVM.fetchFavorite(
+                    service: FavoritePreviewService(client: appVM.client),
+                    friendVM: friendVM
+                )
             } catch {
                 appVM.handleError(error)
             }

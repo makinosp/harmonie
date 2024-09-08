@@ -25,6 +25,7 @@ extension UserDetailView {
         guard let friend = friendVM.getFriend(id: friendId) else { return }
         do {
             try await favoriteVM.updateFavorite(
+                service: favoriteService,
                 friend: friend,
                 targetGroup: group
             )

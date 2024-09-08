@@ -17,16 +17,9 @@ class FavoriteViewModel {
     var favoriteFriends: [FavoriteFriend] = []
     var favoriteWorlds: [World] = []
     var segment: Segment = .friend
-    @ObservationIgnored let service: any FavoriteServiceProtocol
 
     enum Segment {
         case friend, world
-    }
-
-    /// Initializes the view model with the specified HTTP client.
-    /// - Parameter client: The `APIClient` instance used for making network requests.
-    init(service: any FavoriteServiceProtocol) {
-        self.service = service
     }
 
     /// A filtered list of favorite groups that contain only friend-type groups.
@@ -37,7 +30,7 @@ class FavoriteViewModel {
 
     /// Asynchronously fetches and updates the favorite groups and their details.
     /// - Throws: An error if any network request or decoding operation fails.
-    func fetchFavorite(friendVM: FriendViewModel) async throws {
+    func fetchFavorite(service: FavoriteServiceProtocol, friendVM: FriendViewModel) async throws {
         favoriteGroups = try await service.listFavoriteGroups()
         let favoriteDetails = try await service.fetchFavoriteGroupDetails(favoriteGroups: favoriteGroups)
         let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
@@ -114,7 +107,7 @@ class FavoriteViewModel {
     /// - Parameters:
     ///   - friendId: The friend's id whose favorite status is being updated.
     ///   - targetGroup: The `FavoriteGroup` object representing the target group for the favorite status.
-    func updateFavorite(friend: Friend, targetGroup: FavoriteGroup) async throws {
+    func updateFavorite(service: FavoriteServiceProtocol, friend: Friend, targetGroup: FavoriteGroup) async throws {
         let sourceGroupId = findFavoriteGroupIdForFriend(friendId: friend.id)
         if let sourceGroupId = sourceGroupId {
             _ = try await service.removeFavorite(favoriteId: friend.id)

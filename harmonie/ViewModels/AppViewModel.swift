@@ -102,11 +102,6 @@ class AppViewModel {
         }
     }
 
-    func generateFavoriteVM(friendVM: FriendViewModel) -> FavoriteViewModel {
-        let service = isDemoMode ? FavoritePreviewService(client: client) : FavoriteService(client: client)
-        return FavoriteViewModel(service: service)
-    }
-
     func logout(service: any AuthenticationServiceProtocol) async {
         do {
             try await service.logout()

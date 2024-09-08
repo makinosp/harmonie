@@ -25,11 +25,9 @@ struct ContentView: View, AuthenticationServicePresentable, FriendServicePresent
             AuthenticationView()
                 .errorAlert()
         case .done(let user):
-            let friendVM = FriendViewModel(user: user)
-            let favoriteVM = appVM.generateFavoriteVM(friendVM: friendVM)
             MainTabView()
-                .environment(friendVM)
-                .environment(favoriteVM)
+                .environment(FriendViewModel(user: user))
+                .environment(FavoriteViewModel())
                 .errorAlert()
         }
     }
