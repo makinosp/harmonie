@@ -16,6 +16,7 @@
 		204709A52C7B47E100A56DF8 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2096016C2C4BD30100D905AF /* VRCKit */; };
 		204709A62C7B47E100A56DF8 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 205D81A52C71B9D70047C1CC /* SwiftUIIntrospect */; };
 		20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20592B022C45640D00E1C8B8 /* AsyncSwiftUI */; };
+		20593CD92C8D4A8000D1305B /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 20593CD82C8D4A8000D1305B /* Shimmer */; };
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
 		2094C4002C43BBC100F88986 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2094C3FF2C43BBC100F88986 /* VRCKit */; };
 		20C7F8BB2C480E6800AC7A56 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 20C7F89E2C480E6800AC7A56 /* LICENSE */; };
@@ -78,6 +79,7 @@
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
 				2014A0B32C3832690019C638 /* VRCKit in Frameworks */,
 				20DC3C292C422786001101DB /* VRCKit in Frameworks */,
+				20593CD92C8D4A8000D1305B /* Shimmer in Frameworks */,
 				206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +153,7 @@
 				2052C7AD2C4BC97100B341D1 /* VRCKit */,
 				2096016C2C4BD30100D905AF /* VRCKit */,
 				205D81A52C71B9D70047C1CC /* SwiftUIIntrospect */,
+				20593CD82C8D4A8000D1305B /* Shimmer */,
 			);
 			productName = harmonie;
 			productReference = 20395D912B945CD700003921 /* Harmonie.app */;
@@ -235,6 +238,7 @@
 				20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */,
 				2096016B2C4BD30100D905AF /* XCRemoteSwiftPackageReference "vrckit" */,
 				205D81A42C71B9D70047C1CC /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
+				20593CD72C8D4A8000D1305B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -635,6 +639,14 @@
 				kind = branch;
 			};
 		};
+		20593CD72C8D4A8000D1305B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.1;
+			};
+		};
 		205D81A42C71B9D70047C1CC /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/swiftui-introspect";
@@ -687,6 +699,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */;
 			productName = AsyncSwiftUI;
+		};
+		20593CD82C8D4A8000D1305B /* Shimmer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20593CD72C8D4A8000D1305B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
+			productName = Shimmer;
 		};
 		205D81A52C71B9D70047C1CC /* SwiftUIIntrospect */ = {
 			isa = XCSwiftPackageProductDependency;
