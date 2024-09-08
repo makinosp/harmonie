@@ -9,7 +9,7 @@ import Foundation
 import Observation
 import VRCKit
 
-@Observable
+@Observable @MainActor
 final class AppViewModel {
     var user: User?
     var step: Step = .initializing

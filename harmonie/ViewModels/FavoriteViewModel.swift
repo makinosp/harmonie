@@ -10,7 +10,7 @@ import VRCKit
 
 /// View model for managing favorite groups and their associated details.
 /// Acts as an interface between the UI and backend services for handling favorite group operations.
-@Observable
+@Observable @MainActor
 final class FavoriteViewModel {
     typealias FavoriteFriend = (favoriteGroupId: String, friends: [Friend])
     var favoriteGroups: [FavoriteGroup] = []
