@@ -6,6 +6,7 @@
 //
 
 import NukeUI
+import Shimmer
 import SwiftUI
 
 struct SquareURLImage: View {
@@ -25,7 +26,10 @@ struct SquareURLImage: View {
     }
 
     var placeholder: some View {
-        rect.fill(.gray).frame(width: frameWidth, height: frameWidth * 3/4)
+        rect
+            .frame(width: frameWidth, height: frameWidth * 3/4)
+            .redacted(reason: .placeholder)
+            .shimmering()
     }
 
     var body: some View {
@@ -40,11 +44,10 @@ struct SquareURLImage: View {
             } else {
                 placeholder
                     .onDisappear {
-                        isImageLoaded = true
+                        withAnimation { isImageLoaded = true }
                     }
             }
         }
         .frame(width: frameWidth, height: frameWidth * 3/4)
-        .redacted(reason: isImageLoaded ? [] : .placeholder)
     }
 }

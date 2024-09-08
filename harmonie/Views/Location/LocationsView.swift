@@ -70,7 +70,9 @@ struct LocationsView: View {
             .padding(.horizontal, 8)
         }
         .overlay {
-            if friendVM.friendsLocations.isEmpty {
+            if friendVM.isRequesting {
+                ProgressScreen()
+            } else if friendVM.friendsLocations.isEmpty {
                 ContentUnavailableView {
                     Label {
                         Text("No Friend Location")
