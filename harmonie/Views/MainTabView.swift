@@ -37,6 +37,15 @@ struct MainTabView: View {
                 appVM.handleError(error)
             }
         }
+        .task {
+            do {
+                try await favoriteVM.fetchFavoritedWorlds(
+                    service: WorldService(client: appVM.client)
+                )
+            } catch {
+                appVM.handleError(error)
+            }
+        }
     }
 }
 

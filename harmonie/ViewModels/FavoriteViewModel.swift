@@ -15,6 +15,7 @@ class FavoriteViewModel {
     typealias FavoriteFriend = (favoriteGroupId: String, friends: [Friend])
     var favoriteGroups: [FavoriteGroup] = []
     var favoriteFriends: [FavoriteFriend] = []
+    var favoriteWorlds: [World] = []
     var segment: Segment = .friend
     @ObservationIgnored let service: any FavoriteServiceProtocol
 
@@ -127,6 +128,11 @@ class FavoriteViewModel {
             )
             addFriendToFavoriteGroup(friend: friend, groupId: targetGroup.id)
         }
+    }
+
+    func fetchFavoritedWorlds(service: any WorldServiceProtocol) async throws {
+        let favoriteWorldsWrapper = try await service.fetchFavoritedWorlds()
+        favoriteWorlds = favoriteWorldsWrapper.worlds
     }
 }
 
