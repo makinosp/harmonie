@@ -18,7 +18,7 @@ struct FavoritesView: View {
                 if favoriteVM.segment == .friend {
                     listView
                 } else if favoriteVM.segment == .world {
-                    Text("Work in progress!")
+                    listWorldView
                 }
             }
             .navigationDestination(item: $selected) { selected in
@@ -92,4 +92,40 @@ struct FavoritesView: View {
             .contentShape(Rectangle())
         }
     }
-}
+
+      var listWorldView: some View {
+          List {
+              ForEach(groupedWorlds.keys.sorted(), id: \.self) { group in
+                  if let worlds = groupedWorlds[group] {
+                      Section(header: Text(group)) {
+                          ForEach(worlds) { world in
+                              rowWorldView(world)
+                          }
+                      }
+                  }
+              }
+          }
+      }
+
+        var groupedWorlds: [String: [World]] {
+            let grouped = Dictionary(grouping: favoriteVM.favoriteWorlds, by: { String($0.name.prefix(1)) })
+            return grouped
+        }
+
+      func rowWorldView(_ world: World) -> some View {
+          Button {
+              selected = Selected(id: world.id)
+          } label: {
+              VStack(alignment: .leading) {
+                  Text(world.name)
+                      .font(.headline)
+                  Text(world.description)
+                      .font(.subheadline)
+                      .foregroundColor(.gray)
+              }
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .padding()
+          }
+          .contentShape(Rectangle())
+      }
+  }
