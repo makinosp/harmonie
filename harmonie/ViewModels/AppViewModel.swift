@@ -17,19 +17,9 @@ class AppViewModel {
     var vrckError: VRCKitError?
     var isDemoMode = false
     @ObservationIgnored var client = APIClient()
-    @ObservationIgnored var service: any AuthenticationServiceProtocol
-
-    init() {
-        self.service = AuthenticationService(client: client)
-    }
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
-    }
-
-    func setDemoMode() {
-        isDemoMode = true
-        service = AuthenticationPreviewService(client: client)
     }
 
     func reset() {
@@ -41,7 +31,7 @@ class AppViewModel {
     /// Check the authentication status of the user,
     /// fetch the user information, and perform the initialization process.
     /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
-    func setup() async -> Step {
+    func setup(service: any AuthenticationServiceProtocol) async -> Step {
         // check local data
         guard !client.cookieManager.cookies.isEmpty else {
             return .loggingIn
@@ -60,9 +50,14 @@ class AppViewModel {
         }
     }
 
-    func login(username: String, password: String, isSavedOnKeyChain: Bool) async -> VerifyType? {
+    func login(
+        service: any AuthenticationServiceProtocol,
+        username: String,
+        password: String,
+        isSavedOnKeyChain: Bool
+    ) async -> VerifyType? {
         if username == "demo" && password == "demo" {
-            setDemoMode()
+            isDemoMode = true
         } else {
             client.setCledentials(username: username, password: password)
         }
@@ -84,7 +79,11 @@ class AppViewModel {
         return nil
     }
 
-    func verifyTwoFA(_ verifyType: VerifyType?, _ code: String) async {
+    func verifyTwoFA(
+        service: any AuthenticationServiceProtocol,
+        verifyType: VerifyType?,
+        code: String
+    ) async {
         do {
             defer {
                 reset()
@@ -113,7 +112,7 @@ class AppViewModel {
         return FavoriteViewModel(service: service)
     }
 
-    func logout() async {
+    func logout(service: any AuthenticationServiceProtocol) async {
         do {
             try await service.logout()
             reset()

@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import LicenseList
 import VRCKit
 
-struct SettingsView: View {
+struct SettingsView: View, AuthenticationServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @State var destination: Destination?
     @State var isPresentedForm = false
@@ -63,7 +63,7 @@ struct SettingsView: View {
             aboutSection
             Section {
                 AsyncButton {
-                    await appVM.logout()
+                    await appVM.logout(service: authenticationService)
                 } label: {
                     Label {
                         Text("Logout")
