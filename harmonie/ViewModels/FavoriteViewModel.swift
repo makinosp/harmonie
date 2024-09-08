@@ -131,8 +131,7 @@ class FavoriteViewModel {
     }
 
     func fetchFavoritedWorlds(service: any WorldServiceProtocol) async throws {
-        let favoriteWorldsWrapper = try await service.fetchFavoritedWorlds()
-        favoriteWorlds = favoriteWorldsWrapper.worlds
+        favoriteWorlds = try await service.fetchFavoritedWorlds()
     }
 }
 
