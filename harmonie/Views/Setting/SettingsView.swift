@@ -40,7 +40,7 @@ struct SettingsView: View, AuthenticationServicePresentable {
     }
 
     @ViewBuilder
-    func presentDestination(_ destination: Destination) -> some View {
+    private func presentDestination(_ destination: Destination) -> some View {
         switch destination {
         case .userDetail:
             if let user = appVM.user {
@@ -55,7 +55,7 @@ struct SettingsView: View, AuthenticationServicePresentable {
         }
     }
 
-    var settingsContent: some View {
+    private var settingsContent: some View {
         List {
             if let user = appVM.user {
                 profileSection(user: user)

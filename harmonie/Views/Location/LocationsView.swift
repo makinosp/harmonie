@@ -18,7 +18,7 @@ struct LocationsView: View, FriendServicePresentable {
         appVM.isDemoMode ? InstancePreviewService(client: appVM.client) : InstanceService(client: appVM.client)
     }
 
-    var backGroundColor: Color {
+    private var backGroundColor: Color {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             Color(uiColor: .secondarySystemGroupedBackground)
@@ -58,7 +58,7 @@ struct LocationsView: View, FriendServicePresentable {
         }
     }
 
-    var locationList: some View {
+    private var locationList: some View {
         ScrollView {
             LazyVStack {
                 ForEach(friendVM.friendsLocations) { location in
@@ -84,7 +84,7 @@ struct LocationsView: View, FriendServicePresentable {
         }
     }
 
-    func locatoinItem(_ location: FriendsLocation) -> some View {
+    private func locatoinItem(_ location: FriendsLocation) -> some View {
         LocationCardView(selected: $selected, service: service, location: location)
     }
 }

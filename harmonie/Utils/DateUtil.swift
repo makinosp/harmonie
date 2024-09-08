@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DateUtil {
+final class DateUtil {
     static let shared = DateUtil()
 
     private let yyyyMMddDateFormatter: DateFormatter = {

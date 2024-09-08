@@ -9,8 +9,8 @@ import Foundation
 import Observation
 import VRCKit
 
-@MainActor @Observable
-class AppViewModel {
+@Observable
+final class AppViewModel {
     var user: User?
     var step: Step = .initializing
     var isPresentedAlert = false
@@ -20,12 +20,6 @@ class AppViewModel {
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
-    }
-
-    func reset() {
-        user = nil
-        step = .initializing
-        client = APIClient()
     }
 
     /// Check the authentication status of the user,
@@ -111,6 +105,12 @@ class AppViewModel {
         }
     }
 
+    private func reset() {
+        user = nil
+        step = .initializing
+        client = APIClient()
+    }
+
     func handleError(_ error: Error) {
         if let error = error as? VRCKitError {
             if error == .unauthorized {
@@ -124,14 +124,7 @@ class AppViewModel {
         isPresentedAlert = vrckError != nil
     }
 
-    func isCancelled(_ error: Error) -> Bool {
+    private func isCancelled(_ error: Error) -> Bool {
         (error as NSError?)?.isCancelled ?? false
-    }
-}
-
-fileprivate extension NSError {
-    /// A Boolean value indicating whether the error represents a cancelled network request.
-    var isCancelled: Bool {
-        self.domain == NSURLErrorDomain && self.code == NSURLErrorCancelled
     }
 }

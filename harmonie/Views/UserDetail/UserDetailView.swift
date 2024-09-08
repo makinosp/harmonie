@@ -44,7 +44,7 @@ struct UserDetailView: View, FavoriteServicePresentable {
         }
     }
 
-    var contentStacks: some View {
+    private var contentStacks: some View {
         VStack(spacing: 12) {
             locationSection
             noteSection

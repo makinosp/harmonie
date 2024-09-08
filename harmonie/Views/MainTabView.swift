@@ -13,6 +13,10 @@ struct MainTabView: View, FriendServicePresentable, FavoriteServicePresentable {
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
 
+    enum Tab: String, CaseIterable {
+        case locations, friends, favorites, settings
+    }
+
     var body: some View {
         TabView {
             ForEach(Tab.allCases) { tab in
@@ -49,12 +53,6 @@ struct MainTabView: View, FriendServicePresentable, FavoriteServicePresentable {
                 appVM.handleError(error)
             }
         }
-    }
-}
-
-extension MainTabView {
-    enum Tab: String, CaseIterable {
-        case locations, friends, favorites, settings
     }
 }
 

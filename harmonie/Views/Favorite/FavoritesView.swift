@@ -10,7 +10,7 @@ import VRCKit
 
 struct FavoritesView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @State var selected: Selected?
+    @State private var selected: Selected?
 
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
@@ -93,39 +93,38 @@ struct FavoritesView: View {
         }
     }
 
-      var listWorldView: some View {
-          List {
-              ForEach(groupedWorlds.keys.sorted(), id: \.self) { group in
-                  if let worlds = groupedWorlds[group] {
-                      Section(header: Text(group)) {
-                          ForEach(worlds) { world in
-                              rowWorldView(world)
-                          }
-                      }
-                  }
-              }
-          }
-      }
-
-        var groupedWorlds: [String: [World]] {
-            let grouped = Dictionary(grouping: favoriteVM.favoriteWorlds, by: { String($0.name.prefix(1)) })
-            return grouped
+    var listWorldView: some View {
+        List {
+            ForEach(groupedWorlds.keys.sorted(), id: \.self) { group in
+                if let worlds = groupedWorlds[group] {
+                    Section(header: Text(group)) {
+                        ForEach(worlds) { world in
+                            rowWorldView(world)
+                        }
+                    }
+                }
+            }
         }
+    }
 
-      func rowWorldView(_ world: World) -> some View {
-          Button {
-              selected = Selected(id: world.id)
-          } label: {
-              VStack(alignment: .leading) {
-                  Text(world.name)
-                      .font(.headline)
-                  Text(world.description)
-                      .font(.subheadline)
-                      .foregroundColor(.gray)
-              }
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .padding()
-          }
-          .contentShape(Rectangle())
-      }
-  }
+    var groupedWorlds: [String: [World]] {
+        Dictionary(grouping: favoriteVM.favoriteWorlds, by: { String($0.name.prefix(1)) })
+    }
+
+    func rowWorldView(_ world: World) -> some View {
+        Button {
+            selected = Selected(id: world.id)
+        } label: {
+            VStack(alignment: .leading) {
+                Text(world.name)
+                    .font(.headline)
+                Text(world.description)
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+        }
+        .contentShape(Rectangle())
+    }
+}

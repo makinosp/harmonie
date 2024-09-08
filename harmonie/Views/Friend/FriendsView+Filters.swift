@@ -25,7 +25,7 @@ extension FriendsView {
         }
     }
 
-    var filterUserStatusMenu: some View {
+    private var filterUserStatusMenu: some View {
         Menu("Statuses") {
             ForEach(FriendViewModel.FilterUserStatus.allCases) { filterUserStatus in
                 Button {
@@ -43,7 +43,7 @@ extension FriendsView {
         }
     }
 
-    var filterFavoriteGroupsMenu: some View {
+    private var filterFavoriteGroupsMenu: some View {
         Menu("Favorite Groups") {
             Button {
                 friendVM.applyFilterFavoriteGroup(.all)
