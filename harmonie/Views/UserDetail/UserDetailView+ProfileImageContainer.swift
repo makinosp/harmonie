@@ -70,20 +70,4 @@ extension UserDetailView {
         case .visitor, .unknown: .gray
         }
     }
-
-    var displayStatusAndName: some View {
-        HStack(alignment: .bottom) {
-            Label {
-                Text(user.displayName)
-            } icon: {
-                Constants.Icon.circleFilled
-                    .foregroundStyle(user.status.color)
-            }
-            .font(.headline)
-            Text(user.statusDescription)
-                .font(.subheadline)
-            Spacer()
-        }
-        .padding(8)
-    }
 }
