@@ -28,7 +28,7 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                if let url = user.imageUrl(.origin) {
+                if let url = user.imageUrl(.x1024) {
                     profileImageContainer(url: url)
                 }
                 contentStacks
