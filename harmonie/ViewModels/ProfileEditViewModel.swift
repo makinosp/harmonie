@@ -8,7 +8,7 @@
 import Observation
 import VRCKit
 
-@Observable
+@Observable @MainActor
 final class ProfileEditViewModel {
     var editingUserInfo: EditableUserInfo
     @ObservationIgnored private let id: String
@@ -18,7 +18,7 @@ final class ProfileEditViewModel {
         id = user.id
     }
 
-    func saveProfile(service: any UserServiceProtocol) async throws {
+    func saveProfile(service: UserServiceProtocol) async throws {
         try await service.updateUser(
             id: id,
             editedInfo: editingUserInfo

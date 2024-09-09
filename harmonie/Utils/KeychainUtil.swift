@@ -37,7 +37,7 @@ final class KeychainUtil {
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query, &item)
         guard status == errSecSuccess, let passwordData = item as? Data else { return nil }
-        return String(decoding: passwordData, as: UTF8.self)
+        return String(data: passwordData, encoding: .utf8)
     }
 
     func deletePassword(for account: String) -> Bool {

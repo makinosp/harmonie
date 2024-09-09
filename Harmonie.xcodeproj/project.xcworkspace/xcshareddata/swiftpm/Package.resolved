@@ -1,5 +1,5 @@
 {
-  "originHash" : "3af81fba53312a9bf207661172fc1fe957ee2d72891f7537035a4ae61ae39934",
+  "originHash" : "f0fb8ceb3ffd5128d02593ebef3a373aa7fe9597383061f9f65348fd33476726",
   "pins" : [
     {
       "identity" : "async-swift-ui",
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
       "state" : {
-        "revision" : "6c3d6c32a37224179dc290f21e03d1238f3d963b",
-        "version" : "0.56.2"
+        "revision" : "7c80ce6f142164b0201871e580b021d1b2c69804",
+        "version" : "0.57.0"
       }
     },
     {
@@ -47,21 +47,12 @@
       }
     },
     {
-      "identity" : "swiftui-shimmer",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/markiv/SwiftUI-Shimmer",
-      "state" : {
-        "revision" : "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
-        "version" : "1.5.1"
-      }
-    },
-    {
       "identity" : "vrckit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/makinosp/vrckit",
       "state" : {
         "branch" : "develop",
-        "revision" : "bf2facec1f9c338ee67c6469c5098b7e5c2ebd09"
+        "revision" : "1f1df4f2d04d2a81d0ee0d9a8753021f967909b9"
       }
     }
   ],

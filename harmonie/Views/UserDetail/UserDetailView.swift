@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-struct UserDetailView: View, FavoriteServicePresentable {
+struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
@@ -28,7 +28,7 @@ struct UserDetailView: View, FavoriteServicePresentable {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                if let url = user.imageUrl(.origin) {
+                if let url = user.imageUrl(.x1024) {
                     profileImageContainer(url: url)
                 }
                 contentStacks

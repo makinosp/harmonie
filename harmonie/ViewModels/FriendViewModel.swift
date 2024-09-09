@@ -8,7 +8,7 @@
 import Observation
 import VRCKit
 
-@Observable
+@Observable @MainActor
 final class FriendViewModel {
     var onlineFriends: [Friend] = []
     var offlineFriends: [Friend] = []

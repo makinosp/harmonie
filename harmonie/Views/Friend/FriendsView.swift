@@ -12,28 +12,49 @@ struct FriendsView: View, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @State private var searchText = ""
     @State var selected: Selected?
 
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
             listView
+                .navigationSplitViewStyle(.balanced)
+                .overlay { contentUnavailableView }
+                .toolbar { toolbarContent }
+                .navigationTitle("Friends")
+                .navigationDestination(item: $selected) { selected in
+                    UserDetailPresentationView(id: selected.id)
+                        .id(selected.id)
+                }
+                .refreshable {
+                    await refreshAction()
+                }
         } detail: {
             Text("Select a friend")
         }
-        .refreshable {
-            do {
-                try await friendVM.fetchAllFriends(service: friendService)
-            } catch {
-                appVM.handleError(error)
-            }
-        }
-        .navigationSplitViewStyle(.balanced)
     }
 
-    var bindFilterText: Binding<String> {
-        @Bindable var friendVM = friendVM
-        return $friendVM.filterText
+    private func refreshAction() async {
+        do {
+            try await friendVM.fetchAllFriends(service: friendService)
+        } catch {
+            appVM.handleError(error)
+        }
+    }
+
+    @ViewBuilder private var contentUnavailableView: some View {
+        if filteredFriends.isEmpty {
+            if friendVM.isEmptyAllFilters {
+                ContentUnavailableView {
+                    Label {
+                        Text("No Friends")
+                    } icon: {
+                        Constants.Icon.friends
+                    }
+                }
+            } else {
+                ContentUnavailableView.search
+            }
+        }
     }
 
     @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
@@ -67,31 +88,6 @@ struct FriendsView: View, FriendServicePresentable {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
             }
-        }
-        .overlay {
-            if filteredFriends.isEmpty {
-                if friendVM.isEmptyAllFilters {
-                    ContentUnavailableView {
-                        Label {
-                            Text("No Friends")
-                        } icon: {
-                            Constants.Icon.friends
-                        }
-                    }
-                } else {
-                    ContentUnavailableView.search
-                }
-            }
-        }
-        .navigationTitle("Friends")
-        .toolbar { toolbarContent }
-        .navigationDestination(item: $selected) { selected in
-            UserDetailPresentationView(id: selected.id)
-                .id(selected.id)
-        }
-        .searchable(text: $searchText)
-        .onSubmit(of: .search) {
-            friendVM.filterText = searchText
         }
     }
 }

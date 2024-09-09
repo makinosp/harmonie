@@ -6,7 +6,6 @@
 //
 
 import NukeUI
-import Shimmer
 import SwiftUI
 
 struct SquareURLImage: View {
@@ -27,9 +26,9 @@ struct SquareURLImage: View {
 
     var placeholder: some View {
         rect
+            .fill(.gray)
             .frame(width: frameWidth, height: frameWidth * 3/4)
             .redacted(reason: .placeholder)
-            .shimmering()
     }
 
     var body: some View {
