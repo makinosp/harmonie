@@ -9,13 +9,10 @@ import VRCKit
 
 extension UserDetailView {
     func fetchInstance(id: String) async {
-        let service = appVM.isDemoMode
-        ? InstancePreviewService(client: appVM.client)
-        : InstanceService(client: appVM.client)
         do {
             defer { isRequesting = false }
             isRequesting = true
-            instance = try await service.fetchInstance(location: id)
+            instance = try await instanceService.fetchInstance(location: id)
         } catch {
             appVM.handleError(error)
         }
