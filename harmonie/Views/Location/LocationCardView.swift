@@ -30,8 +30,7 @@ struct LocationCardView: View, InstanceServicePresentable {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(backGroundColor)
             if isRequesting {
-                locationCardContent(instance: PreviewDataProvider.generateInstance())
-                    .redacted(reason: .placeholder)
+                ProgressView()
             } else if let instance = instance {
                 locationCardContent(instance: instance)
                     .onTapGesture {

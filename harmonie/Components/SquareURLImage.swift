@@ -26,6 +26,7 @@ struct SquareURLImage: View {
 
     var placeholder: some View {
         rect
+            .fill(.gray)
             .frame(width: frameWidth, height: frameWidth * 3/4)
             .redacted(reason: .placeholder)
     }
