@@ -8,8 +8,8 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct ProfileEditView: View {
-    @Environment(AppViewModel.self) private var appVM: AppViewModel
+struct ProfileEditView: View, UserServicePresentable {
+    @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(\.dismiss) private var dismiss
     @State var profileEditVM: ProfileEditViewModel
     @State private var isPresentedLanguagePicker = false
@@ -159,13 +159,10 @@ struct ProfileEditView: View {
     }
 
     private func saveProfileAction() async {
-        let service = appVM.isDemoMode
-        ? UserPreviewService(client: appVM.client)
-        : UserService(client: appVM.client)
         isRequesting = true
         do {
             defer { isRequesting = false }
-            try await profileEditVM.saveProfile(service: service)
+            try await profileEditVM.saveProfile(service: userService)
             dismiss()
         } catch {
             appVM.handleError(error)
