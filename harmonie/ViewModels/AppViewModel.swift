@@ -107,6 +107,7 @@ final class AppViewModel {
         user = nil
         step = .initializing
         client = APIClient()
+        isDemoMode = false
     }
 
     func handleError(_ error: Error) {
