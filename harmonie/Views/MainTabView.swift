@@ -47,7 +47,7 @@ struct MainTabView: View, FriendServicePresentable, FavoriteServicePresentable {
         .task {
             do {
                 try await favoriteVM.fetchFavoritedWorlds(
-                    service: appVM.isDemoMode
+                    service: appVM.isPreviewMode
                     ? WorldPreviewService(client: appVM.client)
                     : WorldService(client: appVM.client)
                 )

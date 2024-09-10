@@ -14,7 +14,7 @@ protocol AuthenticationServicePresentable {
 extension AuthenticationServicePresentable {
     @MainActor
     var authenticationService: AuthenticationServiceProtocol {
-        appVM.isDemoMode
+        appVM.isPreviewMode
         ? AuthenticationPreviewService(client: appVM.client)
         : AuthenticationService(client: appVM.client)
     }

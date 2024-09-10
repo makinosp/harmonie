@@ -22,7 +22,7 @@ struct ContentView: View, AuthenticationServicePresentable, FriendServicePresent
                     Task { await appVM.logout(service: authenticationService) }
                 }
         case .loggingIn:
-            AuthenticationView()
+            LoginView()
                 .errorAlert()
         case .done(let user):
             MainTabView()

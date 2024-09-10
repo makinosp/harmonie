@@ -15,7 +15,7 @@ final class AppViewModel {
     var step: Step = .initializing
     var isPresentedAlert = false
     var vrckError: VRCKitError?
-    var isDemoMode = false
+    var isPreviewMode = false
     @ObservationIgnored var client = APIClient()
 
     enum Step: Equatable {
@@ -44,16 +44,17 @@ final class AppViewModel {
         }
     }
 
+    private func isPreviewUser(username: String, password: String) -> Bool {
+        username == Constants.Values.previewUser && password == Constants.Values.previewUser
+    }
+
     func login(username: String, password: String, isSavedOnKeyChain: Bool) async -> VerifyType? {
-        if username == "demo" && password == "demo" {
-            isDemoMode = true
-        } else {
-            client.setCledentials(username: username, password: password)
-        }
+        isPreviewMode = isPreviewUser(username: username, password: password)
+        client.setCledentials(username: username, password: password)
         if isSavedOnKeyChain {
            _ = KeychainUtil.shared.savePassword(password, for: username)
         }
-        let service = isDemoMode
+        let service = isPreviewMode
             ? AuthenticationPreviewService(client: client)
             : AuthenticationService(client: client)
         do {
@@ -107,6 +108,7 @@ final class AppViewModel {
         user = nil
         step = .initializing
         client = APIClient()
+        isPreviewMode = false
     }
 
     func handleError(_ error: Error) {

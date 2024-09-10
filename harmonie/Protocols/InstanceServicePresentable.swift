@@ -14,7 +14,7 @@ protocol InstanceServicePresentable {
 extension InstanceServicePresentable {
     @MainActor
     var instanceService: InstanceServiceProtocol {
-        appVM.isDemoMode
+        appVM.isPreviewMode
         ? InstancePreviewService(client: appVM.client)
         : InstanceService(client: appVM.client)
     }

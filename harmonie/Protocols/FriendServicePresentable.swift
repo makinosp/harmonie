@@ -14,7 +14,7 @@ protocol FriendServicePresentable {
 extension FriendServicePresentable {
     @MainActor
     var friendService: FriendServiceProtocol {
-        appVM.isDemoMode
+        appVM.isPreviewMode
         ? FriendPreviewService(client: appVM.client)
         : FriendService(client: appVM.client)
     }
