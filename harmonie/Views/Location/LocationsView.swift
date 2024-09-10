@@ -12,21 +12,11 @@ import VRCKit
 struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
-    @State var selected: InstanceLocation?
-
-    private var backGroundColor: Color {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            Color(uiColor: .secondarySystemGroupedBackground)
-        default:
-            Color(uiColor: .systemGroupedBackground)
-        }
-    }
+    @State private var selected: InstanceLocation?
 
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
             locationList
-                .background(backGroundColor)
                 .navigationTitle("Locations")
                 .navigationDestination(item: $selected) { selected in
                     LocationDetailView(
@@ -36,11 +26,16 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                 }
         } detail: {
             NavigationStack {
-                Text("Select a location")
+                ContentUnavailableView {
+                    Label {
+                        Text("Select a location")
+                    } icon: {
+                        Constants.Icon.location
+                    }
+                }
             }
         }
         .navigationSplitViewStyle(.balanced)
-        .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 8 : .zero)
         .refreshable {
             do {
                 try await friendVM.fetchAllFriends(service: friendService)
@@ -55,15 +50,10 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
     }
 
     private var locationList: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(friendVM.friendsLocations) { location in
-                    if location.isVisible {
-                        LocationCardView(selected: $selected, location: location)
-                    }
-                }
+        List(friendVM.friendsLocations) { location in
+            if location.isVisible {
+                LocationCardView(selected: $selected, location: location)
             }
-            .padding(.horizontal, 8)
         }
         .overlay {
             if friendVM.isRequesting {
