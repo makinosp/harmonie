@@ -14,7 +14,7 @@ protocol FavoriteServicePresentable {
 extension FavoriteServicePresentable {
     @MainActor
     var favoriteService: FavoriteServiceProtocol {
-        appVM.isDemoMode
+        appVM.isPreviewMode
         ? FavoritePreviewService(client: appVM.client)
         : FavoriteService(client: appVM.client)
     }

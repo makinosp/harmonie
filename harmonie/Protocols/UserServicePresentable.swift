@@ -14,7 +14,7 @@ protocol UserServicePresentable {
 extension UserServicePresentable {
     @MainActor
     var userService: UserServiceProtocol {
-        appVM.isDemoMode
+        appVM.isPreviewMode
         ? UserPreviewService(client: appVM.client)
         : UserService(client: appVM.client)
     }

@@ -13,6 +13,10 @@ enum Constants {
         static let username = "username"
     }
 
+    enum Values {
+        static let previewUser = "demo"
+    }
+
     enum Icon {
         static var check: some View {
             Image(systemName: "checkmark")
