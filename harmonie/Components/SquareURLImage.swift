@@ -24,13 +24,6 @@ struct SquareURLImage: View {
         RoundedRectangle(cornerRadius: cornerRadius)
     }
 
-    var placeholder: some View {
-        rect
-            .fill(.gray)
-            .frame(width: frameWidth, height: frameWidth * 3/4)
-            .redacted(reason: .placeholder)
-    }
-
     var body: some View {
         LazyImage(url: url) { state in
             if let image = state.image {
@@ -41,12 +34,13 @@ struct SquareURLImage: View {
             } else if url != nil && state.error != nil {
                 Constants.Icon.exclamation
             } else {
-                placeholder
-                    .onDisappear {
-                        withAnimation { isImageLoaded = true }
-                    }
+                rect.fill(Color(.systemFill))
             }
         }
+        .onCompletion { _ in
+            isImageLoaded = true
+        }
+        .animation(.default, value: isImageLoaded)
         .frame(width: frameWidth, height: frameWidth * 3/4)
     }
 }
