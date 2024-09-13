@@ -22,7 +22,11 @@ struct FavoritesView: View {
                 }
             }
             .navigationDestination(item: $selected) { selected in
-                UserDetailPresentationView(id: selected.id)
+                if favoriteVM.segment == .friend {
+                    UserDetailPresentationView(id: selected.id)
+                } else if favoriteVM.segment == .world {
+                    WorldDetailPresentationView(id: selected.id)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -108,22 +112,33 @@ struct FavoritesView: View {
     }
 
     var groupedWorlds: [String: [World]] {
-        Dictionary(grouping: favoriteVM.favoriteWorlds, by: { String($0.name.prefix(1)) })
+        Dictionary(grouping: favoriteVM.favoriteWorlds, by: { $0.favoriteGroup ?? "Unknown" })
     }
 
     func rowWorldView(_ world: World) -> some View {
         Button {
             selected = Selected(id: world.id)
         } label: {
-            VStack(alignment: .leading) {
-                Text(world.name)
-                    .font(.headline)
-                Text(world.description)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+            HStack(spacing: 16) {
+                SquareURLImage(url: world.imageUrl(.x512))
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(world.name)
+                            .font(.body)
+                            .lineLimit(1)
+                        HStack {
+                            Text("author: ")
+                                .font(.footnote)
+                                .foregroundStyle(Color.gray)
+                            Text(world.authorName)
+                                .font(.footnote)
+                                .foregroundStyle(Color.gray)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Constants.Icon.forward
+                }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
         }
         .contentShape(Rectangle())
     }
