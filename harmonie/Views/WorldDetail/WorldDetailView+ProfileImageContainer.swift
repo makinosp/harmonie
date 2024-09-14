@@ -1,5 +1,5 @@
 //
-//  WorldDetailView+ProfileImaheContainer.swift
+//  WorldDetailView+ProfileImageContainer.swift
 //  Harmonie
 //
 //  Created by xili on 2024/09/13.
@@ -9,7 +9,6 @@ import SwiftUI
 import VRCKit
 
 extension WorldDetailView {
-
     func profileImageContainer(url: URL) -> some View {
         GradientOverlayImageView(
             url: url,
@@ -27,6 +26,4 @@ extension WorldDetailView {
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
     }
-
 }
-

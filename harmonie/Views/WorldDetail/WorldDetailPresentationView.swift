@@ -4,6 +4,7 @@
 //
 //  Created by xili on 2024/09/13.
 //
+
 import SwiftUI
 import VRCKit
 
@@ -14,14 +15,14 @@ struct WorldDetailPresentationView: View, WorldServicePresentable {
 
     var body: some View {
         if let world = world {
-            WorldDetailView(world: world) 
+            WorldDetailView(world: world)
                 .refreshable {
                     await fetchWorld(id: id)
                 }
         } else {
             ProgressView()
                 .task(id: id) {
-                    await fetchWorld(id: id) 
+                    await fetchWorld(id: id)
                 }
         }
     }
