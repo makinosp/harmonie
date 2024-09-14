@@ -44,7 +44,7 @@ extension UserDetailView {
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
             HStack {
-                SquareURLImage(url: locationImageUrl)
+                SquareURLImage(imageUrl: locationImageUrl)
                 Text(locationDescription)
                     .font(.headline)
             }

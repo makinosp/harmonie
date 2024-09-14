@@ -13,14 +13,6 @@ extension UserDetailView {
         user.state == .offline ? UserStatus.offline.color : user.status.color
     }
 
-    func profileImageContainer(url: URL) -> some View {
-        GradientOverlayImageView(
-            url: url,
-            maxHeight: 250,
-            bottomContent: { bottomBar }
-        )
-    }
-
     var bottomBar: some View {
         VStack(alignment: .leading) {
             Text(user.displayName)
@@ -31,6 +23,7 @@ extension UserDetailView {
                 trustRankLabel
             }
         }
+        .foregroundStyle(Color.white)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 8)
         .padding(.horizontal, 12)

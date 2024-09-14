@@ -16,44 +16,35 @@ struct LocationCardView: View, InstanceServicePresentable {
     @State private var isRequesting = true
     let location: FriendsLocation
 
-    private var backGroundColor: Color {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            Color(uiColor: .tertiarySystemGroupedBackground)
-        default:
-            Color(uiColor: .secondarySystemGroupedBackground)
-        }
-    }
-
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(backGroundColor)
-            if isRequesting {
-                ProgressView()
-            } else if let instance = instance {
-                locationCardContent(instance: instance)
-                    .onTapGesture {
-                        selected = InstanceLocation(location: location, instance: instance)
+        if isRequesting {
+            ProgressView()
+                .frame(minHeight: 75)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .task {
+                    if case let .id(id) = location.location {
+                        do {
+                            defer { withAnimation { isRequesting = false } }
+                            instance = try await instanceService.fetchInstance(location: id)
+                        } catch {
+                            appVM.handleError(error)
+                        }
                     }
-            }
-        }
-        .frame(minHeight: 120)
-        .task {
-            if case let .id(id) = location.location {
-                do {
-                    defer { withAnimation { isRequesting = false } }
-                    instance = try await instanceService.fetchInstance(location: id)
-                } catch {
-                    appVM.handleError(error)
                 }
-            }
+        } else if let instance = instance {
+            locationCardContent(instance: instance)
+                .onTapGesture {
+                    selected = InstanceLocation(location: location, instance: instance)
+                }
         }
     }
 
     private func locationCardContent(instance: Instance) -> some View {
         HStack(spacing: 16) {
-            SquareURLImage(url: instance.world.imageUrl(.x512))
+            SquareURLImage(
+                imageUrl: instance.world.imageUrl(.x512),
+                thumbnailImageUrl: instance.world.imageUrl(.x256)
+            )
             HStack {
                 VStack(alignment: .leading) {
                     Text(instance.world.name)
@@ -79,7 +70,6 @@ struct LocationCardView: View, InstanceServicePresentable {
                 Constants.Icon.forward
             }
         }
-        .padding()
     }
 
     private func personAmount(_ instance: Instance) -> String {

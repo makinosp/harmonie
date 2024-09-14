@@ -63,7 +63,7 @@ struct LoginView: View, AuthenticationServicePresentable {
                     }
                 }
                 .font(.callout)
-                .foregroundStyle(Color(uiColor: .systemGray))
+                .foregroundStyle(Color(.systemGray))
             }
         }
         .padding(.horizontal, 8)
