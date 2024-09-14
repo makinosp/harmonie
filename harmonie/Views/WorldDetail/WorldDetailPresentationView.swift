@@ -27,7 +27,7 @@ struct WorldDetailPresentationView: View, WorldServicePresentable {
         }
     }
 
-    func fetchWorld(id: String) async {
+    private func fetchWorld(id: String) async {
         do {
             world = try await worldService.fetchWorld(worldId: id)
         } catch {

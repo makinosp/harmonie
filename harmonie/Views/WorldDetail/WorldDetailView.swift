@@ -13,10 +13,6 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @State var world: World
 
-    init(world: World) {
-        _world = State(initialValue: world)
-    }
-
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -24,7 +20,7 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
                     imageUrl: world.imageUrl(.x1024),
                     thumbnailImageUrl: world.imageUrl(.x256),
                     maxHeight: 250,
-                    bottomContent: { bottomBar }
+                    bottomContent: { overlaysOnImage }
                 )
                 contentWorldStacks
             }
@@ -32,6 +28,17 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
         .navigationTitle(world.name)
         .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground))
+    }
+
+    private var overlaysOnImage: some View {
+        VStack(alignment: .leading) {
+            Text(world.name)
+                .font(.headline)
+        }
+        .foregroundStyle(Color.white)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
     }
 
     private var contentWorldStacks: some View {
