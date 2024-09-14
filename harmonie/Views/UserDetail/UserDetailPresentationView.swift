@@ -20,7 +20,7 @@ struct UserDetailPresentationView: View, UserServicePresentable {
                     await fetchUser(id: id)
                 }
         } else {
-            ProgressView()
+            ProgressScreen()
                 .task(id: id) {
                     await fetchUser(id: id)
                 }

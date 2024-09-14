@@ -20,7 +20,7 @@ struct WorldDetailPresentationView: View, WorldServicePresentable {
                     await fetchWorld(id: id)
                 }
         } else {
-            ProgressView()
+            ProgressScreen()
                 .task(id: id) {
                     await fetchWorld(id: id)
                 }
