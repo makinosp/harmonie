@@ -9,14 +9,6 @@ import SwiftUI
 import VRCKit
 
 extension WorldDetailView {
-    func profileImageContainer(url: URL) -> some View {
-        GradientOverlayImageView(
-            url: url,
-            maxHeight: 250,
-            bottomContent: { bottomBar }
-        )
-    }
-
     var bottomBar: some View {
         VStack(alignment: .leading) {
             Text(world.name)

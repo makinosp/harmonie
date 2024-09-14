@@ -28,9 +28,12 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                if let url = user.imageUrl(.x1024) {
-                    profileImageContainer(url: url)
-                }
+                GradientOverlayImageView(
+                    imageUrl: user.imageUrl(.x1024),
+                    thumbnailImageUrl: user.imageUrl(.x256),
+                    maxHeight: 250,
+                    bottomContent: { bottomBar }
+                )
                 contentStacks
             }
         }

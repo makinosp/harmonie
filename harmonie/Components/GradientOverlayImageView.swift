@@ -9,41 +9,48 @@ import NukeUI
 import SwiftUI
 
 struct GradientOverlayImageView<TopContent, BottomContent>: View where TopContent: View, BottomContent: View {
-    let url: URL?
-    let maxHeight: CGFloat
-    let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
-    let topContent: () -> TopContent
-    let bottomContent: () -> BottomContent
+    private let imageUrl: URL?
+    private let thumbnailImageUrl: URL?
+    private let maxHeight: CGFloat
+    private let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
+    private let topContent: () -> TopContent
+    private let bottomContent: () -> BottomContent
 
     init(
-        url: URL?,
+        imageUrl: URL?,
+        thumbnailImageUrl: URL? = nil,
         maxHeight: CGFloat,
         @ViewBuilder topContent: @escaping () -> TopContent = { EmptyView() },
         @ViewBuilder bottomContent: @escaping () -> BottomContent
     ) {
-        self.url = url
+        self.imageUrl = imageUrl
+        self.thumbnailImageUrl = thumbnailImageUrl
         self.maxHeight = maxHeight
         self.topContent = topContent
         self.bottomContent = bottomContent
     }
 
     var body: some View {
-        lazyImage
-            .overlay {
-                overlaidGradient(.top, TopContent.self != EmptyView.self)
+        lazyImage(url: imageUrl) {
+            lazyImage(url: thumbnailImageUrl) {
+                Color(.systemFill)
             }
-            .overlay {
-                overlaidGradient(.bottom, BottomContent.self != EmptyView.self)
-            }
-            .overlay(alignment: .top) {
-                overlaidContent(topContent)
-            }
-            .overlay(alignment: .bottom) {
-                overlaidContent(bottomContent)
-            }
+        }
+        .overlay {
+            overlaidGradient(.top, TopContent.self != EmptyView.self)
+        }
+        .overlay {
+            overlaidGradient(.bottom, BottomContent.self != EmptyView.self)
+        }
+        .overlay(alignment: .top) {
+            overlaidContent(topContent)
+        }
+        .overlay(alignment: .bottom) {
+            overlaidContent(bottomContent)
+        }
     }
 
-    @MainActor var lazyImage: some View {
+    private func lazyImage(url: URL?, placeholder: @escaping () -> some View) -> some View {
         LazyImage(url: url) { state in
             if let image = state.image {
                 image
@@ -53,19 +60,15 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
                     .clipped()
             } else if state.error != nil {
                 Constants.Icon.exclamation
-                    .frame(height: maxHeight)
             } else {
-                ZStack {
-                    Color.clear
-                    ProgressView()
-                }
-                .frame(height: maxHeight)
+                placeholder()
             }
         }
+        .frame(height: maxHeight)
     }
 
     @ViewBuilder
-    func overlaidGradient(_ startPoint: UnitPoint, _ isVisible: Bool) -> some View {
+    private func overlaidGradient(_ startPoint: UnitPoint, _ isVisible: Bool) -> some View {
         if isVisible {
             LinearGradient(
                 gradient: gradient,
@@ -78,7 +81,7 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
     }
 
     @ViewBuilder
-    func overlaidContent<Content: View>(_ content: (() -> Content)?) -> some View {
+    private func overlaidContent<Content: View>(_ content: (() -> Content)?) -> some View {
         if let content = content {
             content()
         } else {
