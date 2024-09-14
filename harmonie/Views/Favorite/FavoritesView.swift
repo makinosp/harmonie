@@ -29,7 +29,7 @@ struct FavoritesView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .principal) {
+                ToolbarItem(placement: .status) {
                     @Bindable var favoriteVM = favoriteVM
                     Picker("", selection: $favoriteVM.segment) {
                         ForEach(FavoriteViewModel.Segment.allCases) { segment in
