@@ -20,9 +20,12 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                if let url = world.imageUrl(.x1024) {
-                    profileImageContainer(url: url)
-                }
+                GradientOverlayImageView(
+                    imageUrl: world.imageUrl(.x1024),
+                    thumbnailImageUrl: world.imageUrl(.x256),
+                    maxHeight: 250,
+                    bottomContent: { bottomBar }
+                )
                 contentWorldStacks
             }
         }
