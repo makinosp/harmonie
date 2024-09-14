@@ -44,7 +44,7 @@ enum Constants {
         }
         static var forward: some View {
             Image(systemName: "chevron.forward")
-                .foregroundStyle(Color(uiColor: .tertiaryLabel))
+                .foregroundStyle(Color(.tertiaryLabel))
                 .imageScale(.small)
         }
         static var friends: some View {

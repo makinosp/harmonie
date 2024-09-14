@@ -110,7 +110,7 @@ struct ProfileEditView: View, UserServicePresentable {
                         Text(url.description)
                     } icon: {
                         Image(systemName: "link")
-                            .foregroundStyle(Color(uiColor: .label))
+                            .foregroundStyle(Color(.label))
                     }
                 }
                 .swipeActions {
