@@ -31,6 +31,7 @@ extension UserDetailView {
                 trustRankLabel
             }
         }
+        .foregroundStyle(Color.white)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 8)
         .padding(.horizontal, 12)

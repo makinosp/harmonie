@@ -28,6 +28,7 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
         }
         .navigationTitle(world.name)
         .navigationBarTitleDisplayMode(.inline)
+        .background(Color(.systemGroupedBackground))
     }
 
     private var contentWorldStacks: some View {

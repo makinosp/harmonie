@@ -36,6 +36,7 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
         }
         .navigationTitle(user.displayName)
         .navigationBarTitleDisplayMode(.inline)
+        .background(Color(.systemGroupedBackground))
         .toolbar { toolbar }
         .task {
             if case let .id(id) = user.location {
