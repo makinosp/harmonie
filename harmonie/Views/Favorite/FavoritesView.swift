@@ -120,7 +120,10 @@ struct FavoritesView: View {
             selected = Selected(id: world.id)
         } label: {
             HStack(spacing: 16) {
-                SquareURLImage(url: world.imageUrl(.x512))
+                SquareURLImage(
+                    imageUrl: world.imageUrl(.x512),
+                    thumbnailImageUrl: world.imageUrl(.x256)
+                )
                 HStack {
                     VStack(alignment: .leading) {
                         Text(world.name)

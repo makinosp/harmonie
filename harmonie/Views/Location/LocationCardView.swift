@@ -41,7 +41,10 @@ struct LocationCardView: View, InstanceServicePresentable {
 
     private func locationCardContent(instance: Instance) -> some View {
         HStack(spacing: 16) {
-            SquareURLImage(url: instance.world.imageUrl(.x512))
+            SquareURLImage(
+                imageUrl: instance.world.imageUrl(.x512),
+                thumbnailImageUrl: instance.world.imageUrl(.x256)
+            )
             HStack {
                 VStack(alignment: .leading) {
                     Text(instance.world.name)
