@@ -16,6 +16,7 @@ final class AppViewModel {
     var isPresentedAlert = false
     var vrckError: VRCKitError?
     var isPreviewMode = false
+    var isRequiredReAuthentication = false
     @ObservationIgnored var client = APIClient()
 
     enum Step: Equatable {
@@ -113,11 +114,11 @@ final class AppViewModel {
 
     func handleError(_ error: Error) {
         if let error = error as? VRCKitError {
-            if error == .unauthorized {
-                step = .loggingIn
-            } else {
-                vrckError = error
+            if error == .unauthorized, case .done = step {
+                isRequiredReAuthentication = true
+                return
             }
+            vrckError = error
         } else if !isCancelled(error) {
             vrckError = .unexpected
         }
