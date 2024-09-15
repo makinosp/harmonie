@@ -18,9 +18,8 @@ struct LocationCardView: View, InstanceServicePresentable {
 
     var body: some View {
         if isRequesting {
-            ProgressView()
-                .frame(minHeight: 75)
-                .frame(maxWidth: .infinity, alignment: .center)
+            locationCardContent(instance: PreviewDataProvider.generateInstance())
+                .redacted(reason: .placeholder)
                 .task {
                     if case let .id(id) = location.location {
                         do {
