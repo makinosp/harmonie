@@ -14,7 +14,7 @@ final class DateUtil {
 
     private init() {
         relativeDateTimeFormatter = RelativeDateTimeFormatter()
-        comparedComponents = [.day, .year, .month, .minute, .second]
+        comparedComponents = [.year, .month, .day, .hour, .minute, .second]
     }
 
     /// Returns the difference between two dates as `DateComponents`.
@@ -28,8 +28,9 @@ final class DateUtil {
 
     /// Formats a given date as a localized relative time string (e.g., "3 hours ago").
     /// - Parameter date: The date to compare to the current date.
-    /// - Returns: A localized string representing the relative time difference between the given date and the current date.
+    /// - Returns: A localized string representing the relative time difference
+    ///            between the given date and the current date.
     func formatRelative(from date: Date) -> String {
-        relativeDateTimeFormatter.localizedString(from: relativeDateComponents(to: Date()))
+        relativeDateTimeFormatter.localizedString(from: relativeDateComponents(to: date))
     }
 }
