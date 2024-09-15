@@ -67,9 +67,6 @@
         }
       }
     },
-    "author: " : {
-
-    },
     "Bio" : {
 
     },
@@ -415,6 +412,9 @@
 
     },
     "Select a location" : {
+
+    },
+    "Select an item" : {
 
     },
     "Settings" : {
