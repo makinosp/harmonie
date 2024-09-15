@@ -15,14 +15,14 @@ extension UserDetailView {
                     Text("Last Login")
                         .font(.subheadline)
                         .foregroundStyle(Color.gray)
-                    Text(DateUtil.shared.formattedDateTime(from: user.lastLogin))
+                    Text(user.lastLogin.formatted(date: .complete, time: .complete))
                         .font(.body)
                 }
                 VStack(alignment: .leading) {
                     Text("Last Activity")
                         .font(.subheadline)
                         .foregroundStyle(Color.gray)
-                    Text(DateUtil.shared.formattedDateTime(from: user.lastActivity))
+                    Text(user.lastActivity.formatted(date: .complete, time: .complete))
                         .font(.body)
                 }
                 if let dateJoined = user.dateJoined {
@@ -30,7 +30,7 @@ extension UserDetailView {
                         Text("Date Joined")
                             .font(.subheadline)
                             .foregroundStyle(Color.gray)
-                        Text(DateUtil.shared.formatToyyyyMMdd(from: dateJoined))
+                        Text(dateJoined.formatted(date: .abbreviated, time: .omitted))
                             .font(.body)
                     }
                 }

@@ -11,7 +11,8 @@ import SwiftUI
 struct GradientOverlayImageView<TopContent, BottomContent>: View where TopContent: View, BottomContent: View {
     private let imageUrl: URL?
     private let thumbnailImageUrl: URL?
-    private let maxHeight: CGFloat
+    private let height: CGFloat
+    private let maxWidth: CGFloat
     private let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
     private let topContent: () -> TopContent
     private let bottomContent: () -> BottomContent
@@ -19,15 +20,17 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
     init(
         imageUrl: URL?,
         thumbnailImageUrl: URL? = nil,
-        maxHeight: CGFloat,
+        height: CGFloat,
+        maxWidth: CGFloat? = nil,
         @ViewBuilder topContent: @escaping () -> TopContent = { EmptyView() },
         @ViewBuilder bottomContent: @escaping () -> BottomContent
     ) {
         self.imageUrl = imageUrl
         self.thumbnailImageUrl = thumbnailImageUrl
-        self.maxHeight = maxHeight
+        self.height = height
         self.topContent = topContent
         self.bottomContent = bottomContent
+        self.maxWidth = maxWidth ?? WindowUtil.width
     }
 
     var body: some View {
@@ -56,15 +59,15 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(maxHeight: maxHeight)
-                    .clipped()
             } else if state.error != nil {
                 Constants.Icon.exclamation
             } else {
                 placeholder()
             }
         }
-        .frame(height: maxHeight)
+        .frame(height: height)
+        .frame(maxWidth: maxWidth)
+        .clipped()
     }
 
     @ViewBuilder
