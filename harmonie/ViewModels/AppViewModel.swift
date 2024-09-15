@@ -95,13 +95,13 @@ final class AppViewModel {
                 reset()
             }
             guard let verifyType = verifyType else {
-                throw Errors.dataError
+                throw HarmonieErrors.appError
             }
             guard try await service.verify2FA(
                 verifyType: verifyType,
                 code: code
             ) else {
-                throw Errors.dataError
+                throw HarmonieErrors.appError
             }
         } catch {
             handleError(error)

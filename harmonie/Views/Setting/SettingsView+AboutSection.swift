@@ -18,11 +18,11 @@ extension SettingsView {
 
     var aboutSection: some View {
         Section("About") {
-            LabeledContent {
-                Constants.Icon.forward
+            Button {
+                destination = .about
             } label: {
-                Button {
-                    destination = .about
+                LabeledContent {
+                    Constants.Icon.forward
                 } label: {
                     Label {
                         Text("About This App")
@@ -38,11 +38,11 @@ extension SettingsView {
                     Image(systemName: "curlybraces")
                 }
             }
-            LabeledContent {
-                Constants.Icon.forward
+            Button {
+                destination = .license
             } label: {
-                Button {
-                    destination = .license
+                LabeledContent {
+                    Constants.Icon.forward
                 } label: {
                     Label {
                         Text("Third Party Licence")
