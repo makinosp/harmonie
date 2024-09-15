@@ -159,13 +159,16 @@ struct ProfileEditView: View, UserServicePresentable {
     }
 
     private func saveProfileAction() async {
+        defer {
+            isRequesting = false
+            dismiss()
+        }
         isRequesting = true
         do {
-            defer { isRequesting = false }
             try await profileEditVM.saveProfile(service: userService)
-            dismiss()
         } catch {
             appVM.handleError(error)
         }
+        _ = await appVM.login()
     }
 }

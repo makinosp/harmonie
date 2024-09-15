@@ -13,6 +13,24 @@ extension UserDetailView {
         user.state == .offline ? UserStatus.offline.color : user.status.color
     }
 
+    var topOverlay: some View {
+        HStack {
+            Spacer()
+            Label {
+                Text(DateUtil.shared.formatRelative(from: user.lastActivity))
+            } icon: {
+                Image(systemName: "stopwatch")
+            }
+            .font(.footnote.bold())
+            .padding(.horizontal, 12)
+            .padding(.vertical, 4)
+            .background(.regularMaterial)
+            .cornerRadius(8)
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+    }
+
     var bottomBar: some View {
         VStack(alignment: .leading) {
             Text(user.displayName)

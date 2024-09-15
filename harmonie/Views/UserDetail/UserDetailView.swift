@@ -31,7 +31,8 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
                 GradientOverlayImageView(
                     imageUrl: user.imageUrl(.x1024),
                     thumbnailImageUrl: user.imageUrl(.x256),
-                    maxHeight: 250,
+                    height: 250,
+                    topContent: { topOverlay },
                     bottomContent: { bottomBar }
                 )
                 contentStacks
@@ -55,7 +56,9 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
             if let bio = user.bio {
                 bioSection(bio)
             }
-            languageSection
+            if !user.tags.languageTags.isEmpty {
+                languageSection
+            }
             let urls = user.bioLinks.elements
             if !urls.isEmpty {
                 bioLinksSection(urls)
