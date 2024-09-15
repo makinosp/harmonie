@@ -32,6 +32,7 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
                     imageUrl: user.imageUrl(.x1024),
                     thumbnailImageUrl: user.imageUrl(.x256),
                     maxHeight: 250,
+                    topContent: { topOverlay },
                     bottomContent: { bottomBar }
                 )
                 contentStacks

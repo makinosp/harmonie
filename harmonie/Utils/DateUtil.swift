@@ -9,31 +9,28 @@ import Foundation
 
 final class DateUtil {
     static let shared = DateUtil()
+    private let relativeDateTimeFormatter: RelativeDateTimeFormatter
+    private let comparedComponents: Set<Calendar.Component>
 
-    private let yyyyMMddDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy/MM/dd"
-        return dateFormatter
-    }()
-
-    private let HHmmDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "HH:mm"
-        return dateFormatter
-    }()
-
-    func formattedDateTime(from date: Date) -> String {
-        [formatToyyyyMMdd(from: date), formatToHHmm(from: date)]
-            .joined(separator: " ")
+    private init() {
+        relativeDateTimeFormatter = RelativeDateTimeFormatter()
+        comparedComponents = [.year, .month, .day, .hour, .minute, .second]
     }
 
-    func formatToyyyyMMdd(from date: Date) -> String {
-        return yyyyMMddDateFormatter.string(from: date)
+    /// Returns the difference between two dates as `DateComponents`.
+    /// - Parameters:
+    ///   - from: The starting date. Defaults to the current date.
+    ///   - to: The end date to compare against.
+    /// - Returns: The `DateComponents` representing the difference between the two dates.
+    private func relativeDateComponents(from: Date = Date(), to: Date) -> DateComponents {
+        Calendar.current.dateComponents(comparedComponents, from: from, to: to)
     }
 
-    func formatToHHmm(from date: Date) -> String {
-        return HHmmDateFormatter.string(from: date)
+    /// Formats a given date as a localized relative time string (e.g., "3 hours ago").
+    /// - Parameter date: The date to compare to the current date.
+    /// - Returns: A localized string representing the relative time difference
+    ///            between the given date and the current date.
+    func formatRelative(from date: Date) -> String {
+        relativeDateTimeFormatter.localizedString(from: relativeDateComponents(to: date))
     }
 }
