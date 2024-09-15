@@ -29,15 +29,6 @@
       }
     },
     {
-      "identity" : "swiftlintplugins",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
-      "state" : {
-        "revision" : "7c80ce6f142164b0201871e580b021d1b2c69804",
-        "version" : "0.57.0"
-      }
-    },
-    {
       "identity" : "swiftui-introspect",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/siteline/swiftui-introspect",
@@ -52,7 +43,7 @@
       "location" : "https://github.com/makinosp/vrckit",
       "state" : {
         "branch" : "develop",
-        "revision" : "59513dd7c314eb5b918ba7d72ffdd26892cdba30"
+        "revision" : "8a41adc2b663853c33d9c2d7c2000d0f6b499ecb"
       }
     }
   ],
