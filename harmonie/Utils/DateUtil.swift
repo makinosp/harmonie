@@ -36,4 +36,14 @@ final class DateUtil {
     func formatToHHmm(from date: Date) -> String {
         return HHmmDateFormatter.string(from: date)
     }
+
+    func formatRelative(from date: Date) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        let components = Calendar.current.dateComponents(
+            [.day, .year, .month, .minute, .second],
+            from: Date(),
+            to: date
+        )
+        return formatter.localizedString(from: components)
+    }
 }
