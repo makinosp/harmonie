@@ -18,6 +18,8 @@
 		20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20592B022C45640D00E1C8B8 /* AsyncSwiftUI */; };
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
 		2094C4002C43BBC100F88986 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2094C3FF2C43BBC100F88986 /* VRCKit */; };
+		2096E1172C96B9C9009C3649 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2096E1152C96B9C9009C3649 /* README.md */; };
+		2096E1182C96B9C9009C3649 /* release.sh in Resources */ = {isa = PBXBuildFile; fileRef = 2096E1162C96B9C9009C3649 /* release.sh */; };
 		20C7F8BB2C480E6800AC7A56 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 20C7F89E2C480E6800AC7A56 /* LICENSE */; };
 		20DC3C292C422786001101DB /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20DC3C282C422786001101DB /* VRCKit */; };
 		20E1D3722C8F467D00E00017 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 20E1D3322C8F467D00E00017 /* .swiftlint.yml */; };
@@ -45,6 +47,8 @@
 		20395D912B945CD700003921 /* Harmonie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harmonie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20395DA32B945CD900003921 /* HarmonieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20395DAD2B945CD900003921 /* HarmonieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2096E1152C96B9C9009C3649 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2096E1162C96B9C9009C3649 /* release.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = release.sh; sourceTree = "<group>"; };
 		20C7F89E2C480E6800AC7A56 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		20E1D3322C8F467D00E00017 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +108,8 @@
 		20395D882B945CD700003921 = {
 			isa = PBXGroup;
 			children = (
+				2096E1152C96B9C9009C3649 /* README.md */,
+				2096E1162C96B9C9009C3649 /* release.sh */,
 				20E1D3322C8F467D00E00017 /* .swiftlint.yml */,
 				20C7F8982C480E6800AC7A56 /* Harmonie */,
 				20C7F89E2C480E6800AC7A56 /* LICENSE */,
@@ -258,6 +264,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				20E1D3722C8F467D00E00017 /* .swiftlint.yml in Resources */,
+				2096E1172C96B9C9009C3649 /* README.md in Resources */,
+				2096E1182C96B9C9009C3649 /* release.sh in Resources */,
 				20C7F8BB2C480E6800AC7A56 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
