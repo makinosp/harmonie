@@ -14,10 +14,14 @@ extension UserDetailView {
             Text("Languages")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
-            VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
                 ForEach(user.tags.languageTags) { language in
                     Text(language.description)
-                        .font(.body)
+                        .font(.footnote.bold())
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 4)
+                        .background(Color(.systemFill))
+                        .cornerRadius(8)
                 }
             }
         }
