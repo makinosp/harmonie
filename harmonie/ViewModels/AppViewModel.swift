@@ -49,15 +49,27 @@ final class AppViewModel {
         username == Constants.Values.previewUser && password == Constants.Values.previewUser
     }
 
+    private func setCredential(username: String, password: String, isSavedOnKeyChain: Bool) {
+        isPreviewMode = isPreviewUser(username: username, password: password)
+        client.setCledentials(username: username, password: password)
+        if isSavedOnKeyChain {
+            _ = KeychainUtil.shared.savePassword(password, for: username)
+        }
+    }
+
     func login(username: String, password: String, isSavedOnKeyChain: Bool) async -> VerifyType? {
         isPreviewMode = isPreviewUser(username: username, password: password)
         client.setCledentials(username: username, password: password)
         if isSavedOnKeyChain {
-           _ = KeychainUtil.shared.savePassword(password, for: username)
+            _ = KeychainUtil.shared.savePassword(password, for: username)
         }
+        return await login()
+    }
+
+    func login() async -> VerifyType? {
         let service = isPreviewMode
-            ? AuthenticationPreviewService(client: client)
-            : AuthenticationService(client: client)
+        ? AuthenticationPreviewService(client: client)
+        : AuthenticationService(client: client)
         do {
             switch try await service.loginUserInfo() {
             case let verifyType as VerifyType:
