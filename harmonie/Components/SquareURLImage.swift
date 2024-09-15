@@ -48,7 +48,6 @@ struct SquareURLImage: View {
                 image
                     .resizable()
                     .scaledToFill()
-                    .clipShape(rect)
             } else if url != nil && state.error != nil {
                 Constants.Icon.exclamation
             } else {
@@ -60,5 +59,6 @@ struct SquareURLImage: View {
         }
         .animation(.default, value: isImageLoaded)
         .frame(width: frameWidth, height: frameWidth * ratio)
+        .clipShape(rect)
     }
 }
