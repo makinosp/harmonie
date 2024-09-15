@@ -48,12 +48,10 @@ struct FavoriteWorldListView: View {
                             .font(.body)
                             .lineLimit(1)
                         HStack {
-                            Text("author: ")
+                            Text(world.description ?? "")
                                 .font(.footnote)
                                 .foregroundStyle(Color.gray)
-                            Text(world.authorName)
-                                .font(.footnote)
-                                .foregroundStyle(Color.gray)
+                                .lineLimit(2)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
