@@ -19,7 +19,7 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
                 GradientOverlayImageView(
                     imageUrl: world.imageUrl(.x1024),
                     thumbnailImageUrl: world.imageUrl(.x256),
-                    maxHeight: 250,
+                    height: 250,
                     bottomContent: { overlaysOnImage }
                 )
                 contentWorldStacks
