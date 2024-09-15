@@ -37,26 +37,22 @@ struct FavoriteWorldListView: View {
         Button {
             selected = Selected(id: world.id)
         } label: {
-            HStack(spacing: 16) {
+            HStack(spacing: 12) {
                 SquareURLImage(
                     imageUrl: world.imageUrl(.x512),
                     thumbnailImageUrl: world.imageUrl(.x256)
                 )
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(world.name)
-                            .font(.body)
-                            .lineLimit(1)
-                        HStack {
-                            Text(world.description ?? "")
-                                .font(.footnote)
-                                .foregroundStyle(Color.gray)
-                                .lineLimit(2)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    Constants.Icon.forward
+                VStack(alignment: .leading) {
+                    Text(world.name)
+                        .font(.body)
+                        .lineLimit(1)
+                    Text(world.description ?? "")
+                        .font(.footnote)
+                        .foregroundStyle(Color.gray)
+                        .lineLimit(2)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Constants.Icon.forward
             }
         }
         .contentShape(Rectangle())
