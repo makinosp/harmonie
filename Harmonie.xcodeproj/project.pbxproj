@@ -131,11 +131,11 @@
 				20395D8D2B945CD700003921 /* Sources */,
 				20395D8E2B945CD700003921 /* Frameworks */,
 				20395D8F2B945CD700003921 /* Resources */,
-				20A26A662C8D6DF0004310E6 /* Swiftlint */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2096DFE92C96B142009C3649 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				20C7F8982C480E6800AC7A56 /* Harmonie */,
@@ -239,6 +239,7 @@
 				20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */,
 				2096016B2C4BD30100D905AF /* XCRemoteSwiftPackageReference "vrckit" */,
 				205D81A42C71B9D70047C1CC /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
+				2096DFE72C96B115009C3649 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -277,28 +278,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		20A26A662C8D6DF0004310E6 /* Swiftlint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = Swiftlint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nSWIFT_PACKAGE_DIR=\"${BUILD_DIR%Build/*}SourcePackages/artifacts\"\nSWIFTLINT_CMD=$(ls \"$SWIFT_PACKAGE_DIR\"/swiftlintplugins/SwiftLintBinary/SwiftLintBinary.artifactbundle/swiftlint-*/bin/swiftlint | head -n 1)\n\nif test -f \"$SWIFTLINT_CMD\" 2>&1\nthen\n    \"$SWIFTLINT_CMD\"\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		20395D8D2B945CD700003921 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -333,6 +312,10 @@
 			isa = PBXTargetDependency;
 			target = 20395D902B945CD700003921 /* Harmonie */;
 			targetProxy = 20395DAE2B945CD900003921 /* PBXContainerItemProxy */;
+		};
+		2096DFE92C96B142009C3649 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 2096DFE82C96B142009C3649 /* SwiftLintBuildToolPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -680,6 +663,14 @@
 				kind = branch;
 			};
 		};
+		2096DFE72C96B115009C3649 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.57.0;
+			};
+		};
 		20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kean/Nuke";
@@ -738,6 +729,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2096016B2C4BD30100D905AF /* XCRemoteSwiftPackageReference "vrckit" */;
 			productName = VRCKit;
+		};
+		2096DFE82C96B142009C3649 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2096DFE72C96B115009C3649 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
 		20DC3C282C422786001101DB /* VRCKit */ = {
 			isa = XCSwiftPackageProductDependency;
