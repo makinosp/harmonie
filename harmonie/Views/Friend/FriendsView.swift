@@ -13,9 +13,10 @@ struct FriendsView: View, FriendServicePresentable {
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
     @State private var selected: String?
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             listView
                 .overlay { overlayView }
                 .toolbar { toolbarContent }
@@ -75,7 +76,13 @@ struct FriendsView: View, FriendServicePresentable {
     private var listView: some View {
         List(friendVM.filterResultFriends, id: \.id, selection: $selected) { friend in
             Label {
-                Text(friend.displayName)
+                LabeledContent {
+                    if UIDevice.current.userInterfaceIdiom == .phone {
+                        Constants.Icon.forward
+                    }
+                } label: {
+                    Text(friend.displayName)
+                }
             } icon: {
                 ZStack {
                     Circle()
