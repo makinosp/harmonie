@@ -38,24 +38,16 @@ struct FriendsView: View, FriendServicePresentable {
                 }
             }
         }
+        .navigationSplitViewStyle(.balanced)
         .searchable(text: $friendVM.filterText)
         .onSubmit(of: .search) {
             friendVM.applyFilters()
         }
-        .navigationSplitViewStyle(.balanced)
         .onChange(of: friendVM.favoriteFriends) { _, favoriteFriends in
             friendVM.setFavoriteFriends(favoriteFriends: favoriteFriends)
         }
         .onAppear {
             friendVM.clearFilters()
-        }
-    }
-
-    private func refreshAction() async {
-        do {
-            try await friendVM.fetchAllFriends(service: friendService)
-        } catch {
-            appVM.handleError(error)
         }
     }
 
@@ -74,6 +66,14 @@ struct FriendsView: View, FriendServicePresentable {
             } else {
                 ContentUnavailableView.search
             }
+        }
+    }
+
+    private func refreshAction() async {
+        do {
+            try await friendVM.fetchAllFriends(service: friendService)
+        } catch {
+            appVM.handleError(error)
         }
     }
 }
