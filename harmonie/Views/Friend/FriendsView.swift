@@ -12,24 +12,37 @@ struct FriendsView: View, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @State var selected: Selected?
+    @State private var selected: String?
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
     var body: some View {
-        NavigationSplitView(columnVisibility: .constant(.all)) {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             listView
-                .navigationSplitViewStyle(.balanced)
-                .overlay { contentUnavailableView }
+                .overlay { overlayView }
                 .toolbar { toolbarContent }
                 .navigationTitle("Friends")
-                .navigationDestination(item: $selected) { selected in
-                    UserDetailPresentationView(id: selected.id)
-                        .id(selected.id)
-                }
                 .refreshable {
                     await refreshAction()
                 }
         } detail: {
-            Text("Select a friend")
+            if let selected = selected {
+                UserDetailPresentationView(id: selected).id(selected)
+            } else {
+                ContentUnavailableView {
+                    Label {
+                        Text("Select a Friend")
+                    } icon: {
+                        Constants.Icon.friends
+                    }
+                }
+            }
+        }
+        .navigationSplitViewStyle(.balanced)
+        .onChange(of: friendVM.favoriteFriends) { _, favoriteFriends in
+            friendVM.setFavoriteFriends(favoriteFriends: favoriteFriends)
+        }
+        .onAppear {
+            friendVM.clearFilters()
         }
     }
 
@@ -41,8 +54,10 @@ struct FriendsView: View, FriendServicePresentable {
         }
     }
 
-    @ViewBuilder private var contentUnavailableView: some View {
-        if filteredFriends.isEmpty {
+    @ViewBuilder private var overlayView: some View {
+        if friendVM.isProcessingFilter {
+            ProgressView()
+        } else if friendVM.filterResultFriends.isEmpty {
             if friendVM.isEmptyAllFilters {
                 ContentUnavailableView {
                     Label {
@@ -57,36 +72,27 @@ struct FriendsView: View, FriendServicePresentable {
         }
     }
 
-    @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
-        ToolbarItem { sortMenu }
-        ToolbarItem { filterMenu }
-    }
-
     /// Friend List branched by list type
-    var listView: some View {
-        List(filteredFriends) { friend in
-            Button {
-                selected = Selected(id: friend.id)
-            } label: {
+    private var listView: some View {
+        List(friendVM.filterResultFriends, selection: $selected) { friend in
+            Label {
                 LabeledContent {
-                    Constants.Icon.forward
-                } label: {
-                    Label {
-                        Text(friend.displayName)
-                    } icon: {
-                        ZStack {
-                            Circle()
-                                .foregroundStyle(friend.status.color)
-                                .frame(size: Constants.IconSize.thumbnailOutside)
-                            CircleURLImage(
-                                imageUrl: friend.imageUrl(.x256),
-                                size: Constants.IconSize.thumbnail
-                            )
-                        }
+                    if UIDevice.current.userInterfaceIdiom == .phone {
+                        Constants.Icon.forward
                     }
+                } label: {
+                    Text(friend.displayName)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
+            } icon: {
+                ZStack {
+                    Circle()
+                        .foregroundStyle(friend.status.color)
+                        .frame(size: Constants.IconSize.thumbnailOutside)
+                    CircleURLImage(
+                        imageUrl: friend.imageUrl(.x256),
+                        size: Constants.IconSize.thumbnail
+                    )
+                }
             }
         }
     }
