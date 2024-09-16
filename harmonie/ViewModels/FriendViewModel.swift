@@ -22,7 +22,7 @@ final class FriendViewModel {
     var isRequesting = true
     var isProcessingFilter = false
     @ObservationIgnored let user: User
-    @ObservationIgnored var favoriteFriends: [FavoriteViewModel.FavoriteFriend] = []
+    @ObservationIgnored var favoriteFriends: [FavoriteFriend] = []
 
     init(user: User) {
         self.user = user

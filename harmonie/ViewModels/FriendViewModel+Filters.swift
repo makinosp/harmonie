@@ -27,7 +27,7 @@ extension FriendViewModel {
         case asc, desc
     }
 
-    func setFavoriteFriends(favoriteFriends: [FavoriteViewModel.FavoriteFriend]) {
+    func setFavoriteFriends(favoriteFriends: [FavoriteFriend]) {
         self.favoriteFriends = favoriteFriends
     }
 

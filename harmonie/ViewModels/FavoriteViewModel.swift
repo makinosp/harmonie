@@ -12,10 +12,6 @@ import VRCKit
 /// Acts as an interface between the UI and backend services for handling favorite group operations.
 @Observable @MainActor
 final class FavoriteViewModel {
-    struct FavoriteFriend: Hashable {
-        let favoriteGroupId: String
-        var friends: [Friend]
-    }
     var favoriteGroups: [FavoriteGroup] = []
     var favoriteFriends: [FavoriteFriend] = []
     var favoriteWorlds: [World] = []

@@ -17,7 +17,7 @@ struct FriendsView: View, FriendServicePresentable {
     var body: some View {
         NavigationSplitView {
             listView
-                .overlay { contentUnavailableView }
+                .overlay { overlayView }
                 .toolbar { toolbarContent }
                 .navigationTitle("Friends")
                 .refreshable {
@@ -53,7 +53,7 @@ struct FriendsView: View, FriendServicePresentable {
         }
     }
 
-    @ViewBuilder private var contentUnavailableView: some View {
+    @ViewBuilder private var overlayView: some View {
         if friendVM.isProcessingFilter {
             ProgressView()
         } else if friendVM.filterResultFriends.isEmpty {
@@ -69,11 +69,6 @@ struct FriendsView: View, FriendServicePresentable {
                 ContentUnavailableView.search
             }
         }
-    }
-
-    @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
-        ToolbarItem { sortMenu }
-        ToolbarItem { filterMenu }
     }
 
     /// Friend List branched by list type
