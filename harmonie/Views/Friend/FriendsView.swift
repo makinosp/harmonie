@@ -16,8 +16,9 @@ struct FriendsView: View, FriendServicePresentable {
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
     var body: some View {
+        @Bindable var friendVM = friendVM
         NavigationSplitView(columnVisibility: $columnVisibility) {
-            listView
+            FriendsListView(selected: $selected)
                 .overlay { overlayView }
                 .toolbar { toolbarContent }
                 .navigationTitle("Friends")
@@ -36,6 +37,10 @@ struct FriendsView: View, FriendServicePresentable {
                     }
                 }
             }
+        }
+        .searchable(text: $friendVM.filterText)
+        .onSubmit(of: .search) {
+            friendVM.applyFilters()
         }
         .navigationSplitViewStyle(.balanced)
         .onChange(of: friendVM.favoriteFriends) { _, favoriteFriends in
@@ -68,31 +73,6 @@ struct FriendsView: View, FriendServicePresentable {
                 }
             } else {
                 ContentUnavailableView.search
-            }
-        }
-    }
-
-    /// Friend List branched by list type
-    private var listView: some View {
-        List(friendVM.filterResultFriends, selection: $selected) { friend in
-            Label {
-                LabeledContent {
-                    if UIDevice.current.userInterfaceIdiom == .phone {
-                        Constants.Icon.forward
-                    }
-                } label: {
-                    Text(friend.displayName)
-                }
-            } icon: {
-                ZStack {
-                    Circle()
-                        .foregroundStyle(friend.status.color)
-                        .frame(size: Constants.IconSize.thumbnailOutside)
-                    CircleURLImage(
-                        imageUrl: friend.imageUrl(.x256),
-                        size: Constants.IconSize.thumbnail
-                    )
-                }
             }
         }
     }
