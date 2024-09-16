@@ -12,25 +12,31 @@ struct FriendsView: View, FriendServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @State var selected: Selected?
+    @State var selected: String?
 
     var body: some View {
-        NavigationSplitView(columnVisibility: .constant(.all)) {
+        NavigationSplitView {
             listView
-                .navigationSplitViewStyle(.balanced)
-                .overlay { contentUnavailableView }
+                // .overlay { contentUnavailableView }
                 .toolbar { toolbarContent }
                 .navigationTitle("Friends")
-                .navigationDestination(item: $selected) { selected in
-                    UserDetailPresentationView(id: selected.id)
-                        .id(selected.id)
-                }
                 .refreshable {
                     await refreshAction()
                 }
         } detail: {
-            Text("Select a friend")
+            if let selected = selected {
+                UserDetailPresentationView(id: selected).id(selected)
+            } else {
+                ContentUnavailableView {
+                    Label {
+                        Text("Select a Friend")
+                    } icon: {
+                        Constants.Icon.friends
+                    }
+                }
+            }
         }
+        .navigationSplitViewStyle(.balanced)
     }
 
     private func refreshAction() async {
@@ -41,21 +47,21 @@ struct FriendsView: View, FriendServicePresentable {
         }
     }
 
-    @ViewBuilder private var contentUnavailableView: some View {
-        if filteredFriends.isEmpty {
-            if friendVM.isEmptyAllFilters {
-                ContentUnavailableView {
-                    Label {
-                        Text("No Friends")
-                    } icon: {
-                        Constants.Icon.friends
-                    }
-                }
-            } else {
-                ContentUnavailableView.search
-            }
-        }
-    }
+//    @ViewBuilder private var contentUnavailableView: some View {
+//        if filteredFriends.isEmpty {
+//            if friendVM.isEmptyAllFilters {
+//                ContentUnavailableView {
+//                    Label {
+//                        Text("No Friends")
+//                    } icon: {
+//                        Constants.Icon.friends
+//                    }
+//                }
+//            } else {
+//                ContentUnavailableView.search
+//            }
+//        }
+//    }
 
     @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
         ToolbarItem { sortMenu }
@@ -64,29 +70,20 @@ struct FriendsView: View, FriendServicePresentable {
 
     /// Friend List branched by list type
     var listView: some View {
-        List(filteredFriends) { friend in
-            Button {
-                selected = Selected(id: friend.id)
-            } label: {
-                LabeledContent {
-                    Constants.Icon.forward
-                } label: {
-                    Label {
-                        Text(friend.displayName)
-                    } icon: {
-                        ZStack {
-                            Circle()
-                                .foregroundStyle(friend.status.color)
-                                .frame(size: Constants.IconSize.thumbnailOutside)
-                            CircleURLImage(
-                                imageUrl: friend.imageUrl(.x256),
-                                size: Constants.IconSize.thumbnail
-                            )
-                        }
-                    }
+        // TODO: Replace filtered friends list
+        List(friendVM.filteredFriends, id: \.id, selection: $selected) { friend in
+            Label {
+                Text(friend.displayName)
+            } icon: {
+                ZStack {
+                    Circle()
+                        .foregroundStyle(friend.status.color)
+                        .frame(size: Constants.IconSize.thumbnailOutside)
+                    CircleURLImage(
+                        imageUrl: friend.imageUrl(.x256),
+                        size: Constants.IconSize.thumbnail
+                    )
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
             }
         }
     }

@@ -12,6 +12,7 @@ import VRCKit
 final class FriendViewModel {
     var onlineFriends: [Friend] = []
     var offlineFriends: [Friend] = []
+    var filteredFriends: [Friend] = []
     var friendsLocations: [FriendsLocation] = []
     var filterUserStatus: Set<UserStatus> = []
     var filterFavoriteGroups: Set<FavoriteGroup> = []
@@ -55,5 +56,6 @@ final class FriendViewModel {
         onlineFriends = try await onlineFriendsTask
         offlineFriends = try await offlineFriendsTask
         friendsLocations = service.friendsGroupedByLocation(onlineFriends)
+        filteredFriends = allFriends
     }
 }

@@ -9,10 +9,6 @@ import SwiftUI
 import VRCKit
 
 extension FriendsView {
-    var filteredFriends: [Friend] {
-        friendVM.filterFriends(favoriteFriends: favoriteVM.favoriteFriends)
-    }
-
     var filterMenu: some View {
         Menu {
             Button("Clear") {
