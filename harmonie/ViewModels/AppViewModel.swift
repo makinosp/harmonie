@@ -141,3 +141,10 @@ final class AppViewModel {
         (error as NSError?)?.isCancelled ?? false
     }
 }
+
+extension AppViewModel {
+    convenience init(isPreviewMode: Bool) {
+        self.init()
+        self.isPreviewMode = isPreviewMode
+    }
+}
