@@ -12,7 +12,10 @@ import VRCKit
 /// Acts as an interface between the UI and backend services for handling favorite group operations.
 @Observable @MainActor
 final class FavoriteViewModel {
-    typealias FavoriteFriend = (favoriteGroupId: String, friends: [Friend])
+    struct FavoriteFriend: Hashable {
+        let favoriteGroupId: String
+        var friends: [Friend]
+    }
     var favoriteGroups: [FavoriteGroup] = []
     var favoriteFriends: [FavoriteFriend] = []
     var favoriteWorlds: [World] = []
@@ -35,7 +38,7 @@ final class FavoriteViewModel {
         let favoriteDetails = try await service.fetchFavoriteGroupDetails(favoriteGroups: favoriteGroups)
         let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
         favoriteFriends = favoriteDetailsOfFriends.map { favoriteDetail in
-            (
+            FavoriteFriend(
                 favoriteGroupId: favoriteDetail.id,
                 friends: favoriteDetail.favorites.compactMap { favorite in
                     friendVM.getFriend(id: favorite.favoriteId)

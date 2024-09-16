@@ -12,7 +12,7 @@ import VRCKit
 final class FriendViewModel {
     var onlineFriends: [Friend] = []
     var offlineFriends: [Friend] = []
-    var filteredFriends: [Friend] = []
+    var filterResultFriends: [Friend] = []
     var friendsLocations: [FriendsLocation] = []
     var filterUserStatus: Set<UserStatus> = []
     var filterFavoriteGroups: Set<FavoriteGroup> = []
@@ -20,7 +20,9 @@ final class FriendViewModel {
     var sortType: SortType = .default
     var sortOrder: SortOrder = .asc
     var isRequesting = true
+    var isProcessingFilter = false
     @ObservationIgnored let user: User
+    @ObservationIgnored var favoriteFriends: [FavoriteViewModel.FavoriteFriend] = []
 
     init(user: User) {
         self.user = user
@@ -56,6 +58,5 @@ final class FriendViewModel {
         onlineFriends = try await onlineFriendsTask
         offlineFriends = try await offlineFriendsTask
         friendsLocations = service.friendsGroupedByLocation(onlineFriends)
-        filteredFriends = allFriends
     }
 }

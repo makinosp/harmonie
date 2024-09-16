@@ -27,19 +27,26 @@ extension FriendViewModel {
         case asc, desc
     }
 
+    func setFavoriteFriends(favoriteFriends: [FavoriteViewModel.FavoriteFriend]) {
+        self.favoriteFriends = favoriteFriends
+    }
+
     func clearFilters() {
         filterUserStatus = []
         filterFavoriteGroups = []
+        resetFilteredFriends()
+    }
+
+    private func resetFilteredFriends() {
+        filterResultFriends = recentlyFriends
     }
 
     /// Filters the list of friends based on the specified list type.
-    /// - Parameter favoriteFriends: Favorite friends information.
-    /// - Returns: A filtered list of friends whose display names meet the criteria defined by `isIncluded`.
-    func filterFriends(favoriteFriends: [FavoriteViewModel.FavoriteFriend]) -> [Friend] {
+    private var filteredFriends: [Friend] {
         recentlyFriends
             .filter { friend in
                 filterFavoriteGroups.isEmpty ||
-                isFriendContainedInFilterFavoriteGroups(friend: friend, favoriteFriends: favoriteFriends)
+                isFriendContainedInFilterFavoriteGroups(friend: friend)
             }
             .filter {
                 filterUserStatus.isEmpty || filterUserStatus.contains($0.status)
@@ -61,14 +68,19 @@ extension FriendViewModel {
             }
     }
 
+    func applyFilters() {
+        isProcessingFilter = true
+        Task {
+            defer { isProcessingFilter = false }
+            filterResultFriends = filteredFriends
+        }
+    }
+
     var isEmptyAllFilters: Bool {
         [ filterUserStatus.isEmpty, filterFavoriteGroups.isEmpty, filterText.isEmpty ].allSatisfy(\.self)
     }
 
-    func isFriendContainedInFilterFavoriteGroups(
-        friend: Friend,
-        favoriteFriends: [FavoriteViewModel.FavoriteFriend]
-    ) -> Bool {
+    private func isFriendContainedInFilterFavoriteGroups(friend: Friend) -> Bool {
         filterFavoriteGroups.contains { favoriteGroup in
             guard let favoriteFriend = favoriteFriends.first(where: { favoriteFriend in
                 favoriteFriend.favoriteGroupId == favoriteGroup.id
@@ -90,6 +102,7 @@ extension FriendViewModel {
                 filterUserStatus.insert(status)
             }
         }
+        applyFilters()
     }
 
     func applyFilterFavoriteGroup(_ type: FilterFavoriteGroups) {
@@ -103,6 +116,7 @@ extension FriendViewModel {
                 filterFavoriteGroups.insert(favoriteGroup)
             }
         }
+        applyFilters()
     }
 
     func isCheckedFilterUserStatus(_ listType: FilterUserStatus) -> Bool {

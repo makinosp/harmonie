@@ -18,6 +18,7 @@ extension FriendsView {
                         friendVM.sortType = sortType
                         friendVM.sortOrder = .asc
                     }
+                    friendVM.applyFilters()
                 } label: {
                     Label {
                         Text(sortType.description)
