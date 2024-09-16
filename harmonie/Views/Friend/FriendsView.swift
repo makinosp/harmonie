@@ -74,7 +74,7 @@ struct FriendsView: View, FriendServicePresentable {
 
     /// Friend List branched by list type
     private var listView: some View {
-        List(friendVM.filterResultFriends, id: \.id, selection: $selected) { friend in
+        List(friendVM.filterResultFriends, selection: $selected) { friend in
             Label {
                 LabeledContent {
                     if UIDevice.current.userInterfaceIdiom == .phone {
