@@ -49,7 +49,7 @@ extension UserDetailView {
 
     var statusDescription: some View {
         Label {
-            Text(user.statusDescription.isEmpty ?  user.status.description : user.statusDescription)
+            Text(user.statusDescription.isEmpty ? user.status.description : user.statusDescription)
         } icon: {
             Constants.Icon.circleFilled
                 .foregroundStyle(statusColor)
