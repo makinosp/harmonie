@@ -9,11 +9,41 @@ import SwiftUI
 import VRCKit
 
 extension FriendsView {
-    var filteredFriends: [Friend] {
-        friendVM.filterFriends(favoriteFriends: favoriteVM.favoriteFriends)
+    @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
+        ToolbarItem { sortMenu }
+        ToolbarItem { filterMenu }
     }
 
-    var filterMenu: some View {
+    private var sortMenu: some View {
+        Menu {
+            ForEach(FriendViewModel.SortType.allCases) { sortType in
+                Button {
+                    if friendVM.sortType == sortType {
+                        friendVM.sortOrder.toggle()
+                    } else {
+                        friendVM.sortType = sortType
+                        friendVM.sortOrder = .asc
+                    }
+                    friendVM.applyFilters()
+                } label: {
+                    Label {
+                        Text(sortType.description)
+                    } icon: {
+                        if friendVM.sortType == sortType {
+                            switch friendVM.sortOrder {
+                            case .asc: Constants.Icon.up
+                            case .desc: Constants.Icon.down
+                            }
+                        }
+                    }
+                }
+            }
+        } label: {
+            Constants.Icon.sort
+        }
+    }
+
+    private var filterMenu: some View {
         Menu {
             Button("Clear") {
                 friendVM.clearFilters()

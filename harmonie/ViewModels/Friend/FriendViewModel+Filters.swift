@@ -8,38 +8,26 @@
 import VRCKit
 
 extension FriendViewModel {
-    enum FilterUserStatus: Hashable, Identifiable {
-        case all, status(UserStatus)
-        var id: Int { hashValue }
-    }
-
-    enum FilterFavoriteGroups: Hashable, Identifiable {
-        case all, favoriteGroup(FavoriteGroup)
-        var id: Int { hashValue }
-    }
-
-    enum SortType: String, Hashable, Identifiable, CaseIterable {
-        case `default`, displayName, lastLogin, status
-        var id: Int { hashValue }
-    }
-
-    enum SortOrder {
-        case asc, desc
+    func setFavoriteFriends(favoriteFriends: [FavoriteFriend]) {
+        self.favoriteFriends = favoriteFriends
     }
 
     func clearFilters() {
         filterUserStatus = []
         filterFavoriteGroups = []
+        resetFilteredFriends()
+    }
+
+    private func resetFilteredFriends() {
+        filterResultFriends = recentlyFriends
     }
 
     /// Filters the list of friends based on the specified list type.
-    /// - Parameter favoriteFriends: Favorite friends information.
-    /// - Returns: A filtered list of friends whose display names meet the criteria defined by `isIncluded`.
-    func filterFriends(favoriteFriends: [FavoriteViewModel.FavoriteFriend]) -> [Friend] {
+    private var filteredFriends: [Friend] {
         recentlyFriends
             .filter { friend in
                 filterFavoriteGroups.isEmpty ||
-                isFriendContainedInFilterFavoriteGroups(friend: friend, favoriteFriends: favoriteFriends)
+                isFriendContainedInFilterFavoriteGroups(friend: friend)
             }
             .filter {
                 filterUserStatus.isEmpty || filterUserStatus.contains($0.status)
@@ -61,14 +49,19 @@ extension FriendViewModel {
             }
     }
 
+    func applyFilters() {
+        isProcessingFilter = true
+        Task {
+            defer { isProcessingFilter = false }
+            filterResultFriends = filteredFriends
+        }
+    }
+
     var isEmptyAllFilters: Bool {
         [ filterUserStatus.isEmpty, filterFavoriteGroups.isEmpty, filterText.isEmpty ].allSatisfy(\.self)
     }
 
-    func isFriendContainedInFilterFavoriteGroups(
-        friend: Friend,
-        favoriteFriends: [FavoriteViewModel.FavoriteFriend]
-    ) -> Bool {
+    private func isFriendContainedInFilterFavoriteGroups(friend: Friend) -> Bool {
         filterFavoriteGroups.contains { favoriteGroup in
             guard let favoriteFriend = favoriteFriends.first(where: { favoriteFriend in
                 favoriteFriend.favoriteGroupId == favoriteGroup.id
@@ -90,6 +83,7 @@ extension FriendViewModel {
                 filterUserStatus.insert(status)
             }
         }
+        applyFilters()
     }
 
     func applyFilterFavoriteGroup(_ type: FilterFavoriteGroups) {
@@ -103,6 +97,7 @@ extension FriendViewModel {
                 filterFavoriteGroups.insert(favoriteGroup)
             }
         }
+        applyFilters()
     }
 
     func isCheckedFilterUserStatus(_ listType: FilterUserStatus) -> Bool {
@@ -120,51 +115,6 @@ extension FriendViewModel {
             filterFavoriteGroups.isEmpty
         case .favoriteGroup(let favoriteGroup):
             filterFavoriteGroups.contains(favoriteGroup)
-        }
-    }
-}
-
-extension FriendViewModel.FilterUserStatus: CustomStringConvertible {
-    var description: String {
-        switch self {
-        case .all:
-            "All"
-        case .status(let status):
-            status.description
-        }
-    }
-}
-
-extension FriendViewModel.FilterUserStatus: CaseIterable {
-    static var allCases: [FriendViewModel.FilterUserStatus] {
-        [
-            .all,
-            .status(.active),
-            .status(.joinMe),
-            .status(.askMe),
-            .status(.busy),
-            .status(.offline)
-        ]
-    }
-}
-
-extension FriendViewModel.SortType: CustomStringConvertible {
-    var description: String {
-        switch self {
-        case .displayName: "Name"
-        case .lastLogin: "Last Login"
-        default: rawValue.localizedCapitalized
-        }
-    }
-}
-
-extension FriendViewModel.SortOrder {
-    mutating func toggle() {
-        switch self {
-        case .asc:
-            self = .desc
-        case .desc:
-            self = .asc
         }
     }
 }

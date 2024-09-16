@@ -27,11 +27,17 @@ struct UserDetailPresentationView: View, UserServicePresentable {
         }
     }
 
-    func fetchUser(id: String) async {
+    private func fetchUser(id: String) async {
         do {
             userDetail = try await userService.fetchUser(userId: id)
         } catch {
             appVM.handleError(error)
         }
+    }
+}
+
+extension UserDetailPresentationView {
+    init(selected: Selected) {
+        id = selected.id
     }
 }

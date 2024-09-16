@@ -62,8 +62,7 @@ struct LocationDetailView: View {
         .navigationTitle(instance.world.name)
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Selected.self) { selected in
-            UserDetailPresentationView(id: selected.id)
-                .id(selected.id)
+            UserDetailPresentationView(selected: selected).id(selected)
         }
     }
 
