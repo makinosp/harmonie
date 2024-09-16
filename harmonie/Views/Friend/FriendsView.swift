@@ -16,8 +16,9 @@ struct FriendsView: View, FriendServicePresentable {
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
     var body: some View {
+        @Bindable var friendVM = friendVM
         NavigationSplitView(columnVisibility: $columnVisibility) {
-            listView
+            FriendsListView(selected: $selected)
                 .overlay { overlayView }
                 .toolbar { toolbarContent }
                 .navigationTitle("Friends")
@@ -38,19 +39,15 @@ struct FriendsView: View, FriendServicePresentable {
             }
         }
         .navigationSplitViewStyle(.balanced)
+        .searchable(text: $friendVM.filterText)
+        .onSubmit(of: .search) {
+            friendVM.applyFilters()
+        }
         .onChange(of: friendVM.favoriteFriends) { _, favoriteFriends in
             friendVM.setFavoriteFriends(favoriteFriends: favoriteFriends)
         }
         .onAppear {
             friendVM.clearFilters()
-        }
-    }
-
-    private func refreshAction() async {
-        do {
-            try await friendVM.fetchAllFriends(service: friendService)
-        } catch {
-            appVM.handleError(error)
         }
     }
 
@@ -72,28 +69,11 @@ struct FriendsView: View, FriendServicePresentable {
         }
     }
 
-    /// Friend List branched by list type
-    private var listView: some View {
-        List(friendVM.filterResultFriends, selection: $selected) { friend in
-            Label {
-                LabeledContent {
-                    if UIDevice.current.userInterfaceIdiom == .phone {
-                        Constants.Icon.forward
-                    }
-                } label: {
-                    Text(friend.displayName)
-                }
-            } icon: {
-                ZStack {
-                    Circle()
-                        .foregroundStyle(friend.status.color)
-                        .frame(size: Constants.IconSize.thumbnailOutside)
-                    CircleURLImage(
-                        imageUrl: friend.imageUrl(.x256),
-                        size: Constants.IconSize.thumbnail
-                    )
-                }
-            }
+    private func refreshAction() async {
+        do {
+            try await friendVM.fetchAllFriends(service: friendService)
+        } catch {
+            appVM.handleError(error)
         }
     }
 }
