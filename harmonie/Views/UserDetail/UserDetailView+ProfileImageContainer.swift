@@ -12,6 +12,9 @@ extension UserDetailView {
     var statusColor: Color {
         user.state == .offline ? UserStatus.offline.color : user.status.color
     }
+    var statusIsWebColor: Color {
+        user.state == .offline ? UserStatus.offline.color : user.platform.isWebColor
+    }
 
     var topOverlay: some View {
         HStack {
@@ -51,8 +54,12 @@ extension UserDetailView {
         Label {
             Text(user.statusDescription.isEmpty ? user.status.description : user.statusDescription)
         } icon: {
-            Constants.Icon.circleFilled
-                .foregroundStyle(statusColor)
+            ZStack {
+                Constants.Icon.circleFilled
+                    .foregroundStyle(statusColor)
+                Constants.Icon.circleSmallFilled
+                    .foregroundStyle(statusIsWebColor)
+            }
         }
         .lineLimit(1)
         .font(.subheadline)

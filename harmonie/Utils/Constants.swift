@@ -24,6 +24,10 @@ enum Constants {
         static var circleFilled: some View {
             Image(systemName: "circle.fill")
         }
+        static var circleSmallFilled: some View {
+            Image(systemName: "circle.fill")
+                .font(.system(size: 9))
+        }
         static var dots: some View {
             Image(systemName: "ellipsis.circle")
         }
