@@ -14,7 +14,6 @@
 		204709A32C7B47E100A56DF8 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 208899AA2C4BB26D00BCE9C5 /* VRCKit */; };
 		204709A42C7B47E100A56DF8 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2052C7AD2C4BC97100B341D1 /* VRCKit */; };
 		204709A52C7B47E100A56DF8 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2096016C2C4BD30100D905AF /* VRCKit */; };
-		204709A62C7B47E100A56DF8 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 205D81A52C71B9D70047C1CC /* SwiftUIIntrospect */; };
 		20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20592B022C45640D00E1C8B8 /* AsyncSwiftUI */; };
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
 		2094C4002C43BBC100F88986 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2094C3FF2C43BBC100F88986 /* VRCKit */; };
@@ -72,7 +71,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				204709A62C7B47E100A56DF8 /* SwiftUIIntrospect in Frameworks */,
 				204709A52C7B47E100A56DF8 /* VRCKit in Frameworks */,
 				204709A42C7B47E100A56DF8 /* VRCKit in Frameworks */,
 				204709A32C7B47E100A56DF8 /* VRCKit in Frameworks */,
@@ -160,7 +158,6 @@
 				208899AA2C4BB26D00BCE9C5 /* VRCKit */,
 				2052C7AD2C4BC97100B341D1 /* VRCKit */,
 				2096016C2C4BD30100D905AF /* VRCKit */,
-				205D81A52C71B9D70047C1CC /* SwiftUIIntrospect */,
 			);
 			productName = harmonie;
 			productReference = 20395D912B945CD700003921 /* Harmonie.app */;
@@ -244,7 +241,6 @@
 				201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */,
 				20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */,
 				2096016B2C4BD30100D905AF /* XCRemoteSwiftPackageReference "vrckit" */,
-				205D81A42C71B9D70047C1CC /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 				2096DFE72C96B115009C3649 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
@@ -655,14 +651,6 @@
 				kind = branch;
 			};
 		};
-		205D81A42C71B9D70047C1CC /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/swiftui-introspect";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.0;
-			};
-		};
 		2096016B2C4BD30100D905AF /* XCRemoteSwiftPackageReference "vrckit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/makinosp/vrckit";
@@ -715,11 +703,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */;
 			productName = AsyncSwiftUI;
-		};
-		205D81A52C71B9D70047C1CC /* SwiftUIIntrospect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 205D81A42C71B9D70047C1CC /* XCRemoteSwiftPackageReference "swiftui-introspect" */;
-			productName = SwiftUIIntrospect;
 		};
 		206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;

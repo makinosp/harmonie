@@ -17,25 +17,18 @@ struct LocationCardView: View, InstanceServicePresentable {
     let location: FriendsLocation
 
     var body: some View {
-        if isRequesting {
-            locationCardContent(instance: PreviewDataProvider.generateInstance())
-                .redacted(reason: .placeholder)
-                .task {
-                    if case let .id(id) = location.location {
-                        do {
-                            defer { withAnimation { isRequesting = false } }
-                            instance = try await instanceService.fetchInstance(location: id)
-                        } catch {
-                            appVM.handleError(error)
-                        }
+        locationCardContent(instance: instance ?? PreviewDataProvider.generateInstance())
+            .redacted(reason: isRequesting ? .placeholder : [])
+            .task {
+                if case let .id(id) = location.location {
+                    do {
+                        defer { withAnimation { isRequesting = false } }
+                        instance = try await instanceService.fetchInstance(location: id)
+                    } catch {
+                        appVM.handleError(error)
                     }
                 }
-        } else if let instance = instance {
-            locationCardContent(instance: instance)
-                .onTapGesture {
-                    selected = InstanceLocation(location: location, instance: instance)
-                }
-        }
+            }
     }
 
     private func locationCardContent(instance: Instance) -> some View {
@@ -66,9 +59,12 @@ struct LocationCardView: View, InstanceServicePresentable {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                Constants.Icon.forward
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    Constants.Icon.forward
+                }
             }
         }
+        .tag(InstanceLocation(location: location, instance: instance))
     }
 
     private func personAmount(_ instance: Instance) -> String {
