@@ -126,7 +126,7 @@ final class AppViewModel {
 
     func handleError(_ error: Error) {
         if let error = error as? VRCKitError {
-            if error == .unauthorized, case .done = step {
+            if error == .unauthorized, step != .loggingIn {
                 isRequiredReAuthentication = true
                 return
             }
