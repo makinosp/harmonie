@@ -10,8 +10,13 @@ import NukeUI
 import VRCKit
 
 struct LocationDetailView: View {
-    let instance: Instance
-    let location: FriendsLocation
+    private let instance: Instance
+    private let location: FriendsLocation
+
+    init(instanceLocation: InstanceLocation) {
+        instance = instanceLocation.instance
+        location = instanceLocation.location
+    }
 
     var body: some View {
         List {
@@ -66,7 +71,7 @@ struct LocationDetailView: View {
         }
     }
 
-    var bottomBar: some View {
+    private var bottomBar: some View {
         VStack(alignment: .leading) {
             Text(instance.world.name)
                 .font(.headline)
@@ -77,7 +82,7 @@ struct LocationDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    var friendList: some View {
+    private var friendList: some View {
         ForEach(location.friends) { friend in
             NavigationLink(value: Selected(id: friend.id)) {
                 Label {

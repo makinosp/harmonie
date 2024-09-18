@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIIntrospect
 import VRCKit
 
 struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable {
@@ -18,14 +17,15 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
         NavigationSplitView(columnVisibility: .constant(.all)) {
             locationList
                 .navigationTitle("Locations")
-                .navigationDestination(item: $selected) { selected in
-                    LocationDetailView(
-                        instance: selected.instance,
-                        location: selected.location
-                    )
-                }
+                .navigationSplitViewColumnWidth(
+                    min: 300,
+                    ideal: WindowUtil.width / 2,
+                    max: WindowUtil.width / 2
+                )
         } detail: {
-            NavigationStack {
+            if let selected = selected {
+                LocationDetailView(instanceLocation: selected)
+            } else {
                 ContentUnavailableView {
                     Label {
                         Text("Select a location")
@@ -43,16 +43,12 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                 appVM.handleError(error)
             }
         }
-        .introspect(.navigationSplitView, on: .iOS(.v17, .v18)) { splitView in
-            splitView.maximumPrimaryColumnWidth = .infinity
-            splitView.preferredPrimaryColumnWidthFraction = 1 / 2
-        }
     }
 
     private var locationList: some View {
-        List(friendVM.friendsLocations) { location in
+        List(friendVM.friendsLocations, selection: $selected) { location in
             if location.isVisible {
-                LocationCardView(selected: $selected, location: location)
+                LocationCardView(selected: $selected, location: location).tag(location)
             }
         }
         .overlay {
