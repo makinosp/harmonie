@@ -75,13 +75,12 @@ struct FriendsView: View, FriendServicePresentable {
                         Text(friend.displayName)
                     } icon: {
                         ZStack {
-                            Circle()
-                                .foregroundStyle(friend.status.color)
-                                .frame(size: Constants.IconSize.thumbnailOutside)
                             CircleURLImage(
                                 imageUrl: friend.imageUrl(.x256),
                                 size: Constants.IconSize.thumbnail
-                            )
+                                )
+                            .mask(bittenCircle)
+                            friendStatusCircle(friend: friend)
                         }
                     }
                 }
