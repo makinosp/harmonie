@@ -11,9 +11,11 @@ import VRCKit
 
 struct SettingsView: View, AuthenticationServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
-    @State var destination: Destination?
+    @State var destination: Destination? = UIDevice.current.userInterfaceIdiom == .pad ? .userDetail : nil
     @State var isPresentedForm = false
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
+
+    @State private var selectedLibrary: Library?
 
     enum Destination: Hashable {
         case userDetail, about, license
@@ -29,11 +31,6 @@ struct SettingsView: View, AuthenticationServicePresentable {
             }
         }
         .navigationSplitViewStyle(.balanced)
-        .onAppear {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                destination = .userDetail
-            }
-        }
         .sheet(isPresented: $isPresentedForm) {
             if let user = appVM.user {
                 ProfileEditView(profileEditVM: ProfileEditViewModel(user: user))
@@ -51,9 +48,20 @@ struct SettingsView: View, AuthenticationServicePresentable {
         case .about:
             aboutThisApp
         case .license:
-            LicenseListView()
-                .navigationTitle("Third Party Licence")
-                .navigationBarTitleDisplayMode(.inline)
+            Group {
+                if let selectedLibrary = selectedLibrary {
+                    LicenseView(library: selectedLibrary)
+                        .onDisappear {
+                            self.selectedLibrary = nil
+                        }
+                } else {
+                    LicenseListView { library in
+                        selectedLibrary = library
+                    }
+                }
+            }
+            .navigationTitle("Third Party Licence")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 
@@ -64,16 +72,10 @@ struct SettingsView: View, AuthenticationServicePresentable {
             }
             aboutSection
             Section {
-                AsyncButton {
+                AsyncButton(role: .destructive) {
                     await appVM.logout(service: authenticationService)
                 } label: {
-                    Label {
-                        Text("Logout")
-                            .foregroundStyle(Color.red)
-                    } icon: {
-                        Image(systemName: "rectangle.portrait.and.arrow.forward")
-                            .foregroundStyle(Color.red)
-                    }
+                    Label("Logout", systemImage: "rectangle.portrait.and.arrow.forward")
                 }
             }
         }
