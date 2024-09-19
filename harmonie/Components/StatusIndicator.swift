@@ -10,43 +10,43 @@ import SwiftUI
 struct StatusIndicator<S>: View where S: ShapeStyle {
     private let content: S
     private let isCutedOut: Bool
-    private let outer: CGFloat
+    private let outerSize: CGSize
 
-    init(_ content: S, outer: CGFloat, isCutedOut: Bool = false) {
+    init(_ content: S, outerSize: CGSize, isCutedOut: Bool = false) {
         self.content = content
-        self.outer = outer
+        self.outerSize = outerSize
         self.isCutedOut = isCutedOut
     }
 
-    private var frameSize: CGFloat {
-        outer * 0.3
+    private var frameSize: CGSize {
+        outerSize * 0.3
     }
 
-    private var cutoutSize: CGFloat {
-        outer * 0.15
+    private var cutoutSize: CGSize {
+        outerSize * 0.15
     }
 
-    private var offset: CGFloat {
-        outer * 0.36
+    private var offset: CGSize {
+        outerSize * 0.36
     }
 
     var body: some View {
         Circle()
             .fill(content)
-            .frame(width: frameSize, height: frameSize)
+            .frame(size: frameSize)
             .overlay {
                 Circle()
                     .blendMode(.destinationOut)
-                    .frame(
-                        width: isCutedOut ? cutoutSize : .zero,
-                        height: isCutedOut ? cutoutSize : .zero
-                    )
+                    .frame(size: cutoutSize)
             }
             .compositingGroup()
-            .offset(x: offset, y: offset)
+            .offset(x: offset.width, y: offset.height)
     }
 }
 
 #Preview {
-    StatusIndicator(.blue, outer: 120)
+    StatusIndicator(
+        .blue,
+        outerSize: CGSize(width: 120, height: 120)
+    )
 }
