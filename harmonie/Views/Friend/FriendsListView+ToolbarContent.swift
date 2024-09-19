@@ -1,5 +1,5 @@
 //
-//  FriendsView+Filters.swift
+//  FriendsListView+ToolbarContent.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/08/12.
@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-extension FriendsView {
+extension FriendsListView {
     @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
         ToolbarItem { sortMenu }
         ToolbarItem { filterMenu }

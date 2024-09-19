@@ -10,22 +10,22 @@ import VRCKit
 
 struct FavoriteFriendListView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @State private var selected: Selected?
+    @Binding private var selected: Selected?
+
+    init(selected: Binding<Selected?>) {
+        _selected = selected
+    }
 
     var body: some View {
-        List {
-            ForEach(favoriteVM.favoriteFriendGroups) { group in
-                if let friends = favoriteVM.getFavoriteFriends(group.id) {
-                    Section(header: Text(group.displayName)) {
-                        ForEach(friends) { friend in
-                            friendItem(friend)
-                        }
+        List(favoriteVM.favoriteFriendGroups, selection: $selected) { group in
+            if let friends = favoriteVM.getFavoriteFriends(group.id) {
+                Section(header: Text(group.displayName)) {
+                    ForEach(friends) { friend in
+                        friendItem(friend)
+                            .tag(Selected(id: friend.id))
                     }
                 }
             }
-        }
-        .navigationDestination(item: $selected) { selected in
-            UserDetailPresentationView(id: selected.id)
         }
         .overlay {
             if favoriteVM.favoriteFriendGroups.isEmpty {
@@ -41,28 +41,24 @@ struct FavoriteFriendListView: View {
     }
 
     private func friendItem(_ friend: Friend) -> some View {
-        Button {
-            selected = Selected(id: friend.id)
+        LabeledContent {
+            Constants.Icon.forward
         } label: {
-            LabeledContent {
-                Constants.Icon.forward
-            } label: {
-                Label {
-                    Text(friend.displayName)
-                } icon: {
-                    ZStack {
-                        Circle()
-                            .foregroundStyle(friend.status.color)
-                            .frame(size: Constants.IconSize.thumbnailOutside)
-                        CircleURLImage(
-                            imageUrl: friend.imageUrl(.x256),
-                            size: Constants.IconSize.thumbnail
-                        )
-                    }
+            Label {
+                Text(friend.displayName)
+            } icon: {
+                ZStack {
+                    Circle()
+                        .foregroundStyle(friend.status.color)
+                        .frame(size: Constants.IconSize.thumbnailOutside)
+                    CircleURLImage(
+                        imageUrl: friend.imageUrl(.x256),
+                        size: Constants.IconSize.thumbnail
+                    )
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
     }
 }
