@@ -10,22 +10,22 @@ import VRCKit
 
 struct FavoriteWorldListView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @State private var selected: Selected?
+    @Binding private var selected: Selected?
+
+    init(selected: Binding<Selected?>) {
+        _selected = selected
+    }
 
     var body: some View {
-        List {
-            ForEach(groupedWorlds.keys.sorted(), id: \.self) { group in
-                if let worlds = groupedWorlds[group] {
-                    Section(header: Text(group)) {
-                        ForEach(worlds) { world in
-                            worldItem(world)
-                        }
+        List(groupedWorlds.keys.sorted(), id: \.hashValue, selection: $selected) { group in
+            if let worlds = groupedWorlds[group] {
+                Section(header: Text(group)) {
+                    ForEach(worlds) { world in
+                        worldItem(world)
+                            .tag(Selected(id: world.id))
                     }
                 }
             }
-        }
-        .navigationDestination(item: $selected) { selected in
-            WorldDetailPresentationView(id: selected.id)
         }
     }
 
@@ -34,27 +34,22 @@ struct FavoriteWorldListView: View {
     }
 
     private func worldItem(_ world: World) -> some View {
-        Button {
-            selected = Selected(id: world.id)
-        } label: {
-            HStack(spacing: 12) {
-                SquareURLImage(
-                    imageUrl: world.imageUrl(.x512),
-                    thumbnailImageUrl: world.imageUrl(.x256)
-                )
-                VStack(alignment: .leading) {
-                    Text(world.name)
-                        .font(.body)
-                        .lineLimit(1)
-                    Text(world.description ?? "")
-                        .font(.footnote)
-                        .foregroundStyle(Color.gray)
-                        .lineLimit(2)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                Constants.Icon.forward
+        HStack(spacing: 12) {
+            SquareURLImage(
+                imageUrl: world.imageUrl(.x512),
+                thumbnailImageUrl: world.imageUrl(.x256)
+            )
+            VStack(alignment: .leading) {
+                Text(world.name)
+                    .font(.body)
+                    .lineLimit(1)
+                Text(world.description ?? "")
+                    .font(.footnote)
+                    .foregroundStyle(Color.gray)
+                    .lineLimit(2)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Constants.Icon.forward
         }
-        .contentShape(Rectangle())
     }
 }

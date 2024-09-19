@@ -10,14 +10,15 @@ import VRCKit
 
 struct FavoritesView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @State private var selected: Selected?
 
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
             Group {
                 if favoriteVM.segment == .friend {
-                    FavoriteFriendListView()
+                    FavoriteFriendListView(selected: $selected)
                 } else if favoriteVM.segment == .world {
-                    FavoriteWorldListView()
+                    FavoriteWorldListView(selected: $selected)
                 }
             }
             .toolbar {
@@ -33,11 +34,20 @@ struct FavoritesView: View {
             }
             .navigationTitle("Favorites")
         } detail: {
-            ContentUnavailableView {
-                Label {
-                    Text("Select an item")
-                } icon: {
-                    Constants.Icon.favorite
+            if let selected = selected {
+                switch favoriteVM.segment {
+                case .friend:
+                    UserDetailPresentationView(id: selected.id)
+                case .world:
+                    WorldDetailPresentationView(id: selected.id)
+                }
+            } else {
+                ContentUnavailableView {
+                    Label {
+                        Text("Select an item")
+                    } icon: {
+                        Constants.Icon.favorite
+                    }
                 }
             }
         }
