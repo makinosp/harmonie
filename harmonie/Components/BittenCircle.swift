@@ -6,13 +6,8 @@
 //
 import SwiftUI
 struct BittenCircle: Shape {
-    private let biteSize: CGFloat
-    private let offsetRatio: CGFloat
-
-    init(biteSize: CGFloat, offsetRatio: CGFloat) {
-        self.biteSize = biteSize
-        self.offsetRatio = offsetRatio
-    }
+    private let biteSize: CGFloat =  Constants.IconSize.thumbnailOutside.width * 0.4
+    private let offsetRatio: CGFloat = 0.65
     func path(in rect: CGRect) -> Path {
         var path = rectanglePath(rect)
         path.addPath(circlePath(rect))
@@ -31,5 +26,17 @@ struct BittenCircle: Shape {
     }
     private func offsetBy(_ maxX: CGFloat) -> CGFloat {
         maxX * offsetRatio
+    }
+}
+
+struct BittenCircle_Previews: PreviewProvider {
+    static var previews: some View {
+        Circle()
+            .foregroundStyle(.blue)
+            .mask(
+                BittenCircle()
+                    .fill(style: FillStyle(eoFill: true))
+            )
+            .frame(width: Constants.IconSize.thumbnailOutside.width, height: Constants.IconSize.thumbnailOutside.height)
     }
 }

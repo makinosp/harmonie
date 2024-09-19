@@ -1,34 +1,35 @@
 //
-//  FriendsView+Friends.swift
+//  FriendStatusCircle.swift
 //  Harmonie
 //
-//  Created by xili on 2024/09/18.
+//  Created by xili on 2024/09/19.
 //
 import SwiftUI
-import VRCKit
-extension FriendsView {
-    func friendStatusCircle(friend: Friend) -> some View {
+struct FriendStatusCircle: View {
+    private let statusColor: Color
+    private let platformColor: Color
+    init(statusColor: Color, platformColor: Color) {
+        self.statusColor = statusColor
+        self.platformColor = platformColor
+    }
+    var body: some View {
         Circle()
             .frame(
                 width: Constants.IconSize.thumbnailOutside.width * 0.3,
                 height: Constants.IconSize.thumbnailOutside.height * 0.3
             )
-            .foregroundColor(friend.status.color)
+            .foregroundColor(statusColor)
             .overlay(
                 Circle()
                     .frame(
                         width: Constants.IconSize.thumbnailOutside.width * 0.15,
                         height: Constants.IconSize.thumbnailOutside.height * 0.15
                     )
-                    .foregroundColor(friend.platform.isWebColor)
+                    .foregroundColor(platformColor)
             )
             .offset(
                 x: Constants.IconSize.thumbnailOutside.width * 0.36,
                 y: Constants.IconSize.thumbnailOutside.height * 0.36
             )
-    }
-     var bittenCircle: some ShapeView {
-        BittenCircle(biteSize: Constants.IconSize.thumbnailOutside.width * 0.4, offsetRatio: 0.65)
-            .fill(style: FillStyle(eoFill: true))
     }
 }
