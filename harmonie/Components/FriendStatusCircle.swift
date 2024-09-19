@@ -4,7 +4,9 @@
 //
 //  Created by xili on 2024/09/19.
 //
+
 import SwiftUI
+
 struct FriendStatusCircle: View {
     private let statusColor: Color
     private let platformColor: Color

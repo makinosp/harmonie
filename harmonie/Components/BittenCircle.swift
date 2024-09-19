@@ -4,7 +4,9 @@
 //
 //  Created by xili on 2024/09/18.
 //
+
 import SwiftUI
+
 struct BittenCircle: Shape {
     private let biteSize: CGFloat =  Constants.IconSize.thumbnailOutside.width * 0.4
     private let offsetRatio: CGFloat = 0.65
