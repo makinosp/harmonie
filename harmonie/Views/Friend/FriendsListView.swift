@@ -34,11 +34,11 @@ struct FriendsListView: View, FriendServicePresentable {
                         imageUrl: friend.imageUrl(.x256),
                         size: Constants.IconSize.thumbnail
                         )
-                    .mask(BittenCircle().fill(style: FillStyle(eoFill: true)))
-                    FriendStatusCircle(
-                        statusColor: friend.status.color,
-                        platformColor: friend.platform.isWebColor
-                    )
+//                    .mask(BittenCircle().fill(style: FillStyle(eoFill: true)))
+//                    FriendStatusCircle(
+//                        statusColor: friend.status.color,
+//                        platformColor: friend.platform.isWebColor
+//                    )
                 }
             }
         }
