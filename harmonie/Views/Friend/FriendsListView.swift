@@ -30,12 +30,14 @@ struct FriendsListView: View, FriendServicePresentable {
                 }
             } icon: {
                 ZStack {
-                    Circle()
-                        .foregroundStyle(friend.status.color)
-                        .frame(size: Constants.IconSize.thumbnailOutside)
                     CircleURLImage(
                         imageUrl: friend.imageUrl(.x256),
                         size: Constants.IconSize.thumbnail
+                        )
+                    .mask(BittenCircle().fill(style: FillStyle(eoFill: true)))
+                    FriendStatusCircle(
+                        statusColor: friend.status.color,
+                        platformColor: friend.platform.isWebColor
                     )
                 }
             }
