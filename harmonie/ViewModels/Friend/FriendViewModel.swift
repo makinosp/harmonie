@@ -58,5 +58,6 @@ final class FriendViewModel {
         onlineFriends = try await onlineFriendsTask
         offlineFriends = try await offlineFriendsTask
         friendsLocations = service.friendsGroupedByLocation(onlineFriends)
+        applyFilters()
     }
 }

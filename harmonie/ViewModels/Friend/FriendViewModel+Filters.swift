@@ -15,11 +15,7 @@ extension FriendViewModel {
     func clearFilters() {
         filterUserStatus = []
         filterFavoriteGroups = []
-        resetFilteredFriends()
-    }
-
-    private func resetFilteredFriends() {
-        filterResultFriends = recentlyFriends
+        applyFilters()
     }
 
     /// Filters the list of friends based on the specified list type.

@@ -8,10 +8,8 @@
 import SwiftUI
 import VRCKit
 
-struct FriendsView: View, FriendServicePresentable {
-    @Environment(AppViewModel.self) var appVM: AppViewModel
+struct FriendsView: View {
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
-    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
     @State private var selected: String?
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
@@ -19,15 +17,11 @@ struct FriendsView: View, FriendServicePresentable {
         @Bindable var friendVM = friendVM
         NavigationSplitView(columnVisibility: $columnVisibility) {
             FriendsListView(selected: $selected)
-                .overlay { overlayView }
-                .toolbar { toolbarContent }
                 .navigationTitle("Friends")
-                .refreshable {
-                    await refreshAction()
-                }
         } detail: {
             if let selected = selected {
-                UserDetailPresentationView(id: selected).id(selected)
+                UserDetailPresentationView(id: selected)
+                    .id(selected)
             } else {
                 ContentUnavailableView {
                     Label {
@@ -46,35 +40,6 @@ struct FriendsView: View, FriendServicePresentable {
         .onChange(of: friendVM.favoriteFriends) { _, favoriteFriends in
             friendVM.setFavoriteFriends(favoriteFriends: favoriteFriends)
         }
-        .onAppear {
-            friendVM.clearFilters()
-        }
-    }
-
-    @ViewBuilder private var overlayView: some View {
-        if friendVM.isProcessingFilter {
-            ProgressView()
-        } else if friendVM.filterResultFriends.isEmpty {
-            if friendVM.isEmptyAllFilters {
-                ContentUnavailableView {
-                    Label {
-                        Text("No Friends")
-                    } icon: {
-                        Constants.Icon.friends
-                    }
-                }
-            } else {
-                ContentUnavailableView.search
-            }
-        }
-    }
-
-    private func refreshAction() async {
-        do {
-            try await friendVM.fetchAllFriends(service: friendService)
-        } catch {
-            appVM.handleError(error)
-        }
     }
 }
 
@@ -83,7 +48,6 @@ struct FriendsView: View, FriendServicePresentable {
     let friendVM = FriendViewModel(user: PreviewDataProvider.shared.previewUser)
     let favoriteVM = FavoriteViewModel()
     FriendsView()
-        .environment(appVM)
         .environment(friendVM)
         .environment(favoriteVM)
         .task {
