@@ -13,18 +13,20 @@ struct SettingsView: View, AuthenticationServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @State var destination: Destination?
     @State var isPresentedForm = false
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
     enum Destination: Hashable {
         case userDetail, about, license
     }
 
     var body: some View {
-        NavigationSplitView(columnVisibility: .constant(.all)) {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             settingsContent
-                .navigationDestination(item: $destination) { destination in
-                    presentDestination(destination)
-                }
                 .navigationTitle("Settings")
+        } detail: {
+            if let destination = destination {
+                presentDestination(destination)
+            }
         }
         .navigationSplitViewStyle(.balanced)
         .onAppear {
@@ -56,7 +58,7 @@ struct SettingsView: View, AuthenticationServicePresentable {
     }
 
     private var settingsContent: some View {
-        List {
+        List(selection: $destination) {
             if let user = appVM.user {
                 profileSection(user: user)
             }
