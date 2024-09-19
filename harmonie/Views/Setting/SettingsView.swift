@@ -36,6 +36,9 @@ struct SettingsView: View, AuthenticationServicePresentable {
                 ProfileEditView(profileEditVM: ProfileEditViewModel(user: user))
             }
         }
+        .sheet(item: $selectedLibrary) { library in
+            LicenseView(library: library)
+        }
     }
 
     @ViewBuilder
@@ -48,16 +51,11 @@ struct SettingsView: View, AuthenticationServicePresentable {
         case .about:
             aboutThisApp
         case .license:
-            Group {
-                if let selectedLibrary = selectedLibrary {
-                    LicenseView(library: selectedLibrary)
-                        .onDisappear {
-                            self.selectedLibrary = nil
-                        }
-                } else {
-                    LicenseListView { library in
-                        selectedLibrary = library
-                    }
+            List(Library.libraries) { library in
+                Button {
+                    selectedLibrary = library
+                } label: {
+                    Text(library.name)
                 }
             }
             .navigationTitle("Third Party Licence")
