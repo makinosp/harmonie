@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct SectionView<Content>: View where Content: View {
-    var content: Content
+    private let content: Content
+
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
+
     var body: some View {
         VStack(alignment: .leading) {
             content
