@@ -10,28 +10,25 @@ import VRCKit
 
 extension SettingsView {
     func profileSection(user: User) -> some View {
-        Section(header: Text("My Profile")) {
-            Button {
-                destination = .userDetail
-            } label: {
-                HStack(alignment: .center) {
-                    Label {
-                        Text(user.displayName)
-                    } icon: {
-                        UserIcon(user: user, size: Constants.IconSize.ll)
-                    }
-                    Spacer()
+        Section(header: Text("Profile")) {
+            LabeledContent {
+                if UIDevice.current.userInterfaceIdiom == .phone {
                     Constants.Icon.forward
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
+            } label: {
+                Label {
+                    Text(user.displayName)
+                } icon: {
+                        UserIcon(user: user, size: Constants.IconSize.ll)
+                }
+                .padding(.vertical, 8)
             }
+            .tag(Destination.userDetail)
+
             Button {
                 isPresentedForm = true
             } label: {
-                HStack(alignment: .center) {
-                    Label("Edit", systemImage: "pencil")
-                }
+                Label("Edit", systemImage: "pencil")
             }
         }
         .textCase(nil)

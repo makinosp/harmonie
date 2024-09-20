@@ -18,39 +18,35 @@ extension SettingsView {
 
     var aboutSection: some View {
         Section("About") {
-            Button {
-                destination = .about
+            LabeledContent {
+                Constants.Icon.forward
             } label: {
-                LabeledContent {
-                    Constants.Icon.forward
-                } label: {
-                    Label {
-                        Text("About This App")
-                    } icon: {
-                        Image(systemName: "info.circle")
-                    }
-                }
-            }
-            Link(destination: URL(string: "https://github.com/makinosp/harmonie")!) {
                 Label {
-                    Text("Source Code")
+                    Text("About This App")
                 } icon: {
-                    Image(systemName: "curlybraces")
+                    Image(systemName: "info.circle")
                 }
             }
-            Button {
-                destination = .license
-            } label: {
-                LabeledContent {
-                    Constants.Icon.forward
-                } label: {
+            .tag(Destination.about)
+            if let sourceCodeUrl = URL(string: "https://github.com/makinosp/harmonie") {
+                Link(destination: sourceCodeUrl) {
                     Label {
-                        Text("Third Party Licence")
+                        Text("Source Code")
                     } icon: {
-                        Image(systemName: "lightbulb")
+                        Image(systemName: "curlybraces")
                     }
                 }
             }
+            LabeledContent {
+                Constants.Icon.forward
+            } label: {
+                Label {
+                    Text("Third Party Licence")
+                } icon: {
+                    Image(systemName: "lightbulb")
+                }
+            }
+            .tag(Destination.license)
         }
     }
 
