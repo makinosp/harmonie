@@ -47,7 +47,7 @@ struct FavoriteFriendListView: View {
             Label {
                 Text(friend.displayName)
             } icon: {
-                UserIcon(user: friend)
+                UserIcon(user: friend, size: Constants.IconSize.thumbnail)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

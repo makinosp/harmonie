@@ -29,7 +29,7 @@ struct FriendsListView: View, FriendServicePresentable {
                     Text(friend.displayName)
                 }
             } icon: {
-                UserIcon(user: friend)
+                UserIcon(user: friend, size: Constants.IconSize.thumbnail)
             }
         }
         .overlay { overlayView }
