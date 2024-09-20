@@ -19,10 +19,7 @@ extension SettingsView {
                 Label {
                     Text(user.displayName)
                 } icon: {
-                    CircleURLImage(
-                        imageUrl: user.imageUrl(.x256),
-                        size: Constants.IconSize.ll
-                    )
+                        UserIcon(user: user, size: Constants.IconSize.ll)
                 }
                 .padding(.vertical, 8)
             }

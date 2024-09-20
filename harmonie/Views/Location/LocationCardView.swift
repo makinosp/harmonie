@@ -53,7 +53,10 @@ struct LocationCardView: View, InstanceServicePresentable {
                     ScrollView(.horizontal) {
                         HStack(spacing: -8) {
                             ForEach(location.friends) { friend in
-                                friendThumbnail(friend: friend)
+                                CircleURLImage(
+                                    imageUrl: friend.imageUrl(.x256),
+                                    size: Constants.IconSize.thumbnail
+                                )
                             }
                         }
                     }
@@ -71,19 +74,5 @@ struct LocationCardView: View, InstanceServicePresentable {
         [location.friends.count, instance.userCount, instance.capacity]
             .map { $0.description }
             .joined(separator: " / ")
-    }
-
-    private func friendThumbnail(friend: Friend) -> some View {
-        ZStack {
-            CircleURLImage(
-                imageUrl: friend.imageUrl(.x256),
-                size: Constants.IconSize.thumbnail
-                )
-            .mask(BittenCircle().fill(style: FillStyle(eoFill: true)))
-            FriendStatusCircle(
-                statusColor: friend.status.color,
-                platformColor: friend.platform.isWebColor
-            )
-        }
     }
 }
