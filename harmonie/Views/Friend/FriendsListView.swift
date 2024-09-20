@@ -29,15 +29,7 @@ struct FriendsListView: View, FriendServicePresentable {
                     Text(friend.displayName)
                 }
             } icon: {
-                ZStack {
-                    Circle()
-                        .foregroundStyle(friend.status.color)
-                        .frame(size: Constants.IconSize.thumbnailOutside)
-                    CircleURLImage(
-                        imageUrl: friend.imageUrl(.x256),
-                        size: Constants.IconSize.thumbnail
-                    )
-                }
+                UserIcon(user: friend, size: Constants.IconSize.thumbnail)
             }
         }
         .overlay { overlayView }
