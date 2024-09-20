@@ -9,13 +9,13 @@ import SwiftUI
 
 struct StatusIndicator<S>: View where S: ShapeStyle {
     private let content: S
-    private let isCutedOut: Bool
+    private let isCutOut: Bool
     private let outerSize: CGSize
 
-    init(_ content: S, outerSize: CGSize, isCutedOut: Bool = false) {
+    init(_ content: S, outerSize: CGSize, isCutOut: Bool = false) {
         self.content = content
         self.outerSize = outerSize
-        self.isCutedOut = isCutedOut
+        self.isCutOut = isCutOut
     }
 
     private var frameSize: CGSize {
@@ -37,7 +37,7 @@ struct StatusIndicator<S>: View where S: ShapeStyle {
             .overlay {
                 Circle()
                     .blendMode(.destinationOut)
-                    .frame(size: cutoutSize)
+                    .frame(size: isCutOut ? cutoutSize : .zero)
             }
             .compositingGroup()
             .offset(x: offset.width, y: offset.height)

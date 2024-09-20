@@ -88,15 +88,7 @@ struct LocationDetailView: View {
                 Label {
                     Text(friend.displayName)
                 } icon: {
-                    ZStack {
-                        Circle()
-                            .foregroundStyle(friend.status.color)
-                            .frame(size: Constants.IconSize.thumbnailOutside)
-                        CircleURLImage(
-                            imageUrl: friend.imageUrl(.x256),
-                            size: Constants.IconSize.thumbnail
-                        )
-                    }
+                    UserIcon(user: friend)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
