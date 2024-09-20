@@ -42,6 +42,6 @@ struct BittenView<Content>: View where Content: View {
     BittenView {
         Circle()
             .fill(.blue)
-            .frame(size: 120)
+            .frame(width: 120, height: 120)
     }
 }
