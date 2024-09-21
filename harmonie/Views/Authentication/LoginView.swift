@@ -19,35 +19,17 @@ struct LoginView: View, AuthenticationServicePresentable {
     @State private var isPresentedSavingPasswordPopover = false
 
     var body: some View {
-        VStack(spacing: 20) {
-            title
-            NavigationStack {
-                VStack(spacing: 16) {
-                    Text("Login")
-                        .font(.headline)
-                    VStack {
-                        Text("Connect your VRChat account")
-                            .foregroundStyle(Color(.systemGray))
-                            .font(.body)
-                        Button {
-                            isPresentedSecurityPopover.toggle()
-                        } label: {
-                            Text("Is this secure?")
-                        }
-                        .popover(isPresented: $isPresentedSecurityPopover) {
-                            securityPopover
-                        }
-                    }
-                    loginFields
-                    enterButton
-                }
-                .padding(.horizontal, 24)
-                .navigationDestination(item: $verifyType) { verifyType in
-                    OtpView(verifyType: verifyType)
-                        .navigationBarBackButtonHidden()
-                }
+        NavigationStack {
+            VStack(spacing: 16) {
+                title
+                loginFields
+                enterButton
             }
-            .frame(height: 300)
+            .padding(.horizontal, 24)
+            .navigationDestination(item: $verifyType) { verifyType in
+                OtpView(verifyType: verifyType)
+                    .navigationBarBackButtonHidden()
+            }
         }
         .ignoresSafeArea(.keyboard)
         .onAppear {
@@ -62,6 +44,26 @@ struct LoginView: View, AuthenticationServicePresentable {
         Text(BundleUtil.appName.uppercased())
             .font(.custom("Avenir Next", size: titleFontSize))
             .kerning(titleKerning)
+    }
+
+    private var subtitle: some View {
+        Group {
+            Text("Login")
+                .font(.headline)
+            VStack {
+                Text("Connect your VRChat account")
+                    .foregroundStyle(Color(.systemGray))
+                    .font(.body)
+                Button {
+                    isPresentedSecurityPopover.toggle()
+                } label: {
+                    Text("Is this secure?")
+                }
+                .popover(isPresented: $isPresentedSecurityPopover) {
+                    securityPopover
+                }
+            }
+        }
     }
 
     private var titleFontSize: CGFloat {
