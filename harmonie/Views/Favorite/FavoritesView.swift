@@ -25,7 +25,7 @@ struct FavoritesView: View {
                 ToolbarItem(placement: .status) {
                     @Bindable var favoriteVM = favoriteVM
                     Picker("", selection: $favoriteVM.segment) {
-                        ForEach(FavoriteViewModel.Segment.allCases) { segment in
+                        ForEach(Segment.allCases) { segment in
                             Text(segment.description).tag(segment)
                         }
                     }
