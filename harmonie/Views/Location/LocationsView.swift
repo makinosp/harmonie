@@ -11,37 +11,41 @@ import VRCKit
 struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedInstance: InstanceLocation?
     @State private var selectedUser: Selected?
 
     var body: some View {
-        NavigationSplitView(columnVisibility: .constant(.all)) {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             locationList
                 .navigationTitle("Locations")
-                .navigationSplitViewColumnWidth(
-                    min: 300,
-                    ideal: WindowUtil.width / 2,
-                    max: WindowUtil.width / 2
-                )
+                .setColumn()
         } content: {
-            if let selectedInstance = selectedInstance {
-                LocationDetailView(
-                    instanceLocation: selectedInstance,
-                    selectedUser: $selectedUser
-                )
-            } else {
-                ContentUnavailableView {
-                    Label {
-                        Text("Select a location")
-                    } icon: {
-                        Constants.Icon.location
+            Group {
+                if let selectedInstance = selectedInstance {
+                    LocationDetailView(
+                        instanceLocation: selectedInstance,
+                        selectedUser: $selectedUser
+                    )
+                } else {
+                    ContentUnavailableView {
+                        Label {
+                            Text("Select a location")
+                        } icon: {
+                            Constants.Icon.location
+                        }
                     }
                 }
             }
+            .setColumn()
         } detail: {
-            if let selectedUser = selectedUser {
-                UserDetailPresentationView(selected: selectedUser)
+            Group {
+                if let selectedUser = selectedUser {
+                    UserDetailPresentationView(selected: selectedUser)
+                        .id(selectedUser)
+                }
             }
+            .setColumn()
         }
         .navigationSplitViewStyle(.balanced)
         .refreshable {
@@ -75,5 +79,15 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                 }
             }
         }
+    }
+}
+
+fileprivate extension View {
+    func setColumn() -> some View {
+        self.navigationSplitViewColumnWidth(
+            min: WindowUtil.width * 1 / 3,
+            ideal: WindowUtil.width * 1 / 3,
+            max: WindowUtil.width / 2
+        )
     }
 }
