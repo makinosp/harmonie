@@ -15,20 +15,23 @@ struct LoginView: View, AuthenticationServicePresentable {
     @State private var verifyType: VerifyType?
     @State private var password: String = ""
     @State private var isRequesting = false
-    @State private var isPresentedPopover = false
+    @State private var isPresentedSecurityPopover = false
+    @State private var isPresentedSavingPasswordPopover = false
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
+                title
                 loginFields
                 enterButton
             }
-            .padding(32)
-            .ignoresSafeArea(.keyboard)
+            .padding(.horizontal, 24)
             .navigationDestination(item: $verifyType) { verifyType in
                 OtpView(verifyType: verifyType)
+                    .navigationBarBackButtonHidden()
             }
         }
+        .ignoresSafeArea(.keyboard)
         .onAppear {
             if isSavedOnKeyChain,
                let password = KeychainUtil.shared.getPassword(for: username) {
@@ -37,36 +40,97 @@ struct LoginView: View, AuthenticationServicePresentable {
         }
     }
 
+    private var title: some View {
+        Text(BundleUtil.appName.uppercased())
+            .font(.custom("Avenir Next", size: titleFontSize))
+            .kerning(titleKerning)
+    }
+
+    private var subtitle: some View {
+        Group {
+            Text("Login")
+                .font(.headline)
+            VStack {
+                Text("Connect your VRChat account")
+                    .foregroundStyle(Color(.systemGray))
+                    .font(.body)
+                Button {
+                    isPresentedSecurityPopover.toggle()
+                } label: {
+                    Text("Is this secure?")
+                }
+                .popover(isPresented: $isPresentedSecurityPopover) {
+                    securityPopover
+                }
+            }
+        }
+    }
+
+    private var titleFontSize: CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad ? 56 : 28
+    }
+
+    private var titleKerning: CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad ? 28 : 14
+    }
+
     private var loginFields: some View {
-        VStack(spacing: 8) {
+        VStack(alignment: .leading, spacing: 8) {
             TextField("UserName", text: $username)
                 .textInputAutocapitalization(.never)
                 .textFieldStyle(.roundedBorder)
             SecureField("Password", text: $password)
                 .textFieldStyle(.roundedBorder)
             Toggle(isOn: $isSavedOnKeyChain) {
-                HStack {
-                    Label {
-                        Text("Store in Keychain")
-                    } icon: {
-                        Image(systemName: "key.icloud")
-                    }
+                LabeledContent {
                     Button {
-                        isPresentedPopover.toggle()
+                        isPresentedSavingPasswordPopover.toggle()
                     } label: {
                         Image(systemName: "questionmark.circle")
                     }
-                    .popover(isPresented: $isPresentedPopover) {
-                        Text(Constants.Messages.helpWithStoringKeychain)
-                            .padding()
-                            .presentationDetents([.fraction(1/4)])
+                    .popover(isPresented: $isPresentedSavingPasswordPopover) {
+                        savingPasswordPopover
                     }
+                } label: {
+                    Label {
+                        Text("Save Password")
+                    } icon: {
+                        Image(systemName: "key.icloud")
+                    }
+                    .foregroundStyle(Color(.systemGray))
                 }
                 .font(.callout)
-                .foregroundStyle(Color(.systemGray))
             }
         }
+        .frame(maxWidth: 560)
         .padding(.horizontal, 8)
+    }
+
+    private var securityPopover: some View {
+        VStack(alignment: .leading) {
+            Text("Is this secure?")
+                .font(.headline)
+                .foregroundStyle(Color(.label))
+            Text(Constants.Messages.helpWithStoringKeychain)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .foregroundStyle(Color(.systemGray))
+        .frame(width: WindowUtil.width * 2 / 3)
+        .padding()
+        .presentationDetents([.fraction(0.25)])
+    }
+
+    private var savingPasswordPopover: some View {
+        VStack(alignment: .leading) {
+            Text("In What Way?")
+                .font(.headline)
+                .foregroundStyle(Color(.label))
+            Text(Constants.Messages.helpWithStoringKeychain)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(width: WindowUtil.width * 2 / 3)
+        .padding()
+        .presentationDetents([.fraction(0.25)])
     }
 
     private var enterButton: some View {
