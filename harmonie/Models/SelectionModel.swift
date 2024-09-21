@@ -17,3 +17,17 @@ struct SegmentIdSelection: Hashable, Sendable {
 extension SegmentIdSelection: Identifiable {
     var id: Int { hashValue }
 }
+
+extension SegmentIdSelection {
+    init(friendId: String) {
+        selected = Selected(id: friendId)
+        segment = .friend
+    }
+}
+
+extension SegmentIdSelection {
+    init(worldId: String) {
+        selected = Selected(id: worldId)
+        segment = .world
+    }
+}

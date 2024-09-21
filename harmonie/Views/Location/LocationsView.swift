@@ -13,7 +13,7 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedInstance: InstanceLocation?
-    @State private var selectedUser: Selected?
+    @State private var selection: SegmentIdSelection?
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -25,7 +25,7 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                 if let selectedInstance = selectedInstance {
                     LocationDetailView(
                         instanceLocation: selectedInstance,
-                        selectedUser: $selectedUser
+                        selection: $selection
                     )
                 } else {
                     ContentUnavailableView {
@@ -40,9 +40,16 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
             .setColumn()
         } detail: {
             Group {
-                if let selectedUser = selectedUser {
-                    UserDetailPresentationView(selected: selectedUser)
-                        .id(selectedUser)
+                if let selection = selection {
+                    Group {
+                        switch selection.segment {
+                        case .friend:
+                            UserDetailPresentationView(selected: selection.selected)
+                        case .world:
+                            WorldDetailPresentationView(id: selection.selected.id)
+                        }
+                    }
+                    .id(selection.selected.id)
                 }
             }
             .setColumn()
