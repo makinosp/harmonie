@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 PROJECT_PATH="$(dirname $(readlink -f $0))"
 
