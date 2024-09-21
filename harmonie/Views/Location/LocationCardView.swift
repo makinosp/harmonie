@@ -68,11 +68,15 @@ struct LocationCardView: View, InstanceServicePresentable {
                     }
                 }
                 .onTapGesture {
-                    selected = InstanceLocation(location: location, instance: instance)
+                    selected = tag(instance)
                 }
             }
         }
-        .tag(InstanceLocation(location: location, instance: instance))
+        .tag(tag(instance))
+    }
+
+    private func tag(_ instance: Instance) -> InstanceLocation {
+        InstanceLocation(location: location, instance: instance)
     }
 
     private func personAmount(_ instance: Instance) -> String {

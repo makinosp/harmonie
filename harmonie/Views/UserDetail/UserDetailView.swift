@@ -19,6 +19,7 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
     @State var instance: Instance?
     @State var note: String
     @State var isRequesting = false
+    @State var lastActivity = ""
 
     init(user: UserDetail) {
         _user = State(initialValue: user)
@@ -46,6 +47,9 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
             if case let .id(id) = user.location {
                 await fetchInstance(id: id)
             }
+        }
+        .task {
+            lastActivity = await DateUtil.shared.formatRelative(from: user.lastActivity)
         }
     }
 

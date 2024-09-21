@@ -10,25 +10,37 @@ import NukeUI
 import VRCKit
 
 struct LocationDetailView: View {
-    @Binding var selectedUser: Selected?
+    @Binding var selection: SegmentIdSelection?
     private let instance: Instance
     private let location: FriendsLocation
 
-    init(instanceLocation: InstanceLocation, selectedUser: Binding<Selected?>) {
+    init(instanceLocation: InstanceLocation, selection: Binding<SegmentIdSelection?>) {
         instance = instanceLocation.instance
         location = instanceLocation.location
-        _selectedUser = selectedUser
+        _selection = selection
     }
 
     var body: some View {
-        List(selection: $selectedUser) {
+        List(selection: $selection) {
             Section("World") {
-                GradientOverlayImageView(
-                    imageUrl: instance.world.imageUrl(.x1024),
-                    thumbnailImageUrl: instance.world.imageUrl(.x256),
-                    height: 80
-                ) { bottomBar }
-                    .listRowInsets(EdgeInsets())
+                HStack(spacing: 12) {
+                    SquareURLImage(
+                        imageUrl: instance.world.imageUrl(.x1024),
+                        thumbnailImageUrl: instance.world.imageUrl(.x256)
+                    )
+                    VStack(alignment: .leading) {
+                        Text(instance.world.name)
+                            .font(.body)
+                            .lineLimit(1)
+                        Text(instance.world.description ?? "")
+                            .font(.footnote)
+                            .foregroundStyle(Color.gray)
+                            .lineLimit(2)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Constants.Icon.forward
+                }
+                .tag(SegmentIdSelection(worldId: instance.world.id))
             }
             Section("Friends") {
                 friendList
@@ -95,7 +107,7 @@ struct LocationDetailView: View {
             } icon: {
                 UserIcon(user: friend, size: Constants.IconSize.thumbnail)
             }
-            .tag(Selected(id: friend.id))
+            .tag(SegmentIdSelection(friendId: friend.id))
         }
     }
 }

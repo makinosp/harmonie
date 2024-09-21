@@ -17,10 +17,6 @@ final class FavoriteViewModel {
     var favoriteWorlds: [World] = []
     var segment: Segment = .friend
 
-    enum Segment {
-        case friend, world
-    }
-
     /// A filtered list of favorite groups that contain only friend-type groups.
     /// It retrieves friend-type groups from the `favoriteGroups` property.
     var favoriteFriendGroups: [FavoriteGroup] {
@@ -124,24 +120,5 @@ final class FavoriteViewModel {
 
     func fetchFavoritedWorlds(service: WorldServiceProtocol) async throws {
         favoriteWorlds = try await service.fetchFavoritedWorlds()
-    }
-}
-
-extension FavoriteViewModel.Segment: Identifiable {
-    var id: Int { hashValue }
-}
-
-extension FavoriteViewModel.Segment: CaseIterable {
-    var allCases: [FavoriteViewModel.Segment] {
-        [.friend, .world]
-    }
-}
-
-extension FavoriteViewModel.Segment: CustomStringConvertible {
-    var description: String {
-        switch self {
-        case .friend: "Friend"
-        case .world: "World"
-        }
     }
 }

@@ -24,6 +24,8 @@ struct WorldDetailPresentationView: View, WorldServicePresentable {
                 .task(id: id) {
                     await fetchWorld(id: id)
                 }
+                .navigationTitle("Loading...")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 
