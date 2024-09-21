@@ -60,6 +60,9 @@ struct LocationCardView: View, InstanceServicePresentable {
                             }
                         }
                     }
+                    .onTapGesture {
+                        selected = InstanceLocation(location: location, instance: instance)
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 if UIDevice.current.userInterfaceIdiom == .phone {
