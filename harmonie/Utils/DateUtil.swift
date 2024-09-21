@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class DateUtil {
+actor DateUtil: Sendable {
     static let shared = DateUtil()
     private let relativeDateTimeFormatter: RelativeDateTimeFormatter
     private let comparedComponents: Set<Calendar.Component>
