@@ -32,9 +32,9 @@ struct LoginView: View, AuthenticationServicePresentable {
             }
         }
         .ignoresSafeArea(.keyboard)
-        .onAppear {
-            if isSavedOnKeyChain,
-               let password = KeychainUtil.shared.getPassword(for: username) {
+        .task {
+            guard isSavedOnKeyChain else { return }
+            if let password = await KeychainUtil.shared.getPassword(for: username) {
                 self.password = password
             }
         }
