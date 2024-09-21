@@ -14,7 +14,7 @@ enum Constants {
     }
 
     enum Values {
-        static let previewUser = "demo"
+        static let previewUser = "demonstration"
     }
 
     enum Icon {
