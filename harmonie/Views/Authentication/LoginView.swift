@@ -18,20 +18,24 @@ struct LoginView: View, AuthenticationServicePresentable {
     @State private var isPresentedPopover = false
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                title
+        VStack(spacing: 20) {
+            title
+            NavigationStack {
                 VStack(spacing: 16) {
+                    Text("Connect your VRChat account")
+                        .foregroundStyle(Color(.systemGray))
+                        .font(.body)
                     loginFields
                     enterButton
                 }
+                .navigationDestination(item: $verifyType) { verifyType in
+                    OtpView(verifyType: verifyType)
+                        .navigationBarBackButtonHidden()
+                }
             }
-            .padding(32)
-            .ignoresSafeArea(.keyboard)
-            .navigationDestination(item: $verifyType) { verifyType in
-                OtpView(verifyType: verifyType)
-            }
+            .frame(height: 300)
         }
+        .ignoresSafeArea(.keyboard)
         .onAppear {
             if isSavedOnKeyChain,
                let password = KeychainUtil.shared.getPassword(for: username) {
@@ -56,9 +60,6 @@ struct LoginView: View, AuthenticationServicePresentable {
 
     private var loginFields: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Connect your VRChat account")
-                .foregroundStyle(Color(.systemGray))
-                .font(.body)
             TextField("UserName", text: $username)
                 .textInputAutocapitalization(.never)
                 .textFieldStyle(.roundedBorder)
