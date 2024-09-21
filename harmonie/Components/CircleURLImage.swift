@@ -22,23 +22,36 @@ struct CircleURLImage: View {
     var body: some View {
         lazyImage(url: imageUrl) {
             lazyImage(url: thumbnailImageUrl) {
-                ProgressView()
-                    .controlSize(.small)
-                    .frame(size: size)
+                defaultPlaceholder
             }
         }
     }
 
-    func lazyImage(url: URL?, placeholder: @escaping () -> some View) -> some View {
+    private var defaultPlaceholder: some View {
+        shape
+            .fill(color)
+            .frame(size: size)
+    }
+
+    private var shape: some Shape {
+        Circle()
+    }
+
+    private var color: some ShapeStyle {
+        Color(.systemFill)
+    }
+
+    private func lazyImage(url: URL?, placeholder: @escaping () -> some View) -> some View {
         LazyImage(url: imageUrl) { state in
             if let image = state.image {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(size: size)
-                    .clipShape(Circle())
+                    .clipShape(shape)
             } else if state.error != nil {
-                Constants.Icon.exclamation
+                defaultPlaceholder
+                    .overlay(Constants.Icon.exclamation)
                     .frame(size: size)
             } else {
                 placeholder()
