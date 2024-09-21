@@ -15,19 +15,33 @@ struct LoginView: View, AuthenticationServicePresentable {
     @State private var verifyType: VerifyType?
     @State private var password: String = ""
     @State private var isRequesting = false
-    @State private var isPresentedPopover = false
+    @State private var isPresentedSecurityPopover = false
+    @State private var isPresentedSavingPasswordPopover = false
 
     var body: some View {
         VStack(spacing: 20) {
             title
             NavigationStack {
                 VStack(spacing: 16) {
-                    Text("Connect your VRChat account")
-                        .foregroundStyle(Color(.systemGray))
-                        .font(.body)
+                    Text("Login")
+                        .font(.headline)
+                    VStack {
+                        Text("Connect your VRChat account")
+                            .foregroundStyle(Color(.systemGray))
+                            .font(.body)
+                        Button {
+                            isPresentedSecurityPopover.toggle()
+                        } label: {
+                            Text("Is this secure?")
+                        }
+                        .popover(isPresented: $isPresentedSecurityPopover) {
+                            securityPopover
+                        }
+                    }
                     loginFields
                     enterButton
                 }
+                .padding(.horizontal, 24)
                 .navigationDestination(item: $verifyType) { verifyType in
                     OtpView(verifyType: verifyType)
                         .navigationBarBackButtonHidden()
@@ -68,21 +82,12 @@ struct LoginView: View, AuthenticationServicePresentable {
             Toggle(isOn: $isSavedOnKeyChain) {
                 LabeledContent {
                     Button {
-                        isPresentedPopover.toggle()
+                        isPresentedSavingPasswordPopover.toggle()
                     } label: {
                         Image(systemName: "questionmark.circle")
                     }
-                    .popover(isPresented: $isPresentedPopover) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("In What Way?")
-                                .font(.headline)
-                                .foregroundStyle(Color(.label))
-                            Text(Constants.Messages.helpWithStoringKeychain)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        .frame(width: WindowUtil.width * 2 / 3)
-                        .padding()
-                        .presentationDetents([.fraction(1/4)])
+                    .popover(isPresented: $isPresentedSavingPasswordPopover) {
+                        savingPasswordPopover
                     }
                 } label: {
                     Label {
@@ -90,13 +95,40 @@ struct LoginView: View, AuthenticationServicePresentable {
                     } icon: {
                         Image(systemName: "key.icloud")
                     }
+                    .foregroundStyle(Color(.systemGray))
                 }
                 .font(.callout)
-                .foregroundStyle(Color(.systemGray))
             }
         }
         .frame(maxWidth: 560)
         .padding(.horizontal, 8)
+    }
+
+    private var securityPopover: some View {
+        VStack(alignment: .leading) {
+            Text("Is this secure?")
+                .font(.headline)
+                .foregroundStyle(Color(.label))
+            Text(Constants.Messages.helpWithStoringKeychain)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .foregroundStyle(Color(.systemGray))
+        .frame(width: WindowUtil.width * 2 / 3)
+        .padding()
+        .presentationDetents([.fraction(0.25)])
+    }
+
+    private var savingPasswordPopover: some View {
+        VStack(alignment: .leading) {
+            Text("In What Way?")
+                .font(.headline)
+                .foregroundStyle(Color(.label))
+            Text(Constants.Messages.helpWithStoringKeychain)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(width: WindowUtil.width * 2 / 3)
+        .padding()
+        .presentationDetents([.fraction(0.25)])
     }
 
     private var enterButton: some View {
