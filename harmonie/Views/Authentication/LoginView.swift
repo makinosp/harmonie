@@ -19,9 +19,12 @@ struct LoginView: View, AuthenticationServicePresentable {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
-                loginFields
-                enterButton
+            VStack(spacing: 20) {
+                title
+                VStack(spacing: 16) {
+                    loginFields
+                    enterButton
+                }
             }
             .padding(32)
             .ignoresSafeArea(.keyboard)
@@ -37,20 +40,32 @@ struct LoginView: View, AuthenticationServicePresentable {
         }
     }
 
+    private var title: some View {
+        Text(BundleUtil.appName.uppercased())
+            .font(.custom("Avenir Next", size: titleFontSize))
+            .kerning(titleKerning)
+    }
+
+    private var titleFontSize: CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad ? 56 : 28
+    }
+
+    private var titleKerning: CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad ? 28 : 14
+    }
+
     private var loginFields: some View {
-        VStack(spacing: 8) {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Connect your VRChat account")
+                .foregroundStyle(Color(.systemGray))
+                .font(.body)
             TextField("UserName", text: $username)
                 .textInputAutocapitalization(.never)
                 .textFieldStyle(.roundedBorder)
             SecureField("Password", text: $password)
                 .textFieldStyle(.roundedBorder)
             Toggle(isOn: $isSavedOnKeyChain) {
-                HStack {
-                    Label {
-                        Text("Save Password")
-                    } icon: {
-                        Image(systemName: "key.icloud")
-                    }
+                LabeledContent {
                     Button {
                         isPresentedPopover.toggle()
                     } label: {
@@ -68,11 +83,18 @@ struct LoginView: View, AuthenticationServicePresentable {
                         .padding()
                         .presentationDetents([.fraction(1/4)])
                     }
+                } label: {
+                    Label {
+                        Text("Save Password")
+                    } icon: {
+                        Image(systemName: "key.icloud")
+                    }
                 }
                 .font(.callout)
                 .foregroundStyle(Color(.systemGray))
             }
         }
+        .frame(maxWidth: 560)
         .padding(.horizontal, 8)
     }
 
