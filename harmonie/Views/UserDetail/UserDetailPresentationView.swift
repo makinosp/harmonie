@@ -11,7 +11,15 @@ import VRCKit
 struct UserDetailPresentationView: View, UserServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @State var userDetail: UserDetail?
-    let id: String
+    private let id: String
+
+    init(id: String) {
+        self.id = id
+    }
+
+    init(selected: Selected) {
+        id = selected.id
+    }
 
     var body: some View {
         if let userDetail = userDetail {
@@ -24,6 +32,8 @@ struct UserDetailPresentationView: View, UserServicePresentable {
                 .task(id: id) {
                     await fetchUser(id: id)
                 }
+                .navigationTitle("Loading...")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 
@@ -33,11 +43,5 @@ struct UserDetailPresentationView: View, UserServicePresentable {
         } catch {
             appVM.handleError(error)
         }
-    }
-}
-
-extension UserDetailPresentationView {
-    init(selected: Selected) {
-        id = selected.id
     }
 }

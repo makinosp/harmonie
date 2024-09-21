@@ -49,11 +49,11 @@ final class AppViewModel {
         username == Constants.Values.previewUser && password == Constants.Values.previewUser
     }
 
-    private func setCredential(username: String, password: String, isSavedOnKeyChain: Bool) {
+    private func setCredential(username: String, password: String, isSavedOnKeyChain: Bool) async {
         isPreviewMode = isPreviewUser(username: username, password: password)
         client.setCledentials(username: username, password: password)
         if isSavedOnKeyChain {
-            _ = KeychainUtil.shared.savePassword(password, for: username)
+            _ = await KeychainUtil.shared.savePassword(password, for: username)
         }
     }
 
@@ -61,7 +61,7 @@ final class AppViewModel {
         isPreviewMode = isPreviewUser(username: username, password: password)
         client.setCledentials(username: username, password: password)
         if isSavedOnKeyChain {
-            _ = KeychainUtil.shared.savePassword(password, for: username)
+            _ = await KeychainUtil.shared.savePassword(password, for: username)
         }
         return await login()
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class KeychainUtil {
+actor KeychainUtil: Sendable {
     static let shared = KeychainUtil()
     private init() {}
 

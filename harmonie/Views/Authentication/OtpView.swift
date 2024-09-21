@@ -12,14 +12,24 @@ struct OtpView: View, AuthenticationServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @State private var code: String = ""
     @State private var isRequesting = false
-    let verifyType: VerifyType?
+    private let verifyType: VerifyType
+
+    init(verifyType: VerifyType) {
+        self.verifyType = verifyType
+    }
 
     var body: some View {
         VStack(spacing: 16) {
+            Text("Two-step verification")
+                .font(.headline)
+            Text("Enter the 6-digit two-factor verification code recieved in your \(verifyType.method).")
+                .foregroundStyle(Color(.systemGray))
+                .font(.body)
             TextField("Code", text: $code)
                 .keyboardType(.decimalPad)
                 .textFieldStyle(.roundedBorder)
                 .padding(.horizontal, 8)
+                .frame(maxWidth: 240)
             enterButton
         }
         .padding(32)
@@ -53,6 +63,15 @@ struct OtpView: View, AuthenticationServicePresentable {
 
     private var isDisabledEnterButton: Bool {
         isRequesting || code.count < 6
+    }
+}
+
+extension VerifyType {
+    var method: String {
+        switch self {
+        case .emailOtp: "email"
+        default: "authenticator app"
+        }
     }
 }
 

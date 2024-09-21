@@ -37,33 +37,38 @@ struct LocationCardView: View, InstanceServicePresentable {
                 imageUrl: instance.world.imageUrl(.x512),
                 thumbnailImageUrl: instance.world.imageUrl(.x256)
             )
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(instance.world.name)
-                        .font(.body)
-                        .lineLimit(1)
-                    HStack {
-                        Text(instance.typeDescription)
-                            .font(.footnote)
-                            .foregroundStyle(Color.gray)
-                        Text(personAmount(instance))
-                            .font(.footnote)
-                            .foregroundStyle(Color.gray)
+            VStack(spacing: 4) {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(instance.world.name)
+                            .font(.body)
+                            .lineLimit(1)
+                        HStack {
+                            Text(instance.typeDescription)
+                                .font(.footnote)
+                                .foregroundStyle(Color.gray)
+                            Text(personAmount(instance))
+                                .font(.footnote)
+                                .foregroundStyle(Color.gray)
+                        }
                     }
-                    ScrollView(.horizontal) {
-                        HStack(spacing: -8) {
-                            ForEach(location.friends) { friend in
-                                CircleURLImage(
-                                    imageUrl: friend.imageUrl(.x256),
-                                    size: Constants.IconSize.thumbnail
-                                )
-                            }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    if UIDevice.current.userInterfaceIdiom == .phone {
+                        Constants.Icon.forward
+                    }
+                }
+                ScrollView(.horizontal) {
+                    HStack(spacing: -8) {
+                        ForEach(location.friends) { friend in
+                            CircleURLImage(
+                                imageUrl: friend.imageUrl(.x256),
+                                size: Constants.IconSize.thumbnail
+                            )
                         }
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                if UIDevice.current.userInterfaceIdiom == .phone {
-                    Constants.Icon.forward
+                .onTapGesture {
+                    selected = InstanceLocation(location: location, instance: instance)
                 }
             }
         }

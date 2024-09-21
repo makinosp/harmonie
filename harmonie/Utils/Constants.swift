@@ -68,9 +68,8 @@ enum Constants {
     }
 
     enum IconSize {
-        static let thumbnail = CGSize(width: 28, height: 28)
-        static let thumbnailOutside = CGSize(width: 32, height: 32)
-        static let ll = CGSize(width: 40, height: 40)
+        static let thumbnail = CGSize(width: 32, height: 32)
+        static let ll = CGSize(width: 44, height: 44)
     }
 
     enum Messages {
