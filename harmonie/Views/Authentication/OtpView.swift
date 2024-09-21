@@ -20,6 +20,8 @@ struct OtpView: View, AuthenticationServicePresentable {
 
     var body: some View {
         VStack(spacing: 16) {
+            Text("Two-step verification")
+                .font(.headline)
             Text("Enter the 6-digit two-factor verification code recieved in your \(verifyType.method).")
                 .foregroundStyle(Color(.systemGray))
                 .font(.body)
@@ -27,7 +29,7 @@ struct OtpView: View, AuthenticationServicePresentable {
                 .keyboardType(.decimalPad)
                 .textFieldStyle(.roundedBorder)
                 .padding(.horizontal, 8)
-                .frame(maxWidth: 560)
+                .frame(maxWidth: 240)
             enterButton
         }
         .padding(32)
