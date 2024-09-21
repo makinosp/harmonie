@@ -47,7 +47,7 @@ struct LoginView: View, AuthenticationServicePresentable {
             Toggle(isOn: $isSavedOnKeyChain) {
                 HStack {
                     Label {
-                        Text("Store in Keychain")
+                        Text("Save Password")
                     } icon: {
                         Image(systemName: "key.icloud")
                     }
@@ -57,9 +57,16 @@ struct LoginView: View, AuthenticationServicePresentable {
                         Image(systemName: "questionmark.circle")
                     }
                     .popover(isPresented: $isPresentedPopover) {
-                        Text(Constants.Messages.helpWithStoringKeychain)
-                            .padding()
-                            .presentationDetents([.fraction(1/4)])
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("In What Way?")
+                                .font(.headline)
+                                .foregroundStyle(Color(.label))
+                            Text(Constants.Messages.helpWithStoringKeychain)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .frame(width: WindowUtil.width * 2 / 3)
+                        .padding()
+                        .presentationDetents([.fraction(1/4)])
                     }
                 }
                 .font(.callout)
