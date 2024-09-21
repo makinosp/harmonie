@@ -10,16 +10,18 @@ import NukeUI
 import VRCKit
 
 struct LocationDetailView: View {
+    @Binding var selectedUser: Selected?
     private let instance: Instance
     private let location: FriendsLocation
 
-    init(instanceLocation: InstanceLocation) {
+    init(instanceLocation: InstanceLocation, selectedUser: Binding<Selected?>) {
         instance = instanceLocation.instance
         location = instanceLocation.location
+        _selectedUser = selectedUser
     }
 
     var body: some View {
-        List {
+        List(selection: $selectedUser) {
             Section("World") {
                 GradientOverlayImageView(
                     imageUrl: instance.world.imageUrl(.x1024),
@@ -64,11 +66,9 @@ struct LocationDetailView: View {
                 }
             }
         }
+        .listStyle(.insetGrouped)
         .navigationTitle(instance.world.name)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: Selected.self) { selected in
-            UserDetailPresentationView(selected: selected).id(selected)
-        }
     }
 
     private var bottomBar: some View {
@@ -84,15 +84,18 @@ struct LocationDetailView: View {
 
     private var friendList: some View {
         ForEach(location.friends) { friend in
-            NavigationLink(value: Selected(id: friend.id)) {
-                Label {
+            Label {
+                LabeledContent {
+                    if UIDevice.current.userInterfaceIdiom == .phone {
+                        Constants.Icon.forward
+                    }
+                } label: {
                     Text(friend.displayName)
-                } icon: {
-                    UserIcon(user: friend, size: Constants.IconSize.thumbnail)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
+            } icon: {
+                UserIcon(user: friend, size: Constants.IconSize.thumbnail)
             }
+            .tag(Selected(id: friend.id))
         }
     }
 }

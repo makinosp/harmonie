@@ -11,7 +11,8 @@ import VRCKit
 struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
-    @State private var selected: InstanceLocation?
+    @State private var selectedInstance: InstanceLocation?
+    @State private var selectedUser: Selected?
 
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
@@ -22,9 +23,12 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                     ideal: WindowUtil.width / 2,
                     max: WindowUtil.width / 2
                 )
-        } detail: {
-            if let selected = selected {
-                LocationDetailView(instanceLocation: selected)
+        } content: {
+            if let selectedInstance = selectedInstance {
+                LocationDetailView(
+                    instanceLocation: selectedInstance,
+                    selectedUser: $selectedUser
+                )
             } else {
                 ContentUnavailableView {
                     Label {
@@ -33,6 +37,10 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                         Constants.Icon.location
                     }
                 }
+            }
+        } detail: {
+            if let selectedUser = selectedUser {
+                UserDetailPresentationView(selected: selectedUser)
             }
         }
         .navigationSplitViewStyle(.balanced)
@@ -46,9 +54,12 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
     }
 
     private var locationList: some View {
-        List(friendVM.friendsLocations, selection: $selected) { location in
+        List(friendVM.friendsLocations, selection: $selectedInstance) { location in
             if location.isVisible {
-                LocationCardView(selected: $selected, location: location).tag(location)
+                LocationCardView(
+                    selected: $selectedInstance,
+                    location: location
+                )
             }
         }
         .overlay {
