@@ -17,7 +17,7 @@ extension UserDetailView {
         HStack {
             Spacer()
             Label {
-                Text(DateUtil.shared.formatRelative(from: user.lastActivity))
+                Text(lastActivity)
             } icon: {
                 Image(systemName: "stopwatch")
             }
