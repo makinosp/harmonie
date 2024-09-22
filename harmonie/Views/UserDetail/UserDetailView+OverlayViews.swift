@@ -1,5 +1,5 @@
 //
-//  UserDetailView+ProfileImageContainer.swift
+//  UserDetailView+OverlayViews.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/09/06.
