@@ -31,15 +31,11 @@ extension UserDetailView {
         .padding(.horizontal, 12)
     }
 
-    var bottomBar: some View {
-        VStack(alignment: .leading) {
-            Text(user.displayName)
-                .font(.headline)
-            HStack {
-                statusDescription
-                Spacer()
-                trustRankLabel
-            }
+    var bottomOverlay: some View {
+        HStack {
+            statusDescription
+            Spacer()
+            trustRankLabel
         }
         .foregroundStyle(Color.white)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -51,8 +47,11 @@ extension UserDetailView {
         Label {
             Text(user.statusDescription.isEmpty ? user.status.description : user.statusDescription)
         } icon: {
-            Constants.Icon.circleFilled
-                .foregroundStyle(statusColor)
+            StatusIndicator(
+                user.status.color,
+                size: Constants.IconSize.indicator,
+                isCutOut: user.platform == .web
+            )
         }
         .lineLimit(1)
         .font(.subheadline)
