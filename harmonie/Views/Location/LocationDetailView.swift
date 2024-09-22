@@ -97,11 +97,7 @@ struct LocationDetailView: View {
     private var friendList: some View {
         ForEach(location.friends) { friend in
             Label {
-                LabeledContent {
-                    if UIDevice.current.userInterfaceIdiom == .phone {
-                        Constants.Icon.forward
-                    }
-                } label: {
+                NavigationLabel {
                     Text(friend.displayName)
                 }
             } icon: {

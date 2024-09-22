@@ -21,8 +21,14 @@ struct FavoriteFriendListView: View {
             if let friends = favoriteVM.getFavoriteFriends(group.id) {
                 Section(header: Text(group.displayName)) {
                     ForEach(friends) { friend in
-                        friendItem(friend)
-                            .tag(Selected(id: friend.id))
+                        NavigationLabel {
+                            Label {
+                                Text(friend.displayName)
+                            } icon: {
+                                UserIcon(user: friend, size: Constants.IconSize.thumbnail)
+                            }
+                        }
+                        .tag(Selected(id: friend.id))
                     }
                 }
             }
@@ -38,19 +44,5 @@ struct FavoriteFriendListView: View {
                 }
             }
         }
-    }
-
-    private func friendItem(_ friend: Friend) -> some View {
-        LabeledContent {
-            Constants.Icon.forward
-        } label: {
-            Label {
-                Text(friend.displayName)
-            } icon: {
-                UserIcon(user: friend, size: Constants.IconSize.thumbnail)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle())
     }
 }
