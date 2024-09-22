@@ -33,7 +33,10 @@ struct FriendsView: View {
             }
         }
         .navigationSplitViewStyle(.balanced)
-        .searchable(text: $friendVM.filterText)
+        .searchable(
+            text: $friendVM.filterText,
+            placement: .navigationBarDrawer(displayMode: .always)
+        )
         .onSubmit(of: .search) {
             friendVM.applyFilters()
         }
