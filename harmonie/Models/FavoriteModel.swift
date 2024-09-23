@@ -1,5 +1,5 @@
 //
-//  FavoriteFriendModel.swift
+//  FavoriteModel.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/09/16.
