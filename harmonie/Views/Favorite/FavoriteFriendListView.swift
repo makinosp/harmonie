@@ -19,7 +19,7 @@ struct FavoriteFriendListView: View {
     var body: some View {
         List(favoriteVM.favoriteFriendGroups, selection: $selected) { group in
             if let friends = favoriteVM.getFavoriteFriends(group.id) {
-                Section(header: Text(group.displayName)) {
+                DisclosureGroup(group.displayName) {
                     ForEach(friends) { friend in
                         NavigationLabel {
                             Label {

@@ -23,6 +23,14 @@ final class FavoriteViewModel {
         favoriteGroups.filter { $0.type == .friend }
     }
 
+    func getFavoriteGroup(id: String) -> FavoriteGroup? {
+        favoriteGroups.first { $0.id == id }
+    }
+
+    func getFavoriteGroup(name: String) -> FavoriteGroup? {
+        favoriteGroups.first { $0.name == name }
+    }
+
     /// Asynchronously fetches and updates the favorite groups and their details.
     /// - Throws: An error if any network request or decoding operation fails.
     func fetchFavorite(service: FavoriteServiceProtocol, friendVM: FriendViewModel) async throws {
@@ -119,6 +127,17 @@ final class FavoriteViewModel {
     }
 
     func fetchFavoritedWorlds(service: WorldServiceProtocol) async throws {
-        favoriteWorlds = try await service.fetchFavoritedWorlds()
+        favoriteWorlds = try await service.fetchFavoritedWorlds(n: 100)
+    }
+
+    var groupedFavoriteWorlds: [FavoriteWorld] {
+        Dictionary(grouping: favoriteWorlds, by: { $0.favoriteGroup ?? "Unknown" })
+            .sorted { $0.key < $1.key }
+            .map { dictionary in
+                FavoriteWorld(
+                    group: getFavoriteGroup(name: dictionary.key),
+                    worlds: dictionary.value
+                )
+            }
     }
 }

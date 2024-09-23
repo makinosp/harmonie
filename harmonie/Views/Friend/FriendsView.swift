@@ -52,6 +52,7 @@ struct FriendsView: View {
     let friendVM = FriendViewModel(user: PreviewDataProvider.shared.previewUser)
     let favoriteVM = FavoriteViewModel()
     FriendsView()
+        .environment(appVM)
         .environment(friendVM)
         .environment(favoriteVM)
         .task {
