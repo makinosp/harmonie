@@ -10,9 +10,7 @@ import SwiftUI
 extension SettingsView {
     var aboutSection: some View {
         Section("About") {
-            LabeledContent {
-                Constants.Icon.forward
-            } label: {
+            NavigationLabel {
                 Label {
                     Text("About This App")
                 } icon: {
@@ -29,9 +27,7 @@ extension SettingsView {
                     }
                 }
             }
-            LabeledContent {
-                Constants.Icon.forward
-            } label: {
+            NavigationLabel {
                 Label {
                     Text("Third Party Licence")
                 } icon: {

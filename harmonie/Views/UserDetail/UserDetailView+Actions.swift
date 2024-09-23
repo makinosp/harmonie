@@ -32,7 +32,7 @@ extension UserDetailView {
     }
 
     func saveNote() async {
-        let service = appVM.isPreviewMode
+        let service: UserNoteServiceProtocol = appVM.isPreviewMode
         ? UserNotePreviewService(client: appVM.client)
         : UserNoteService(client: appVM.client)
         do {

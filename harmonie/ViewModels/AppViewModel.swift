@@ -28,7 +28,7 @@ final class AppViewModel {
     /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
     func setup(service: AuthenticationServiceProtocol) async -> Step {
         // check local data
-        guard !client.cookieManager.cookies.isEmpty else {
+        guard await !client.cookieManager.cookies.isEmpty else {
             return .loggingIn
         }
         do {
@@ -51,7 +51,7 @@ final class AppViewModel {
 
     private func setCredential(username: String, password: String, isSavedOnKeyChain: Bool) async {
         isPreviewMode = isPreviewUser(username: username, password: password)
-        client.setCledentials(username: username, password: password)
+        await client.setCledentials(username: username, password: password)
         if isSavedOnKeyChain {
             _ = await KeychainUtil.shared.savePassword(password, for: username)
         }
@@ -59,7 +59,7 @@ final class AppViewModel {
 
     func login(username: String, password: String, isSavedOnKeyChain: Bool) async -> VerifyType? {
         isPreviewMode = isPreviewUser(username: username, password: password)
-        client.setCledentials(username: username, password: password)
+        await client.setCledentials(username: username, password: password)
         if isSavedOnKeyChain {
             _ = await KeychainUtil.shared.savePassword(password, for: username)
         }
@@ -67,7 +67,7 @@ final class AppViewModel {
     }
 
     func login() async -> VerifyType? {
-        let service = isPreviewMode
+        let service: AuthenticationServiceProtocol = isPreviewMode
         ? AuthenticationPreviewService(client: client)
         : AuthenticationService(client: client)
         do {

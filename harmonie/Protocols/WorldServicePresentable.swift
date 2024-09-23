@@ -7,12 +7,12 @@
 
 import VRCKit
 
+@MainActor
 protocol WorldServicePresentable {
     var appVM: AppViewModel { get }
 }
 
 extension WorldServicePresentable {
-    @MainActor
     var worldService: WorldServiceProtocol {
         appVM.isPreviewMode
         ? WorldPreviewService(client: appVM.client)

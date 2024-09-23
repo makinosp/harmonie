@@ -46,7 +46,7 @@ final class FriendViewModel {
     }
 
     /// Fetch friends from API
-    func fetchAllFriends(service: FriendServiceProtocol) async throws {
+    func fetchAllFriends<T: FriendServiceProtocol>(service: T) async throws where T: Sendable {
         async let onlineFriendsTask = service.fetchFriends(
             count: user.onlineFriends.count + user.activeFriends.count,
             offline: false
@@ -57,7 +57,7 @@ final class FriendViewModel {
         )
         onlineFriends = try await onlineFriendsTask
         offlineFriends = try await offlineFriendsTask
-        friendsLocations = service.friendsGroupedByLocation(onlineFriends)
+        friendsLocations = await service.friendsGroupedByLocation(onlineFriends)
         applyFilters()
     }
 }

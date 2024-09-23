@@ -21,11 +21,7 @@ struct FriendsListView: View, FriendServicePresentable {
     var body: some View {
         List(friendVM.filterResultFriends, selection: $selected) { friend in
             Label {
-                LabeledContent {
-                    if UIDevice.current.userInterfaceIdiom == .phone {
-                        Constants.Icon.forward
-                    }
-                } label: {
+                NavigationLabel {
                     Text(friend.displayName)
                 }
             } icon: {

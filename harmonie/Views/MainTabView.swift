@@ -58,6 +58,7 @@ struct MainTabView: View, FriendServicePresentable, FavoriteServicePresentable {
     }
 }
 
+@MainActor
 extension MainTabView.Tab {
     @ViewBuilder var content: some View {
         switch self {

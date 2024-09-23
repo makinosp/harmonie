@@ -7,12 +7,12 @@
 
 import VRCKit
 
+@MainActor
 protocol FriendServicePresentable {
     var appVM: AppViewModel { get }
 }
 
 extension FriendServicePresentable {
-    @MainActor
     var friendService: FriendServiceProtocol {
         appVM.isPreviewMode
         ? FriendPreviewService(client: appVM.client)

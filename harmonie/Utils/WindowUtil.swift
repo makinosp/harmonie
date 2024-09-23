@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum WindowUtil {
+@MainActor enum WindowUtil {
     static var window: UIWindowScene? {
         UIApplication.shared.connectedScenes.first as? UIWindowScene
     }

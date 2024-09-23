@@ -11,15 +11,11 @@ import VRCKit
 extension SettingsView {
     func profileSection(user: User) -> some View {
         Section(header: Text("Profile")) {
-            LabeledContent {
-                if UIDevice.current.userInterfaceIdiom == .phone {
-                    Constants.Icon.forward
-                }
-            } label: {
+            NavigationLabel {
                 Label {
                     Text(user.displayName)
                 } icon: {
-                        UserIcon(user: user, size: Constants.IconSize.ll)
+                    UserIcon(user: user, size: Constants.IconSize.ll)
                 }
                 .padding(.vertical, 8)
             }

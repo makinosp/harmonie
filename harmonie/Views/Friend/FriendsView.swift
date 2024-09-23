@@ -10,6 +10,7 @@ import VRCKit
 
 struct FriendsView: View {
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
     @State private var selected: String?
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
@@ -33,12 +34,15 @@ struct FriendsView: View {
             }
         }
         .navigationSplitViewStyle(.balanced)
-        .searchable(text: $friendVM.filterText)
+        .searchable(
+            text: $friendVM.filterText,
+            placement: .navigationBarDrawer(displayMode: .always)
+        )
         .onSubmit(of: .search) {
             friendVM.applyFilters()
         }
-        .onChange(of: friendVM.favoriteFriends) { _, favoriteFriends in
-            friendVM.setFavoriteFriends(favoriteFriends: favoriteFriends)
+        .task {
+            friendVM.setFavoriteFriends(favoriteVM.favoriteFriends)
         }
     }
 }

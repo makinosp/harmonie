@@ -7,12 +7,12 @@
 
 import VRCKit
 
+@MainActor
 protocol FavoriteServicePresentable {
     var appVM: AppViewModel { get }
 }
 
 extension FavoriteServicePresentable {
-    @MainActor
     var favoriteService: FavoriteServiceProtocol {
         appVM.isPreviewMode
         ? FavoritePreviewService(client: appVM.client)

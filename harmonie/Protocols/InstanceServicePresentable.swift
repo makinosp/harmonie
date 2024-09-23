@@ -7,12 +7,12 @@
 
 import VRCKit
 
+@MainActor
 protocol InstanceServicePresentable {
     var appVM: AppViewModel { get }
 }
 
 extension InstanceServicePresentable {
-    @MainActor
     var instanceService: InstanceServiceProtocol {
         appVM.isPreviewMode
         ? InstancePreviewService(client: appVM.client)

@@ -8,7 +8,7 @@
 import VRCKit
 
 extension FriendViewModel {
-    func setFavoriteFriends(favoriteFriends: [FavoriteFriend]) {
+    func setFavoriteFriends(_ favoriteFriends: [FavoriteFriend]) {
         self.favoriteFriends = favoriteFriends
     }
 

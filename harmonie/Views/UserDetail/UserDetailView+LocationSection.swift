@@ -10,9 +10,11 @@ import SwiftUI
 import VRCKit
 
 extension UserDetailView {
-    var locationDescription: String {
+    private var locationDescription: String {
         if let instance = instance {
             instance.world.name
+        } else if user.platform == .web {
+            "On website"
         } else if user.location == .offline {
             "Offline"
         } else if user.location == .private {
@@ -24,17 +26,18 @@ extension UserDetailView {
         }
     }
 
-    var locationImageUrl: URL? {
+    private var locationImageUrl: URL? {
         if user.isVisible {
             return instance?.imageUrl(.x256)
         }
-        return switch user.location {
-        case .offline:
-            Const.offlineImageUrl
-        case .private, .traveling:
-            Const.privateWorldImageUrl
-        default:
-            nil
+        if user.platform == .web {
+            return Const.locationOnWebImageUrl
+        } else if user.location == .offline {
+            return Const.offlineImageUrl
+        } else if user.location == .offline || user.location == .offline || user.location == .offline {
+            return Const.privateWorldImageUrl
+        } else {
+            return nil
         }
     }
 
