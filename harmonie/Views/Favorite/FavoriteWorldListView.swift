@@ -17,20 +17,16 @@ struct FavoriteWorldListView: View {
     }
 
     var body: some View {
-        List(groupedWorlds.keys.sorted(), id: \.hashValue, selection: $selected) { group in
-            if let worlds = groupedWorlds[group] {
-                Section(header: Text(group)) {
-                    ForEach(worlds) { world in
+        List(favoriteVM.groupedFavoriteWorlds, selection: $selected) { favoriteWorlds in
+            if let group = favoriteWorlds.group {
+                DisclosureGroup(group.displayName) {
+                    ForEach(favoriteWorlds.worlds) { world in
                         worldItem(world)
                             .tag(Selected(id: world.id))
                     }
                 }
             }
         }
-    }
-
-    private var groupedWorlds: [String: [World]] {
-        Dictionary(grouping: favoriteVM.favoriteWorlds, by: { $0.favoriteGroup ?? "Unknown" })
     }
 
     private func worldItem(_ world: World) -> some View {
