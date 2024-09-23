@@ -13,6 +13,7 @@ struct FavoritesView: View {
     @State private var selected: Selected?
 
     var body: some View {
+        @Bindable var favoriteVM = favoriteVM
         NavigationSplitView(columnVisibility: .constant(.all)) {
             Group {
                 if favoriteVM.segment == .friend {
@@ -23,7 +24,6 @@ struct FavoritesView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .status) {
-                    @Bindable var favoriteVM = favoriteVM
                     Picker("", selection: $favoriteVM.segment) {
                         ForEach(Segment.allCases) { segment in
                             Text(segment.description).tag(segment)
