@@ -7,12 +7,12 @@
 
 import VRCKit
 
+@MainActor
 protocol AuthenticationServicePresentable {
     var appVM: AppViewModel { get }
 }
 
 extension AuthenticationServicePresentable {
-    @MainActor
     var authenticationService: AuthenticationServiceProtocol {
         appVM.isPreviewMode
         ? AuthenticationPreviewService(client: appVM.client)
