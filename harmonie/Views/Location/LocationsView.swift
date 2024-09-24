@@ -66,7 +66,7 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
 
     private var locationList: some View {
         List(friendVM.friendsLocations, selection: $selectedInstance) { location in
-            if location.isVisible {
+            if case .id = location.location {
                 LocationCardView(
                     selected: $selectedInstance,
                     location: location
