@@ -28,7 +28,7 @@ extension UserDetailView {
 
     private var locationImageUrl: URL? {
         switch user.location {
-        case .id(let string):
+        case .id:
             user.platform == .web ? Const.locationOnWebImageUrl : instance?.imageUrl(.x256)
         case .private, .traveling:
             Const.privateWorldImageUrl
