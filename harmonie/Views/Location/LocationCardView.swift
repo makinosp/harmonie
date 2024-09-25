@@ -58,7 +58,7 @@ struct LocationCardView: View, InstanceServicePresentable {
                     }
                 }
                 ScrollView(.horizontal) {
-                    HStack(spacing: -8) {
+                    LazyHStack(spacing: -8) {
                         ForEach(location.friends) { friend in
                             CircleURLImage(
                                 imageUrl: friend.imageUrl(.x256),
