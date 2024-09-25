@@ -65,12 +65,42 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
     }
 
     private var locationList: some View {
-        List(friendVM.friendsLocations, selection: $selectedInstance) { location in
-            if case .id = location.location {
+        List(selection: $selectedInstance) {
+            ForEach(friendVM.friendsLocations.filter(\.location.isVisible)) { location in
                 LocationCardView(
                     selected: $selectedInstance,
                     location: location
                 )
+            }
+            Section("Private") {
+                HStack(spacing: 16) {
+                    SquareURLImage(imageUrl: Const.privateWorldImageUrl)
+                    VStack(spacing: 4) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Private World")
+                                    .font(.body)
+                                Text(friendVM.friendsInPrivate.count.description)
+                                    .font(.footnote)
+                                    .foregroundStyle(Color.gray)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            if UIDevice.current.userInterfaceIdiom == .phone {
+                                Constants.Icon.forward
+                            }
+                        }
+                        ScrollView(.horizontal) {
+                            LazyHStack(spacing: -8) {
+                                ForEach(friendVM.friendsInPrivate) { friend in
+                                    CircleURLImage(
+                                        imageUrl: friend.imageUrl(.x256),
+                                        size: Constants.IconSize.thumbnail
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         .overlay {
@@ -85,6 +115,15 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                     }
                 }
             }
+        }
+    }
+}
+
+extension Location {
+    var isVisible: Bool {
+        switch self {
+        case .id: true
+        default: false
         }
     }
 }
