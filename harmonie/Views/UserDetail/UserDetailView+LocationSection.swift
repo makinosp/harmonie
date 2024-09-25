@@ -15,10 +15,10 @@ extension UserDetailView {
             instance.world.name
         } else if user.platform == .web {
             "On website"
-        } else if user.location == .offline {
-            "Offline"
         } else if user.location == .private {
             "Private World"
+        } else if user.location == .offline {
+            "Offline"
         } else if isRequesting {
             String(repeating: " ", count: 15)
         } else {
@@ -27,17 +27,13 @@ extension UserDetailView {
     }
 
     private var locationImageUrl: URL? {
-        if user.isVisible {
-            return instance?.imageUrl(.x256)
-        }
-        if user.platform == .web {
-            return Const.locationOnWebImageUrl
-        } else if user.location == .offline {
-            return Const.offlineImageUrl
-        } else if user.location == .offline || user.location == .offline || user.location == .offline {
-            return Const.privateWorldImageUrl
-        } else {
-            return nil
+        switch user.location {
+        case .id:
+            user.platform == .web ? Const.locationOnWebImageUrl : instance?.imageUrl(.x256)
+        case .private, .traveling:
+            Const.privateWorldImageUrl
+        case .offline:
+            Const.offlineImageUrl
         }
     }
 

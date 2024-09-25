@@ -9,10 +9,6 @@ import SwiftUI
 import VRCKit
 
 extension UserDetailView {
-    var statusColor: Color {
-        user.state == .offline ? UserStatus.offline.color : user.status.color
-    }
-
     var topOverlay: some View {
         HStack {
             Spacer()
@@ -48,7 +44,7 @@ extension UserDetailView {
             Text(user.statusDescription.isEmpty ? user.status.description : user.statusDescription)
         } icon: {
             StatusIndicator(
-                user.status.color,
+                user.location != .offline ? user.status.color : UserStatus.offline.color,
                 size: Constants.IconSize.indicator,
                 isCutOut: user.platform == .web
             )

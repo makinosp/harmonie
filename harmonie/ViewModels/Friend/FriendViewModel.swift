@@ -32,6 +32,10 @@ final class FriendViewModel {
         onlineFriends + offlineFriends
     }
 
+    var friendsInPrivate: [Friend] {
+        friendsLocations.first(where: { $0.location == .private })?.friends ?? []
+    }
+
     func getFriend(id: String) -> Friend? {
         allFriends.first { $0.id == id }
     }
