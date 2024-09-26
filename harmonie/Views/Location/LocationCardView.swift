@@ -37,7 +37,7 @@ struct LocationCardView: View, InstanceServicePresentable {
                 imageUrl: instance.world.imageUrl(.x512),
                 thumbnailImageUrl: instance.world.imageUrl(.x256)
             )
-            VStack(spacing: 4) {
+            VStack(spacing: .zero) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(instance.world.name)
@@ -45,10 +45,10 @@ struct LocationCardView: View, InstanceServicePresentable {
                             .lineLimit(1)
                         HStack {
                             Text(instance.typeDescription)
-                                .font(.footnote)
+                                .font(.caption)
                                 .foregroundStyle(Color.gray)
                             Text(personAmount(instance))
-                                .font(.footnote)
+                                .font(.caption)
                                 .foregroundStyle(Color.gray)
                         }
                     }
@@ -71,6 +71,7 @@ struct LocationCardView: View, InstanceServicePresentable {
                     selected = tag(instance)
                 }
             }
+            .padding(.top, 4)
         }
         .tag(tag(instance))
     }
