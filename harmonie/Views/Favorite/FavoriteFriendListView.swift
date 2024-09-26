@@ -31,6 +31,8 @@ struct FavoriteFriendListView: View {
                         .tag(Selected(id: friend.id))
                     }
                 }
+            } else {
+                Text("\(group.displayName) (Empty)")
             }
         }
         .overlay {
@@ -44,5 +46,12 @@ struct FavoriteFriendListView: View {
                 }
             }
         }
+    }
+}
+
+#Preview {
+    @Previewable @State var selected: Selected?
+    PreviewContainer {
+        FavoriteFriendListView(selected: $selected)
     }
 }

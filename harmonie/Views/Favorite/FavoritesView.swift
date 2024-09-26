@@ -53,3 +53,9 @@ struct FavoritesView: View {
         .navigationSplitViewStyle(.balanced)
     }
 }
+
+#Preview {
+    PreviewContainer {
+        FavoritesView()
+    }
+}
