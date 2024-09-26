@@ -15,25 +15,23 @@ struct FavoritesView: View {
     var body: some View {
         @Bindable var favoriteVM = favoriteVM
         NavigationSplitView(columnVisibility: .constant(.all)) {
-            VStack(spacing: .zero) {
+            Group {
+                if favoriteVM.segment == .friend {
+                    FavoriteFriendListView(selected: $selected)
+                } else if favoriteVM.segment == .world {
+                    FavoriteWorldListView(selected: $selected)
+                }
+            }
+            .contentMargins(.top, 8)
+            .navigationTitle("Favorites")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarTitleMenu {
                 Picker("", selection: $favoriteVM.segment) {
                     ForEach(Segment.allCases) { segment in
                         Text(segment.description).tag(segment)
                     }
                 }
-                .pickerStyle(.segmented)
-                .padding(.horizontal, 16)
-                Group {
-                    if favoriteVM.segment == .friend {
-                        FavoriteFriendListView(selected: $selected)
-                    } else if favoriteVM.segment == .world {
-                        FavoriteWorldListView(selected: $selected)
-                    }
-                }
-                .contentMargins(.top, 8)
             }
-            .background(Color(.systemGroupedBackground))
-            .navigationTitle("Favorites")
         } detail: {
             if let selected = selected {
                 switch favoriteVM.segment {
