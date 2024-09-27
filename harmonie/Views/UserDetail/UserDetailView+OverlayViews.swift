@@ -70,18 +70,8 @@ extension UserDetailView {
         .font(.footnote.bold())
         .padding(.horizontal, 12)
         .padding(.vertical, 4)
-        .background(trustRankColor(user.trustRank).opacity(0.5))
+        .background(user.trustRank.color.opacity(0.5))
         .background(.thinMaterial)
         .cornerRadius(8)
-    }
-
-    func trustRankColor(_ trustRank: TrustRank) -> Color {
-        switch trustRank {
-        case .trusted: .indigo
-        case .known: .orange
-        case .user: .green
-        case .newUser: .blue
-        case .visitor, .unknown: .gray
-        }
     }
 }

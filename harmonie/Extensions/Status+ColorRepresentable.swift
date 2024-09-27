@@ -1,5 +1,5 @@
 //
-//  Status+color.swift
+//  Status+ColorRepresentable.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/04/07.
@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-extension UserStatus {
+extension UserStatus: ColorRepresentable {
     var color: Color {
         switch self {
         case .joinMe: .cyan
