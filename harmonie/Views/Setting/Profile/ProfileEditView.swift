@@ -159,6 +159,7 @@ struct ProfileEditView: View, UserServicePresentable {
     }
 
     private func saveProfileAction() async {
+        guard let user = appVM.user else { return }
         defer {
             isRequesting = false
             dismiss()
@@ -169,6 +170,6 @@ struct ProfileEditView: View, UserServicePresentable {
         } catch {
             appVM.handleError(error)
         }
-        _ = await appVM.login()
+        appVM.user = User(user: user, editedUserInfo: profileEditVM.editingUserInfo)
     }
 }
