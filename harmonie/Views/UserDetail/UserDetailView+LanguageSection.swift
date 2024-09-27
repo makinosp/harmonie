@@ -10,10 +10,7 @@ import VRCKit
 
 extension UserDetailView {
     var languageSection: some View {
-        SectionView {
-            Text("Languages")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
+        GroupBox("Languages") {
             HStack(spacing: 8) {
                 ForEach(user.tags.languageTags) { language in
                     Text(language.description)
@@ -25,5 +22,6 @@ extension UserDetailView {
                 }
             }
         }
+        .groupBoxStyle(.card)
     }
 }

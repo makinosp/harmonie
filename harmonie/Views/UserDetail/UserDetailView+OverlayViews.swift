@@ -29,7 +29,7 @@ extension UserDetailView {
 
     var bottomOverlay: some View {
         HStack {
-            statusDescription
+            status
             Spacer()
             trustRankLabel
         }
@@ -39,12 +39,20 @@ extension UserDetailView {
         .padding(.horizontal, 12)
     }
 
-    var statusDescription: some View {
+    private var statusDescription: String {
+        if user.state == .offline {
+            UserStatus.offline.description
+        } else {
+            user.statusDescription.isEmpty ? user.status.description : user.statusDescription
+        }
+    }
+
+    var status: some View {
         Label {
-            Text(user.statusDescription.isEmpty ? user.status.description : user.statusDescription)
+            Text(statusDescription)
         } icon: {
             StatusIndicator(
-                user.location != .offline ? user.status.color : UserStatus.offline.color,
+                user.state != .offline ? user.status.color : UserStatus.offline.color,
                 size: Constants.IconSize.indicator,
                 isCutOut: user.platform == .web
             )
@@ -62,18 +70,8 @@ extension UserDetailView {
         .font(.footnote.bold())
         .padding(.horizontal, 12)
         .padding(.vertical, 4)
-        .background(trustRankColor(user.trustRank).opacity(0.5))
+        .background(user.trustRank.color.opacity(0.5))
         .background(.thinMaterial)
         .cornerRadius(8)
-    }
-
-    func trustRankColor(_ trustRank: TrustRank) -> Color {
-        switch trustRank {
-        case .trusted: .indigo
-        case .known: .orange
-        case .user: .green
-        case .newUser: .blue
-        case .visitor, .unknown: .gray
-        }
     }
 }

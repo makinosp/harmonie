@@ -10,12 +10,10 @@ import VRCKit
 
 extension UserDetailView {
     func bioSection(_ bio: String) -> some View {
-        SectionView {
-            Text("Bio")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
+        GroupBox("Bio") {
             Text(bio)
                 .font(.body)
         }
+        .groupBoxStyle(.card)
     }
 }

@@ -15,14 +15,14 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 0) {
+            VStack {
                 GradientOverlayImageView(
                     imageUrl: world.imageUrl(.x1024),
                     thumbnailImageUrl: world.imageUrl(.x256),
                     height: 250,
                     bottomContent: { overlaysOnImage }
                 )
-                contentWorldStacks
+                contentStacks
             }
         }
         .navigationTitle(world.name)
@@ -41,33 +41,28 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
         .padding(.horizontal, 12)
     }
 
-    private var contentWorldStacks: some View {
-        VStack(spacing: 12) {
+    private var contentStacks: some View {
+        VStack {
             authorSection
             if let description = world.description {
                 descriptionSection(description)
             }
         }
-        .padding()
     }
 
     private var authorSection: some View {
-        SectionView {
-            Text("Author")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
+        GroupBox("Author") {
             Text(world.authorName)
                 .font(.body)
         }
+        .groupBoxStyle(.card)
     }
 
     func descriptionSection(_ description: String) -> some View {
-        SectionView {
-            Text("Description")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
+        GroupBox("Description") {
             Text(description)
                 .font(.body)
         }
+        .groupBoxStyle(.card)
     }
 }

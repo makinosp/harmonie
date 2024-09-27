@@ -7,8 +7,11 @@
 
 import VRCKit
 
-struct InstanceLocation: Hashable, Identifiable {
+struct InstanceLocation: Hashable {
     var location: FriendsLocation
     var instance: Instance
+}
+
+extension InstanceLocation: Identifiable {
     var id: Int { hashValue }
 }

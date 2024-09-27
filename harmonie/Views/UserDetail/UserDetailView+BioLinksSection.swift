@@ -10,10 +10,7 @@ import VRCKit
 
 extension UserDetailView {
     func bioLinksSection(_ urls: [URL]) -> some View {
-        SectionView {
-            Text("Social Links")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
+        GroupBox("Social Links") {
             VStack(alignment: .leading) {
                 ForEach(urls) { url in
                     Link(url.description, destination: url)
@@ -21,5 +18,6 @@ extension UserDetailView {
                 }
             }
         }
+        .groupBoxStyle(.card)
     }
 }
