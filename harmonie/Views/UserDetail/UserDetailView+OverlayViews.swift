@@ -29,7 +29,7 @@ extension UserDetailView {
 
     var bottomOverlay: some View {
         HStack {
-            statusDescription
+            status
             Spacer()
             trustRankLabel
         }
@@ -39,12 +39,20 @@ extension UserDetailView {
         .padding(.horizontal, 12)
     }
 
-    var statusDescription: some View {
+    private var statusDescription: String {
+        if user.state == .offline {
+            UserStatus.offline.description
+        } else {
+            user.statusDescription.isEmpty ? user.status.description : user.statusDescription
+        }
+    }
+
+    var status: some View {
         Label {
-            Text(user.statusDescription.isEmpty ? user.status.description : user.statusDescription)
+            Text(statusDescription)
         } icon: {
             StatusIndicator(
-                user.location != .offline ? user.status.color : UserStatus.offline.color,
+                user.state != .offline ? user.status.color : UserStatus.offline.color,
                 size: Constants.IconSize.indicator,
                 isCutOut: user.platform == .web
             )
