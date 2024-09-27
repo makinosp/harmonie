@@ -9,18 +9,18 @@ import SwiftUI
 
 extension UserDetailView {
     var activitySection: some View {
-        SectionView {
+        GroupBox("Activity") {
             VStack(alignment: .leading, spacing: 8) {
                 VStack(alignment: .leading) {
                     Text("Last Login")
-                        .font(.subheadline)
+                        .font(.caption)
                         .foregroundStyle(Color.gray)
                     Text(user.lastLogin.formatted(date: .complete, time: .complete))
                         .font(.body)
                 }
                 VStack(alignment: .leading) {
                     Text("Last Activity")
-                        .font(.subheadline)
+                        .font(.caption)
                         .foregroundStyle(Color.gray)
                     Text(user.lastActivity.formatted(date: .complete, time: .complete))
                         .font(.body)
@@ -28,7 +28,7 @@ extension UserDetailView {
                 if let dateJoined = user.dateJoined {
                     VStack(alignment: .leading) {
                         Text("Date Joined")
-                            .font(.subheadline)
+                            .font(.caption)
                             .foregroundStyle(Color.gray)
                         Text(dateJoined.formatted(date: .abbreviated, time: .omitted))
                             .font(.body)
@@ -36,5 +36,6 @@ extension UserDetailView {
                 }
             }
         }
+        .groupBoxStyle(.card)
     }
 }

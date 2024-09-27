@@ -10,13 +10,11 @@ import VRCKit
 
 extension UserDetailView {
     var noteSection: some View {
-        SectionView {
-            Text("Note")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
+        GroupBox("Note") {
             TextField("Enter note", text: $note, axis: .vertical)
                 .focused($isFocusedNoteField)
                 .font(.body)
         }
+        .groupBoxStyle(.card)
     }
 }

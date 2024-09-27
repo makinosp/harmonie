@@ -28,7 +28,7 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 0) {
+            VStack {
                 GradientOverlayImageView(
                     imageUrl: user.imageUrl(.x1024),
                     thumbnailImageUrl: user.imageUrl(.x256),
@@ -54,7 +54,7 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
     }
 
     private var contentStacks: some View {
-        VStack(spacing: 12) {
+        VStack {
             locationSection
             noteSection
             if let bio = user.bio {
@@ -69,6 +69,11 @@ struct UserDetailView: View, FavoriteServicePresentable, InstanceServicePresenta
             }
             activitySection
         }
-        .padding()
+    }
+}
+
+#Preview {
+    PreviewContainer { userDetail in
+        UserDetailView(user: userDetail)
     }
 }

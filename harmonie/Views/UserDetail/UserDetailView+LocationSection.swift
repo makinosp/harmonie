@@ -38,10 +38,7 @@ extension UserDetailView {
     }
 
     var locationSection: some View {
-        SectionView {
-            Text("Location")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
+        GroupBox("Location") {
             HStack {
                 SquareURLImage(imageUrl: locationImageUrl)
                 Text(locationDescription)
@@ -49,5 +46,6 @@ extension UserDetailView {
             }
             .redacted(reason: isRequesting ? .placeholder : [])
         }
+        .groupBoxStyle(.card)
     }
 }
