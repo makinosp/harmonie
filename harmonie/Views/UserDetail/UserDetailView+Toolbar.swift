@@ -69,7 +69,7 @@ extension UserDetailView {
             Label {
                 Text(group.displayName)
             } icon: {
-                if favoriteVM.isFriendInFavoriteGroup(
+                if favoriteVM.isInFavoriteGroup(
                     friendId: user.id,
                     groupId: group.id
                 ) {

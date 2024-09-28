@@ -100,7 +100,7 @@ final class FavoriteViewModel {
     ///   - friendId: The ID of the friend to check.
     ///   - groupId: The ID of the favorite group to check for the friend.
     /// - Returns: `true` if the friend is found in the group's favorite friends list, otherwise `false`.
-    func isFriendInFavoriteGroup(friendId: String, groupId: String) -> Bool {
+    func isInFavoriteGroup(friendId: String, groupId: String) -> Bool {
         guard let favoriteFriendDetails = getFavoriteFriends(groupId) else { return false }
         return favoriteFriendDetails.contains { $0.id == friendId }
     }
