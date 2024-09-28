@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import VRCKit
 
 struct OtpView: View, AuthenticationServicePresentable {
-    @Environment(AppViewModel.self) var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM
     @State private var code: String = ""
     @State private var isRequesting = false
     private let verifyType: VerifyType

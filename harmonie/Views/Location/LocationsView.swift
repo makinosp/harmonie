@@ -9,8 +9,8 @@ import SwiftUI
 import VRCKit
 
 struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable {
-    @Environment(AppViewModel.self) var appVM: AppViewModel
-    @Environment(FriendViewModel.self) var friendVM: FriendViewModel
+    @Environment(AppViewModel.self) var appVM
+    @Environment(FriendViewModel.self) var friendVM
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedInstance: InstanceLocation?
     @State private var selection: SegmentIdSelection?

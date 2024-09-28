@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct FavoriteWorldListView: View {
-    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM
     @Binding private var selected: Selected?
 
     init(selected: Binding<Selected?>) {

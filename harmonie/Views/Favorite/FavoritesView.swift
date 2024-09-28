@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct FavoritesView: View {
-    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM
     @State private var selected: Selected?
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
 

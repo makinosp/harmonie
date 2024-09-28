@@ -13,7 +13,7 @@ extension WorldView: FavoriteServicePresentable {}
 extension WorldView: InstanceServicePresentable {}
 
 struct WorldView: View {
-    @Environment(AppViewModel.self) var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @State var world: World
     @State var isRequesting = false
