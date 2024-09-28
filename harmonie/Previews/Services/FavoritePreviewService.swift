@@ -23,7 +23,7 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
                 name: "group_1",
                 tags: [],
                 type: .friend,
-                visibility: "private"
+                visibility: .private
             )
         ]
     }

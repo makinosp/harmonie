@@ -44,7 +44,7 @@ extension WorldView {
 
     private func favoriteMenuItem(group: FavoriteGroup) -> some View {
         AsyncButton {
-            // TODO: await updateFavorite(worldId: world.id, group: group)
+            await updateFavorite(world: world, group: group)
         } label: {
             Label {
                 Text(group.displayName)
@@ -56,6 +56,18 @@ extension WorldView {
                     Constants.Icon.check
                 }
             }
+        }
+    }
+
+    func updateFavorite(world: World, group: FavoriteGroup) async {
+        do {
+            try await favoriteVM.updateFavorite(
+                service: favoriteService,
+                world: world,
+                targetGroup: group
+            )
+        } catch {
+            appVM.handleError(error)
         }
     }
 }

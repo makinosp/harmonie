@@ -12,11 +12,11 @@ struct FavoriteFriend: Sendable, Hashable {
     var friends: [Friend]
 }
 
-struct FavoriteWorld: Sendable, Hashable {
+struct FavoriteWorldGroup: Sendable, Hashable {
     let group: FavoriteGroup?
-    var worlds: [World]
+    var worlds: [FavoriteWorld]
 }
 
-extension FavoriteWorld: Identifiable {
+extension FavoriteWorldGroup: Identifiable {
     var id: Int { hashValue }
 }

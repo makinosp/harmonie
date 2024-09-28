@@ -29,7 +29,7 @@ struct FavoriteWorldListView: View {
         }
     }
 
-    private func worldItem(_ world: World) -> some View {
+    private func worldItem(_ world: FavoriteWorld) -> some View {
         HStack(spacing: 12) {
             SquareURLImage(
                 imageUrl: world.imageUrl(.x512),

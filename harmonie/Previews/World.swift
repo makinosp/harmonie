@@ -40,8 +40,7 @@ extension World {
         favorites: Int,
         visits: Int,
         popularity: Int,
-        heat: Int,
-        favoriteGroup: String? = nil
+        heat: Int
     ) {
         self.init(
             id: "wrld_\(id.uuidString)",
@@ -66,7 +65,6 @@ extension World {
             visits: visits,
             popularity: popularity,
             heat: heat,
-            favoriteGroup: favoriteGroup,
             version: 1
         )
     }
