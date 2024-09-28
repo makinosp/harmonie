@@ -1,5 +1,5 @@
 //
-//  WorldDetailView.swift
+//  WorldView.swift
 //  Harmonie
 //
 //  Created by xili on 2024/09/13.
@@ -9,8 +9,12 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresentable {
+extension WorldView: FavoriteServicePresentable {}
+extension WorldView: InstanceServicePresentable {}
+
+struct WorldView: View {
     @Environment(AppViewModel.self) var appVM: AppViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM
     @State var world: World
 
     var body: some View {
@@ -28,6 +32,7 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
         .navigationTitle(world.name)
         .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground))
+        .toolbar { toolbar }
     }
 
     private var overlaysOnImage: some View {
@@ -58,11 +63,19 @@ struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresent
         .groupBoxStyle(.card)
     }
 
-    func descriptionSection(_ description: String) -> some View {
+    private func descriptionSection(_ description: String) -> some View {
         GroupBox("Description") {
             Text(description)
                 .font(.body)
         }
         .groupBoxStyle(.card)
+    }
+}
+
+#Preview {
+    PreviewContainer {
+        NavigationStack {
+            WorldView(world: PreviewDataProvider.world)
+        }
     }
 }

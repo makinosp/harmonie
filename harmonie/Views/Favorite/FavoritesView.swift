@@ -38,7 +38,7 @@ struct FavoritesView: View {
                 case .friend:
                     UserDetailPresentationView(id: selected.id)
                 case .world:
-                    WorldDetailPresentationView(id: selected.id)
+                    WorldPresentationView(id: selected.id)
                 }
             } else {
                 ContentUnavailableView {

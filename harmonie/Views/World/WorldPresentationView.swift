@@ -1,5 +1,5 @@
 //
-//  WorldDetailPresentationView.swift
+//  WorldPresentationView.swift
 //  Harmonie
 //
 //  Created by xili on 2024/09/13.
@@ -8,14 +8,14 @@
 import SwiftUI
 import VRCKit
 
-struct WorldDetailPresentationView: View, WorldServicePresentable {
+struct WorldPresentationView: View, WorldServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @State var world: World?
     let id: String
 
     var body: some View {
         if let world = world {
-            WorldDetailView(world: world)
+            WorldView(world: world)
                 .refreshable {
                     await fetchWorld(id: id)
                 }
