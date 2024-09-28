@@ -1,5 +1,5 @@
 //
-//  WorldDetailView.swift
+//  WorldView.swift
 //  Harmonie
 //
 //  Created by xili on 2024/09/13.
@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-struct WorldDetailView: View, FavoriteServicePresentable, InstanceServicePresentable {
+struct WorldView: View, FavoriteServicePresentable, InstanceServicePresentable {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @State var world: World
 

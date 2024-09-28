@@ -46,7 +46,7 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                         case .friend:
                             UserDetailPresentationView(selected: selection.selected)
                         case .world:
-                            WorldDetailPresentationView(id: selection.selected.id)
+                            WorldPresentationView(id: selection.selected.id)
                         }
                     }
                     .id(selection.selected.id)
