@@ -17,10 +17,11 @@ final class FavoriteViewModel {
     var favoriteWorlds: [World] = []
     var segment: Segment = .friend
 
-    /// A filtered list of favorite groups that contain only friend-type groups.
-    /// It retrieves friend-type groups from the `favoriteGroups` property.
-    var favoriteFriendGroups: [FavoriteGroup] {
-        favoriteGroups.filter { $0.type == .friend }
+    /// Filters and returns the favorite groups of a specific type.
+    /// - Parameter type: The `FavoriteType` to filter the favorite groups by.
+    /// - Returns: An array of `FavoriteGroup` that matches the specified type.
+    func favoriteGroups(_ type: FavoriteType) -> [FavoriteGroup] {
+        favoriteGroups.filter { $0.type == type }
     }
 
     func getFavoriteGroup(id: String) -> FavoriteGroup? {
@@ -135,13 +136,11 @@ final class FavoriteViewModel {
     }
 
     var groupedFavoriteWorlds: [FavoriteWorld] {
-        favoriteGroups
-            .filter { $0.type == .world }
-            .map { group in
-                FavoriteWorld(
-                    group: group,
-                    worlds: getFavoriteWorldsByGroup(groupName: group.name)
-                )
-            }
+        favoriteGroups(.world).map { group in
+            FavoriteWorld(
+                group: group,
+                worlds: getFavoriteWorldsByGroup(groupName: group.name)
+            )
+        }
     }
 }
