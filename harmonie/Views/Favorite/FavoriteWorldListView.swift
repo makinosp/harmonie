@@ -27,6 +27,18 @@ struct FavoriteWorldListView: View {
                 }
             }
         }
+        .overlay {
+            if favoriteVM.favoriteWorlds.isEmpty {
+                ContentUnavailableView {
+                    Label {
+                        Text("No Favorites")
+                    } icon: {
+                        Constants.Icon.favorite
+                    }
+                }
+                .background(Color(.systemGroupedBackground))
+            }
+        }
     }
 
     private func worldItem(_ world: FavoriteWorld) -> some View {

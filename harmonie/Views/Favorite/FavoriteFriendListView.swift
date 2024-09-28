@@ -45,6 +45,7 @@ struct FavoriteFriendListView: View {
                         Constants.Icon.favorite
                     }
                 }
+                .background(Color(.systemGroupedBackground))
             }
         }
     }
