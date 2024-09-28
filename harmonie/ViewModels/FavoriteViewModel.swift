@@ -130,13 +130,17 @@ final class FavoriteViewModel {
         favoriteWorlds = try await service.fetchFavoritedWorlds(n: 100)
     }
 
+    func getFavoriteWorldsByGroup(groupName: String) -> [World] {
+        favoriteWorlds.filter { $0.favoriteGroup == groupName }
+    }
+
     var groupedFavoriteWorlds: [FavoriteWorld] {
-        Dictionary(grouping: favoriteWorlds, by: { $0.favoriteGroup ?? "Unknown" })
-            .sorted { $0.key < $1.key }
-            .map { dictionary in
+        favoriteGroups
+            .filter { $0.type == .world }
+            .map { group in
                 FavoriteWorld(
-                    group: getFavoriteGroup(name: dictionary.key),
-                    worlds: dictionary.value
+                    group: group,
+                    worlds: getFavoriteWorldsByGroup(groupName: group.name)
                 )
             }
     }
