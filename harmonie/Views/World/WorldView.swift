@@ -16,6 +16,7 @@ struct WorldView: View {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM
     @State var world: World
+    @State var isRequesting = false
 
     var body: some View {
         ScrollView {

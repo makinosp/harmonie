@@ -22,6 +22,7 @@ struct UserDetailView: View {
     @State var instance: Instance?
     @State var note: String
     @State var isRequesting = false
+    @State var isRequestingInMenu = false
     @State var lastActivity = ""
 
     init(user: UserDetail) {

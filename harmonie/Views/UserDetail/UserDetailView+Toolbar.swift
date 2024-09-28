@@ -40,7 +40,11 @@ extension UserDetailView {
                 ShareLink(item: url)
             }
         } label: {
-            Constants.Icon.dots
+            if isRequestingInMenu {
+                ProgressView()
+            } else {
+                Constants.Icon.dots
+            }
         }
     }
 
@@ -64,7 +68,7 @@ extension UserDetailView {
 
     private func favoriteMenuItem(group: FavoriteGroup) -> some View {
         AsyncButton {
-            await updateFavorite(friendId: user.id, group: group)
+            await updateFavoriteAction(friendId: user.id, group: group)
         } label: {
             Label {
                 Text(group.displayName)
