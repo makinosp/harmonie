@@ -105,6 +105,11 @@ final class FavoriteViewModel {
         return favoriteFriendDetails.contains { $0.id == friendId }
     }
 
+    func isInFavoriteGroup(worldId: String, groupName: String) -> Bool {
+        guard let favoriteWorld = favoriteWorlds.first(where: { $0.id == worldId }) else { return false }
+        return favoriteWorld.favoriteGroup == groupName
+    }
+
     /// Updates the favorite status for a user based on the specified target group.
     /// If the user is currently favorited in a different group, removes them from that group.
     /// If the target group differs from the current favorite group, adds the user to the new group.
