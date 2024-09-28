@@ -207,37 +207,4 @@ final class PreviewDataProvider: Sendable {
     static func generateInstance() -> Instance {
         generateInstance(worldId: UUID(), instanceId: 0)
     }
-
-    static func generateWorld(worldId: UUID) -> World {
-        World(
-            id: "wrld_\(worldId.uuidString)",
-            name: "DummyWorld",
-            description: "This is Dummy World.",
-            featured: true,
-            authorId: "usr_\(UUID().uuidString)",
-            authorName: "Dummy Author",
-            capacity: 32,
-            tags: [],
-            releaseStatus: .public,
-            imageUrl: Const.privateWorldImageUrl,
-            thumbnailImageUrl: Const.privateWorldImageUrl,
-            namespace: nil,
-            organization: "",
-            previewYoutubeId: "",
-            favorites: 1,
-            createdAt: Date(),
-            updatedAt: Date(),
-            publicationDate: OptionalISO8601Date(),
-            labsPublicationDate: OptionalISO8601Date(),
-            visits: 1,
-            popularity: 1,
-            heat: 1,
-            favoriteGroup: "",
-            version: 1
-        )
-    }
-
-    static func generateWorld() -> World {
-        generateWorld(worldId: UUID())
-    }
 }

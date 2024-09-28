@@ -15,10 +15,10 @@ final actor WorldPreviewService: APIService, WorldServiceProtocol {
     }
 
     func fetchWorld(worldId: String) async throws -> World {
-        PreviewDataProvider.generateWorld()
+        PreviewDataProvider.world
     }
 
     func fetchFavoritedWorlds(n: Int = 100) async throws -> [World] {
-        (0..<10).map { _ in PreviewDataProvider.generateWorld() }
+        (0..<n).map { _ in PreviewDataProvider.world }
     }
 }
