@@ -5,6 +5,8 @@
 //  Created by makinosp on 2024/09/21.
 //
 
+import SwiftUI
+
 enum Segment {
     case friend, world
 }
@@ -24,6 +26,15 @@ extension Segment: CustomStringConvertible {
         switch self {
         case .friend: "Friend"
         case .world: "World"
+        }
+    }
+}
+
+extension Segment {
+    @ViewBuilder var icon: some View {
+        switch self {
+        case .friend: Constants.Icon.friends
+        case .world: Constants.Icon.world
         }
     }
 }

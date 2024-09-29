@@ -24,12 +24,17 @@ struct FavoritesView: View {
                 }
             }
             .contentMargins(.top, 8)
-            .navigationTitle("Favorites")
+            .navigationTitle(favoriteVM.segment.description)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarTitleMenu {
                 Picker("", selection: $favoriteVM.segment) {
                     ForEach(Segment.allCases) { segment in
-                        Text(segment.description).tag(segment)
+                        Label {
+                            Text(segment.description)
+                        } icon: {
+                            segment.icon
+                        }
+                        .tag(segment)
                     }
                 }
             }
