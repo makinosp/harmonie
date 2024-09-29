@@ -76,7 +76,10 @@ extension World {
                     unitySortNumber: 1,
                     unityVersion: ""
                 )
-            ]
+            ],
+            occupants: 0,
+            privateOccupants: 0,
+            publicOccupants: 0
         )
     }
 }
