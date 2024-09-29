@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct WorldPresentationView: View, WorldServicePresentable {
-    @Environment(AppViewModel.self) var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM
     @State var world: World?
     let id: String
 

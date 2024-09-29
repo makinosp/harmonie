@@ -11,7 +11,7 @@ import VRCKit
 struct LoginView: View, AuthenticationServicePresentable {
     @AppStorage(Constants.Keys.isSavedOnKeyChain) private var isSavedOnKeyChain = false
     @AppStorage(Constants.Keys.username) private var username: String = ""
-    @Environment(AppViewModel.self) var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM
     @State private var verifyType: VerifyType?
     @State private var password: String = ""
     @State private var isRequesting = false

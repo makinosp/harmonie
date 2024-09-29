@@ -9,12 +9,13 @@ import SwiftUI
 import VRCKit
 
 struct FavoritesView: View {
-    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM
     @State private var selected: Selected?
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
     var body: some View {
         @Bindable var favoriteVM = favoriteVM
-        NavigationSplitView(columnVisibility: .constant(.all)) {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             Group {
                 if favoriteVM.segment == .friend {
                     FavoriteFriendListView(selected: $selected)
@@ -23,12 +24,17 @@ struct FavoritesView: View {
                 }
             }
             .contentMargins(.top, 8)
-            .navigationTitle("Favorites")
+            .navigationTitle(favoriteVM.segment.description)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarTitleMenu {
                 Picker("", selection: $favoriteVM.segment) {
                     ForEach(Segment.allCases) { segment in
-                        Text(segment.description).tag(segment)
+                        Label {
+                            Text(segment.description)
+                        } icon: {
+                            segment.icon
+                        }
+                        .tag(segment)
                     }
                 }
             }

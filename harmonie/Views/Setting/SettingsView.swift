@@ -10,7 +10,7 @@ import LicenseList
 import VRCKit
 
 struct SettingsView: View, AuthenticationServicePresentable {
-    @Environment(AppViewModel.self) var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM
     @State var destination: Destination? = UIDevice.current.userInterfaceIdiom == .pad ? .userDetail : nil
     @State var isPresentedForm = false
     @State private var columnVisibility: NavigationSplitViewVisibility = .all

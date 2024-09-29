@@ -48,7 +48,7 @@ enum Constants {
                 .imageScale(.small)
         }
         static var friends: some View {
-            Image(systemName: "person.2.fill")
+            Image(systemName: "person.2")
         }
         static var location: some View {
             Image(systemName: "location")
@@ -64,6 +64,9 @@ enum Constants {
         }
         static var up: some View {
             Image(systemName: "arrow.up")
+        }
+        static var world: some View {
+            Image(systemName: "globe.desk")
         }
     }
 

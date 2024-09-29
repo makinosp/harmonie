@@ -13,15 +13,16 @@ extension UserDetailView: FavoriteServicePresentable {}
 extension UserDetailView: InstanceServicePresentable {}
 
 struct UserDetailView: View {
-    @Environment(AppViewModel.self) var appVM: AppViewModel
-    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @Environment(FriendViewModel.self) var friendVM: FriendViewModel
+    @Environment(AppViewModel.self) var appVM
+    @Environment(FavoriteViewModel.self) var favoriteVM
+    @Environment(FriendViewModel.self) var friendVM
     @Environment(\.dismiss) private var dismiss
     @FocusState var isFocusedNoteField
     @State var user: UserDetail
     @State var instance: Instance?
     @State var note: String
     @State var isRequesting = false
+    @State var isRequestingInMenu = false
     @State var lastActivity = ""
 
     init(user: UserDetail) {

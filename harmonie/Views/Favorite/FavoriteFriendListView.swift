@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct FavoriteFriendListView: View {
-    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM
     @Binding private var selected: Selected?
 
     init(selected: Binding<Selected?>) {
@@ -45,6 +45,7 @@ struct FavoriteFriendListView: View {
                         Constants.Icon.favorite
                     }
                 }
+                .background(Color(.systemGroupedBackground))
             }
         }
     }

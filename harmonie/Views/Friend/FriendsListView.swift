@@ -9,9 +9,9 @@ import SwiftUI
 
 struct FriendsListView: View, FriendServicePresentable {
     @Environment(\.isSearching) private var isSearching
-    @Environment(AppViewModel.self) var appVM: AppViewModel
-    @Environment(FriendViewModel.self) var friendVM: FriendViewModel
-    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @Environment(AppViewModel.self) var appVM
+    @Environment(FriendViewModel.self) var friendVM
+    @Environment(FavoriteViewModel.self) var favoriteVM
     @Binding private var selected: String?
 
     init(selected: Binding<String?>) {

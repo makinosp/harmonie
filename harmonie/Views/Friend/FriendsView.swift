@@ -9,8 +9,8 @@ import SwiftUI
 import VRCKit
 
 struct FriendsView: View {
-    @Environment(FriendViewModel.self) var friendVM: FriendViewModel
-    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @Environment(FriendViewModel.self) var friendVM
+    @Environment(FavoriteViewModel.self) var favoriteVM
     @State private var selected: String?
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
 

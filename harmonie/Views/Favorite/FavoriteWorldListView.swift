@@ -9,7 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct FavoriteWorldListView: View {
-    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM
     @Binding private var selected: Selected?
 
     init(selected: Binding<Selected?>) {
@@ -25,6 +25,18 @@ struct FavoriteWorldListView: View {
                             .tag(Selected(id: world.id))
                     }
                 }
+            }
+        }
+        .overlay {
+            if favoriteVM.favoriteWorlds.isEmpty {
+                ContentUnavailableView {
+                    Label {
+                        Text("No Favorites")
+                    } icon: {
+                        Constants.Icon.favorite
+                    }
+                }
+                .background(Color(.systemGroupedBackground))
             }
         }
     }

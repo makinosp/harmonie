@@ -20,8 +20,13 @@ extension WorldView {
                 ShareLink(item: url)
             }
         } label: {
-            Constants.Icon.dots
+            if isRequesting {
+                ProgressView()
+            } else {
+                Constants.Icon.dots
+            }
         }
+        .disabled(isRequesting)
     }
 
     private var favoriteMenu: some View {
@@ -44,7 +49,7 @@ extension WorldView {
 
     private func favoriteMenuItem(group: FavoriteGroup) -> some View {
         AsyncButton {
-            await updateFavorite(world: world, group: group)
+            await updateFavoriteAction(world: world, group: group)
         } label: {
             Label {
                 Text(group.displayName)
@@ -59,7 +64,9 @@ extension WorldView {
         }
     }
 
-    func updateFavorite(world: World, group: FavoriteGroup) async {
+    func updateFavoriteAction(world: World, group: FavoriteGroup) async {
+        isRequesting = true
+        defer { isRequesting = false }
         do {
             try await favoriteVM.updateFavorite(
                 service: favoriteService,

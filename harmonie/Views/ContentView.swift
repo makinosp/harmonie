@@ -9,7 +9,7 @@ import AsyncSwiftUI
 import VRCKit
 
 struct ContentView: View, AuthenticationServicePresentable, FriendServicePresentable {
-    @Environment(AppViewModel.self) var appVM: AppViewModel
+    @Environment(AppViewModel.self) var appVM
 
     var body: some View {
         switch appVM.step {
