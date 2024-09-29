@@ -23,7 +23,7 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
         height: CGFloat,
         maxWidth: CGFloat? = nil,
         @ViewBuilder topContent: @escaping () -> TopContent = { EmptyView() },
-        @ViewBuilder bottomContent: @escaping () -> BottomContent
+        @ViewBuilder bottomContent: @escaping () -> BottomContent = { EmptyView() }
     ) {
         self.imageUrl = imageUrl
         self.thumbnailImageUrl = thumbnailImageUrl

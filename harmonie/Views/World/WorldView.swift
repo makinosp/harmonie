@@ -25,7 +25,7 @@ struct WorldView: View {
                     imageUrl: world.imageUrl(.x1024),
                     thumbnailImageUrl: world.imageUrl(.x256),
                     height: 250,
-                    bottomContent: { overlaysOnImage }
+                    topContent: { overlaysOnImage }
                 )
                 contentStacks
             }
@@ -37,12 +37,18 @@ struct WorldView: View {
     }
 
     private var overlaysOnImage: some View {
-        VStack(alignment: .leading) {
-            Text(world.name)
-                .font(.headline)
+        Label {
+            Text(world.platform.explanation)
+        } icon: {
+            Image(systemName: "vision.pro.fill")
         }
-        .foregroundStyle(Color.white)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .font(.footnote.bold())
+        .padding(.horizontal, 12)
+        .padding(.vertical, 4)
+        .background(.thinMaterial)
+        .cornerRadius(8)
+        .foregroundStyle(.white)
+        .frame(maxWidth: .infinity, alignment: .trailing)
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
     }
@@ -70,6 +76,17 @@ struct WorldView: View {
                 .font(.body)
         }
         .groupBoxStyle(.card)
+    }
+}
+
+extension World.Platform {
+    var explanation: LocalizedStringKey {
+        switch self {
+        case .android: "Quest Only"
+        case .crossPlatform: "Cross-Platform"
+        case .windows: "PC Only"
+        case .none: "None"
+        }
     }
 }
 

@@ -65,7 +65,18 @@ extension World {
             visits: visits,
             popularity: popularity,
             heat: heat,
-            version: 1
+            version: 1,
+            unityPackages: [
+                UnityPackage(
+                    id: UUID().uuidString,
+                    assetUrl: nil,
+                    assetVersion: 1,
+                    createdAt: Date(),
+                    platform: .standalonewindows,
+                    unitySortNumber: 1,
+                    unityVersion: ""
+                )
+            ]
         )
     }
 }
