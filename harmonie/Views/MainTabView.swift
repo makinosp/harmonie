@@ -13,18 +13,18 @@ struct MainTabView: View, FriendServicePresentable, FavoriteServicePresentable {
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
 
-    enum Tab: String, CaseIterable {
+    enum TabSegment: String, CaseIterable {
         case locations, friends, favorites, settings
     }
 
     var body: some View {
         TabView {
-            ForEach(Tab.allCases) { tab in
-                tab.content
-                    .tag(tab)
+            ForEach(TabSegment.allCases) { tabSegment in
+                tabSegment.content
+                    .tag(tabSegment)
                     .tabItem {
-                        tab.icon
-                        Text(tab.description)
+                        tabSegment.icon
+                        Text(tabSegment.description)
                     }
             }
         }
@@ -59,7 +59,7 @@ struct MainTabView: View, FriendServicePresentable, FavoriteServicePresentable {
 }
 
 @MainActor
-extension MainTabView.Tab {
+extension MainTabView.TabSegment {
     @ViewBuilder var content: some View {
         switch self {
         case .locations: LocationsView()
@@ -79,13 +79,13 @@ extension MainTabView.Tab {
     }
 }
 
-extension MainTabView.Tab: CustomStringConvertible {
+extension MainTabView.TabSegment: CustomStringConvertible {
     var description: String {
         rawValue.capitalized
     }
 }
 
-extension MainTabView.Tab: Identifiable {
+extension MainTabView.TabSegment: Identifiable {
     var id: Int {
         hashValue
     }
