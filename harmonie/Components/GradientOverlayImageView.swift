@@ -60,7 +60,7 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             } else if state.error != nil {
-                Constants.Icon.exclamation
+                IconSet.exclamation.icon
             } else {
                 placeholder()
             }

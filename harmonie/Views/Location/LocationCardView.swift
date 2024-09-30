@@ -54,7 +54,7 @@ struct LocationCardView: View, InstanceServicePresentable {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     if UIDevice.current.userInterfaceIdiom == .phone {
-                        Constants.Icon.forward
+                        IconSet.forward.icon
                     }
                 }
                 ScrollView(.horizontal) {
