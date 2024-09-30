@@ -9,11 +9,12 @@ import SwiftUI
 
 protocol Iconizable {
     var systemName: String { get }
-    init(_ systemName: String)
+    var scale: Image.Scale { get }
 }
 
 extension Iconizable {
     var icon: some View {
         Image(systemName: systemName)
+            .imageScale(scale)
     }
 }
