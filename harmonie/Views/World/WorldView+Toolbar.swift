@@ -23,7 +23,7 @@ extension WorldView {
             if isRequesting {
                 ProgressView()
             } else {
-                Constants.Icon.dots
+                Constants.IconSet.dots.icon
             }
         }
         .disabled(isRequesting)
@@ -39,9 +39,9 @@ extension WorldView {
                 Text("Favorite")
             } icon: {
                 if favoriteVM.favoriteWorlds.contains(where: { $0.id == world.id }) {
-                    Constants.Icon.favoriteFilled
+                    Constants.IconSet.favoriteFilled.icon
                 } else {
-                    Constants.Icon.favorite
+                    Constants.IconSet.favorite.icon
                 }
             }
         }
@@ -58,7 +58,7 @@ extension WorldView {
                     worldId: world.id,
                     groupName: group.name
                 ) {
-                    Constants.Icon.check
+                    Constants.IconSet.check.icon
                 }
             }
         }

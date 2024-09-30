@@ -50,7 +50,7 @@ struct FriendsListView: View, FriendServicePresentable {
                     Label {
                         Text("No Friends")
                     } icon: {
-                        Constants.Icon.friends
+                        Constants.IconSet.friends.icon
                     }
                 }
             } else {

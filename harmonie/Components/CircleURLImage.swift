@@ -51,7 +51,7 @@ struct CircleURLImage: View {
                     .clipShape(shape)
             } else if state.error != nil {
                 defaultPlaceholder
-                    .overlay(Constants.Icon.exclamation)
+                    .overlay(Constants.IconSet.exclamation.icon)
                     .frame(size: size)
             } else {
                 placeholder()

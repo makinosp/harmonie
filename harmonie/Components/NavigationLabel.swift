@@ -21,7 +21,9 @@ struct NavigationLabel<Label>: View where Label: View {
     @ViewBuilder
     func content() -> some View {
         if UIDevice.current.userInterfaceIdiom != .pad {
-            Constants.Icon.forward
+            Constants.IconSet.forward.icon
+                .foregroundStyle(Color(.tertiaryLabel))
+                .imageScale(.small)
         }
     }
 }

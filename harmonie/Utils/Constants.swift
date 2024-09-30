@@ -17,56 +17,54 @@ enum Constants {
         static let previewUser = "demonstration"
     }
 
-    enum Icon {
-        static var check: some View {
-            Image(systemName: "checkmark")
+    enum IconSet {
+        static var check: some Iconizable {
+            Icon("checkmark")
         }
-        static var circleFilled: some View {
-            Image(systemName: "circle.fill")
+        static var circleFilled: some Iconizable {
+            Icon("circle.fill")
         }
-        static var dots: some View {
-            Image(systemName: "ellipsis.circle")
+        static var dots: some Iconizable {
+            Icon("ellipsis.circle")
         }
-        static var down: some View {
-            Image(systemName: "arrow.down")
+        static var down: some Iconizable {
+            Icon("arrow.down")
         }
-        static var exclamation: some View {
-            Image(systemName: "exclamationmark")
+        static var exclamation: some Iconizable {
+            Icon("exclamationmark")
         }
-        static var favorite: some View {
-            Image(systemName: "star")
+        static var favorite: some Iconizable {
+            Icon("star")
         }
-        static var favoriteFilled: some View {
-            Image(systemName: "star.fill")
+        static var favoriteFilled: some Iconizable {
+            Icon("star.fill")
         }
-        static var filter: some View {
-            Image(systemName: "line.3.horizontal.decrease")
+        static var filter: some Iconizable {
+            Icon("line.3.horizontal.decrease")
         }
-        static var forward: some View {
-            Image(systemName: "chevron.forward")
-                .foregroundStyle(Color(.tertiaryLabel))
-                .imageScale(.small)
+        static var forward: some Iconizable {
+            Icon("chevron.forward")
         }
-        static var friends: some View {
-            Image(systemName: "person.2")
+        static var friends: some Iconizable {
+            Icon("person.2")
         }
-        static var location: some View {
-            Image(systemName: "location")
+        static var location: some Iconizable {
+            Icon("location")
         }
-        static var setting: some View {
-            Image(systemName: "gear")
+        static var setting: some Iconizable {
+            Icon("gear")
         }
-        static var shield: some View {
-            Image(systemName: "shield.fill")
+        static var shield: some Iconizable {
+            Icon("shield.fill")
         }
-        static var sort: some View {
-            Image(systemName: "arrow.up.arrow.down")
+        static var sort: some Iconizable {
+            Icon("arrow.up.arrow.down")
         }
-        static var up: some View {
-            Image(systemName: "arrow.up")
+        static var up: some Iconizable {
+            Icon("arrow.up")
         }
-        static var world: some View {
-            Image(systemName: "globe.desk")
+        static var world: some Iconizable {
+            Icon("globe.desk")
         }
     }
 

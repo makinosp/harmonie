@@ -65,7 +65,7 @@ extension UserDetailView {
         Label {
             Text(user.trustRank.description)
         } icon: {
-            Constants.Icon.shield
+            Constants.IconSet.shield.icon
         }
         .font(.footnote.bold())
         .padding(.horizontal, 12)

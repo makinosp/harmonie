@@ -42,7 +42,7 @@ struct FavoriteFriendListView: View {
                     Label {
                         Text("No Favorites")
                     } icon: {
-                        Constants.Icon.favorite
+                        Constants.IconSet.favorite.icon
                     }
                 }
                 .background(Color(.systemGroupedBackground))
