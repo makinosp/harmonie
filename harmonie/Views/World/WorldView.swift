@@ -134,7 +134,7 @@ struct WorldView: View {
                     )
                     Divider()
                     detailItem(
-                        value: world.updatedAt.formatted(date: .numeric, time: .omitted),
+                        value: world.updatedAt.date?.formatted(date: .numeric, time: .omitted) ?? "Unknown",
                         systemName: "icloud.and.arrow.up",
                         caption: "Updated"
                     )
