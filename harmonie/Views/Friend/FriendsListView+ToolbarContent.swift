@@ -31,15 +31,15 @@ extension FriendsListView {
                     } icon: {
                         if friendVM.sortType == sortType {
                             switch friendVM.sortOrder {
-                            case .asc: Constants.IconSet.up.icon
-                            case .desc: Constants.IconSet.down.icon
+                            case .asc: IconSet.up.icon
+                            case .desc: IconSet.down.icon
                             }
                         }
                     }
                 }
             }
         } label: {
-            Constants.IconSet.sort.icon
+            IconSet.sort.icon
         }
     }
 
@@ -51,7 +51,7 @@ extension FriendsListView {
             filterUserStatusMenu
             filterFavoriteGroupsMenu
         } label: {
-            Constants.IconSet.filter.icon
+            IconSet.filter.icon
         }
     }
 
@@ -65,7 +65,7 @@ extension FriendsListView {
                         Text(filterUserStatus.description)
                     } icon: {
                         if friendVM.isCheckedFilterUserStatus(filterUserStatus) {
-                            Constants.IconSet.check.icon
+                            IconSet.check.icon
                         }
                     }
                 }
@@ -82,7 +82,7 @@ extension FriendsListView {
                     Text("All")
                 } icon: {
                     if friendVM.isCheckedFilterFavoriteGroups(.all) {
-                        Constants.IconSet.check.icon
+                        IconSet.check.icon
                     }
                 }
             }
@@ -94,7 +94,7 @@ extension FriendsListView {
                         Text(favoriteGroup.displayName)
                     } icon: {
                         if friendVM.isCheckedFilterFavoriteGroups(.favoriteGroup(favoriteGroup)) {
-                            Constants.IconSet.check.icon
+                            IconSet.check.icon
                         }
                     }
                 }

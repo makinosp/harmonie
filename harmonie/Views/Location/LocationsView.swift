@@ -32,7 +32,7 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                         Label {
                             Text("Select a location")
                         } icon: {
-                            Constants.IconSet.location.icon
+                            IconSet.location.icon
                         }
                     }
                 }
@@ -86,7 +86,7 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             if UIDevice.current.userInterfaceIdiom == .phone {
-                                Constants.IconSet.forward.icon
+                                IconSet.forward.icon
                             }
                         }
                         ScrollView(.horizontal) {
@@ -111,7 +111,7 @@ struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable
                     Label {
                         Text("No Friend Location")
                     } icon: {
-                        Constants.IconSet.location.icon
+                        IconSet.location.icon
                     }
                 }
             }

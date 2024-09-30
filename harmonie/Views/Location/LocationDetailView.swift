@@ -38,7 +38,7 @@ struct LocationDetailView: View {
                             .lineLimit(2)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    Constants.IconSet.forward.icon
+                    IconSet.forward.icon
                 }
                 .tag(SegmentIdSelection(worldId: instance.world.id))
             }

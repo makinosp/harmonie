@@ -43,7 +43,7 @@ extension UserDetailView {
             if isRequestingInMenu {
                 ProgressView()
             } else {
-                Constants.IconSet.dots.icon
+                IconSet.dots.icon
             }
         }
     }
@@ -58,9 +58,9 @@ extension UserDetailView {
                 Text("Favorite")
             } icon: {
                 if favoriteVM.isAdded(friendId: user.id) {
-                    Constants.IconSet.favoriteFilled.icon
+                    IconSet.favoriteFilled.icon
                 } else {
-                    Constants.IconSet.favorite.icon
+                    IconSet.favorite.icon
                 }
             }
         }
@@ -77,7 +77,7 @@ extension UserDetailView {
                     friendId: user.id,
                     groupId: group.id
                 ) {
-                    Constants.IconSet.check.icon
+                    IconSet.check.icon
                 }
             }
         }

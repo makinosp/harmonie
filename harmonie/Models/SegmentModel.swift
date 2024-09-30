@@ -33,8 +33,8 @@ extension Segment: CustomStringConvertible {
 extension Segment {
     @ViewBuilder var icon: some View {
         switch self {
-        case .friend: Constants.IconSet.friends.icon
-        case .world: Constants.IconSet.world.icon
+        case .friend: IconSet.friends.icon
+        case .world: IconSet.world.icon
         }
     }
 }

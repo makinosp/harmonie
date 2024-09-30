@@ -28,7 +28,7 @@ struct FriendsView: View {
                     Label {
                         Text("Select a Friend")
                     } icon: {
-                        Constants.IconSet.friends.icon
+                        IconSet.friends.icon
                     }
                 }
             }
