@@ -69,9 +69,9 @@ extension World {
             unityPackages: [
                 UnityPackage(
                     id: UUID().uuidString,
-                    assetUrl: nil,
+                    assetUrl: SafeDecoding(),
                     assetVersion: 1,
-                    createdAt: Date(),
+                    createdAt: OptionalISO8601Date(),
                     platform: .standalonewindows,
                     unitySortNumber: 1,
                     unityVersion: ""

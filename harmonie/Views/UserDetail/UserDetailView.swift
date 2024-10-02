@@ -67,7 +67,7 @@ struct UserDetailView: View {
             if !user.tags.languageTags.isEmpty {
                 languageSection
             }
-            let urls = user.bioLinks.elements
+            let urls = user.bioLinks.wrappedValue
             if !urls.isEmpty {
                 bioLinksSection(urls)
             }
