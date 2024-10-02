@@ -33,7 +33,7 @@ struct FavoriteWorldListView: View {
                     Label {
                         Text("No Favorites")
                     } icon: {
-                        Constants.Icon.favorite
+                        IconSet.favorite.icon
                     }
                 }
                 .background(Color(.systemGroupedBackground))
@@ -57,7 +57,7 @@ struct FavoriteWorldListView: View {
                     .lineLimit(2)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            Constants.Icon.forward
+            IconSet.forward.icon
         }
     }
 }

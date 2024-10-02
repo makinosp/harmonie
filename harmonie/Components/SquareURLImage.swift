@@ -49,7 +49,7 @@ struct SquareURLImage: View {
                     .resizable()
                     .scaledToFill()
             } else if url != nil && state.error != nil {
-                Constants.Icon.exclamation
+                IconSet.exclamation.icon
             } else {
                 placeholder()
             }

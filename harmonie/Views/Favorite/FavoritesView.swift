@@ -51,7 +51,7 @@ struct FavoritesView: View {
                     Label {
                         Text("Select an item")
                     } icon: {
-                        Constants.Icon.favorite
+                        IconSet.favorite.icon
                     }
                 }
             }

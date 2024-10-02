@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CardGroupBoxStyle: GroupBoxStyle {
     func makeBody(configuration: Configuration) -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 8) {
             configuration.label
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)

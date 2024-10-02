@@ -71,10 +71,10 @@ extension MainTabView.TabSegment {
 
     @ViewBuilder var icon: some View {
         switch self {
-        case .locations: Constants.Icon.location
-        case .friends: Constants.Icon.friends
-        case .favorites: Constants.Icon.favorite
-        case .settings: Constants.Icon.setting
+        case .locations: IconSet.location.icon
+        case .friends: IconSet.friends.icon
+        case .favorites: IconSet.favorite.icon
+        case .settings: IconSet.setting.icon
         }
     }
 }
