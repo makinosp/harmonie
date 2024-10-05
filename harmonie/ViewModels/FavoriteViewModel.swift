@@ -20,8 +20,8 @@ final class FavoriteViewModel {
     /// Filters and returns the favorite groups of a specific type.
     /// - Parameter type: The `FavoriteType` to filter the favorite groups by.
     /// - Returns: An array of `FavoriteGroup` that matches the specified type.
-    func favoriteGroups(_ type: FavoriteType) -> [FavoriteGroup] {
-        favoriteGroups.filter { $0.type == type }
+    func favoriteGroups(_ types: Set<FavoriteType>) -> [FavoriteGroup] {
+        favoriteGroups.filter { types.contains($0.type) }
     }
 
     func getFavoriteGroup(id: FavoriteGroup.ID) -> FavoriteGroup? {
@@ -146,7 +146,7 @@ final class FavoriteViewModel {
     }
 
     var favoriteWorldGroups: [FavoriteWorldGroup] {
-        favoriteGroups(.world).map { group in
+        favoriteGroups([.world]).map { group in
             FavoriteWorldGroup(
                 group: group,
                 worlds: getFavoriteWorldsByGroup(groupName: group.name)

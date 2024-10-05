@@ -17,7 +17,7 @@ struct FavoriteFriendListView: View {
     }
 
     var body: some View {
-        let groups = favoriteVM.favoriteGroups(.friend)
+        let groups = favoriteVM.favoriteGroups([.friend])
         List(groups, selection: $selected) { group in
             if let friends = favoriteVM.getFavoriteFriends(group.id) {
                 DisclosureGroup(group.displayName) {

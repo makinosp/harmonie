@@ -50,7 +50,7 @@ extension UserDetailView {
 
     private var favoriteMenu: some View {
         Menu {
-            ForEach(favoriteVM.favoriteGroups(.friend)) { group in
+            ForEach(favoriteVM.favoriteGroups([.friend])) { group in
                 favoriteMenuItem(group: group)
             }
         } label: {
