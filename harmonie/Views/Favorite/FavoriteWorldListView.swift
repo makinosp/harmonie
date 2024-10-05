@@ -17,7 +17,7 @@ struct FavoriteWorldListView: View {
     }
 
     var body: some View {
-        List(favoriteVM.groupedFavoriteWorlds, selection: $selected) { favoriteWorlds in
+        List(favoriteVM.favoriteWorldGroups, selection: $selected) { favoriteWorlds in
             if let group = favoriteWorlds.group {
                 DisclosureGroup(group.displayName) {
                     ForEach(favoriteWorlds.worlds) { world in
