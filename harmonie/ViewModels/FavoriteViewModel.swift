@@ -36,8 +36,7 @@ final class FavoriteViewModel {
     /// - Parameters:
     ///   - service: Any `FavoriteServiceProtocol` service.
     ///   - friendVM: The `FriendViewModel` view model.
-    /// - Throws: An error if any network request or decoding operation fails.
-    func fetchFavorite(service: FavoriteServiceProtocol, friendVM: FriendViewModel) async throws {
+    func fetchFavoriteFriends(service: FavoriteServiceProtocol, friendVM: FriendViewModel) async throws {
         favoriteGroups = try await service.listFavoriteGroups()
         let favoriteDetails = try await service.fetchFavoriteGroupDetails(favoriteGroups: favoriteGroups)
         let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
@@ -56,13 +55,8 @@ final class FavoriteViewModel {
     /// Finds the favorite group ID that contains a friend with the specified friend ID.
     /// - Parameter friendId: The ID of the friend to search for.
     /// - Returns: The ID of the favorite group that contains the friend, or nil if the friend is not found.
-    func findFavoriteGroupIdForFriend(friendId: String) -> String? {
-        let includingFavorite = favoriteFriends.first { favoriteFriendDetail in
-            favoriteFriendDetail.friends.contains { friend in
-                friend.id == friendId
-            }
-        }
-        return includingFavorite?.favoriteGroupId
+    func findFavoriteGroupIdForFriend(friendId: Friend.ID) -> FavoriteFriend.ID? {
+        favoriteFriends.first { $0.friends.contains { $0.id == friendId } }?.favoriteGroupId
     }
 
     func isAdded(friendId: String) -> Bool {
@@ -74,9 +68,13 @@ final class FavoriteViewModel {
     ///   - friend: The `Friend` object representing the friend to add.
     ///   - groupId: The ID of the favorite group to which the friend should be added.
     func addFriendToFavoriteGroup(friend: Friend, groupId: String) {
-        let groupIndex = favoriteFriends.firstIndex { $0.favoriteGroupId == groupId }
-        guard let groupIndex = groupIndex else { return }
-        favoriteFriends[groupIndex].friends.insert(friend, at: 0)
+        let index = favoriteFriends.firstIndex { $0.favoriteGroupId == groupId }
+        guard let index = index else { return }
+        let favoriteFriend = favoriteFriends[index]
+        favoriteFriends[index] = FavoriteFriend(
+            favoriteGroupId: favoriteFriend.favoriteGroupId,
+            friends: [friend] + favoriteFriend.friends
+        )
     }
 
     /// Removes a friend from the favorite group identified by `groupId`.
@@ -85,9 +83,13 @@ final class FavoriteViewModel {
     ///   - friendId: The ID of the friend to remove.
     ///   - groupId: The ID of the favorite group from which the friend should be removed.
     func removeFriendFromFavoriteGroup(friendId: String, groupId: String) {
-        let groupIndex = favoriteFriends.firstIndex { $0.favoriteGroupId == groupId }
-        guard let groupIndex = groupIndex else { return }
-        favoriteFriends[groupIndex].friends = favoriteFriends[groupIndex].friends.filter { $0.id != friendId }
+        let index = favoriteFriends.firstIndex { $0.favoriteGroupId == groupId }
+        guard let index = index else { return }
+        let favoriteFriend = favoriteFriends[index]
+        favoriteFriends[index] = FavoriteFriend(
+            favoriteGroupId: favoriteFriend.favoriteGroupId,
+            friends: favoriteFriend.friends.filter { $0.id != friendId }
+        )
     }
 
     /// Removes a world from the favorite list.
