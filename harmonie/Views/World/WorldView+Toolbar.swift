@@ -31,7 +31,7 @@ extension WorldView {
 
     private var favoriteMenu: some View {
         Menu {
-            ForEach(favoriteVM.favoriteGroups([.world])) { group in
+            ForEach(favoriteVM.favoriteGroups(.world)) { group in
                 favoriteMenuItem(group: group)
             }
         } label: {

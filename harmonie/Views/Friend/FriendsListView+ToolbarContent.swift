@@ -86,7 +86,7 @@ extension FriendsListView {
                     }
                 }
             }
-            ForEach(favoriteVM.favoriteGroups([.friend])) { favoriteGroup in
+            ForEach(favoriteVM.favoriteGroups(.friend)) { favoriteGroup in
                 Button {
                     friendVM.applyFilterFavoriteGroup(.favoriteGroup(favoriteGroup))
                 } label: {
