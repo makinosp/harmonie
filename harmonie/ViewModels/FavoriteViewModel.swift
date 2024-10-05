@@ -32,7 +32,7 @@ final class FavoriteViewModel {
         favoriteGroups.first { $0.name == name }
     }
 
-    // MARK: Friend
+    // MARK: - Friend
 
     /// Asynchronously fetches and updates the favorite groups and their details.
     /// - Parameters:
@@ -135,7 +135,7 @@ final class FavoriteViewModel {
         }
     }
 
-    // MARK: World
+    // MARK: - World
 
     func fetchFavoritedWorlds(service: WorldServiceProtocol) async throws {
         favoriteWorlds = try await service.fetchFavoritedWorlds(n: 100)
