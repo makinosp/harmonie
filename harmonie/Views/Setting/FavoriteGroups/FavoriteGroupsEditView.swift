@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct FavoriteGroupsEditView: View {
+    @Environment(FavoriteViewModel.self) var favoriteVM
+
     var body: some View {
+        // favoriteVM.favoriteGroups([.friend])
         Text("FavoriteGroupsEditView")
             .navigationTitle("Edit favorite groups")
             .navigationBarTitleDisplayMode(.inline)

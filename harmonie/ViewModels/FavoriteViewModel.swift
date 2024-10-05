@@ -24,6 +24,15 @@ final class FavoriteViewModel {
         favoriteGroups.filter { $0.type == type }
     }
 
+    /// Filters the favorite groups by the given set of favorite types,
+    /// and returns a dictionary where the keys are the favorite types.
+    /// - Parameter types: A set of `FavoriteType` values used to filter the favorite groups.
+    /// - Returns: A dictionary where the keys are `FavoriteType` and the values are arrays of `FavoriteGroup`.
+    func favoriteGroups(_ types: Set<FavoriteType>) -> [FavoriteType: [FavoriteGroup]] {
+        let filtered = favoriteGroups.filter { types.contains($0.type) }
+        return Dictionary(grouping: filtered) { $0.type }
+    }
+
     func getFavoriteGroup(id: FavoriteGroup.ID) -> FavoriteGroup? {
         favoriteGroups.first { $0.id == id }
     }
