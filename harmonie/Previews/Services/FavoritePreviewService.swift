@@ -55,7 +55,17 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
         Favorite(id: UUID().uuidString, favoriteId: favoriteId, tags: [tag], type: type)
     }
 
+    func updateFavoriteGroup(
+        type: VRCKit.FavoriteType,
+        displayName: String,
+        visibility: FavoriteGroup.Visibility,
+        userId: String,
+        tag: String
+    ) async throws -> SuccessResponse {
+        SuccessResponse(success: .ok)
+    }
+
     func removeFavorite(favoriteId: String) async throws -> SuccessResponse {
-        SuccessResponse(success: ResponseMessage(message: "OK", statusCode: 200))
+        SuccessResponse(success: .ok)
     }
 }
