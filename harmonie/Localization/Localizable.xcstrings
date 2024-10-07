@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "%@ (Empty)" : {
+
+    },
     "About" : {
 
     },
@@ -16,6 +19,9 @@
           }
         }
       }
+    },
+    "Activity" : {
+
     },
     "Add" : {
       "localizations" : {
@@ -103,6 +109,9 @@
         }
       }
     },
+    "Close" : {
+
+    },
     "Code" : {
 
     },
@@ -115,6 +124,12 @@
           }
         }
       }
+    },
+    "Connect your VRChat account." : {
+
+    },
+    "Cross-Platform" : {
+
     },
     "Date Joined" : {
       "localizations" : {
@@ -139,6 +154,12 @@
     "Description" : {
 
     },
+    "Details" : {
+
+    },
+    "Display Name" : {
+
+    },
     "Edit" : {
       "localizations" : {
         "ja" : {
@@ -148,6 +169,9 @@
           }
         }
       }
+    },
+    "Edit favorite groups" : {
+
     },
     "Edit Profile" : {
       "localizations" : {
@@ -171,6 +195,9 @@
           }
         }
       }
+    },
+    "Enter the 6-digit two-factor verification code recieved in your %@." : {
+
     },
     "Enter URL" : {
       "localizations" : {
@@ -203,6 +230,7 @@
       }
     },
     "Favorites" : {
+      "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -225,6 +253,9 @@
     "https://" : {
       "shouldTranslate" : false
     },
+    "In What Way?" : {
+
+    },
     "Information" : {
       "localizations" : {
         "ja" : {
@@ -244,6 +275,9 @@
           }
         }
       }
+    },
+    "Is this secure?" : {
+
     },
     "Language" : {
       "localizations" : {
@@ -285,12 +319,15 @@
         }
       }
     },
+    "Loading..." : {
+
+    },
     "Location" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "場所"
+            "value" : "ロケーション"
           }
         }
       }
@@ -300,7 +337,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "場所"
+            "value" : "ロケーション"
           }
         }
       }
@@ -316,6 +353,7 @@
       }
     },
     "My Profile" : {
+      "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -340,7 +378,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "場所がありません"
+            "value" : "ロケーションがありません"
           }
         }
       }
@@ -354,6 +392,9 @@
           }
         }
       }
+    },
+    "None" : {
+
     },
     "Note" : {
       "localizations" : {
@@ -378,6 +419,9 @@
         }
       }
     },
+    "PC Only" : {
+
+    },
     "Platform" : {
       "localizations" : {
         "ja" : {
@@ -387,6 +431,18 @@
           }
         }
       }
+    },
+    "Private" : {
+
+    },
+    "Private World" : {
+
+    },
+    "Profile" : {
+
+    },
+    "Quest Only" : {
+
     },
     "Region" : {
       "localizations" : {
@@ -408,7 +464,10 @@
         }
       }
     },
-    "Select a friend" : {
+    "Save Password" : {
+
+    },
+    "Select a Friend" : {
 
     },
     "Select a location" : {
@@ -435,10 +494,10 @@
     "Statuses" : {
 
     },
-    "Store in Keychain" : {
+    "Third Party Licence" : {
 
     },
-    "Third Party Licence" : {
+    "Two-step verification" : {
 
     },
     "UserName" : {
