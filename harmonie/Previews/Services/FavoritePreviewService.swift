@@ -21,6 +21,7 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
                 id: "fvgrp_\(UUID().uuidString)",
                 displayName: "DemoGroup",
                 name: "group_1",
+                ownerId: PreviewDataProvider.shared.previewUser.id,
                 tags: [],
                 type: .friend,
                 visibility: .private
@@ -43,7 +44,7 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
         }
     }
 
-    func fetchFavoriteGroupDetails(favoriteGroups: [FavoriteGroup]) async throws -> [FavoriteDetail] {
+    func fetchFavoriteList(favoriteGroups: [FavoriteGroup]) async throws -> [FavoriteList] {
         []
     }
 
@@ -56,11 +57,9 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
     }
 
     func updateFavoriteGroup(
-        type: VRCKit.FavoriteType,
+        source: FavoriteGroup,
         displayName: String,
-        visibility: FavoriteGroup.Visibility,
-        userId: String,
-        tag: String
+        visibility: FavoriteGroup.Visibility
     ) async throws -> SuccessResponse {
         SuccessResponse(success: .ok)
     }

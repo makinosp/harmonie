@@ -41,6 +41,23 @@ final class FavoriteViewModel {
         favoriteGroups.first { $0.name == name }
     }
 
+    func updateFavoriteGroup(
+        service: FavoriteServiceProtocol,
+        id: FavoriteGroup.ID,
+        displayName: String,
+        visibility: FavoriteGroup.Visibility
+    ) async throws {
+        guard let source = getFavoriteGroup(id: id) else { return }
+        _ = try await service.updateFavoriteGroup(
+            source: source,
+            displayName: displayName,
+            visibility: visibility
+        )
+        let index = favoriteGroups.firstIndex { $0.id == source.id }
+        guard let index = index else { return }
+        favoriteGroups[index] = FavoriteGroup(source: source, displayName: displayName, visibility: visibility)
+    }
+
     // MARK: - Friend
 
     /// Asynchronously fetches and updates the favorite groups and their details.
@@ -49,7 +66,7 @@ final class FavoriteViewModel {
     ///   - friendVM: The `FriendViewModel` view model.
     func fetchFavoriteFriends(service: FavoriteServiceProtocol, friendVM: FriendViewModel) async throws {
         favoriteGroups = try await service.listFavoriteGroups()
-        let favoriteDetails = try await service.fetchFavoriteGroupDetails(favoriteGroups: favoriteGroups)
+        let favoriteDetails = try await service.fetchFavoriteList(favoriteGroups: favoriteGroups)
         let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
         favoriteFriends = favoriteDetailsOfFriends.map { favoriteDetail in
             FavoriteFriend(
