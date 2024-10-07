@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct ProfileEditView: View, UserServicePresentable {
+struct ProfileEditView: View, UserServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @Environment(\.dismiss) private var dismiss
     @State var profileEditVM: ProfileEditViewModel

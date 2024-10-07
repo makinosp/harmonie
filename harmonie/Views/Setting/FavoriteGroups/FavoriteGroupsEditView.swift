@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct FavoriteGroupsEditView: View, FavoriteServicePresentable {
+struct FavoriteGroupsEditView: View, FavoriteServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @Environment(\.dismiss) private var dismiss

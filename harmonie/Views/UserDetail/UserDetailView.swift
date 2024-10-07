@@ -9,8 +9,8 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-extension UserDetailView: FavoriteServicePresentable {}
-extension UserDetailView: InstanceServicePresentable {}
+extension UserDetailView: FavoriteServiceRepresentable {}
+extension UserDetailView: InstanceServiceRepresentable {}
 
 struct UserDetailView: View {
     @Environment(AppViewModel.self) var appVM

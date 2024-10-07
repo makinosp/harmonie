@@ -9,7 +9,7 @@ import NukeUI
 import SwiftUI
 import VRCKit
 
-struct LocationCardView: View, InstanceServicePresentable {
+struct LocationCardView: View, InstanceServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @Binding var selected: InstanceLocation?
     @State private var instance: Instance?

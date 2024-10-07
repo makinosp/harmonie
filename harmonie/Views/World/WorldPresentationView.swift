@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-struct WorldPresentationView: View, WorldServicePresentable {
+struct WorldPresentationView: View, WorldServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @State var world: World?
     let id: String

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DividedVStack<Content: View>: View {
+struct DividedVStack<Content>: View where Content: View {
     @ViewBuilder private let content: () -> Content
 
     init(content: @escaping () -> Content) {

@@ -8,11 +8,11 @@
 import SwiftUI
 import VRCKit
 
-struct UserIcon: View {
-    private let user: any ProfileElementRepresentable
+struct UserIcon<T>: View where T: ProfileElementRepresentable {
+    private let user: T
     private let size: CGSize
 
-    init(user: any ProfileElementRepresentable, size: CGSize) {
+    init(user: T, size: CGSize) {
         self.user = user
         self.size = size
     }

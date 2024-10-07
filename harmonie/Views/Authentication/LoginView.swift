@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct LoginView: View, AuthenticationServicePresentable {
+struct LoginView: View, AuthenticationServiceRepresentable {
     @AppStorage(Constants.Keys.isSavedOnKeyChain) private var isSavedOnKeyChain = false
     @AppStorage(Constants.Keys.username) private var username: String = ""
     @Environment(AppViewModel.self) var appVM

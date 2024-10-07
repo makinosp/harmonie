@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-struct LocationsView: View, FriendServicePresentable, InstanceServicePresentable {
+struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @Environment(FriendViewModel.self) var friendVM
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
