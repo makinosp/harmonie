@@ -8,8 +8,8 @@
 import VRCKit
 
 struct InstanceLocation: Hashable {
-    var location: FriendsLocation
-    var instance: Instance
+    let location: FriendsLocation
+    let instance: Instance
 }
 
 extension InstanceLocation: Identifiable {

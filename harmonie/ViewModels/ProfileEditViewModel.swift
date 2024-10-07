@@ -11,7 +11,7 @@ import VRCKit
 @Observable @MainActor
 final class ProfileEditViewModel {
     var editingUserInfo: EditableUserInfo
-    @ObservationIgnored private let id: String
+    @ObservationIgnored private let id: User.ID
 
     init(user: User) {
         editingUserInfo = EditableUserInfo(detail: user)

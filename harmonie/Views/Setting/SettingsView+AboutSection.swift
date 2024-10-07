@@ -48,7 +48,12 @@ extension SettingsView {
             LabeledContent {
                 Text(BundleUtil.appVersion)
             } label: {
-                Text("App Version")
+                Text("Version")
+            }
+            LabeledContent {
+                Text(BundleUtil.appBuild)
+            } label: {
+                Text("Build")
             }
         }
         .navigationTitle("About")

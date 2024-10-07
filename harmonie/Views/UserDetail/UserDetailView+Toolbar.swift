@@ -11,24 +11,6 @@ import VRCKit
 extension UserDetailView {
     @ToolbarContentBuilder var toolbar: some ToolbarContent {
         ToolbarItem { toolbarMenu }
-        ToolbarItemGroup(placement: .keyboard) {
-            Spacer()
-            AsyncButton {
-                if note != user.note {
-                    isRequesting = true
-                    await saveNote()
-                    isRequesting = false
-                }
-                isFocusedNoteField = false
-            } label: {
-                if isRequesting {
-                    ProgressView()
-                } else {
-                    Text("Save")
-                }
-            }
-            .disabled(isRequesting)
-        }
     }
 
     private var toolbarMenu: some View {

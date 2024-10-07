@@ -18,7 +18,7 @@ extension FavoriteFriend: Identifiable {
 
 struct FavoriteWorldGroup: Sendable, Hashable {
     let group: FavoriteGroup?
-    var worlds: [FavoriteWorld]
+    let worlds: [FavoriteWorld]
 }
 
 extension FavoriteWorldGroup: Identifiable {

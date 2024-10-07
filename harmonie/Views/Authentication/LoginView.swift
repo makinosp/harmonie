@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct LoginView: View, AuthenticationServicePresentable {
+struct LoginView: View, AuthenticationServiceRepresentable {
     @AppStorage(Constants.Keys.isSavedOnKeyChain) private var isSavedOnKeyChain = false
     @AppStorage(Constants.Keys.username) private var username: String = ""
     @Environment(AppViewModel.self) var appVM
@@ -22,11 +22,12 @@ struct LoginView: View, AuthenticationServicePresentable {
         NavigationStack {
             VStack(spacing: 16) {
                 title
-                subtitle
                 loginFields
+                keychainToggle
                 enterButton
             }
-            .padding(.horizontal, 24)
+            .frame(maxWidth: 560)
+            .padding(.horizontal, 32)
             .navigationDestination(item: $verifyType) { verifyType in
                 OtpView(verifyType: verifyType)
                     .navigationBarBackButtonHidden()
@@ -47,26 +48,6 @@ struct LoginView: View, AuthenticationServicePresentable {
             .kerning(titleKerning)
     }
 
-    private var subtitle: some View {
-        Group {
-            Text("Login")
-                .font(.headline)
-            VStack {
-                Text("Connect your VRChat account")
-                    .foregroundStyle(Color(.systemGray))
-                    .font(.body)
-                Button {
-                    isPresentedSecurityPopover.toggle()
-                } label: {
-                    Text("Is this secure?")
-                }
-                .popover(isPresented: $isPresentedSecurityPopover) {
-                    securityPopover
-                }
-            }
-        }
-    }
-
     private var titleFontSize: CGFloat {
         UIDevice.current.userInterfaceIdiom == .pad ? 56 : 28
     }
@@ -82,56 +63,75 @@ struct LoginView: View, AuthenticationServicePresentable {
                 .textFieldStyle(.roundedBorder)
             SecureField("Password", text: $password)
                 .textFieldStyle(.roundedBorder)
-            Toggle(isOn: $isSavedOnKeyChain) {
-                LabeledContent {
-                    Button {
-                        isPresentedSavingPasswordPopover.toggle()
-                    } label: {
-                        Image(systemName: "questionmark.circle")
-                    }
-                    .popover(isPresented: $isPresentedSavingPasswordPopover) {
-                        savingPasswordPopover
-                    }
-                } label: {
-                    Label {
-                        Text("Save Password")
-                    } icon: {
-                        Image(systemName: "key.icloud")
-                    }
+            HStack {
+                Text("Connect your VRChat account.")
+                    .font(.footnote)
                     .foregroundStyle(Color(.systemGray))
+                Button {
+                    isPresentedSecurityPopover.toggle()
+                } label: {
+                    Text("Is this secure?")
                 }
-                .font(.callout)
+                .font(.footnote)
+                .popover(isPresented: $isPresentedSecurityPopover) {
+                    annotation(
+                        title: "Is this secure?",
+                        text: Constants.Messages.helpWithStoringKeychain,
+                        isPresented: $isPresentedSecurityPopover
+                    )
+                }
             }
         }
-        .frame(maxWidth: 560)
-        .padding(.horizontal, 8)
     }
 
-    private var securityPopover: some View {
-        VStack(alignment: .leading) {
-            Text("Is this secure?")
-                .font(.headline)
-                .foregroundStyle(Color(.label))
-            Text(Constants.Messages.helpWithStoringKeychain)
-                .fixedSize(horizontal: false, vertical: true)
+    private var keychainToggle: some View {
+        Toggle(isOn: $isSavedOnKeyChain) {
+            LabeledContent {
+                Button {
+                    isPresentedSavingPasswordPopover.toggle()
+                } label: {
+                    Image(systemName: "questionmark.circle")
+                }
+                .popover(isPresented: $isPresentedSavingPasswordPopover) {
+                    annotation(
+                        title: "In What Way?",
+                        text: Constants.Messages.helpWithStoringKeychain,
+                        isPresented: $isPresentedSavingPasswordPopover
+                    )
+                }
+            } label: {
+                Label {
+                    Text("Save Password")
+                } icon: {
+                    Image(systemName: "key.icloud")
+                }
+                .foregroundStyle(Color(.systemGray))
+            }
+            .font(.callout)
         }
-        .foregroundStyle(Color(.systemGray))
-        .frame(width: WindowUtil.width * 2 / 3)
-        .padding()
-        .presentationDetents([.fraction(0.25)])
     }
 
-    private var savingPasswordPopover: some View {
-        VStack(alignment: .leading) {
-            Text("In What Way?")
-                .font(.headline)
-                .foregroundStyle(Color(.label))
-            Text(Constants.Messages.helpWithStoringKeychain)
-                .fixedSize(horizontal: false, vertical: true)
+    private func annotation(
+        title: LocalizedStringKey,
+        text: String,
+        isPresented: Binding<Bool>
+    ) -> some View {
+        NavigationStack {
+            Text(text)
+                .frame(maxHeight: .infinity, alignment: .top)
+                .navigationTitle(title)
+                .navigationBarTitleDisplayMode(.inline)
+                .foregroundStyle(Color(.systemGray))
+                .padding()
+                .presentationDetents([.medium])
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Close") {
+                            isPresented.wrappedValue.toggle()
+                        }
+                    }
+                }
         }
-        .frame(width: WindowUtil.width * 2 / 3)
-        .padding()
-        .presentationDetents([.fraction(0.25)])
     }
 
     private var enterButton: some View {

@@ -1,5 +1,5 @@
 //
-//  UserServicePresentable.swift
+//  UserServiceRepresentable.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/09/09.
@@ -8,11 +8,11 @@
 import VRCKit
 
 @MainActor
-protocol UserServicePresentable {
+protocol UserServiceRepresentable {
     var appVM: AppViewModel { get }
 }
 
-extension UserServicePresentable {
+extension UserServiceRepresentable {
     var userService: UserServiceProtocol {
         appVM.isPreviewMode
         ? UserPreviewService(client: appVM.client)

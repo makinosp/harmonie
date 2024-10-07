@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FriendsListView: View, FriendServicePresentable {
+struct FriendsListView: View, FriendServiceRepresentable {
     @Environment(\.isSearching) private var isSearching
     @Environment(AppViewModel.self) var appVM
     @Environment(FriendViewModel.self) var friendVM

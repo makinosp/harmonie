@@ -1,5 +1,5 @@
 //
-//  FavoriteServicePresentable.swift
+//  FavoriteServiceRepresentable.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/09/08.
@@ -8,11 +8,11 @@
 import VRCKit
 
 @MainActor
-protocol FavoriteServicePresentable {
+protocol FavoriteServiceRepresentable {
     var appVM: AppViewModel { get }
 }
 
-extension FavoriteServicePresentable {
+extension FavoriteServiceRepresentable {
     var favoriteService: FavoriteServiceProtocol {
         appVM.isPreviewMode
         ? FavoritePreviewService(client: appVM.client)

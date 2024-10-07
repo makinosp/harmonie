@@ -24,11 +24,6 @@ enum Constants {
     }
 
     enum Messages {
-        static let helpWithStoringKeychain = """
-            Using iCloud Keychain to securely store your passwords. \
-            iCloud Keychain is built on security technologies provided by Apple, \
-            ensuring that your passwords are encrypted \
-            and protected from unauthorized access.
-            """
+        static let helpWithStoringKeychain = String(localized: "msg_help_with_storing_keychain", table: "Message")
     }
 }
