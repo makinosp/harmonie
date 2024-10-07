@@ -122,8 +122,8 @@ struct LoginView: View, AuthenticationServicePresentable {
                 .navigationTitle(title)
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundStyle(Color(.systemGray))
-                .frame(width: WindowUtil.width * 2 / 3)
-                .presentationDetents([.fraction(0.25)])
+                .padding()
+                .presentationDetents([.medium])
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Close") {
