@@ -32,22 +32,4 @@ extension UserDetailView {
             appVM.handleError(error)
         }
     }
-
-    func saveNote() async {
-        let service: UserNoteServiceProtocol = appVM.isPreviewMode
-        ? UserNotePreviewService(client: appVM.client)
-        : UserNoteService(client: appVM.client)
-        do {
-            if note.isEmpty {
-                try await service.clearUserNote(targetUserId: user.id)
-            } else {
-                _ = try await service.updateUserNote(
-                    targetUserId: user.id,
-                    note: note
-                )
-            }
-        } catch {
-            appVM.handleError(error)
-        }
-    }
 }

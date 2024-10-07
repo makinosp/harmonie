@@ -11,10 +11,15 @@ import VRCKit
 extension UserDetailView {
     var noteSection: some View {
         GroupBox("Note") {
-            TextField("Enter note", text: $note, axis: .vertical)
-                .focused($isFocusedNoteField)
+            Text(user.note)
                 .font(.body)
         }
         .groupBoxStyle(.card)
+        .onTapGesture {
+            isPresentedNoteEditor = true
+        }
+        .sheet(isPresented: $isPresentedNoteEditor) {
+            NoteEditView(initialValue: user.note, userId: user.id)
+        }
     }
 }

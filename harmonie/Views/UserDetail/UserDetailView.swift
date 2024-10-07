@@ -17,17 +17,15 @@ struct UserDetailView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM
     @Environment(FriendViewModel.self) var friendVM
     @Environment(\.dismiss) private var dismiss
-    @FocusState var isFocusedNoteField
     @State var user: UserDetail
     @State var instance: Instance?
-    @State var note: String
     @State var isRequesting = false
     @State var isRequestingInMenu = false
     @State var lastActivity = ""
+    @State var isPresentedNoteEditor = false
 
     init(user: UserDetail) {
-        _user = State(initialValue: user)
-        _note = State(initialValue: user.note)
+        self.user = user
     }
 
     var body: some View {
