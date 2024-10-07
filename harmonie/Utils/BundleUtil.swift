@@ -13,11 +13,11 @@ enum BundleUtil {
     }
 
     static var appName: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
+        getInfo(key: "CFBundleDisplayName")
     }
 
     static var appVersion: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
+        getInfo(key: "CFBundleShortVersionString")
     }
 
     static var appBuild: String {
