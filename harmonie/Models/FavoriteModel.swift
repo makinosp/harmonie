@@ -9,7 +9,11 @@ import VRCKit
 
 struct FavoriteFriend: Sendable, Hashable {
     let favoriteGroupId: String
-    var friends: [Friend]
+    let friends: [Friend]
+}
+
+extension FavoriteFriend: Identifiable {
+    var id: String { favoriteGroupId }
 }
 
 struct FavoriteWorldGroup: Sendable, Hashable {

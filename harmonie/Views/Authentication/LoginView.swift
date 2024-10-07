@@ -22,6 +22,7 @@ struct LoginView: View, AuthenticationServicePresentable {
         NavigationStack {
             VStack(spacing: 16) {
                 title
+                subtitle
                 loginFields
                 enterButton
             }

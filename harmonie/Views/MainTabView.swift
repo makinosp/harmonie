@@ -36,7 +36,7 @@ struct MainTabView: View, FriendServicePresentable, FavoriteServicePresentable {
                 appVM.handleError(error)
             }
             do {
-                try await favoriteVM.fetchFavorite(
+                try await favoriteVM.fetchFavoriteFriends(
                     service: favoriteService,
                     friendVM: friendVM
                 )

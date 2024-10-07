@@ -25,7 +25,8 @@ struct WorldView: View {
                     imageUrl: world.imageUrl(.x1024),
                     thumbnailImageUrl: world.imageUrl(.x256),
                     height: 250,
-                    topContent: { overlaysOnImage }
+                    topContent: { topOverlay },
+                    bottomContent: { bottomOverlay }
                 )
                 contentStacks
             }
@@ -36,11 +37,28 @@ struct WorldView: View {
         .toolbar { toolbar }
     }
 
-    private var overlaysOnImage: some View {
+    private var topOverlay: some View {
         Label {
             Text(world.platform.explanation)
         } icon: {
             Image(systemName: "vision.pro.fill")
+        }
+        .font(.footnote.bold())
+        .padding(.horizontal, 12)
+        .padding(.vertical, 4)
+        .background(.thinMaterial)
+        .cornerRadius(8)
+        .foregroundStyle(.white)
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+    }
+
+    private var bottomOverlay: some View {
+        HStack(spacing: .zero) {
+            ForEach(.zero..<world.heat, id: \.hashValue) { _ in
+                Image(systemName: "flame.fill")
+            }
         }
         .font(.footnote.bold())
         .padding(.horizontal, 12)
@@ -64,7 +82,8 @@ struct WorldView: View {
     private func detailItem(
         value: String,
         systemName: String,
-        caption: String
+        caption: String,
+        fontSize: Font = .body
     ) -> some View {
         VStack {
             VStack(spacing: 2) {
@@ -74,6 +93,7 @@ struct WorldView: View {
             }
             .foregroundStyle(Color.accentColor)
             Text(value)
+                .font(fontSize)
         }
         .frame(maxWidth: .infinity)
     }
@@ -99,13 +119,8 @@ struct WorldView: View {
                         systemName: "heart.fill",
                         caption: "Popularity"
                     )
-                    Divider()
-                    detailItem(
-                        value: world.heat.description,
-                        systemName: "flame.fill",
-                        caption: "Heat"
-                    )
                 }
+                Divider()
                 HStack(alignment: .bottom) {
                     detailItem(
                         value: world.capacity.description,
@@ -130,13 +145,15 @@ struct WorldView: View {
                     detailItem(
                         value: world.publicationDate.date?.formatted(date: .numeric, time: .omitted) ?? "Unknown",
                         systemName: "megaphone.fill",
-                        caption: "Published"
+                        caption: "Published",
+                        fontSize: .footnote
                     )
                     Divider()
                     detailItem(
                         value: world.updatedAt.date?.formatted(date: .numeric, time: .omitted) ?? "Unknown",
                         systemName: "icloud.and.arrow.up",
-                        caption: "Updated"
+                        caption: "Updated",
+                        fontSize: .footnote
                     )
                 }
             }

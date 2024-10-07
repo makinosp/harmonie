@@ -27,7 +27,7 @@ extension PreviewContainer: View {
                     try await friendVM.fetchAllFriends(
                         service: FriendPreviewService(client: appVM.client)
                     )
-                    try await favoriteVM.fetchFavorite(
+                    try await favoriteVM.fetchFavoriteFriends(
                         service: FavoritePreviewService(client: appVM.client),
                         friendVM: friendVM
                     )

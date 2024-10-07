@@ -14,11 +14,10 @@ struct SettingsView: View, AuthenticationServicePresentable {
     @State var destination: Destination? = UIDevice.current.userInterfaceIdiom == .pad ? .userDetail : nil
     @State var isPresentedForm = false
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
-
     @State private var selectedLibrary: Library?
 
     enum Destination: Hashable {
-        case userDetail, about, license
+        case userDetail, favoriteGroups, about, license
     }
 
     var body: some View {
@@ -48,6 +47,8 @@ struct SettingsView: View, AuthenticationServicePresentable {
             if let user = appVM.user {
                 UserDetailPresentationView(id: user.id)
             }
+        case .favoriteGroups:
+            FavoriteGroupsListView()
         case .about:
             aboutThisApp
         case .license:
@@ -67,6 +68,10 @@ struct SettingsView: View, AuthenticationServicePresentable {
         List(selection: $destination) {
             if let user = appVM.user {
                 profileSection(user: user)
+            }
+            Section("Favorite") {
+                Label("Favorite Groups", systemImage: IconSet.favoriteGroup.systemName)
+                    .tag(Destination.favoriteGroups)
             }
             aboutSection
             Section {

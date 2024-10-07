@@ -26,6 +26,9 @@ enum IconSet {
     static var favorite: some Iconizable {
         Icon("star")
     }
+    static var favoriteGroup: some Iconizable {
+        Icon("star.square.on.square")
+    }
     static var favoriteFilled: some Iconizable {
         Icon("star.fill")
     }
