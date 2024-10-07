@@ -60,8 +60,8 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
         source: FavoriteGroup,
         displayName: String,
         visibility: FavoriteGroup.Visibility
-    ) async throws -> SuccessResponse {
-        SuccessResponse(success: .ok)
+    ) async throws -> FavoriteGroup {
+        source
     }
 
     func removeFavorite(favoriteId: String) async throws -> SuccessResponse {

@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/10/04.
 //
 
-import SwiftUI
+import AsyncSwiftUI
 import VRCKit
 
 struct FavoriteGroupsEditView: View {
@@ -28,23 +28,69 @@ struct FavoriteGroupsEditView: View {
             }
         }
         .sheet(item: $selected) { group in
-            TextFormView(initialValue: group.displayName)
+            TextFormView(favoriteGroup: group)
         }
         .navigationTitle("Edit favorite groups")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-struct TextFormView: View {
-    @State private var text: String = ""
+struct TextFormView: View, FavoriteServicePresentable {
+    @Environment(AppViewModel.self) var appVM
+    @Environment(FavoriteViewModel.self) var favoriteVM
+    @Environment(\.dismiss) private var dismiss
+    @State private var displayName: String
+    @State private var visibility: FavoriteGroup.Visibility
+    @State private var isRequesting = false
+    let favoriteGroup: FavoriteGroup
 
-    init(initialValue: String) {
-        _text = State(initialValue: initialValue)
+    init(favoriteGroup: FavoriteGroup) {
+        self.favoriteGroup = favoriteGroup
+        _displayName = State(initialValue: favoriteGroup.displayName)
+        _visibility = State(initialValue: favoriteGroup.visibility)
     }
 
     var body: some View {
-        Form {
-            TextField("", text: $text)
+        NavigationStack {
+            Form {
+                Section("Display Name") {
+                    TextField("", text: $displayName)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    AsyncButton {
+                        await saveAction()
+                    } label: {
+                        if isRequesting {
+                            Text("Save")
+                        } else {
+                            ProgressView()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    func saveAction() async {
+        defer { isRequesting = false }
+        isRequesting = true
+        do {
+            _ = try await favoriteVM.updateFavoriteGroup(
+                service: favoriteService,
+                id: favoriteGroup.id,
+                displayName: displayName,
+                visibility: visibility
+            )
+            dismiss()
+        } catch {
+            appVM.handleError(error)
         }
     }
 }
