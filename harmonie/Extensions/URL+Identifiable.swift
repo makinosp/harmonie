@@ -8,5 +8,5 @@
 import Foundation
 
 extension URL: @retroactive Identifiable {
-    public var id: Int { hashValue }
+    public var id: String { absoluteString }
 }
