@@ -2,40 +2,13 @@
 //  FavoriteGroupsEditView.swift
 //  Harmonie
 //
-//  Created by makinosp on 2024/10/04.
+//  Created by makinosp on 2024/10/07.
 //
 
 import AsyncSwiftUI
 import VRCKit
 
-struct FavoriteGroupsEditView: View {
-    @Environment(FavoriteViewModel.self) var favoriteVM
-    @State private var selected: FavoriteGroup?
-
-    var body: some View {
-        List {
-            let types: [FavoriteType] = [.friend, .world]
-            ForEach(types, id: \.hashValue) { type in
-                Section(type.rawValue) {
-                    ForEach(favoriteVM.favoriteGroups(type)) { group in
-                        Button {
-                            selected = group
-                        } label: {
-                            Text(group.displayName)
-                        }
-                    }
-                }
-            }
-        }
-        .sheet(item: $selected) { group in
-            TextFormView(favoriteGroup: group)
-        }
-        .navigationTitle("Edit favorite groups")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-struct TextFormView: View, FavoriteServicePresentable {
+struct FavoriteGroupsEditView: View, FavoriteServicePresentable {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @Environment(\.dismiss) private var dismiss
@@ -57,22 +30,24 @@ struct TextFormView: View, FavoriteServicePresentable {
                     TextField("", text: $displayName)
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    AsyncButton {
-                        await saveAction()
-                    } label: {
-                        if isRequesting {
-                            Text("Save")
-                        } else {
-                            ProgressView()
-                        }
-                    }
+            .toolbar { toolbarItems }
+        }
+    }
+
+    @ToolbarContentBuilder var toolbarItems: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            Button("Cancel") {
+                dismiss()
+            }
+        }
+        ToolbarItem(placement: .confirmationAction) {
+            AsyncButton {
+                await saveAction()
+            } label: {
+                if isRequesting {
+                    Text("Save")
+                } else {
+                    ProgressView()
                 }
             }
         }

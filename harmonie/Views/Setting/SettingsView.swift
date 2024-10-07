@@ -48,7 +48,7 @@ struct SettingsView: View, AuthenticationServicePresentable {
                 UserDetailPresentationView(id: user.id)
             }
         case .favoriteGroups:
-            FavoriteGroupsEditView()
+            FavoriteGroupsListView()
         case .about:
             aboutThisApp
         case .license:
