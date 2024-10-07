@@ -11,7 +11,7 @@ import VRCKit
 extension UserDetailView {
     func bioSection(_ bio: String) -> some View {
         GroupBox("Bio") {
-            Text(bio)
+            ShowMoreText(bio, lineLimit: 5)
                 .font(.body)
         }
         .groupBoxStyle(.card)
