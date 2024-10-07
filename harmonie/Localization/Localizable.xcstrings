@@ -54,6 +54,7 @@
       }
     },
     "App Version" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -77,6 +78,9 @@
 
     },
     "Bio Links" : {
+
+    },
+    "Build" : {
 
     },
     "Cancel" : {
@@ -513,6 +517,9 @@
 
     },
     "Users" : {
+
+    },
+    "Version" : {
 
     },
     "World" : {
