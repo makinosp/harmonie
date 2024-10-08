@@ -15,10 +15,12 @@ struct NoteEditView: View, UserNoteServiceRepresentable {
     @State private var text: String
     @State private var isRequesting = false
     private let userId: String
+    private let action: (String) -> Void
 
-    init(initialValue: String, userId: String) {
+    init(initialValue: String, userId: String, action: @escaping (String) -> Void) {
         text = initialValue
         self.userId = userId
+        self.action = action
     }
 
     var body: some View {
@@ -66,15 +68,16 @@ struct NoteEditView: View, UserNoteServiceRepresentable {
                     note: text
                 )
             }
-            dismiss()
         } catch {
             appVM.handleError(error)
         }
+        action(text)
+        dismiss()
     }
 }
 
 #Preview {
     PreviewContainer {
-        NoteEditView(initialValue: "initialValue", userId: "")
+        NoteEditView(initialValue: "initialValue", userId: "") { _ in }
     }
 }

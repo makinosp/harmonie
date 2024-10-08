@@ -19,7 +19,9 @@ extension UserDetailView {
             isPresentedNoteEditor = true
         }
         .sheet(isPresented: $isPresentedNoteEditor) {
-            NoteEditView(initialValue: user.note, userId: user.id)
+            NoteEditView(initialValue: user.note, userId: user.id) { text in
+                user.note = text
+            }
         }
     }
 }
