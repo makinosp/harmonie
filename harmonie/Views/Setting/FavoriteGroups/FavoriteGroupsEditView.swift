@@ -45,9 +45,9 @@ struct FavoriteGroupsEditView: View, FavoriteServiceRepresentable {
                 await saveAction()
             } label: {
                 if isRequesting {
-                    Text("Save")
-                } else {
                     ProgressView()
+                } else {
+                    Text("Save")
                 }
             }
         }

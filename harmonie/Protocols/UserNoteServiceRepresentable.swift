@@ -15,7 +15,7 @@ protocol UserNoteServiceRepresentable {
 extension UserNoteServiceRepresentable {
     var userNoteService: UserNoteServiceProtocol {
         appVM.isPreviewMode
-        ? UserNoteService(client: appVM.client)
-        : UserNotePreviewService(client: appVM.client)
+        ? UserNotePreviewService(client: appVM.client)
+        : UserNoteService(client: appVM.client)
     }
 }

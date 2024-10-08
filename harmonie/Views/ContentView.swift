@@ -18,9 +18,7 @@ struct ContentView: View, AuthenticationServiceRepresentable, FriendServiceRepre
                 .task {
                     appVM.step = await appVM.setup(service: authenticationService)
                 }
-                .errorAlert {
-                    Task { await appVM.logout(service: authenticationService) }
-                }
+                .errorAlert()
         case .loggingIn:
             LoginView()
                 .errorAlert()

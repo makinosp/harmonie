@@ -14,21 +14,24 @@ extension View {
 }
 
 private struct ErrorAlertModifier: ViewModifier {
-    @Environment(AppViewModel.self) var userData: AppViewModel
-    let action: () -> Void
+    @Environment(AppViewModel.self) var appVM: AppViewModel
+    private let action: () -> Void
 
     init(_ action: @escaping () -> Void) {
         self.action = action
     }
 
     func body(content: Content) -> some View {
-        @Bindable var userData = userData
+        @Bindable var appVM = appVM
         content
             .alert(
-                isPresented: $userData.isPresentedAlert,
-                error: userData.vrckError
+                isPresented: $appVM.isPresentedAlert,
+                error: appVM.vrckError
             ) { _ in
-                Button("OK", action: action)
+                Button("OK") {
+                    action()
+                    appVM.vrckError = nil
+                }
             } message: { error in
                 Text(error.failureReason ?? "Try again later.")
             }
