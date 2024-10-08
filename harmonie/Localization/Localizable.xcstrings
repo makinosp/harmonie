@@ -53,17 +53,6 @@
         }
       }
     },
-    "App Version" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "アプリバージョン"
-          }
-        }
-      }
-    },
     "Author" : {
       "localizations" : {
         "ja" : {
@@ -81,7 +70,14 @@
 
     },
     "Build" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ビルド"
+          }
+        }
+      }
     },
     "Cancel" : {
       "localizations" : {
@@ -114,7 +110,14 @@
       }
     },
     "Close" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "閉じる"
+          }
+        }
+      }
     },
     "Code" : {
 
@@ -162,7 +165,14 @@
 
     },
     "Display Name" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表示名"
+          }
+        }
+      }
     },
     "Edit" : {
       "localizations" : {
@@ -472,19 +482,47 @@
       }
     },
     "Save Password" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスワードを保存"
+          }
+        }
+      }
     },
     "Select a Friend" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フレンドを選択"
+          }
+        }
+      }
     },
     "Select a location" : {
 
     },
     "Select an item" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アイテムを選択"
+          }
+        }
+      }
     },
     "Settings" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        }
+      }
     },
     "Show less" : {
 
@@ -499,31 +537,87 @@
 
     },
     "Status" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ステータス"
+          }
+        }
+      }
     },
     "Status Description" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ステータス説明"
+          }
+        }
+      }
     },
     "Statuses" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ステータス"
+          }
+        }
+      }
     },
     "Third Party Licence" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サードパーティライセンス"
+          }
+        }
+      }
     },
     "Two-step verification" : {
 
     },
     "UserName" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ユーザー名"
+          }
+        }
+      }
     },
     "Users" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ユーザー"
+          }
+        }
+      }
     },
     "Version" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バージョン"
+          }
+        }
+      }
     },
     "World" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ワールド"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
