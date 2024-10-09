@@ -96,7 +96,11 @@ struct ProfileEditView: View, UserServiceRepresentable {
             Button {
                 isPresentedLanguagePicker = true
             } label: {
-                Label("Add", systemImage: "plus")
+                Label {
+                    Text("Add")
+                } icon: {
+                    IconSet.plusCircleFilled.icon.symbolRenderingMode(.multicolor)
+                }
             }
         }
         .listSectionSpacing(.compact)
@@ -109,8 +113,8 @@ struct ProfileEditView: View, UserServiceRepresentable {
                     Label {
                         Text(url.description)
                     } icon: {
-                        Image(systemName: "link")
-                            .foregroundStyle(Color(.label))
+                        IconSet.linkCircleFilled.icon
+                            .symbolRenderingMode(.multicolor)
                     }
                 }
                 .swipeActions {
@@ -126,7 +130,11 @@ struct ProfileEditView: View, UserServiceRepresentable {
             Button {
                 isPresentedURLEditor = true
             } label: {
-                Label("Add", systemImage: "plus")
+                Label {
+                    Text("Add")
+                } icon: {
+                    IconSet.plusCircleFilled.icon.symbolRenderingMode(.multicolor)
+                }
             }
         }
         .listSectionSpacing(.compact)
