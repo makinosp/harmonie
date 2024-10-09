@@ -115,13 +115,9 @@ struct ProfileEditView: View, UserServiceRepresentable {
                 }
                 .swipeActions {
                     Button(role: .destructive) {
-                            // Delete action
+                        profileEditVM.removeUrl(url)
                     } label: {
-                        Label {
-                            Text("Delete")
-                        } icon: {
-                            Image(systemName: "message.badge")
-                        }
+                        Text("Delete")
                     }
                 }
             }

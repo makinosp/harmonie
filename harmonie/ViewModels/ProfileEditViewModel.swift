@@ -5,6 +5,7 @@
 //  Created by makinosp on 2024/08/23.
 //
 
+import Foundation
 import Observation
 import VRCKit
 
@@ -27,5 +28,9 @@ final class ProfileEditViewModel {
 
     func removeTag(_ target: LanguageTag) {
         editingUserInfo.tags.languageTags = editingUserInfo.tags.languageTags.filter { $0 != target }
+    }
+
+    func removeUrl(_ target: URL) {
+        editingUserInfo.bioLinks = editingUserInfo.bioLinks.filter { $0 != target }
     }
 }
