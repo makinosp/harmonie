@@ -85,7 +85,7 @@ struct ProfileEditView: View, UserServiceRepresentable {
                 Text(tag.description)
                     .swipeActions {
                         Button(role: .destructive) {
-                                // Delete action
+                            profileEditVM.removeTag(tag)
                         } label: {
                             Text("Delete")
                         }

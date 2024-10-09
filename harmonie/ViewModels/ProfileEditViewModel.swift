@@ -24,4 +24,8 @@ final class ProfileEditViewModel {
             editedInfo: editingUserInfo
         )
     }
+
+    func removeTag(_ target: LanguageTag) {
+        editingUserInfo.tags.languageTags = editingUserInfo.tags.languageTags.filter { $0 != target }
+    }
 }
