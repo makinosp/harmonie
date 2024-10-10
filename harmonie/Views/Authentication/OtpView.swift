@@ -56,11 +56,7 @@ struct OtpView: View, AuthenticationServiceRepresentable {
     private func otpAction() async {
         defer { isRequesting = false }
         isRequesting = true
-        await appVM.verifyTwoFA(
-            service: authenticationService,
-            verifyType: verifyType,
-            code: code
-        )
+        await appVM.verifyTwoFA(verifyType: verifyType, code: code)
     }
 
     private var isDisabledEnterButton: Bool {

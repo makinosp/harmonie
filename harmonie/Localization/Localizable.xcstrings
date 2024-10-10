@@ -21,7 +21,14 @@
       }
     },
     "Activity" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクティビティ"
+          }
+        }
+      }
     },
     "Add" : {
       "localizations" : {
@@ -120,7 +127,14 @@
       }
     },
     "Code" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コード"
+          }
+        }
+      }
     },
     "Confirm" : {
       "localizations" : {
@@ -133,7 +147,14 @@
       }
     },
     "Connect your VRChat account." : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VRChatアカウントを連携しましょう"
+          }
+        }
+      }
     },
     "Cross-Platform" : {
 
@@ -159,10 +180,24 @@
       }
     },
     "Description" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "説明"
+          }
+        }
+      }
     },
     "Details" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細"
+          }
+        }
+      }
     },
     "Display Name" : {
       "localizations" : {
@@ -185,10 +220,24 @@
       }
     },
     "Edit favorite groups" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お気に入りグループを編集"
+          }
+        }
+      }
     },
     "Edit Note" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノートを編集"
+          }
+        }
+      }
     },
     "Edit Profile" : {
       "localizations" : {
@@ -201,7 +250,14 @@
       }
     },
     "Enter" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "入力"
+          }
+        }
+      }
     },
     "Enter note" : {
       "localizations" : {
@@ -271,7 +327,14 @@
       "shouldTranslate" : false
     },
     "In What Way?" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どのようにして？"
+          }
+        }
+      }
     },
     "Information" : {
       "localizations" : {
@@ -294,7 +357,14 @@
       }
     },
     "Is this secure?" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全ですか？"
+          }
+        }
+      }
     },
     "Language" : {
       "localizations" : {
@@ -337,19 +407,16 @@
       }
     },
     "Loading..." : {
-
-    },
-    "Location" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ロケーション"
+            "value" : "読み込み中…"
           }
         }
       }
     },
-    "Locations" : {
+    "Location" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -411,7 +478,14 @@
       }
     },
     "None" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無し"
+          }
+        }
+      }
     },
     "Note" : {
       "localizations" : {
@@ -450,13 +524,27 @@
       }
     },
     "Private" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライベート"
+          }
+        }
+      }
     },
     "Private World" : {
 
     },
     "Profile" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィール"
+          }
+        }
+      }
     },
     "Quest Only" : {
 
@@ -502,7 +590,14 @@
       }
     },
     "Select a location" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ロケーションを選択"
+          }
+        }
+      }
     },
     "Select an item" : {
       "localizations" : {
@@ -525,16 +620,54 @@
       }
     },
     "Show less" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表示を少なく"
+          }
+        }
+      }
     },
     "Show more" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "もっと見る"
+          }
+        }
+      }
+    },
+    "Social" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ソーシャル"
+          }
+        }
+      }
     },
     "Social Links" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ソーシャルリンク"
+          }
+        }
+      }
     },
     "Source Code" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ソースコード"
+          }
+        }
+      }
     },
     "Status" : {
       "localizations" : {
@@ -577,7 +710,14 @@
       }
     },
     "Two-step verification" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "二要素認証"
+          }
+        }
+      }
     },
     "UserName" : {
       "localizations" : {

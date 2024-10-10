@@ -18,9 +18,14 @@ final class AppViewModel {
     var isPreviewMode = false
     var isRequiredReAuthentication = false
     @ObservationIgnored var client = APIClient()
+    @ObservationIgnored lazy var service: AuthenticationServiceProtocol = lazyService
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
+    }
+
+    private var lazyService: AuthenticationServiceProtocol {
+        isPreviewMode ? AuthenticationPreviewService(client: client) : AuthenticationService(client: client)
     }
 
     /// Check the authentication status of the user,
@@ -58,25 +63,20 @@ final class AppViewModel {
     }
 
     func login(username: String, password: String, isSavedOnKeyChain: Bool) async -> VerifyType? {
-        isPreviewMode = isPreviewUser(username: username, password: password)
-        await client.setCledentials(username: username, password: password)
-        if isSavedOnKeyChain {
-            _ = await KeychainUtil.shared.savePassword(password, for: username)
-        }
+        await setCredential(username: username, password: password, isSavedOnKeyChain: isSavedOnKeyChain)
         return await login()
     }
 
     func login() async -> VerifyType? {
-        let service: AuthenticationServiceProtocol = isPreviewMode
-        ? AuthenticationPreviewService(client: client)
-        : AuthenticationService(client: client)
         do {
             switch try await service.loginUserInfo() {
             case let verifyType as VerifyType:
                 return verifyType
             case let user as User:
                 self.user = user
-                step = .done(user)
+                if step != .done(user) {
+                    step = .done(user)
+                }
             default: break
             }
         } catch {
@@ -85,15 +85,9 @@ final class AppViewModel {
         return nil
     }
 
-    func verifyTwoFA(
-        service: AuthenticationServiceProtocol,
-        verifyType: VerifyType?,
-        code: String
-    ) async {
+    func verifyTwoFA(verifyType: VerifyType?, code: String) async {
         do {
-            defer {
-                reset()
-            }
+            defer { reset() }
             guard let verifyType = verifyType else {
                 throw HarmonieErrors.appError
             }

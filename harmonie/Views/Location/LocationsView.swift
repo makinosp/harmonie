@@ -18,7 +18,7 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             locationList
-                .navigationTitle("Locations")
+                .navigationTitle("Social")
                 .setColumn()
         } content: {
             Group {
