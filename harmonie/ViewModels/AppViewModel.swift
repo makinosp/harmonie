@@ -18,9 +18,14 @@ final class AppViewModel {
     var isPreviewMode = false
     var isRequiredReAuthentication = false
     @ObservationIgnored var client = APIClient()
+    @ObservationIgnored lazy var service: AuthenticationServiceProtocol = lazyService
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
+    }
+
+    private var lazyService: AuthenticationServiceProtocol {
+        isPreviewMode ? AuthenticationPreviewService(client: client) : AuthenticationService(client: client)
     }
 
     /// Check the authentication status of the user,
