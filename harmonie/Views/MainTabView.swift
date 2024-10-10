@@ -14,7 +14,7 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
 
     enum TabSegment: String, CaseIterable {
-        case locations, friends, favorites, settings
+        case social, friends, favorites, settings
     }
 
     var body: some View {
@@ -62,7 +62,7 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
 extension MainTabView.TabSegment {
     @ViewBuilder var content: some View {
         switch self {
-        case .locations: LocationsView()
+        case .social: LocationsView()
         case .friends: FriendsView()
         case .favorites: FavoritesView()
         case .settings: SettingsView()
@@ -71,7 +71,7 @@ extension MainTabView.TabSegment {
 
     @ViewBuilder var icon: some View {
         switch self {
-        case .locations: IconSet.location.icon
+        case .social: IconSet.location.icon
         case .friends: IconSet.friends.icon
         case .favorites: IconSet.favorite.icon
         case .settings: IconSet.setting.icon
