@@ -30,6 +30,9 @@ struct ProfileEditView: View, UserServiceRepresentable {
             .navigationTitle("Edit Profile")
             .navigationBarTitleDisplayMode(.inline)
         }
+        .task {
+            await _ = appVM.login()
+        }
         .sheet(isPresented: $isPresentedLanguagePicker) {
             LanguagePickerView(selectedLanguage: $selectedLanguage)
                 .presentationDetents([.medium])
