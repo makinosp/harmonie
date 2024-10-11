@@ -25,5 +25,6 @@ enum Constants {
 
     enum Messages {
         static let helpWithStoringKeychain = String(localized: "msg_help_with_storing_keychain", table: "Message")
+        static let helpWithLoginSafety = String(localized: "msg_help_with_login_safety", table: "Message")
     }
 }

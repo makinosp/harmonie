@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "msg_help_with_login_safety" : {
+
+    },
     "msg_help_with_storing_keychain" : {
       "extractionState" : "manual",
       "localizations" : {
