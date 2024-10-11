@@ -42,12 +42,11 @@ extension PreviewContainer {
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
         appVM = AppViewModel(isPreviewMode: true)
-        friendVM = FriendViewModel(user: PreviewDataProvider.shared.previewUser)
+        friendVM = FriendViewModel(appVM: appVM)
         favoriteVM = FavoriteViewModel()
     }
 
     init(@ViewBuilder content: (_ user: UserDetail) -> Content) {
-        let user = PreviewDataProvider.shared.previewUser
         let userDetail = PreviewDataProvider.generateUserDetail(
             id: UUID(),
             location: .private,
@@ -56,7 +55,7 @@ extension PreviewContainer {
         )
         self.content = content(userDetail)
         appVM = AppViewModel(isPreviewMode: true)
-        friendVM = FriendViewModel(user: user)
+        friendVM = FriendViewModel(appVM: appVM)
         favoriteVM = FavoriteViewModel()
     }
 }

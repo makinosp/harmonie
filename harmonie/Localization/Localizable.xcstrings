@@ -719,7 +719,11 @@
         }
       }
     },
+    "Username" : {
+
+    },
     "UserName" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {

@@ -10,10 +10,10 @@ import VRCKit
 
 struct LoginView: View, AuthenticationServiceRepresentable {
     @AppStorage(Constants.Keys.isSavedOnKeyChain) private var isSavedOnKeyChain = false
-    @AppStorage(Constants.Keys.username) private var username: String = ""
+    @AppStorage(Constants.Keys.username) private var username = ""
     @Environment(AppViewModel.self) var appVM
     @State private var verifyType: VerifyType?
-    @State private var password: String = ""
+    @State private var password = ""
     @State private var isRequesting = false
     @State private var isPresentedSecurityPopover = false
     @State private var isPresentedSavingPasswordPopover = false
@@ -58,7 +58,7 @@ struct LoginView: View, AuthenticationServiceRepresentable {
 
     private var loginFields: some View {
         VStack(alignment: .leading, spacing: 8) {
-            TextField("UserName", text: $username)
+            TextField("Username", text: $username)
                 .textInputAutocapitalization(.never)
                 .textFieldStyle(.roundedBorder)
             SecureField("Password", text: $password)
@@ -76,7 +76,7 @@ struct LoginView: View, AuthenticationServiceRepresentable {
                 .popover(isPresented: $isPresentedSecurityPopover) {
                     annotation(
                         title: "Is this secure?",
-                        text: Constants.Messages.helpWithStoringKeychain,
+                        text: Constants.Messages.helpWithLoginSafety,
                         isPresented: $isPresentedSecurityPopover
                     )
                 }
