@@ -116,7 +116,6 @@ final class AppViewModel {
     }
 
     private func reset() {
-        user = lazyUser
         step = .initializing
         client = APIClient()
         isPreviewMode = false
