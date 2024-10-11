@@ -21,11 +21,11 @@ final class FriendViewModel {
     var sortOrder: SortOrder = .asc
     var isRequesting = true
     var isProcessingFilter = false
-    @ObservationIgnored let user: User
+    @ObservationIgnored let appVM: AppViewModel
     @ObservationIgnored var favoriteFriends: [FavoriteFriend] = []
 
-    init(user: User) {
-        self.user = user
+    init(appVM: AppViewModel) {
+        self.appVM = appVM
     }
 
     var allFriends: [Friend] {
@@ -44,19 +44,19 @@ final class FriendViewModel {
     /// for each id of reversed order friend list.
     /// - Returns a list of recentry friends
     var recentlyFriends: [Friend] {
-        user.friends.reversed().compactMap { id in
+        appVM.user.friends.reversed().compactMap { id in
             onlineFriends.first { $0.id == id } ?? offlineFriends.first { $0.id == id }
         }
     }
 
     /// Fetch friends from API
-    func fetchAllFriends<T: FriendServiceProtocol>(service: T) async throws where T: Sendable {
+    func fetchAllFriends(service: FriendServiceProtocol & Sendable) async throws {
         async let onlineFriendsTask = service.fetchFriends(
-            count: user.onlineFriends.count + user.activeFriends.count,
+            count: appVM.user.onlineFriends.count + appVM.user.activeFriends.count,
             offline: false
         )
         async let offlineFriendsTask = service.fetchFriends(
-            count: user.offlineFriends.count,
+            count: appVM.user.offlineFriends.count,
             offline: true
         )
         onlineFriends = try await onlineFriendsTask

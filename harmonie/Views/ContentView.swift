@@ -22,9 +22,9 @@ struct ContentView: View, AuthenticationServiceRepresentable, FriendServiceRepre
         case .loggingIn:
             LoginView()
                 .errorAlert()
-        case .done(let user):
+        case .done:
             MainTabView()
-                .environment(FriendViewModel(user: user))
+                .environment(FriendViewModel(appVM: appVM))
                 .environment(FavoriteViewModel())
                 .errorAlert()
         }

@@ -28,32 +28,41 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
                     }
             }
         }
-        .task {
-            do {
-                defer { friendVM.isRequesting = false }
-                try await friendVM.fetchAllFriends(service: friendService)
-            } catch {
-                appVM.handleError(error)
-            }
-            do {
-                try await favoriteVM.fetchFavoriteFriends(
-                    service: favoriteService,
-                    friendVM: friendVM
-                )
-            } catch {
-                appVM.handleError(error)
-            }
+        .task { await fetchFriendsTask() }
+        .task { await fetchFavoritesTask() }
+        .onChange(of: appVM.user) { before, after in
+            guard before != after else { return }
+            Task { await fetchFriendsTask() }
+            Task { await fetchFavoritesTask() }
         }
-        .task {
-            do {
-                try await favoriteVM.fetchFavoritedWorlds(
-                    service: appVM.isPreviewMode
-                    ? WorldPreviewService(client: appVM.client)
-                    : WorldService(client: appVM.client)
-                )
-            } catch {
-                appVM.handleError(error)
-            }
+    }
+
+    private func fetchFriendsTask() async {
+        do {
+            defer { friendVM.isRequesting = false }
+            try await friendVM.fetchAllFriends(service: friendService)
+        } catch {
+            appVM.handleError(error)
+        }
+        do {
+            try await favoriteVM.fetchFavoriteFriends(
+                service: favoriteService,
+                friendVM: friendVM
+            )
+        } catch {
+            appVM.handleError(error)
+        }
+    }
+
+    private func fetchFavoritesTask() async {
+        do {
+            try await favoriteVM.fetchFavoritedWorlds(
+                service: appVM.isPreviewMode
+                ? WorldPreviewService(client: appVM.client)
+                : WorldService(client: appVM.client)
+            )
+        } catch {
+            appVM.handleError(error)
         }
     }
 }
