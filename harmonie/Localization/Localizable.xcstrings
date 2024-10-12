@@ -61,7 +61,24 @@
       }
     },
     "Are you sure you want to logout?" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログアウトしてもよろしいですか？"
+          }
+        }
+      }
+    },
+    "authenticator app" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "二段階認証アプリ"
+          }
+        }
+      }
     },
     "Author" : {
       "localizations" : {
@@ -239,6 +256,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "プロフィールを編集する"
+          }
+        }
+      }
+    },
+    "email" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メール"
           }
         }
       }
@@ -474,17 +501,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "フレンドがいません"
-          }
-        }
-      }
-    },
-    "None" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無し"
           }
         }
       }
