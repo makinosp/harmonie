@@ -66,40 +66,8 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
 
     private var locationList: some View {
         List(selection: $selectedInstance) {
-            ForEach(friendVM.friendsLocations.filter(\.location.isVisible)) { location in
-                LocationCardView(
-                    selected: $selectedInstance,
-                    location: location
-                )
-            }
-            Section("Private") {
-                HStack(spacing: 16) {
-                    SquareURLImage(imageUrl: Const.privateWorldImageUrl)
-                    VStack(spacing: .zero) {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Private Instances")
-                                    .font(.body)
-                                Text(friendVM.friendsInPrivate.count.description)
-                                    .font(.footnote)
-                                    .foregroundStyle(Color.gray)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            NavigationLabel()
-                        }
-                        ScrollView(.horizontal) {
-                            LazyHStack(spacing: -8) {
-                                ForEach(friendVM.friendsInPrivate) { friend in
-                                    CircleURLImage(
-                                        imageUrl: friend.imageUrl(.x256),
-                                        size: Constants.IconSize.thumbnail
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            friendLocations
+            inPrivateInstance
         }
         .overlay {
             if friendVM.isRequesting {
@@ -110,6 +78,48 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
                         Text("No Friend Location")
                     } icon: {
                         IconSet.location.icon
+                    }
+                }
+            }
+        }
+    }
+
+    private var friendLocations: some View {
+        Section("Friend Locations") {
+            ForEach(friendVM.friendsLocations.filter(\.location.isVisible)) { location in
+                LocationCardView(
+                    selected: $selectedInstance,
+                    location: location
+                )
+            }
+        }
+    }
+
+    private var inPrivateInstance: some View {
+        Section("Private") {
+            HStack(spacing: 16) {
+                SquareURLImage(imageUrl: Const.privateWorldImageUrl)
+                VStack(spacing: .zero) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Private Instances")
+                                .font(.body)
+                            Text(friendVM.friendsInPrivate.count.description)
+                                .font(.footnote)
+                                .foregroundStyle(Color.gray)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        NavigationLabel()
+                    }
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: -8) {
+                            ForEach(friendVM.friendsInPrivate) { friend in
+                                CircleURLImage(
+                                    imageUrl: friend.imageUrl(.x256),
+                                    size: Constants.IconSize.thumbnail
+                                )
+                            }
+                        }
                     }
                 }
             }
