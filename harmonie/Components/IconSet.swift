@@ -47,6 +47,9 @@ enum IconSet {
     static var location: some Iconizable {
         Icon("location")
     }
+    static var logout: some Iconizable {
+        Icon("rectangle.portrait.and.arrow.forward")
+    }
     static var plusCircleFilled: some Iconizable {
         Icon("plus.circle.fill")
     }

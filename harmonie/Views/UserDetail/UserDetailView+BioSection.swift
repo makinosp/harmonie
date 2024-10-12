@@ -10,7 +10,7 @@ import VRCKit
 
 extension UserDetailView {
     func bioSection(_ bio: String) -> some View {
-        GroupBox("Bio") {
+        GroupBox("Profile") {
             ShowMoreText(bio, lineLimit: 5)
                 .font(.body)
         }

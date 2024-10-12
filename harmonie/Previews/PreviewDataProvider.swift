@@ -92,7 +92,17 @@ final class PreviewDataProvider: Sendable {
             userIcon: PreviewDataProvider.iconImageUrl,
             userLanguage: nil,
             userLanguageCode: nil,
-            presence: User.Presence()
+            presence: Presence(
+                groups: [],
+                id: UUID().uuidString,
+                instance: "",
+                instanceType: "",
+                platform: .android,
+                status: .active,
+                travelingToInstance: "",
+                travelingToWorld: "",
+                world: ""
+            )
         )
     }
 

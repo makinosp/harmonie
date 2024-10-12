@@ -67,8 +67,10 @@ struct OtpView: View, AuthenticationServiceRepresentable {
 extension VerifyType {
     var method: String {
         switch self {
-        case .emailOtp: "email"
-        default: "authenticator app"
+        case .emailOtp:
+            String(localized: "email")
+        case .otp, .totp:
+            String(localized: "authenticator app")
         }
     }
 }

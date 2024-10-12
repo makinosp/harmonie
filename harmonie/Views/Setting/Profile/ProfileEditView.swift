@@ -110,7 +110,7 @@ struct ProfileEditView: View, UserServiceRepresentable {
     }
 
     @ViewBuilder private var bioLinksSection: some View {
-        Section("Bio Links") {
+        Section("Social Links") {
             ForEach(profileEditVM.editingUserInfo.bioLinks) { url in
                 Link(destination: url) {
                     Label {

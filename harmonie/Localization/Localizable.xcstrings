@@ -60,6 +60,26 @@
         }
       }
     },
+    "Are you sure you want to logout?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログアウトしてもよろしいですか？"
+          }
+        }
+      }
+    },
+    "authenticator app" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "二段階認証アプリ"
+          }
+        }
+      }
+    },
     "Author" : {
       "localizations" : {
         "ja" : {
@@ -69,12 +89,6 @@
           }
         }
       }
-    },
-    "Bio" : {
-
-    },
-    "Bio Links" : {
-
     },
     "Build" : {
       "localizations" : {
@@ -155,9 +169,6 @@
           }
         }
       }
-    },
-    "Cross-Platform" : {
-
     },
     "Date Joined" : {
       "localizations" : {
@@ -249,6 +260,16 @@
         }
       }
     },
+    "email" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メール"
+          }
+        }
+      }
+    },
     "Enter" : {
       "localizations" : {
         "ja" : {
@@ -270,7 +291,14 @@
       }
     },
     "Enter the 6-digit two-factor verification code recieved in your %@." : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@で受け取った6桁の認証コードを入力します"
+          }
+        }
+      }
     },
     "Enter URL" : {
       "localizations" : {
@@ -477,16 +505,6 @@
         }
       }
     },
-    "None" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無し"
-          }
-        }
-      }
-    },
     "Note" : {
       "localizations" : {
         "ja" : {
@@ -510,9 +528,6 @@
         }
       }
     },
-    "PC Only" : {
-
-    },
     "Platform" : {
       "localizations" : {
         "ja" : {
@@ -533,8 +548,15 @@
         }
       }
     },
-    "Private World" : {
-
+    "Private Instances" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライベートインスタンス"
+          }
+        }
+      }
     },
     "Profile" : {
       "localizations" : {
@@ -545,9 +567,6 @@
           }
         }
       }
-    },
-    "Quest Only" : {
-
     },
     "Region" : {
       "localizations" : {
@@ -720,10 +739,6 @@
       }
     },
     "Username" : {
-
-    },
-    "UserName" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
