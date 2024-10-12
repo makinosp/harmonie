@@ -5,8 +5,8 @@
 //  Created by makinosp on 2024/03/10.
 //
 
-import AsyncSwiftUI
 import LicenseList
+import SwiftUI
 import VRCKit
 
 struct SettingsView: View, AuthenticationServiceRepresentable {
@@ -69,11 +69,7 @@ struct SettingsView: View, AuthenticationServiceRepresentable {
             }
             aboutSection
             Section {
-                AsyncButton(role: .destructive) {
-                    await appVM.logout(service: authenticationService)
-                } label: {
-                    Label("Logout", systemImage: "rectangle.portrait.and.arrow.forward")
-                }
+                LogoutButton()
             }
         }
     }
