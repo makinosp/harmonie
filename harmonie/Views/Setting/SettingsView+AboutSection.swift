@@ -9,7 +9,7 @@ import SwiftUI
 
 extension SettingsView {
     var aboutSection: some View {
-        Section("About") {
+        Section("About This App") {
             NavigationLabel {
                 Label {
                     Text("About This App")
@@ -56,7 +56,7 @@ extension SettingsView {
                 Text("Build")
             }
         }
-        .navigationTitle("About")
+        .navigationTitle("About This App")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
