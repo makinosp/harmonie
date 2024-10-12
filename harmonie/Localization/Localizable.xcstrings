@@ -60,6 +60,9 @@
         }
       }
     },
+    "Are you sure you want to logout?" : {
+
+    },
     "Author" : {
       "localizations" : {
         "ja" : {
