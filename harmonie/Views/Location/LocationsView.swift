@@ -75,7 +75,7 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
             Section("Private") {
                 HStack(spacing: 16) {
                     SquareURLImage(imageUrl: Const.privateWorldImageUrl)
-                    VStack(spacing: 4) {
+                    VStack(spacing: .zero) {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text("Private Instances")
@@ -85,9 +85,7 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
                                     .foregroundStyle(Color.gray)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            if UIDevice.current.userInterfaceIdiom == .phone {
-                                IconSet.forward.icon
-                            }
+                            NavigationLabel()
                         }
                         ScrollView(.horizontal) {
                             LazyHStack(spacing: -8) {

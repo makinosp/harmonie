@@ -53,9 +53,7 @@ struct LocationCardView: View, InstanceServiceRepresentable {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    if UIDevice.current.userInterfaceIdiom == .phone {
-                        IconSet.forward.icon
-                    }
+                    NavigationLabel()
                 }
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: -8) {
