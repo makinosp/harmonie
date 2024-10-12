@@ -30,9 +30,11 @@ extension MainTabViewSegment {
 }
 
 struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentable {
+    @Environment(\.scenePhase) var scenePhase
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @State private var id = UUID()
 
     var body: some View {
         TabView {
@@ -45,12 +47,18 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
                     }
             }
         }
+        .id(id)
         .task { await fetchFriendsTask() }
         .task { await fetchFavoritesTask() }
         .onChange(of: appVM.user) { before, after in
             guard before != after else { return }
             Task { await fetchFriendsTask() }
             Task { await fetchFavoritesTask() }
+        }
+        .onChange(of: scenePhase) {
+            if scenePhase == .active {
+                id = UUID()
+            }
         }
     }
 
