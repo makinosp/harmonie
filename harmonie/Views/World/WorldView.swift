@@ -39,7 +39,7 @@ struct WorldView: View {
 
     private var topOverlay: some View {
         Label {
-            Text(world.platform.explanation)
+            Text(world.platform.description)
         } icon: {
             Image(systemName: "vision.pro.fill")
         }
@@ -175,17 +175,6 @@ struct WorldView: View {
                 .font(.body)
         }
         .groupBoxStyle(.card)
-    }
-}
-
-extension World.Platform {
-    var explanation: LocalizedStringKey {
-        switch self {
-        case .android: "Quest Only"
-        case .crossPlatform: "Cross-Platform"
-        case .windows: "PC Only"
-        case .none: "None"
-        }
     }
 }
 

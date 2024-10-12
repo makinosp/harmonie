@@ -10,7 +10,7 @@ import NukeUI
 import VRCKit
 
 struct LocationDetailView: View {
-    @Binding var selection: SegmentIdSelection?
+    @Binding private var selection: SegmentIdSelection?
     private let instance: Instance
     private let location: FriendsLocation
 
@@ -67,7 +67,7 @@ struct LocationDetailView: View {
                     Text("Capacity")
                 }
                 LabeledContent {
-                    Text(instance.region.rawValue.uppercased())
+                    Text(instance.region.description)
                 } label: {
                     Text("Region")
                 }
