@@ -143,5 +143,7 @@ extension AppViewModel {
     convenience init(isPreviewMode: Bool) {
         self.init()
         self.isPreviewMode = isPreviewMode
+        user = PreviewDataProvider.shared.previewUser
+        service = AuthenticationPreviewService(client: client)
     }
 }

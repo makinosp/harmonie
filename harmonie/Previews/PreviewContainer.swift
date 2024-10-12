@@ -53,9 +53,6 @@ extension PreviewContainer {
             state: .active,
             status: .active
         )
-        self.content = content(userDetail)
-        appVM = AppViewModel(isPreviewMode: true)
-        friendVM = FriendViewModel(appVM: appVM)
-        favoriteVM = FavoriteViewModel()
+        self.init { content(userDetail) }
     }
 }

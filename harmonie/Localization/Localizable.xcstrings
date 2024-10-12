@@ -7,9 +7,6 @@
     "%@ (Empty)" : {
 
     },
-    "About" : {
-
-    },
     "About This App" : {
       "localizations" : {
         "ja" : {
@@ -337,6 +334,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "お気に入り"
+          }
+        }
+      }
+    },
+    "Friend Locations" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フレンドのロケーション"
           }
         }
       }

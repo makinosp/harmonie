@@ -7,15 +7,12 @@
 
 import SwiftUI
 
-struct NavigationLabel<Label>: View where Label: View {
+@MainActor
+struct NavigationLabel<Label> where Label: View {
     private let label: () -> Label
 
     init(label: @escaping () -> Label) {
         self.label = label
-    }
-
-    var body: some View {
-        LabeledContent(content: content, label: label)
     }
 
     @ViewBuilder
@@ -24,6 +21,25 @@ struct NavigationLabel<Label>: View where Label: View {
             IconSet.forward.icon
                 .foregroundStyle(Color(.tertiaryLabel))
                 .imageScale(.small)
+                .unredacted()
         }
+    }
+}
+
+extension NavigationLabel where Label == EmptyView {
+    init() {
+        label = { EmptyView() }
+    }
+}
+
+extension NavigationLabel: View {
+    var body: some View {
+        LabeledContent(content: content, label: label)
+    }
+}
+
+extension NavigationLabel where Label == EmptyView {
+    var body: some View {
+        content()
     }
 }
