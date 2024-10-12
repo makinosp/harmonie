@@ -150,9 +150,6 @@
         }
       }
     },
-    "Cross-Platform" : {
-      "shouldTranslate" : false
-    },
     "Date Joined" : {
       "localizations" : {
         "ja" : {
@@ -479,6 +476,7 @@
       }
     },
     "None" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -510,9 +508,6 @@
           }
         }
       }
-    },
-    "PC Only" : {
-      "shouldTranslate" : false
     },
     "Platform" : {
       "localizations" : {
@@ -553,9 +548,6 @@
           }
         }
       }
-    },
-    "Quest Only" : {
-      "shouldTranslate" : false
     },
     "Region" : {
       "localizations" : {
