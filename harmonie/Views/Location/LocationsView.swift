@@ -78,7 +78,7 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
                     VStack(spacing: 4) {
                         HStack {
                             VStack(alignment: .leading) {
-                                Text("Private World")
+                                Text("Private Instances")
                                     .font(.body)
                                 Text(friendVM.friendsInPrivate.count.description)
                                     .font(.footnote)

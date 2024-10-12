@@ -70,12 +70,6 @@
         }
       }
     },
-    "Bio" : {
-
-    },
-    "Bio Links" : {
-
-    },
     "Build" : {
       "localizations" : {
         "ja" : {
@@ -157,7 +151,7 @@
       }
     },
     "Cross-Platform" : {
-
+      "shouldTranslate" : false
     },
     "Date Joined" : {
       "localizations" : {
@@ -270,7 +264,14 @@
       }
     },
     "Enter the 6-digit two-factor verification code recieved in your %@." : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@で受け取った6桁の認証コードを入力します"
+          }
+        }
+      }
     },
     "Enter URL" : {
       "localizations" : {
@@ -511,7 +512,7 @@
       }
     },
     "PC Only" : {
-
+      "shouldTranslate" : false
     },
     "Platform" : {
       "localizations" : {
@@ -533,8 +534,15 @@
         }
       }
     },
-    "Private World" : {
-
+    "Private Instances" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライベートインスタンス"
+          }
+        }
+      }
     },
     "Profile" : {
       "localizations" : {
@@ -547,7 +555,7 @@
       }
     },
     "Quest Only" : {
-
+      "shouldTranslate" : false
     },
     "Region" : {
       "localizations" : {
@@ -720,10 +728,6 @@
       }
     },
     "Username" : {
-
-    },
-    "UserName" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
