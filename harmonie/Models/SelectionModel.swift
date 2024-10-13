@@ -11,7 +11,7 @@ struct Selected: Hashable, Identifiable, Sendable {
 
 struct SegmentIdSelection: Hashable, Sendable {
     let selected: Selected
-    let segment: Segment
+    let segment: FavoriteViewSegment
 }
 
 extension SegmentIdSelection: Identifiable {

@@ -30,6 +30,9 @@ enum IconSet {
     static var favoriteFilled: some Iconizable {
         Icon("star.fill")
     }
+    static var favoriteSquares: some Iconizable {
+        Icon("star.square.on.square")
+    }
     static var filter: some Iconizable {
         Icon("line.3.horizontal.decrease")
     }

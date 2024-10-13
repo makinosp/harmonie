@@ -15,7 +15,7 @@ final class FavoriteViewModel {
     var favoriteGroups: [FavoriteGroup] = []
     var favoriteFriends: [FavoriteFriend] = []
     var favoriteWorlds: [FavoriteWorld] = []
-    var segment: Segment = .friends
+    var segment: FavoriteViewSegment = .friends
 
     /// Filters and returns the favorite groups of a specific type.
     /// - Parameter type: The `FavoriteType` to filter the favorite groups by.
