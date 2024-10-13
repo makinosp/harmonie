@@ -5,8 +5,6 @@
 //  Created by makinosp on 2024/09/30.
 //
 
-import SwiftUI
-
 enum IconSet {
     static var check: some Iconizable {
         Icon("checkmark")

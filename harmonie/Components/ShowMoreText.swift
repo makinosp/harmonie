@@ -1,14 +1,18 @@
+//
+//  ShowMoreText.swift
+//  Harmonie
+//
+//  Created by makinosp on 2024/10/12.
+//
+
+import MemberwiseInit
 import SwiftUI
 
+@MemberwiseInit
 struct ShowMoreText: View {
     @State private var isExpanded = false
-    private let text: String
-    private let lineLimit: Int
-
-    init(_ text: String, lineLimit: Int = 3) {
-        self.text = text
-        self.lineLimit = lineLimit
-    }
+    @Init(.internal, label: "_") private let text: String
+    @Init(.internal, default: 3) private let lineLimit: Int
 
     var body: some View {
         VStack(spacing: 3) {

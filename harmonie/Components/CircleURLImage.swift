@@ -5,19 +5,15 @@
 //  Created by makinosp on 2024/06/06.
 //
 
+import MemberwiseInit
 import NukeUI
 import SwiftUI
 
+@MemberwiseInit
 struct CircleURLImage: View {
-    private let imageUrl: URL?
-    private let thumbnailImageUrl: URL?
-    private let size: CGSize
-
-    init(imageUrl: URL?, thumbnailImageUrl: URL? = nil, size: CGSize) {
-        self.imageUrl = imageUrl
-        self.thumbnailImageUrl = thumbnailImageUrl
-        self.size = size
-    }
+    @Init(.internal) private let imageUrl: URL?
+    @Init(.internal, default: nil) private let thumbnailImageUrl: URL?
+    @Init(.internal) private let size: CGSize
 
     var body: some View {
         lazyImage(url: imageUrl) {

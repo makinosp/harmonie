@@ -5,15 +5,12 @@
 //  Created by makinosp on 2024/09/22.
 //
 
+import MemberwiseInit
 import SwiftUI
 
-@MainActor
+@MainActor @MemberwiseInit
 struct NavigationLabel<Label> where Label: View {
-    private let label: () -> Label
-
-    init(label: @escaping () -> Label) {
-        self.label = label
-    }
+    @Init(.internal, escaping: true) private let label: () -> Label
 
     @ViewBuilder
     func content() -> some View {

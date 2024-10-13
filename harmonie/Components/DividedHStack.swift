@@ -5,18 +5,11 @@
 //  Created by makinosp on 2024/09/30.
 //
 
+import MemberwiseInit
 import SwiftUI
 
-struct DividedHStack<Content>: View where Content: View {
-    @ViewBuilder private let content: () -> Content
-
-    init(content: @escaping () -> Content) {
-        self.content = content
-    }
-
-    var body: some View {
-        _VariadicView.Tree(ViewRoot(), content: content)
-    }
+struct DividedHStack<Content> where Content: View {
+    @Init(escaping: true) @ViewBuilder private let content: () -> Content
 
     private struct ViewRoot: _VariadicView_ViewRoot {
         @ViewBuilder func body(children: _VariadicView.Children) -> some View {
@@ -29,5 +22,11 @@ struct DividedHStack<Content>: View where Content: View {
                 }
             }
         }
+    }
+}
+
+extension DividedHStack: View {
+    var body: some View {
+        _VariadicView.Tree(ViewRoot(), content: content)
     }
 }
