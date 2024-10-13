@@ -21,7 +21,7 @@ extension MainTabViewSegment {
 
     @ViewBuilder var icon: some View {
         switch self {
-        case .social: IconSet.location.icon
+        case .social: IconSet.social.icon
         case .friends: IconSet.friends.icon
         case .favorites: IconSet.favorite.icon
         case .settings: IconSet.setting.icon
