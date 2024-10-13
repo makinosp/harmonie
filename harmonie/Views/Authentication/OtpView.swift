@@ -26,12 +26,12 @@ struct OtpView: View, AuthenticationServiceRepresentable {
                 TextField("Code", text: $code)
                     .keyboardType(.decimalPad)
                     .textFieldStyle(.roundedBorder)
+                    .frame(maxWidth: 120)
                 Text("Enter the 6-digit two-factor verification code recieved in your \(verifyType.method).")
                     .foregroundStyle(.gray)
                     .font(.caption2)
             }
             .padding(.horizontal, 8)
-            .frame(maxWidth: 240)
             enterButton
         }
         .padding(32)
