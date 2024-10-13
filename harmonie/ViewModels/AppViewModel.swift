@@ -89,17 +89,14 @@ final class AppViewModel {
         return nil
     }
 
-    func verifyTwoFA(verifyType: VerifyType?, code: String) async {
+    func verifyTwoFA(verifyType: VerifyType, code: String) async {
         do {
             defer { reset() }
-            guard let verifyType = verifyType else {
-                throw HarmonieErrors.appError
-            }
             guard try await service.verify2FA(
                 verifyType: verifyType,
                 code: code
             ) else {
-                throw HarmonieErrors.appError
+                throw ApplicationError(text: "Authentication failed")
             }
         } catch {
             handleError(error)
