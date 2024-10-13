@@ -43,7 +43,7 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
                 if let selection = selection {
                     Group {
                         switch selection.segment {
-                        case .friend:
+                        case .friends:
                             UserDetailPresentationView(selected: selection.selected)
                         case .world:
                             WorldPresentationView(id: selection.selected.id)

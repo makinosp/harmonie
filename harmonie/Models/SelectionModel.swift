@@ -21,7 +21,7 @@ extension SegmentIdSelection: Identifiable {
 extension SegmentIdSelection {
     init(friendId: String) {
         selected = Selected(id: friendId)
-        segment = .friend
+        segment = .friends
     }
 }
 

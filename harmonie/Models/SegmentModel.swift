@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-enum Segment {
-    case friend, world
+enum Segment: String {
+    case friends, world
 }
 
 extension Segment: Identifiable {
@@ -17,23 +17,24 @@ extension Segment: Identifiable {
 
 extension Segment: CaseIterable {
     var allCases: [Segment] {
-        [.friend, .world]
+        [.friends, .world]
     }
 }
 
 extension Segment: CustomStringConvertible {
+    var localizedString: LocalizedStringResource {
+        LocalizedStringResource(stringLiteral: rawValue.capitalized)
+    }
+
     var description: String {
-        switch self {
-        case .friend: "Friend"
-        case .world: "World"
-        }
+        String(localized: localizedString)
     }
 }
 
 extension Segment {
     @ViewBuilder var icon: some View {
         switch self {
-        case .friend: IconSet.friends.icon
+        case .friends: IconSet.friends.icon
         case .world: IconSet.world.icon
         }
     }
