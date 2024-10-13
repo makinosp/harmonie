@@ -31,7 +31,7 @@ struct SettingsView: View, AuthenticationServiceRepresentable {
         }
         .navigationSplitViewStyle(.balanced)
         .sheet(isPresented: $isPresentedForm) {
-            ProfileEditView(profileEditVM: ProfileEditViewModel(user: appVM.user))
+            ProfileEditView(user: appVM.user)
         }
         .sheet(item: $selectedLibrary) { library in
             LicenseView(library: library)
