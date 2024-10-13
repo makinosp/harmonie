@@ -17,7 +17,7 @@ struct FavoritesView: View {
         @Bindable var favoriteVM = favoriteVM
         NavigationSplitView(columnVisibility: $columnVisibility) {
             Group {
-                if favoriteVM.segment == .friend {
+                if favoriteVM.segment == .friends {
                     FavoriteFriendListView(selected: $selected)
                 } else if favoriteVM.segment == .world {
                     FavoriteWorldListView(selected: $selected)
@@ -41,7 +41,7 @@ struct FavoritesView: View {
         } detail: {
             if let selected = selected {
                 switch favoriteVM.segment {
-                case .friend:
+                case .friends:
                     UserDetailPresentationView(id: selected.id)
                 case .world:
                     WorldPresentationView(id: selected.id)

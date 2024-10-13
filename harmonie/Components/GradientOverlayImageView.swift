@@ -5,33 +5,19 @@
 //  Created by makinosp on 2024/07/28.
 //
 
+import MemberwiseInit
 import NukeUI
 import SwiftUI
 
+@MemberwiseInit
 struct GradientOverlayImageView<TopContent, BottomContent>: View where TopContent: View, BottomContent: View {
-    private let imageUrl: URL?
-    private let thumbnailImageUrl: URL?
-    private let height: CGFloat
-    private let maxWidth: CGFloat
-    private let gradient = Gradient(colors: [.black.opacity(0.5), .clear])
-    private let topContent: () -> TopContent
-    private let bottomContent: () -> BottomContent
-
-    init(
-        imageUrl: URL?,
-        thumbnailImageUrl: URL? = nil,
-        height: CGFloat,
-        maxWidth: CGFloat? = nil,
-        @ViewBuilder topContent: @escaping () -> TopContent = { EmptyView() },
-        @ViewBuilder bottomContent: @escaping () -> BottomContent = { EmptyView() }
-    ) {
-        self.imageUrl = imageUrl
-        self.thumbnailImageUrl = thumbnailImageUrl
-        self.height = height
-        self.topContent = topContent
-        self.bottomContent = bottomContent
-        self.maxWidth = maxWidth ?? WindowUtil.width
-    }
+    @Init(.internal) private let imageUrl: URL?
+    @Init(.internal, default: nil) private let thumbnailImageUrl: URL?
+    @Init(.internal) private let height: CGFloat
+    @Init(.internal, default: WindowUtil.width) private let maxWidth: CGFloat
+    @Init(.internal, default: Gradient(colors: [.black.opacity(0.5), .clear])) private let gradient: Gradient
+    @Init(.internal, default: { EmptyView() }, escaping: true) private let topContent: () -> TopContent
+    @Init(.internal, default: { EmptyView() }, escaping: true) private let bottomContent: () -> BottomContent
 
     var body: some View {
         lazyImage(url: imageUrl) {

@@ -17,6 +17,12 @@ enum Constants {
         static let previewUser = "demonstration"
     }
 
+    enum MaxCountInFavoriteList: Int, CustomStringConvertible {
+        case friends = 150
+        case world = 100
+        var description: String { rawValue.description }
+    }
+
     enum IconSize {
         static let thumbnail = CGSize(width: 32, height: 32)
         static let indicator = CGSize(width: 20, height: 20)

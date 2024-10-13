@@ -15,6 +15,7 @@
 		204709A42C7B47E100A56DF8 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2052C7AD2C4BC97100B341D1 /* VRCKit */; };
 		204709A52C7B47E100A56DF8 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2096016C2C4BD30100D905AF /* VRCKit */; };
 		20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20592B022C45640D00E1C8B8 /* AsyncSwiftUI */; };
+		205A12082CBB8621007D4EA4 /* MemberwiseInit in Frameworks */ = {isa = PBXBuildFile; productRef = 205A12072CBB8621007D4EA4 /* MemberwiseInit */; };
 		206AC9012BFA07AA00E0D5AE /* AsyncSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */; };
 		2094C4002C43BBC100F88986 /* VRCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2094C3FF2C43BBC100F88986 /* VRCKit */; };
 		2096E1172C96B9C9009C3649 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2096E1152C96B9C9009C3649 /* README.md */; };
@@ -78,6 +79,7 @@
 				201067B82C4552B40083ECBC /* AsyncSwiftUI in Frameworks */,
 				2094C4002C43BBC100F88986 /* VRCKit in Frameworks */,
 				20F213DD2C11FB470061DE29 /* NukeUI in Frameworks */,
+				205A12082CBB8621007D4EA4 /* MemberwiseInit in Frameworks */,
 				20592B032C45640D00E1C8B8 /* AsyncSwiftUI in Frameworks */,
 				20395DC22B945EEF00003921 /* VRCKit in Frameworks */,
 				2014A0B32C3832690019C638 /* VRCKit in Frameworks */,
@@ -139,7 +141,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				2096DFE92C96B142009C3649 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				20C7F8982C480E6800AC7A56 /* Harmonie */,
@@ -158,6 +159,7 @@
 				208899AA2C4BB26D00BCE9C5 /* VRCKit */,
 				2052C7AD2C4BC97100B341D1 /* VRCKit */,
 				2096016C2C4BD30100D905AF /* VRCKit */,
+				205A12072CBB8621007D4EA4 /* MemberwiseInit */,
 			);
 			productName = harmonie;
 			productReference = 20395D912B945CD700003921 /* Harmonie.app */;
@@ -242,7 +244,7 @@
 				201B430E2C27F48E00879A2F /* XCRemoteSwiftPackageReference "LicenseList" */,
 				20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */,
 				2096016B2C4BD30100D905AF /* XCRemoteSwiftPackageReference "vrckit" */,
-				2096DFE72C96B115009C3649 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				205A12062CBB8621007D4EA4 /* XCRemoteSwiftPackageReference "swift-memberwise-init-macro" */,
 			);
 			productRefGroup = 20395D922B945CD700003921 /* Products */;
 			projectDirPath = "";
@@ -317,10 +319,6 @@
 			isa = PBXTargetDependency;
 			target = 20395D902B945CD700003921 /* Harmonie */;
 			targetProxy = 20395DAE2B945CD900003921 /* PBXContainerItemProxy */;
-		};
-		2096DFE92C96B142009C3649 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 2096DFE82C96B142009C3649 /* SwiftLintBuildToolPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -658,20 +656,20 @@
 				kind = branch;
 			};
 		};
+		205A12062CBB8621007D4EA4 /* XCRemoteSwiftPackageReference "swift-memberwise-init-macro" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gohanlon/swift-memberwise-init-macro";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.1;
+			};
+		};
 		2096016B2C4BD30100D905AF /* XCRemoteSwiftPackageReference "vrckit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/makinosp/vrckit";
 			requirement = {
 				branch = develop;
 				kind = branch;
-			};
-		};
-		2096DFE72C96B115009C3649 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.57.0;
 			};
 		};
 		20F213D92C11FB470061DE29 /* XCRemoteSwiftPackageReference "Nuke" */ = {
@@ -711,6 +709,11 @@
 			package = 20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */;
 			productName = AsyncSwiftUI;
 		};
+		205A12072CBB8621007D4EA4 /* MemberwiseInit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 205A12062CBB8621007D4EA4 /* XCRemoteSwiftPackageReference "swift-memberwise-init-macro" */;
+			productName = MemberwiseInit;
+		};
 		206AC9002BFA07AA00E0D5AE /* AsyncSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AsyncSwiftUI;
@@ -727,11 +730,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2096016B2C4BD30100D905AF /* XCRemoteSwiftPackageReference "vrckit" */;
 			productName = VRCKit;
-		};
-		2096DFE82C96B142009C3649 /* SwiftLintBuildToolPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2096DFE72C96B115009C3649 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
 		20DC3C282C422786001101DB /* VRCKit */ = {
 			isa = XCSwiftPackageProductDependency;

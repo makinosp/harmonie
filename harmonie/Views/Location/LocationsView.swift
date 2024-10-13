@@ -43,7 +43,7 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
                 if let selection = selection {
                     Group {
                         switch selection.segment {
-                        case .friend:
+                        case .friends:
                             UserDetailPresentationView(selected: selection.selected)
                         case .world:
                             WorldPresentationView(id: selection.selected.id)
@@ -84,13 +84,19 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
         }
     }
 
-    private var friendLocations: some View {
-        Section("Friend Locations") {
-            ForEach(friendVM.friendsLocations.filter(\.location.isVisible)) { location in
+    @ViewBuilder private var friendLocations: some View {
+        let friendsLocations = friendVM.friendsLocations.filter(\.location.isVisible)
+        Section {
+            ForEach(friendsLocations) { location in
                 LocationCardView(
                     selected: $selectedInstance,
                     location: location
                 )
+            }
+        } header: {
+            HStack {
+                Text("Friend Locations")
+                Text("(\(friendsLocations.count.description))")
             }
         }
     }
@@ -123,6 +129,7 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
                     }
                 }
             }
+            .padding(.top, 4)
         }
     }
 }
