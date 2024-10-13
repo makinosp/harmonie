@@ -60,6 +60,9 @@ enum IconSet {
     static var sort: some Iconizable {
         Icon("arrow.up.arrow.down")
     }
+    static var unfriend: some Iconizable {
+        Icon("person.fill.xmark")
+    }
     static var up: some Iconizable {
         Icon("arrow.up")
     }

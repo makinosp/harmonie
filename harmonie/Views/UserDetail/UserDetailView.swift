@@ -9,10 +9,9 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-extension UserDetailView: FavoriteServiceRepresentable {}
-extension UserDetailView: InstanceServiceRepresentable {}
-
-struct UserDetailView: View {
+struct UserDetailView: View,
+                       FavoriteServiceRepresentable,
+                       InstanceServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @Environment(FriendViewModel.self) var friendVM
@@ -20,7 +19,6 @@ struct UserDetailView: View {
     @State var user: UserDetail
     @State var instance: Instance?
     @State var isRequesting = false
-    @State var isRequestingInMenu = false
     @State var lastActivity = ""
     @State var isPresentedNoteEditor = false
 
@@ -53,6 +51,10 @@ struct UserDetailView: View {
         .task {
             lastActivity = await DateUtil.shared.formatRelative(from: user.lastActivity)
         }
+    }
+
+    @ToolbarContentBuilder var toolbar: some ToolbarContent {
+        ToolbarItem { UserDetailToolbarMenu(user: user) }
     }
 
     private var contentStacks: some View {
