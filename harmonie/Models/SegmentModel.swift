@@ -7,21 +7,21 @@
 
 import SwiftUI
 
-enum Segment: String {
-    case friends, world
+enum FavoriteViewSegment: String {
+    case all, friends, world
 }
 
-extension Segment: Identifiable {
+extension FavoriteViewSegment: Identifiable {
     var id: Int { hashValue }
 }
 
-extension Segment: CaseIterable {
-    var allCases: [Segment] {
-        [.friends, .world]
+extension FavoriteViewSegment: CaseIterable {
+    var allCases: [FavoriteViewSegment] {
+        [.all, .friends, .world]
     }
 }
 
-extension Segment: CustomStringConvertible {
+extension FavoriteViewSegment: CustomStringConvertible {
     var localizedString: LocalizedStringResource {
         LocalizedStringResource(stringLiteral: rawValue.capitalized)
     }
@@ -31,9 +31,10 @@ extension Segment: CustomStringConvertible {
     }
 }
 
-extension Segment {
+extension FavoriteViewSegment {
     @ViewBuilder var icon: some View {
         switch self {
+        case .all: IconSet.favoriteSquares.icon
         case .friends: IconSet.friends.icon
         case .world: IconSet.world.icon
         }
