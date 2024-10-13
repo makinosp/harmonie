@@ -5,7 +5,7 @@
 
     },
     "(%@)" : {
-
+      "shouldTranslate" : false
     },
     "%@ / %@" : {
       "localizations" : {
@@ -15,7 +15,8 @@
             "value" : "%1$@ / %2$@"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "About This App" : {
       "localizations" : {
