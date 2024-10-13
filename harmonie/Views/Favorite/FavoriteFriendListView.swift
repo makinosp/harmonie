@@ -21,9 +21,9 @@ struct FavoriteFriendListView: View {
         let groups = favoriteVM.favoriteGroups(.friend)
         List(groups, selection: $selected) { group in
             if let friends = favoriteVM.getFavoriteFriends(group.id) {
-                friendsDisclosureGroup(title: group.displayName, friends: friends)
+                friendsDisclosureGroup(group.displayName, friends: friends)
             } else {
-                groupLabel(group.displayName, count: .zero)
+                groupLabel(group.displayName, count: .zero, max: .friends)
             }
         }
         .overlay {
@@ -41,7 +41,7 @@ struct FavoriteFriendListView: View {
     }
 
     private func friendsDisclosureGroup(
-        title: any StringProtocol,
+        _ title: any StringProtocol,
         friends: [Friend]
     ) -> DisclosureGroup<some View, some View> {
         DisclosureGroup {
@@ -56,13 +56,17 @@ struct FavoriteFriendListView: View {
                 .tag(Selected(id: friend.id))
             }
         } label: {
-            groupLabel(title, count: friends.count)
+            groupLabel(title, count: friends.count, max: .friends)
         }
     }
 
-    private func groupLabel(_ title: any StringProtocol, count: Int) -> some View {
+    private func groupLabel(
+        _ title: any StringProtocol,
+        count: Int,
+        max: Constants.MaxCountInFavoriteList
+    ) -> some View {
         LabeledContent {
-            Text("\(count.description) / \(maxListCount.description)")
+            Text("\(count.description) / \(max.description)")
         } label: {
             Text(title)
         }
