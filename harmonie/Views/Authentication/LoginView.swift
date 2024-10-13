@@ -17,14 +17,17 @@ struct LoginView: View, AuthenticationServiceRepresentable {
     @State private var isRequesting = false
     @State private var isPresentedSecurityPopover = false
     @State private var isPresentedSavingPasswordPopover = false
+    private let titleFont = "Avenir Next"
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
+            VStack(spacing: 32) {
                 title
-                loginFields
-                keychainToggle
-                enterButton
+                VStack(spacing: 16) {
+                    loginFields
+                    keychainToggle
+                    enterButton
+                }
             }
             .frame(maxWidth: 560)
             .padding(.horizontal, 32)
@@ -43,17 +46,18 @@ struct LoginView: View, AuthenticationServiceRepresentable {
     }
 
     private var title: some View {
-        Text(BundleUtil.appName.uppercased())
-            .font(.custom("Avenir Next", size: titleFontSize))
-            .kerning(titleKerning)
+        HStack(alignment: .lastTextBaseline) {
+            Text(verbatim: BundleUtil.appName.capitalized)
+                .font(.custom(titleFont, size: titleFontSize))
+                .fontWeight(.semibold)
+            Text(verbatim: "for")
+                .fontWeight(.light)
+            Text(verbatim: "VRChat")
+        }
     }
 
     private var titleFontSize: CGFloat {
         UIDevice.current.userInterfaceIdiom == .pad ? 56 : 28
-    }
-
-    private var titleKerning: CGFloat {
-        UIDevice.current.userInterfaceIdiom == .pad ? 28 : 14
     }
 
     private var loginFields: some View {
