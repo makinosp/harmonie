@@ -11,21 +11,17 @@ import VRCKit
 
 @Observable @MainActor
 final class AppViewModel {
+    var user: User?
     var step: Step = .initializing
     var isPresentedAlert = false
     var vrckError: VRCKitError?
     var isPreviewMode = false
     var isRequiredReAuthentication = false
     @ObservationIgnored var client = APIClient()
-    @ObservationIgnored lazy var user: User = lazyUser
     @ObservationIgnored lazy var service: AuthenticationServiceProtocol = lazyService
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
-    }
-
-    private var lazyUser: User {
-        preconditionFailure("AppViewModel.user has not been set")
     }
 
     private var lazyService: AuthenticationServiceProtocol {

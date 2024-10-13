@@ -17,4 +17,8 @@ struct ApplicationError: LocalizedError {
     var errorDescription: String? {
         String(localized: localizedString)
     }
+
+    static var UserIsNotSetError: ApplicationError {
+        ApplicationError(text: "User is not set")
+    }
 }

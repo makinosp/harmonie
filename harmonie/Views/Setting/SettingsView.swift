@@ -31,7 +31,9 @@ struct SettingsView: View, AuthenticationServiceRepresentable {
         }
         .navigationSplitViewStyle(.balanced)
         .sheet(isPresented: $isPresentedForm) {
-            ProfileEditView(user: appVM.user)
+            if let user = appVM.user {
+                ProfileEditView(user: user)
+            }
         }
         .sheet(item: $selectedLibrary) { library in
             LicenseView(library: library)
@@ -42,7 +44,9 @@ struct SettingsView: View, AuthenticationServiceRepresentable {
     private func presentDestination(_ destination: Destination) -> some View {
         switch destination {
         case .userDetail:
-            UserDetailPresentationView(id: appVM.user.id)
+            if let user = appVM.user {
+                UserDetailPresentationView(id: user.id)
+            }
         case .favoriteGroups:
             FavoriteGroupsListView()
         case .about:
@@ -62,7 +66,9 @@ struct SettingsView: View, AuthenticationServiceRepresentable {
 
     private var settingsContent: some View {
         List(selection: $destination) {
-            profileSection(user: appVM.user)
+            if let user = appVM.user {
+                profileSection(user: user)
+            }
             Section("Favorite") {
                 Label("Favorite Groups", systemImage: IconSet.favoriteGroup.systemName)
                     .tag(Destination.favoriteGroups)

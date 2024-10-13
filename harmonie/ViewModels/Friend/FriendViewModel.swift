@@ -44,19 +44,21 @@ final class FriendViewModel {
     /// for each id of reversed order friend list.
     /// - Returns a list of recentry friends
     var recentlyFriends: [Friend] {
-        appVM.user.friends.reversed().compactMap { id in
+        guard let user = appVM.user else { return [] }
+        return user.friends.reversed().compactMap { id in
             onlineFriends.first { $0.id == id } ?? offlineFriends.first { $0.id == id }
         }
     }
 
     /// Fetch friends from API
     func fetchAllFriends(service: FriendServiceProtocol & Sendable) async throws {
+        guard let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
         async let onlineFriendsTask = service.fetchFriends(
-            count: appVM.user.onlineFriends.count + appVM.user.activeFriends.count,
+            count: user.onlineFriends.count + user.activeFriends.count,
             offline: false
         )
         async let offlineFriendsTask = service.fetchFriends(
-            count: appVM.user.offlineFriends.count,
+            count: user.offlineFriends.count,
             offline: true
         )
         onlineFriends = try await onlineFriendsTask
