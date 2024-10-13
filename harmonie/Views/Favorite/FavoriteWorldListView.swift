@@ -19,12 +19,7 @@ struct FavoriteWorldListView: View {
     var body: some View {
         List(favoriteVM.favoriteWorldGroups, selection: $selected) { favoriteWorlds in
             if let group = favoriteWorlds.group {
-                DisclosureGroup(group.displayName) {
-                    ForEach(favoriteWorlds.worlds) { world in
-                        worldItem(world)
-                            .tag(Selected(id: world.id))
-                    }
-                }
+                worldDisclosureGroup(group.displayName, favoriteWorlds: favoriteWorlds)
             }
         }
         .overlay {
@@ -38,6 +33,32 @@ struct FavoriteWorldListView: View {
                 }
                 .background(Color(.systemGroupedBackground))
             }
+        }
+    }
+
+    private func worldDisclosureGroup(
+        _ title: any StringProtocol,
+        favoriteWorlds: FavoriteWorldGroup
+    ) -> DisclosureGroup<some View, some View> {
+        DisclosureGroup {
+            ForEach(favoriteWorlds.worlds) { world in
+                worldItem(world)
+                    .tag(Selected(id: world.id))
+            }
+        } label: {
+            groupLabel(title, count: favoriteWorlds.worlds.count, max: .world)
+        }
+    }
+
+    private func groupLabel(
+        _ title: any StringProtocol,
+        count: Int,
+        max: Constants.MaxCountInFavoriteList
+    ) -> some View {
+        LabeledContent {
+            Text("\(count.description) / \(max.description)")
+        } label: {
+            Text(title)
         }
     }
 
