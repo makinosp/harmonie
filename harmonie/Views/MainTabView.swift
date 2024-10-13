@@ -21,7 +21,7 @@ extension MainTabViewSegment {
 
     @ViewBuilder var icon: some View {
         switch self {
-        case .social: IconSet.location.icon
+        case .social: IconSet.social.icon
         case .friends: IconSet.friends.icon
         case .favorites: IconSet.favorite.icon
         case .settings: IconSet.setting.icon
@@ -34,20 +34,25 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @State private var id = UUID()
+    @State private var isRequesting = false
 
     var body: some View {
         TabView {
             ForEach(MainTabViewSegment.allCases) { tabSegment in
-                tabSegment.content
-                    .tag(tabSegment)
-                    .tabItem {
-                        tabSegment.icon
-                        Text(tabSegment.description)
+                Group {
+                    if isRequesting {
+                        ProgressScreen()
+                    } else {
+                        tabSegment.content
                     }
+                }
+                .tag(tabSegment)
+                .tabItem {
+                    tabSegment.icon
+                    Text(tabSegment.description)
+                }
             }
         }
-        .id(id)
         .task { await fetchFriendsTask() }
         .task { await fetchFavoritesTask() }
         .onChange(of: appVM.user) { before, after in
@@ -57,7 +62,12 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
         }
         .onChange(of: scenePhase) {
             if scenePhase == .active {
-                id = UUID()
+                isRequesting = true
+                Task {
+                    defer { isRequesting = false }
+                    if await appVM.login() == nil { return }
+                    appVM.step = .loggingIn
+                }
             }
         }
     }

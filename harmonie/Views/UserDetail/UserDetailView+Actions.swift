@@ -17,19 +17,4 @@ extension UserDetailView {
             appVM.handleError(error)
         }
     }
-
-    func updateFavoriteAction(friendId: String, group: FavoriteGroup) async {
-        guard let friend = friendVM.getFriend(id: friendId) else { return }
-        defer { isRequestingInMenu = false }
-        isRequestingInMenu = true
-        do {
-            try await favoriteVM.updateFavorite(
-                service: favoriteService,
-                friend: friend,
-                targetGroup: group
-            )
-        } catch {
-            appVM.handleError(error)
-        }
-    }
 }
