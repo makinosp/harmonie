@@ -5,13 +5,15 @@
 //  Created by xili on 2024/09/13.
 //
 
+import MemberwiseInit
 import SwiftUI
 import VRCKit
 
+@MemberwiseInit
 struct WorldPresentationView: View, WorldServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @State var world: World?
-    let id: String
+    @Init(.internal) private let id: String
 
     var body: some View {
         if let world = world {
