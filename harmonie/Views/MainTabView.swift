@@ -34,7 +34,6 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @State private var id = UUID()
 
     var body: some View {
         TabView {
@@ -47,7 +46,6 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
                     }
             }
         }
-        .id(id)
         .task { await fetchFriendsTask() }
         .task { await fetchFavoritesTask() }
         .onChange(of: appVM.user) { before, after in
@@ -57,7 +55,10 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
         }
         .onChange(of: scenePhase) {
             if scenePhase == .active {
-                id = UUID()
+                Task {
+                    if await appVM.login() == nil { return }
+                    appVM.step = .loggingIn
+                }
             }
         }
     }
