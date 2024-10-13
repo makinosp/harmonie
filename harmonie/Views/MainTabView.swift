@@ -34,16 +34,23 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @State private var isRequesting = false
 
     var body: some View {
         TabView {
             ForEach(MainTabViewSegment.allCases) { tabSegment in
-                tabSegment.content
-                    .tag(tabSegment)
-                    .tabItem {
-                        tabSegment.icon
-                        Text(tabSegment.description)
+                Group {
+                    if isRequesting {
+                        ProgressScreen()
+                    } else {
+                        tabSegment.content
                     }
+                }
+                .tag(tabSegment)
+                .tabItem {
+                    tabSegment.icon
+                    Text(tabSegment.description)
+                }
             }
         }
         .task { await fetchFriendsTask() }
@@ -55,7 +62,9 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
         }
         .onChange(of: scenePhase) {
             if scenePhase == .active {
+                isRequesting = true
                 Task {
+                    defer { isRequesting = false }
                     if await appVM.login() == nil { return }
                     appVM.step = .loggingIn
                 }
