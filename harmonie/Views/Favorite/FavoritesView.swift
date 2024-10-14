@@ -104,7 +104,7 @@ struct FavoritesView: View {
                         UserIcon(user: friend, size: Constants.IconSize.thumbnail)
                     }
                 }
-                .tag(Selected(id: friend.id))
+                .tag(SegmentIdSelection(friendId: friend.id))
             }
         } label: {
             groupLabel(title, count: friends.count, max: .friends)
@@ -128,7 +128,7 @@ struct FavoritesView: View {
         DisclosureGroup {
             ForEach(favoriteWorlds.worlds) { world in
                 worldItem(world)
-                    .tag(Selected(id: world.id))
+                    .tag(SegmentIdSelection(worldId: world.id))
             }
         } label: {
             groupLabel(title, count: favoriteWorlds.worlds.count, max: .world)
