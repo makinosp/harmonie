@@ -51,18 +51,8 @@ struct LocationDetailView: View {
                 }
                 .tag(SegmentIdSelection(worldId: instance.world.id))
             }
-            Section("Friends") {
-                friendList
-            }
-            Section("Information") {
-                ForEach(information, id: \.title) { informationItem in
-                    LabeledContent {
-                        Text(informationItem.value)
-                    } label: {
-                        Text(informationItem.title)
-                    }
-                }
-            }
+            Section("Friends") { friendList }
+            Section("Information") { informationList }
         }
         .listStyle(.insetGrouped)
         .navigationTitle(instance.world.name)
@@ -80,16 +70,26 @@ struct LocationDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    private var friendList: some View {
+    private var friendList: ForEach<[Friend], Friend.ID, some View> {
         ForEach(location.friends) { friend in
-            Label {
-                NavigationLabel {
+            NavigationLabel {
+                Label {
                     Text(friend.displayName)
+                } icon: {
+                    UserIcon(user: friend, size: Constants.IconSize.thumbnail)
                 }
-            } icon: {
-                UserIcon(user: friend, size: Constants.IconSize.thumbnail)
             }
             .tag(SegmentIdSelection(friendId: friend.id))
+        }
+    }
+
+    private var informationList: ForEach<[InformationItem], String, some View> {
+        ForEach(information, id: \.title) { informationItem in
+            LabeledContent {
+                Text(informationItem.value)
+            } label: {
+                Text(informationItem.title)
+            }
         }
     }
 }
