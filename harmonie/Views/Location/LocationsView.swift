@@ -24,8 +24,8 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
             Group {
                 if let selectedInstance = selectedInstance {
                     LocationDetailView(
-                        instanceLocation: selectedInstance,
-                        selection: $selection
+                        selection: $selection,
+                        instanceLocation: selectedInstance
                     )
                 } else {
                     ContentUnavailableView {
