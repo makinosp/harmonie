@@ -42,6 +42,9 @@ enum IconSet {
     static var friends: some Iconizable {
         Icon("person.2")
     }
+    static var info: some Iconizable {
+        Icon("info")
+    }
     static var linkCircleFilled: some Iconizable {
         Icon("link.circle.fill")
     }

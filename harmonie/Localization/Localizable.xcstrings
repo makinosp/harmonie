@@ -133,7 +133,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "キャパシティ"
+            "value" : "上限人数"
           }
         }
       }
@@ -635,6 +635,9 @@
           }
         }
       }
+    },
+    "Select a friend or world" : {
+
     },
     "Select a location" : {
       "localizations" : {

@@ -9,6 +9,7 @@ import SwiftUI
 import VRCKit
 
 struct FavoritesView: View {
+    @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @State private var selected: SegmentIdSelection?
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
@@ -25,7 +26,9 @@ struct FavoritesView: View {
                 }
             }
             .overlay {
-                if favoriteVM.isSelectedEmpty {
+                if appVM.isLoggingIn {
+                    ProgressScreen()
+                } else if favoriteVM.isSelectedEmpty {
                     ContentUnavailableView {
                         Label("No Favorites", systemImage: IconSet.favorite.systemName)
                     }

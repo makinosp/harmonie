@@ -24,16 +24,12 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
             Group {
                 if let selectedInstance = selectedInstance {
                     LocationDetailView(
-                        instanceLocation: selectedInstance,
-                        selection: $selection
+                        selection: $selection,
+                        instanceLocation: selectedInstance
                     )
                 } else {
                     ContentUnavailableView {
-                        Label {
-                            Text("Select a location")
-                        } icon: {
-                            IconSet.location.icon
-                        }
+                        Label("Select a location", systemImage: IconSet.location.systemName)
                     }
                 }
             }
@@ -52,6 +48,10 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
                         }
                     }
                     .id(selection.selected.id)
+                } else {
+                    ContentUnavailableView {
+                        Label("Select a friend or world", systemImage: IconSet.info.systemName)
+                    }
                 }
             }
             .setColumn()
@@ -76,11 +76,7 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
                 ProgressScreen()
             } else if friendVM.friendsLocations.isEmpty {
                 ContentUnavailableView {
-                    Label {
-                        Text("No Friend Location")
-                    } icon: {
-                        IconSet.location.icon
-                    }
+                    Label("No Friend Location", systemImage: IconSet.friends.systemName)
                 }
             }
         }

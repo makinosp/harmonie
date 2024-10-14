@@ -7,18 +7,27 @@
 
 import AsyncSwiftUI
 import NukeUI
+import MemberwiseInit
 import VRCKit
 
+@MemberwiseInit
 struct LocationDetailView: View {
+    @InitWrapper(.internal, type: Binding<SegmentIdSelection?>)
     @Binding private var selection: SegmentIdSelection?
-    private let instance: Instance
-    private let location: FriendsLocation
+    @Init(.internal) private let instanceLocation: InstanceLocation
 
-    init(instanceLocation: InstanceLocation, selection: Binding<SegmentIdSelection?>) {
-        instance = instanceLocation.instance
-        location = instanceLocation.location
-        _selection = selection
-    }
+    private var location: FriendsLocation { instanceLocation.location }
+    private var instance: Instance { instanceLocation.instance }
+
+    private typealias InformationItem = (title: String, value: String)
+    private var information: [InformationItem] { [
+        (title: String(localized: "Instance Type"), value: instance.typeDescription),
+        (title: String(localized: "Friends"), value: location.friends.count.description),
+        (title: String(localized: "Users"), value: instance.userCount.description),
+        (title: String(localized: "Capacity"), value: instance.capacity.description),
+        (title: String(localized: "Region"), value: instance.region.description),
+        (title: String(localized: "Platform"), value: instance.userPlatforms.map(\.description).joined(separator: ", ")),
+    ] }
 
     var body: some View {
         List(selection: $selection) {
@@ -42,41 +51,8 @@ struct LocationDetailView: View {
                 }
                 .tag(SegmentIdSelection(worldId: instance.world.id))
             }
-            Section("Friends") {
-                friendList
-            }
-            Section("Information") {
-                LabeledContent {
-                    Text(instance.typeDescription)
-                } label: {
-                    Text("Instance Type")
-                }
-                LabeledContent {
-                    Text(location.friends.count.description)
-                } label: {
-                    Text("Friends")
-                }
-                LabeledContent {
-                    Text(instance.userCount.description)
-                } label: {
-                    Text("Users")
-                }
-                LabeledContent {
-                    Text(instance.capacity.description)
-                } label: {
-                    Text("Capacity")
-                }
-                LabeledContent {
-                    Text(instance.region.description)
-                } label: {
-                    Text("Region")
-                }
-                LabeledContent {
-                    Text(instance.userPlatforms.map(\.description).joined(separator: ", "))
-                } label: {
-                    Text("Platform")
-                }
-            }
+            Section("Friends") { friendList }
+            Section("Information") { informationList }
         }
         .listStyle(.insetGrouped)
         .navigationTitle(instance.world.name)
@@ -94,16 +70,26 @@ struct LocationDetailView: View {
         .foregroundStyle(Color.white)
     }
 
-    private var friendList: some View {
+    private var friendList: ForEach<[Friend], Friend.ID, some View> {
         ForEach(location.friends) { friend in
-            Label {
-                NavigationLabel {
+            NavigationLabel {
+                Label {
                     Text(friend.displayName)
+                } icon: {
+                    UserIcon(user: friend, size: Constants.IconSize.thumbnail)
                 }
-            } icon: {
-                UserIcon(user: friend, size: Constants.IconSize.thumbnail)
             }
             .tag(SegmentIdSelection(friendId: friend.id))
+        }
+    }
+
+    private var informationList: ForEach<[InformationItem], String, some View> {
+        ForEach(information, id: \.title) { informationItem in
+            LabeledContent {
+                Text(informationItem.value)
+            } label: {
+                Text(informationItem.title)
+            }
         }
     }
 }
