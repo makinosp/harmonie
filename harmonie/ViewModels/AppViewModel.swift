@@ -133,6 +133,8 @@ final class AppViewModel {
 }
 
 extension AppViewModel {
+    /// Initialize as preview mode
+    /// - Parameter isPreviewMode
     convenience init(isPreviewMode: Bool) {
         self.init()
         self.isPreviewMode = isPreviewMode
