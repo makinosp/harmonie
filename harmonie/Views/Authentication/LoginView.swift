@@ -14,7 +14,6 @@ struct LoginView: View, AuthenticationServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @State private var verifyType: VerifyType?
     @State private var password = ""
-    @State private var isRequesting = false
     @State private var isPresentedSecurityPopover = false
     @State private var isPresentedSavingPasswordPopover = false
     private let titleFont = "Avenir Next"
@@ -142,7 +141,7 @@ struct LoginView: View, AuthenticationServiceRepresentable {
         AsyncButton {
             await loginAction()
         } label: {
-            if isRequesting {
+            if appVM.isLoggingIn {
                 ProgressView()
             } else {
                 Text("Enter")
@@ -154,8 +153,6 @@ struct LoginView: View, AuthenticationServiceRepresentable {
     }
 
     private func loginAction() async {
-        defer { isRequesting = false }
-        isRequesting = true
         verifyType = await appVM.login(
             username: username,
             password: password,
@@ -164,7 +161,7 @@ struct LoginView: View, AuthenticationServiceRepresentable {
     }
 
     private var isDisabledEnterButton: Bool {
-        isRequesting || username.count < 4 || password.count < 8
+        appVM.isLoggingIn || username.count < 4 || password.count < 8
     }
 }
 

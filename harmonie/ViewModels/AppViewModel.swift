@@ -16,6 +16,7 @@ final class AppViewModel {
     var isPresentedAlert = false
     var vrckError: VRCKitError?
     var isPreviewMode = false
+    var isLoggingIn = false
     var isRequiredReAuthentication = false
     @ObservationIgnored var client = APIClient()
     @ObservationIgnored lazy var service: AuthenticationServiceProtocol = lazyService
@@ -68,6 +69,8 @@ final class AppViewModel {
     }
 
     func login() async -> VerifyType? {
+        defer { isLoggingIn = false }
+        isLoggingIn = true
         do {
             switch try await service.loginUserInfo() {
             case let verifyType as VerifyType:
