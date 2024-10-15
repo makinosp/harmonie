@@ -48,10 +48,6 @@ final class FavoriteViewModel {
         favoriteGroups.first { $0.id == id }
     }
 
-    func getFavoriteGroup(name: String) -> FavoriteGroup? {
-        favoriteGroups.first { $0.name == name }
-    }
-
     func updateFavoriteGroup(
         service: FavoriteServiceProtocol,
         id: FavoriteGroup.ID,
@@ -198,7 +194,7 @@ final class FavoriteViewModel {
 
     /// Removes a world from the favorite list.
     /// - Parameter id: The `worldId` of the world to be removed.
-    func removeWorldFromFavorite(worldId id: FavoriteWorld.ID) {
+    private func removeWorldFromFavorite(worldId id: FavoriteWorld.ID) {
         favoriteWorlds = favoriteWorlds.filter { $0.id != id }
     }
 
@@ -207,7 +203,7 @@ final class FavoriteViewModel {
     /// If the target group differs from the current favorite group, adds the world to the new group.
     /// - Parameters:
     ///   - service: Any `FavoriteServiceProtocol` service.
-    ///   - worldId: The ID of the world to update.
+    ///   - world: The world to update.
     ///   - targetGroup: The `FavoriteGroup` where the world should be added.
     func updateFavorite(
         service: FavoriteServiceProtocol,
@@ -215,18 +211,22 @@ final class FavoriteViewModel {
         targetGroup: FavoriteGroup
     ) async throws {
         let source = favoriteWorlds.first { $0.id == world.id }
-        if let sourceGroupName = source?.favoriteGroup,
-           let sourceGroup = getFavoriteGroup(name: sourceGroupName) {
+        if let sourceId = source?.favoriteId,
+           let sourceGroup = getFavoriteGroup(id: sourceId) {
             _ = try await service.removeFavorite(favoriteId: world.id)
             removeWorldFromFavorite(worldId: world.id)
-            guard sourceGroup.id != targetGroup.id else { return }
+            guard sourceGroup.id == targetGroup.id else { return }
         }
-        let tag = targetGroup.name
-        _ = try await service.addFavorite(
+        let addedFaovorite = try await service.addFavorite(
             type: .world,
             favoriteId: world.id,
             tag: targetGroup.name
         )
-        favoriteWorlds.append(FavoriteWorld(world: world, favoriteGroup: tag))
+        let addedFavoriteWorld = FavoriteWorld(
+            world: world,
+            favoriteId: addedFaovorite.id,
+            favoriteGroup: targetGroup.name
+        )
+        favoriteWorlds.append(addedFavoriteWorld)
     }
 }

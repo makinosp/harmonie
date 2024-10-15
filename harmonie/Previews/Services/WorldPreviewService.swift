@@ -5,6 +5,7 @@
 //  Created by makinosp on 2024/09/09.
 //
 
+import Foundation
 import VRCKit
 
 final actor WorldPreviewService: APIService, WorldServiceProtocol {
@@ -22,6 +23,7 @@ final actor WorldPreviewService: APIService, WorldServiceProtocol {
         (0..<n).map { number in
             FavoriteWorld(
                 world: PreviewDataProvider.world,
+                favoriteId: "fvrt_\(UUID())",
                 favoriteGroup: number.description
             )
         }
