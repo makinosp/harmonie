@@ -462,6 +462,16 @@
         }
       }
     },
+    "Latest" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しい"
+          }
+        }
+      }
+    },
     "Loading..." : {
       "localizations" : {
         "ja" : {
@@ -478,6 +488,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ロケーション"
+          }
+        }
+      }
+    },
+    "Login latest" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログインの新しい"
+          }
+        }
+      }
+    },
+    "Login oldest" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログインの古い"
           }
         }
       }
@@ -499,6 +529,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "マイプロフィール"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名前"
           }
         }
       }
@@ -545,6 +585,16 @@
     },
     "OK" : {
       "shouldTranslate" : false
+    },
+    "Oldest" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "古い"
+          }
+        }
+      }
     },
     "Password" : {
       "localizations" : {
@@ -637,7 +687,14 @@
       }
     },
     "Select a friend or world" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フレンドかワールドを選択"
+          }
+        }
+      }
     },
     "Select a location" : {
       "localizations" : {
