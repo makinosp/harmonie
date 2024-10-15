@@ -103,12 +103,8 @@ struct LoginView: View, AuthenticationServiceRepresentable {
                     )
                 }
             } label: {
-                Label {
-                    Text("Save Password")
-                } icon: {
-                    Image(systemName: "key.icloud")
-                }
-                .foregroundStyle(Color(.systemGray))
+                Label("Save Password", systemImage: IconSet.key.systemName)
+                    .foregroundStyle(Color(.systemGray))
             }
             .font(.callout)
         }
