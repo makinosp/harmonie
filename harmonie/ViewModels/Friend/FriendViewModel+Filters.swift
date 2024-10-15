@@ -32,15 +32,13 @@ extension FriendViewModel {
                 filterText.isEmpty || $0.displayName.range(of: filterText, options: .caseInsensitive) != nil
             }
             .sorted {
-                switch (sortType, sortOrder) {
-                case (.default, .asc): false
-                case (.default, .desc): true
-                case (.displayName, .asc): $0.displayName < $1.displayName
-                case (.displayName, .desc): $0.displayName > $1.displayName
-                case (.lastLogin, .asc): $0.lastLogin < $1.lastLogin
-                case (.lastLogin, .desc): $0.lastLogin > $1.lastLogin
-                case (.status, .asc): $0.status.rawValue < $1.status.rawValue
-                case (.status, .desc): $0.status.rawValue > $1.status.rawValue
+                switch sortType {
+                case .latest: false
+                case .oldest: true
+                case .name: $0.displayName < $1.displayName
+                case .loginLatest: $0.lastLogin < $1.lastLogin
+                case .loginOldest: $0.lastLogin > $1.lastLogin
+                case .status: $0.status.rawValue < $1.status.rawValue
                 }
             }
     }

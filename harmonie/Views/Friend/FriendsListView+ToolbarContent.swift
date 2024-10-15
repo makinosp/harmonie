@@ -15,31 +15,16 @@ extension FriendsListView {
     }
 
     private var sortMenu: some View {
-        Menu {
-            ForEach(FriendViewModel.SortType.allCases) { sortType in
-                Button {
-                    if friendVM.sortType == sortType {
-                        friendVM.sortOrder.toggle()
-                    } else {
-                        friendVM.sortType = sortType
-                        friendVM.sortOrder = .asc
-                    }
-                    friendVM.applyFilters()
-                } label: {
-                    Label {
-                        Text(sortType.description)
-                    } icon: {
-                        if friendVM.sortType == sortType {
-                            switch friendVM.sortOrder {
-                            case .asc: IconSet.up.icon
-                            case .desc: IconSet.down.icon
-                            }
-                        }
-                    }
+        Menu("", systemImage: IconSet.sort.systemName) {
+            @Bindable var friendVM = friendVM
+            Picker("", selection: $friendVM.sortType) {
+                ForEach(FriendViewModel.SortType.allCases) { sortType in
+                    Text(sortType.description).tag(sortType)
                 }
             }
-        } label: {
-            IconSet.sort.icon
+            .onChange(of: friendVM.sortType) {
+                friendVM.applyFilters()
+            }
         }
     }
 
