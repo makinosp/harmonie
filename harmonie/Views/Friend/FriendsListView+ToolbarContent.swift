@@ -29,14 +29,12 @@ extension FriendsListView {
     }
 
     private var filterMenu: some View {
-        Menu {
+        Menu("", systemImage: IconSet.filter.systemName) {
             Button("Clear") {
                 friendVM.clearFilters()
             }
             filterUserStatusMenu
             filterFavoriteGroupsMenu
-        } label: {
-            IconSet.filter.icon
         }
     }
 
