@@ -117,12 +117,7 @@ struct ProfileEditView: View, UserServiceRepresentable {
         Section("Social Links") {
             ForEach(profileEditVM.editingUserInfo.bioLinks) { url in
                 Link(destination: url) {
-                    Label {
-                        Text(url.description)
-                    } icon: {
-                        IconSet.linkCircleFilled.icon
-                            .symbolRenderingMode(.multicolor)
-                    }
+                    Label(url.description, systemImage: IconSet.link.systemName)
                 }
                 .swipeActions {
                     Button(role: .destructive) {
