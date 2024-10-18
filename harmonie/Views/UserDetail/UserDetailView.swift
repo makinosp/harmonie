@@ -69,7 +69,7 @@ struct UserDetailView: View,
             }
             let urls = user.bioLinks.wrappedValue
             if !urls.isEmpty {
-                bioLinksSection(urls)
+                socialLinksSection(urls)
             }
             activitySection
         }

@@ -51,8 +51,8 @@ enum IconSet {
     static var key: some Iconizable {
         Icon("key.fill")
     }
-    static var linkCircleFilled: some Iconizable {
-        Icon("link.circle.fill")
+    static var link: some Iconizable {
+        Icon("link")
     }
     static var linkExternal: some Iconizable {
         Icon("arrow.up.right")
