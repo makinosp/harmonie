@@ -15,7 +15,7 @@ struct FavoriteGroupsEditView: View, FavoriteServiceRepresentable {
     @State private var displayName: String
     @State private var visibility: FavoriteGroup.Visibility
     @State private var isRequesting = false
-    let favoriteGroup: FavoriteGroup
+    private let favoriteGroup: FavoriteGroup
 
     init(favoriteGroup: FavoriteGroup) {
         self.favoriteGroup = favoriteGroup

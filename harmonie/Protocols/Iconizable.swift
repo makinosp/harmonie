@@ -12,7 +12,7 @@ protocol Iconizable {
 }
 
 extension Iconizable {
-    var icon: some View {
+    var icon: Image {
         Image(systemName: systemName)
     }
 }

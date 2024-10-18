@@ -19,7 +19,7 @@ final class AppViewModel {
     var isLoggingIn = false
     var isRequiredReAuthentication = false
     @ObservationIgnored var client = APIClient()
-    @ObservationIgnored lazy var authenticationService: AuthenticationServiceProtocol = lazyAuthenticationService
+    @ObservationIgnored lazy var authenticationService = lazyAuthenticationService
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
