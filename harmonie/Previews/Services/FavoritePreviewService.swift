@@ -29,11 +29,7 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
         ]
     }
 
-    func listFavorites(
-        n: Int = 60,
-        type: FavoriteType,
-        tag: String? = nil
-    ) async throws -> [Favorite] {
+    func listFavorites(type: FavoriteType) async throws -> [Favorite] {
         switch type {
         case .friend:
             PreviewDataProvider.shared.onlineFriends.prefix(5).map { friend in
@@ -44,7 +40,7 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
         }
     }
 
-    func fetchFavoriteList(favoriteGroups: [FavoriteGroup]) async throws -> [FavoriteList] {
+    func fetchFavoriteList(favoriteGroups: [FavoriteGroup], type: FavoriteType) async throws -> [FavoriteList] {
         []
     }
 

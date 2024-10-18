@@ -73,7 +73,7 @@ final class FavoriteViewModel {
     ///   - friendVM: The `FriendViewModel` view model.
     func fetchFavoriteFriends(service: FavoriteServiceProtocol, friendVM: FriendViewModel) async throws {
         favoriteGroups = try await service.listFavoriteGroups()
-        let favoriteDetails = try await service.fetchFavoriteList(favoriteGroups: favoriteGroups)
+        let favoriteDetails = try await service.fetchFavoriteList(favoriteGroups: favoriteGroups, type: .friend)
         let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
         favoriteFriends = favoriteDetailsOfFriends.map { favoriteDetail in
             FavoriteFriend(
@@ -171,7 +171,7 @@ final class FavoriteViewModel {
     // MARK: - World
 
     func fetchFavoritedWorlds(service: WorldServiceProtocol) async throws {
-        favoriteWorlds = try await service.fetchFavoritedWorlds(n: 100)
+        favoriteWorlds = try await service.fetchFavoritedWorlds()
     }
 
     func getFavoriteWorldsByGroup(groupName: String) -> [FavoriteWorld] {
