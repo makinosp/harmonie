@@ -16,7 +16,7 @@ extension FavoriteViewSegment: Identifiable {
 }
 
 extension FavoriteViewSegment: CaseIterable {
-    var allCases: [FavoriteViewSegment] {
+    var allCases: [Self] {
         [.all, .friends, .world]
     }
 }

@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/04/07.
 //
 
-import SwiftUI
+import SwiftUICore
 import VRCKit
 
 extension UserStatus: ColorRepresentable {

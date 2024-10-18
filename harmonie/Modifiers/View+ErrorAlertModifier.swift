@@ -5,6 +5,7 @@
 //  Created by makinosp on 2024/06/28.
 //
 
+import MemberwiseInit
 import SwiftUI
 
 extension View {
@@ -13,14 +14,13 @@ extension View {
     }
 }
 
-private struct ErrorAlertModifier: ViewModifier {
+@MemberwiseInit
+private struct ErrorAlertModifier {
     @Environment(AppViewModel.self) var appVM: AppViewModel
-    private let action: () -> Void
+    @Init(.internal, escaping: true, label: "_") private let action: () -> Void
+}
 
-    init(_ action: @escaping () -> Void) {
-        self.action = action
-    }
-
+extension ErrorAlertModifier: ViewModifier {
     func body(content: Content) -> some View {
         @Bindable var appVM = appVM
         content
