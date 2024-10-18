@@ -20,10 +20,12 @@ extension SettingsView {
             .tag(Destination.about)
             if let sourceCodeUrl = URL(string: "https://github.com/makinosp/harmonie") {
                 Link(destination: sourceCodeUrl) {
-                    Label {
-                        Text("Source Code")
-                    } icon: {
-                        Image(systemName: "curlybraces")
+                    LabeledContent {
+                        IconSet.linkExternal.icon
+                            .imageScale(.small)
+                            .foregroundStyle(Color(.tertiaryLabel))
+                    } label: {
+                        Label("Source Code", systemImage: IconSet.code.systemName)
                     }
                 }
             }

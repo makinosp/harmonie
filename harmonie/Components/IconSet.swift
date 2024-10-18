@@ -12,6 +12,9 @@ enum IconSet {
     static var circleFilled: some Iconizable {
         Icon("circle.fill")
     }
+    static var code: some Iconizable {
+        Icon("curlybraces")
+    }
     static var dots: some Iconizable {
         Icon("ellipsis.circle")
     }
@@ -50,6 +53,9 @@ enum IconSet {
     }
     static var linkCircleFilled: some Iconizable {
         Icon("link.circle.fill")
+    }
+    static var linkExternal: some Iconizable {
+        Icon("arrow.up.right")
     }
     static var location: some Iconizable {
         Icon("location")
