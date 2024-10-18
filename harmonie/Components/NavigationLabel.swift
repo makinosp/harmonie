@@ -10,7 +10,7 @@ import SwiftUI
 
 @MainActor @MemberwiseInit
 struct NavigationLabel<Label> where Label: View {
-    @Init(.internal, escaping: true) private let label: () -> Label
+    @Init(.internal, default: { EmptyView() }, escaping: true) private let label: () -> Label
 
     @ViewBuilder
     func content() -> some View {
@@ -20,12 +20,6 @@ struct NavigationLabel<Label> where Label: View {
                 .imageScale(.small)
                 .unredacted()
         }
-    }
-}
-
-extension NavigationLabel where Label == EmptyView {
-    init() {
-        label = { EmptyView() }
     }
 }
 
