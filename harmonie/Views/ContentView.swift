@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct ContentView: View, AuthenticationServiceRepresentable, FriendServiceRepresentable {
+struct ContentView: View, FriendServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
 
     var body: some View {
@@ -16,7 +16,7 @@ struct ContentView: View, AuthenticationServiceRepresentable, FriendServiceRepre
         case .initializing:
             ProgressScreen()
                 .task {
-                    appVM.step = await appVM.setup(service: authenticationService)
+                    appVM.step = await appVM.setup(service: appVM.authenticationService)
                 }
                 .errorAlert()
         case .loggingIn:

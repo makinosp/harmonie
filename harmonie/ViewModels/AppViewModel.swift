@@ -19,13 +19,13 @@ final class AppViewModel {
     var isLoggingIn = false
     var isRequiredReAuthentication = false
     @ObservationIgnored var client = APIClient()
-    @ObservationIgnored lazy var service: AuthenticationServiceProtocol = lazyService
+    @ObservationIgnored lazy var authenticationService: AuthenticationServiceProtocol = lazyAuthenticationService
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
     }
 
-    private var lazyService: AuthenticationServiceProtocol {
+    var lazyAuthenticationService: AuthenticationServiceProtocol {
         isPreviewMode ? AuthenticationPreviewService(client: client) : AuthenticationService(client: client)
     }
 
@@ -72,7 +72,7 @@ final class AppViewModel {
         defer { isLoggingIn = false }
         isLoggingIn = true
         do {
-            switch try await service.loginUserInfo() {
+            switch try await authenticationService.loginUserInfo() {
             case let verifyType as VerifyType:
                 return verifyType
             case let user as User:
@@ -91,7 +91,7 @@ final class AppViewModel {
     func verifyTwoFA(verifyType: VerifyType, code: String) async {
         do {
             defer { reset() }
-            guard try await service.verify2FA(
+            guard try await authenticationService.verify2FA(
                 verifyType: verifyType,
                 code: code
             ) else {
@@ -142,6 +142,6 @@ extension AppViewModel {
         self.init()
         self.isPreviewMode = isPreviewMode
         user = PreviewDataProvider.shared.previewUser
-        service = AuthenticationPreviewService(client: client)
+        authenticationService = AuthenticationPreviewService(client: client)
     }
 }

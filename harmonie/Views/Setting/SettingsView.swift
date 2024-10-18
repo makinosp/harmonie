@@ -9,7 +9,7 @@ import LicenseList
 import SwiftUI
 import VRCKit
 
-struct SettingsView: View, AuthenticationServiceRepresentable {
+struct SettingsView: View {
     @Environment(AppViewModel.self) var appVM
     @State var destination: Destination? = UIDevice.current.userInterfaceIdiom == .pad ? .userDetail : nil
     @State var isPresentedForm = false

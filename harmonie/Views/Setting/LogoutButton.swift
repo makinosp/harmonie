@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LogoutButton: View, AuthenticationServiceRepresentable {
+struct LogoutButton: View {
     @Environment(AppViewModel.self) var appVM
     @State private var isPresentedAlert = false
 
@@ -18,7 +18,7 @@ struct LogoutButton: View, AuthenticationServiceRepresentable {
         .alert("Logout", isPresented: $isPresentedAlert) {
             Button("Logout", role: .destructive) {
                 Task {
-                    await appVM.logout(service: authenticationService)
+                    await appVM.logout(service: appVM.authenticationService)
                 }
             }
         } message: {
