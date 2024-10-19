@@ -1,25 +1,17 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "msg_help_with_login_safety" : {
+    "msg_help_with_communication_security" : {
 
     },
-    "msg_help_with_storing_keychain" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Using iCloud Keychain to securely store your passwords. iCloud Keychain is built on security technologies provided by Apple, ensuring that your passwords are encrypted and protected from unauthorized access."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Using iCloud Keychain to securely store your passwords. iCloud Keychain is built on security technologies provided by Apple, ensuring that your passwords are encrypted and protected from unauthorized access."
-          }
-        }
-      }
+    "msg_help_with_storing_authentication_tokens" : {
+
+    },
+    "msg_help_with_storing_password" : {
+
+    },
+    "msg_help_with_vrchat_api_authentication" : {
+
     }
   },
   "version" : "1.0"
