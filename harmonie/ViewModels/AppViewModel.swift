@@ -53,7 +53,7 @@ final class AppViewModel {
     }
 
     private func setCredential(credential: Credential, isSavedOnKeyChain: Bool) async {
-        services = APIServiceUtil(isPreviewMode: true, client: client)
+        services = APIServiceUtil(isPreviewMode: credential.isPreviewUser, client: client)
         await client.setCledentials(credential)
         if isSavedOnKeyChain {
             _ = await KeychainUtil.shared.savePassword(credential)
