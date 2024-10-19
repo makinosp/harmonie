@@ -5,31 +5,41 @@
 //  Created by makinosp on 2024/09/30.
 //
 
-import MemberwiseInit
 import SwiftUI
 
-@MemberwiseInit
 struct DividedVStack<Content> where Content: View {
-    @Init(.internal, default: HorizontalAlignment.center) private let alignment: HorizontalAlignment
-    @Init(.internal, default: nil) private let spacing: CGFloat?
-    @Init(.internal, escaping: true) @ViewBuilder private let content: () -> Content
+    private let alignment: HorizontalAlignment
+    private let spacing: CGFloat?
+    private let content: Content
 
-    struct ViewRoot {
-        let alignment: HorizontalAlignment
-        let spacing: CGFloat?
+    init(
+        alignment: HorizontalAlignment = .center,
+        spacing: CGFloat? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.alignment = alignment
+        self.spacing = spacing
+        self.content = content()
     }
 }
 
 extension DividedVStack: View {
     var body: some View {
         let viewRoot = ViewRoot(alignment: alignment, spacing: spacing)
-        _VariadicView.Tree(viewRoot, content: content)
+        _VariadicView.Tree(viewRoot) { content }
     }
 }
 
-extension DividedVStack.ViewRoot: _VariadicView_ViewRoot {
+extension DividedVStack {
+    struct ViewRoot: _VariadicView_ViewRoot {
+        let alignment: HorizontalAlignment
+        let spacing: CGFloat?
+    }
+}
+
+extension DividedVStack.ViewRoot: _VariadicView_Root {
     @ViewBuilder
-    func body(children: _VariadicView.Children) -> some View {
+    func body(children: _VariadicView.Children) -> VStack<some View> {
         VStack(alignment: alignment, spacing: spacing) {
             ForEach(children) { child in
                 child

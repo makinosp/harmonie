@@ -5,25 +5,35 @@
 //  Created by makinosp on 2024/09/30.
 //
 
-import MemberwiseInit
 import SwiftUI
 
-@MemberwiseInit
 struct DividedHStack<Content> where Content: View {
-    @Init(.internal, default: VerticalAlignment.center) private let alignment: VerticalAlignment
-    @Init(.internal, default: nil) private let spacing: CGFloat?
-    @Init(.internal, escaping: true) @ViewBuilder private let content: () -> Content
+    private let alignment: VerticalAlignment
+    private let spacing: CGFloat?
+    private let content: Content
 
-    struct ViewRoot: _VariadicView_ViewRoot {
-        let alignment: VerticalAlignment
-        let spacing: CGFloat?
+    init(
+        alignment: VerticalAlignment = .center,
+        spacing: CGFloat? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.alignment = alignment
+        self.spacing = spacing
+        self.content = content()
     }
 }
 
 extension DividedHStack: View {
     var body: some View {
         let viewRoot = ViewRoot(alignment: alignment, spacing: spacing)
-        _VariadicView.Tree(viewRoot) { content() }
+        _VariadicView.Tree(viewRoot) { content }
+    }
+}
+
+extension DividedHStack {
+    struct ViewRoot: _VariadicView_ViewRoot {
+        let alignment: VerticalAlignment
+        let spacing: CGFloat?
     }
 }
 
