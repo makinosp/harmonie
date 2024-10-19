@@ -79,7 +79,7 @@ struct LoginView: View {
                 .popover(isPresented: $isPresentedSecurityPopover) {
                     annotation(
                         title: "Is this secure?",
-                        text: Constants.Messages.helpWithLoginSafety,
+                        text: "",
                         isPresented: $isPresentedSecurityPopover
                     )
                 }
@@ -98,7 +98,7 @@ struct LoginView: View {
                 .popover(isPresented: $isPresentedSavingPasswordPopover) {
                     annotation(
                         title: "In What Way?",
-                        text: Constants.Messages.helpWithStoringKeychain,
+                        text: "",
                         isPresented: $isPresentedSavingPasswordPopover
                     )
                 }

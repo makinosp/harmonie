@@ -30,7 +30,26 @@ enum Constants {
     }
 
     enum Messages {
-        static let helpWithStoringKeychain = String(localized: "msg_help_with_storing_keychain", table: "Message")
-        static let helpWithLoginSafety = String(localized: "msg_help_with_login_safety", table: "Message")
+        case helpWithVRChatAPIAuthencication
+        case helpWithStoringAuthenticationTokens
+        case helpWithStoringPassword
+        case helpWithCommunicationSecurity
+
+        var text: String {
+            switch self {
+            case .helpWithVRChatAPIAuthencication:
+                value(key: "msg_help_with_vrchat_api_authentication")
+            case .helpWithStoringAuthenticationTokens:
+                value(key: "msg_help_with_storing_authentication_tokens")
+            case .helpWithStoringPassword:
+                value(key: "msg_help_with_storing_password")
+            case .helpWithCommunicationSecurity:
+                value(key: "msg_help_with_communication_security")
+            }
+        }
+
+        public func value(key: String.LocalizationValue) -> String {
+            String(localized: key, table: "Message")
+        }
     }
 }
