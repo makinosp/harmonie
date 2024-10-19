@@ -48,6 +48,10 @@ final class FavoriteViewModel {
         favoriteGroups.first { $0.id == id }
     }
 
+    func favoriteGroup(tag: String) -> FavoriteGroup? {
+        favoriteGroups.first { $0.name == tag }
+    }
+
     func updateFavoriteGroup(
         service: FavoriteServiceProtocol,
         id: FavoriteGroup.ID,
@@ -210,12 +214,11 @@ final class FavoriteViewModel {
         world: World,
         targetGroup: FavoriteGroup
     ) async throws {
-        let source = favoriteWorlds.first { $0.id == world.id }
-        if let sourceId = source?.favoriteId,
-           let sourceGroup = getFavoriteGroup(id: sourceId) {
-            _ = try await service.removeFavorite(favoriteId: world.id)
+        if let source = favoriteWorlds.first(where: { $0.id == world.id }),
+           let sourceGroup = favoriteGroup(tag: source.favoriteGroup) {
+            _ = try await service.removeFavorite(favoriteId: source.favoriteId)
             removeWorldFromFavorite(worldId: world.id)
-            guard sourceGroup.id == targetGroup.id else { return }
+            if sourceGroup.id == targetGroup.id { return }
         }
         let addedFaovorite = try await service.addFavorite(
             type: .world,
