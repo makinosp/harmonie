@@ -38,18 +38,14 @@ enum Constants {
         var text: String {
             switch self {
             case .helpWithVRChatAPIAuthencication:
-                value(key: "msg_help_with_vrchat_api_authentication")
+                String(localized: "msg_help_with_vrchat_api_authentication", table: "Message")
             case .helpWithStoringAuthenticationTokens:
-                value(key: "msg_help_with_storing_authentication_tokens")
+                String(localized: "msg_help_with_storing_authentication_tokens", table: "Message")
             case .helpWithStoringPassword:
-                value(key: "msg_help_with_storing_password")
+                String(localized: "msg_help_with_storing_password", table: "Message")
             case .helpWithCommunicationSecurity:
-                value(key: "msg_help_with_communication_security")
+                String(localized: "msg_help_with_communication_security", table: "Message")
             }
-        }
-
-        public func value(key: String.LocalizationValue) -> String {
-            String(localized: key, table: "Message")
         }
     }
 }
