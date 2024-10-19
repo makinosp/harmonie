@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct NoteEditView: View, UserNoteServiceRepresentable {
+struct NoteEditView: View {
     @Environment(AppViewModel.self) var appVM
     @Environment(\.dismiss) private var dismiss
     @FocusState var isFocusedNoteField
@@ -61,9 +61,9 @@ struct NoteEditView: View, UserNoteServiceRepresentable {
         isRequesting = true
         do {
             if text.isEmpty {
-                try await userNoteService.clearUserNote(targetUserId: userId)
+                try await appVM.userNoteService.clearUserNote(targetUserId: userId)
             } else {
-                _ = try await userNoteService.updateUserNote(
+                _ = try await appVM.userNoteService.updateUserNote(
                     targetUserId: userId,
                     note: text
                 )
