@@ -2,7 +2,14 @@
   "sourceLanguage" : "en",
   "strings" : {
     "About the authentication method of VRChatAPI" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VRChatAPIの認証方式について "
+          }
+        }
+      }
     },
     "Communication security" : {
 
@@ -72,10 +79,24 @@
       }
     },
     "Security in Authentication Token Retention" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "認証トークン保持における安全性"
+          }
+        }
+      }
     },
     "Security in password storage" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスワード保存機能における安全性"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
