@@ -9,8 +9,8 @@ import AsyncSwiftUI
 import VRCKit
 
 struct LoginView: View {
-    @AppStorage(Constants.Keys.isSavedOnKeyChain) private var isSavedOnKeyChain = false
-    @AppStorage(Constants.Keys.username) private var username = ""
+    @AppStorage(Constants.Keys.isSavedOnKeyChain.rawValue) private var isSavedOnKeyChain = false
+    @AppStorage(Constants.Keys.username.rawValue) private var username = ""
     @Environment(AppViewModel.self) var appVM
     @State private var password = ""
     @State private var isPresentedSecurityPopover = false
@@ -30,7 +30,7 @@ struct LoginView: View {
             }
             .frame(maxWidth: 560)
             .padding(.horizontal, 32)
-            .navigationDestination(item: $appVM.verifyType) { verifyType in
+            .navigationDestination(item: $appVM.verifyType) { _ in
                 OtpView()
                     .navigationBarBackButtonHidden()
             }
