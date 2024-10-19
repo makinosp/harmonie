@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "About the authentication method of VRChatAPI" : {
+
+    },
+    "Communication security" : {
+
+    },
     "msg_help_with_communication_security" : {
       "localizations" : {
         "en" : {
@@ -64,6 +70,12 @@
           }
         }
       }
+    },
+    "Security in Authentication Token Retention" : {
+
+    },
+    "Security in password storage" : {
+
     }
   },
   "version" : "1.0"
