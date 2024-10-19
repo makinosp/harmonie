@@ -52,7 +52,7 @@ final class AppViewModel {
         return next
     }
 
-    private func setCredential(credential: Credential, isSavedOnKeyChain: Bool) async {
+    private func setCredential(_ credential: Credential, isSavedOnKeyChain: Bool) async {
         services = APIServiceUtil(isPreviewMode: credential.isPreviewUser, client: client)
         await client.setCledentials(credential)
         if isSavedOnKeyChain {
@@ -61,7 +61,7 @@ final class AppViewModel {
     }
 
     func login(credential: Credential, isSavedOnKeyChain: Bool) async {
-        await setCredential(credential: credential, isSavedOnKeyChain: isSavedOnKeyChain)
+        await setCredential(credential, isSavedOnKeyChain: isSavedOnKeyChain)
         guard let result = await login() else { return }
         loginHandler(result: result)
     }
@@ -107,9 +107,9 @@ final class AppViewModel {
         }
     }
 
-    func logout(service: AuthenticationServiceProtocol) async {
+    func logout() async {
         do {
-            try await service.logout()
+            try await services.authenticationService.logout()
             reset()
         } catch {
             handleError(error)
