@@ -58,7 +58,7 @@ struct FavoriteGroupsEditView: View {
         isRequesting = true
         do {
             _ = try await favoriteVM.updateFavoriteGroup(
-                service: favoriteVM.favoriteService,
+                service: appVM.services.favoriteService,
                 id: favoriteGroup.id,
                 displayName: displayName,
                 visibility: visibility

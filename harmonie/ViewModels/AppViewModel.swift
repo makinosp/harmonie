@@ -15,46 +15,19 @@ final class AppViewModel {
     var step: Step = .initializing
     var isPresentedAlert = false
     var vrckError: VRCKitError?
-    var isPreviewMode = false
     var isLoggingIn = false
     var isRequiredReAuthentication = false
-    @ObservationIgnored var client = APIClient()
-    @ObservationIgnored lazy var authenticationService = lazyAuthenticationService
-    @ObservationIgnored lazy var instanceService = lazyInstanceService
-    @ObservationIgnored lazy var userNoteService = lazyUserNoteService
-    @ObservationIgnored lazy var userService = lazyUserService
-    @ObservationIgnored lazy var worldService = lazyWorldService
+    var services: APIServiceUtil
+    @ObservationIgnored var client: APIClient
+
+    init() {
+        let client = APIClient()
+        self.client = client
+        services = APIServiceUtil(client: client)
+    }
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
-    }
-
-    private func resetLazyProperties() {
-        authenticationService = lazyAuthenticationService
-        instanceService = lazyInstanceService
-        userNoteService = lazyUserNoteService
-        userService = lazyUserService
-        worldService = lazyWorldService
-    }
-
-    private var lazyAuthenticationService: AuthenticationServiceProtocol {
-        isPreviewMode ? AuthenticationPreviewService(client: client) : AuthenticationService(client: client)
-    }
-
-    private var lazyInstanceService: InstanceServiceProtocol {
-        isPreviewMode ? InstancePreviewService(client: client) : InstanceService(client: client)
-    }
-
-    private var lazyUserNoteService: UserNoteServiceProtocol {
-        isPreviewMode ? UserNotePreviewService(client: client) : UserNoteService(client: client)
-    }
-
-    private var lazyUserService: UserServiceProtocol {
-        isPreviewMode ? UserPreviewService(client: client) : UserService(client: client)
-    }
-
-    private var lazyWorldService: WorldServiceProtocol {
-        isPreviewMode ? WorldPreviewService(client: client) : WorldService(client: client)
     }
 
     /// Check the authentication status of the user,
@@ -84,8 +57,7 @@ final class AppViewModel {
     }
 
     private func setCredential(username: String, password: String, isSavedOnKeyChain: Bool) async {
-        isPreviewMode = isPreviewUser(username: username, password: password)
-        resetLazyProperties()
+        services = APIServiceUtil(isPreviewMode: isPreviewUser(username: username, password: password), client: client)
         await client.setCledentials(username: username, password: password)
         if isSavedOnKeyChain {
             _ = await KeychainUtil.shared.savePassword(password, for: username)
@@ -101,7 +73,7 @@ final class AppViewModel {
         defer { isLoggingIn = false }
         isLoggingIn = true
         do {
-            switch try await authenticationService.loginUserInfo() {
+            switch try await services.authenticationService.loginUserInfo() {
             case let verifyType as VerifyType:
                 return verifyType
             case let user as User:
@@ -120,7 +92,7 @@ final class AppViewModel {
     func verifyTwoFA(verifyType: VerifyType, code: String) async {
         do {
             defer { reset() }
-            guard try await authenticationService.verify2FA(
+            guard try await services.authenticationService.verify2FA(
                 verifyType: verifyType,
                 code: code
             ) else {
@@ -143,8 +115,6 @@ final class AppViewModel {
     private func reset() {
         step = .initializing
         client = APIClient()
-        isPreviewMode = false
-        resetLazyProperties()
     }
 
     func handleError(_ error: Error) {
@@ -170,9 +140,7 @@ extension AppViewModel {
     /// - Parameter isPreviewMode
     convenience init(isPreviewMode: Bool) {
         self.init()
-        self.isPreviewMode = isPreviewMode
-        resetLazyProperties()
+        services = APIServiceUtil(isPreviewMode: true, client: client)
         user = PreviewDataProvider.shared.previewUser
-        authenticationService = AuthenticationPreviewService(client: client)
     }
 }

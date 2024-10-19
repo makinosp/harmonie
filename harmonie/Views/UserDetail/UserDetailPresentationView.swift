@@ -39,7 +39,7 @@ struct UserDetailPresentationView: View {
 
     private func fetchUser(id: String) async {
         do {
-            userDetail = try await appVM.userService.fetchUser(userId: id)
+            userDetail = try await appVM.services.userService.fetchUser(userId: id)
         } catch {
             appVM.handleError(error)
         }
