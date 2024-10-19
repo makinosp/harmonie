@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct FavoriteGroupsEditView: View, FavoriteServiceRepresentable {
+struct FavoriteGroupsEditView: View {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @Environment(\.dismiss) private var dismiss
@@ -58,7 +58,7 @@ struct FavoriteGroupsEditView: View, FavoriteServiceRepresentable {
         isRequesting = true
         do {
             _ = try await favoriteVM.updateFavoriteGroup(
-                service: favoriteService,
+                service: favoriteVM.favoriteService,
                 id: favoriteGroup.id,
                 displayName: displayName,
                 visibility: visibility

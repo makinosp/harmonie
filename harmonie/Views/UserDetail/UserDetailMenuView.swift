@@ -9,8 +9,7 @@ import AsyncSwiftUI
 import VRCKit
 
 struct UserDetailToolbarMenu: View,
-                              FriendServiceRepresentable,
-                              FavoriteServiceRepresentable {
+                              FriendServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @Environment(FriendViewModel.self) var friendVM
@@ -105,7 +104,7 @@ struct UserDetailToolbarMenu: View,
         isRequesting = true
         do {
             try await favoriteVM.updateFavorite(
-                service: favoriteService,
+                service: favoriteVM.favoriteService,
                 friend: friend,
                 targetGroup: group
             )

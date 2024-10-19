@@ -10,7 +10,6 @@ import NukeUI
 import VRCKit
 
 struct WorldView: View,
-                  FavoriteServiceRepresentable,
                   InstanceServiceRepresentable {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM

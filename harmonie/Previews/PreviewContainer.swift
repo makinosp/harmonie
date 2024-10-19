@@ -43,7 +43,7 @@ extension PreviewContainer {
         self.content = content()
         appVM = AppViewModel(isPreviewMode: true)
         friendVM = FriendViewModel(appVM: appVM)
-        favoriteVM = FavoriteViewModel()
+        favoriteVM = FavoriteViewModel(appVM: appVM)
     }
 
     init(@ViewBuilder content: (_ user: UserDetail) -> Content) {

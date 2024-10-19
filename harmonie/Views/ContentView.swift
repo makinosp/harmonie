@@ -25,7 +25,7 @@ struct ContentView: View, FriendServiceRepresentable {
         case .done:
             MainTabView()
                 .environment(FriendViewModel(appVM: appVM))
-                .environment(FavoriteViewModel())
+                .environment(FavoriteViewModel(appVM: appVM))
                 .onChange(of: appVM.isRequiredReAuthentication) {
                     if appVM.isRequiredReAuthentication {
                         appVM.step = .loggingIn

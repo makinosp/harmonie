@@ -29,7 +29,7 @@ extension MainTabViewSegment {
     }
 }
 
-struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentable {
+struct MainTabView: View, FriendServiceRepresentable {
     @Environment(\.scenePhase) var scenePhase
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
@@ -72,7 +72,7 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
         }
         do {
             try await favoriteVM.fetchFavoriteFriends(
-                service: favoriteService,
+                service: favoriteVM.favoriteService,
                 friendVM: friendVM
             )
         } catch {
