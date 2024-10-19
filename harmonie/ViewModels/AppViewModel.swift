@@ -22,6 +22,7 @@ final class AppViewModel {
     @ObservationIgnored lazy var authenticationService = lazyAuthenticationService
     @ObservationIgnored lazy var instanceService = lazyInstanceService
     @ObservationIgnored lazy var userNoteService = lazyUserNoteService
+    @ObservationIgnored lazy var userService = lazyUserService
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
@@ -37,6 +38,10 @@ final class AppViewModel {
 
     private var lazyUserNoteService: UserNoteServiceProtocol {
         isPreviewMode ? UserNotePreviewService(client: client) : UserNoteService(client: client)
+    }
+
+    private var lazyUserService: UserServiceProtocol {
+        isPreviewMode ? UserPreviewService(client: client) : UserService(client: client)
     }
 
     /// Check the authentication status of the user,

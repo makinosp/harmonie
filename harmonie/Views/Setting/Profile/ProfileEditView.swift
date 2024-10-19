@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct ProfileEditView: View, UserServiceRepresentable {
+struct ProfileEditView: View {
     @Environment(AppViewModel.self) var appVM
     @Environment(\.dismiss) private var dismiss
     @State private var profileEditVM: ProfileEditViewModel
@@ -172,7 +172,7 @@ struct ProfileEditView: View, UserServiceRepresentable {
         isRequesting = true
         do {
             guard let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
-            try await profileEditVM.saveProfile(service: userService)
+            try await profileEditVM.saveProfile(service: appVM.userService)
             appVM.user = User(user: user, editedUserInfo: profileEditVM.editingUserInfo)
         } catch {
             appVM.handleError(error)
