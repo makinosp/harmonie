@@ -8,13 +8,9 @@
 import SwiftUI
 
 enum Constants {
-    enum Keys {
-        static let isSavedOnKeyChain = "isSavedOnKeyChain"
-        static let username = "username"
-    }
-
-    enum Values {
-        static let previewUser = "demonstration"
+    enum Keys: String {
+        case isSavedOnKeyChain
+        case username
     }
 
     enum MaxCountInFavoriteList: Int, CustomStringConvertible {

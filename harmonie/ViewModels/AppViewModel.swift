@@ -18,6 +18,7 @@ final class AppViewModel {
     var isLoggingIn = false
     var isRequiredReAuthentication = false
     var services: APIServiceUtil
+    var verifyType: VerifyType?
     @ObservationIgnored var client: APIClient
 
     init() {
@@ -34,62 +35,65 @@ final class AppViewModel {
     /// fetch the user information, and perform the initialization process.
     /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
     func setup(service: AuthenticationServiceProtocol) async -> Step {
+        var next: Step = .loggingIn
         // check local data
-        guard await !client.cookieManager.cookies.isEmpty else {
-            return .loggingIn
-        }
+        guard await client.cookieManager.cookieExists else { return next }
         do {
             // verify auth token and fetch user data
-            guard try await service.verifyAuthToken(),
-                  let user = try await service.loginUserInfo() as? User else {
-                return .loggingIn
+            guard try await service.verifyAuthToken() else { return next }
+            let result = try await service.loginUserInfo()
+            if case .left(let user) = result {
+                self.user = user
+                next = .done(user)
             }
-            self.user = user
-            return .done(user)
         } catch {
             handleError(error)
-            return .loggingIn
         }
+        return next
     }
 
-    private func isPreviewUser(username: String, password: String) -> Bool {
-        username == Constants.Values.previewUser && password == Constants.Values.previewUser
-    }
-
-    private func setCredential(username: String, password: String, isSavedOnKeyChain: Bool) async {
-        services = APIServiceUtil(isPreviewMode: isPreviewUser(username: username, password: password), client: client)
-        await client.setCledentials(username: username, password: password)
+    private func setCredential(_ credential: Credential, isSavedOnKeyChain: Bool) async {
+        services = APIServiceUtil(isPreviewMode: credential.isPreviewUser, client: client)
+        await client.setCledentials(credential)
         if isSavedOnKeyChain {
-            _ = await KeychainUtil.shared.savePassword(password, for: username)
+            _ = await KeychainUtil.shared.savePassword(credential)
         }
     }
 
-    func login(username: String, password: String, isSavedOnKeyChain: Bool) async -> VerifyType? {
-        await setCredential(username: username, password: password, isSavedOnKeyChain: isSavedOnKeyChain)
-        return await login()
+    func login(credential: Credential, isSavedOnKeyChain: Bool) async {
+        await setCredential(credential, isSavedOnKeyChain: isSavedOnKeyChain)
+        guard let result = await login() else { return }
+        loginHandler(result: result)
     }
 
-    func login() async -> VerifyType? {
+    private func loginHandler(result: Either<User, VerifyType>) {
+        switch result {
+        case .left(let user):
+            setUser(user)
+        case .right(let verifyType):
+            self.verifyType = verifyType
+        }
+    }
+
+    private func setUser(_ user: User) {
+        self.user = user
+        step = .done(user)
+    }
+
+    func login() async -> Either<User, VerifyType>? {
         defer { isLoggingIn = false }
+        var result: Either<User, VerifyType>?
         isLoggingIn = true
         do {
-            switch try await services.authenticationService.loginUserInfo() {
-            case let verifyType as VerifyType:
-                return verifyType
-            case let user as User:
-                self.user = user
-                if step != .done(user) {
-                    step = .done(user)
-                }
-            default: break
-            }
+            result = try await services.authenticationService.loginUserInfo()
         } catch {
             handleError(error)
         }
-        return nil
+        return result
     }
 
-    func verifyTwoFA(verifyType: VerifyType, code: String) async {
+    func verifyTwoFA(code: String) async {
+        guard let verifyType = verifyType else { return }
         do {
             defer { reset() }
             guard try await services.authenticationService.verify2FA(
@@ -103,9 +107,9 @@ final class AppViewModel {
         }
     }
 
-    func logout(service: AuthenticationServiceProtocol) async {
+    func logout() async {
         do {
-            try await service.logout()
+            try await services.authenticationService.logout()
             reset()
         } catch {
             handleError(error)

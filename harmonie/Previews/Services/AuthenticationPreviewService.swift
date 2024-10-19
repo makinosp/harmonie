@@ -14,10 +14,10 @@ final actor AuthenticationPreviewService: APIService, AuthenticationServiceProto
         self.client = client
     }
 
-    func isExists(userId: String) async throws -> Bool { true }
+    func exists(userId: String) async throws -> Bool { true }
 
-    func loginUserInfo() async throws -> UserOrRequires {
-        PreviewDataProvider.shared.previewUser
+    func loginUserInfo() async throws -> Either<User, VerifyType> {
+        .left(PreviewDataProvider.shared.previewUser)
     }
 
     func verify2FA(verifyType: VerifyType, code: String) async throws -> Bool { true }
