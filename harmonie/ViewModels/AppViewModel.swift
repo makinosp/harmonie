@@ -18,12 +18,19 @@ final class AppViewModel {
     var isPreviewMode = false
     var isLoggingIn = false
     var isRequiredReAuthentication = false
-    @ObservationIgnored var client = APIClient()
+    var services: APIServiceUtil
+    @ObservationIgnored var client: APIClient
     @ObservationIgnored lazy var authenticationService = lazyAuthenticationService
     @ObservationIgnored lazy var instanceService = lazyInstanceService
     @ObservationIgnored lazy var userNoteService = lazyUserNoteService
     @ObservationIgnored lazy var userService = lazyUserService
     @ObservationIgnored lazy var worldService = lazyWorldService
+
+    init() {
+        let client = APIClient()
+        self.client = client
+        services = APIServiceUtil(isPreviewMode: false, client: client)
+    }
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
