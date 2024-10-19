@@ -1,18 +1,19 @@
 //
-//  FriendViewModel+SortConditions.swift
+//  SortType.swift
 //  Harmonie
 //
-//  Created by makinosp on 2024/10/15.
+//  Created by makinosp on 2024/10/19.
 //
 
-extension FriendViewModel {
-    enum SortType: String, Hashable, Identifiable, CaseIterable {
-        case latest, oldest, name, loginLatest, loginOldest, status
-        var id: String { rawValue }
-    }
+enum SortType: String, Hashable, CaseIterable {
+    case latest, oldest, name, loginLatest, loginOldest, status
 }
 
-extension FriendViewModel.SortType: CustomStringConvertible {
+extension SortType: Identifiable {
+    var id: String { rawValue }
+}
+
+extension SortType: CustomStringConvertible {
     var description: String {
         switch self {
         case .latest:

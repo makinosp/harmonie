@@ -18,7 +18,7 @@ extension FriendsListView {
         Menu("", systemImage: IconSet.sort.systemName) {
             @Bindable var friendVM = friendVM
             Picker("", selection: $friendVM.sortType) {
-                ForEach(FriendViewModel.SortType.allCases) { sortType in
+                ForEach(SortType.allCases) { sortType in
                     Text(sortType.description).tag(sortType)
                 }
             }
@@ -40,7 +40,7 @@ extension FriendsListView {
 
     private var filterUserStatusMenu: some View {
         Menu("Statuses") {
-            ForEach(FriendViewModel.FilterUserStatus.allCases) { filterUserStatus in
+            ForEach(FilterUserStatus.allCases) { filterUserStatus in
                 Button {
                     friendVM.applyFilterUserStatus(filterUserStatus)
                 } label: {
