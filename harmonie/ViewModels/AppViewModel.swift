@@ -52,20 +52,16 @@ final class AppViewModel {
         return next
     }
 
-    private func isPreviewUser(username: String, password: String) -> Bool {
-        username == Constants.Values.previewUser && password == Constants.Values.previewUser
-    }
-
-    private func setCredential(username: String, password: String, isSavedOnKeyChain: Bool) async {
-        services = APIServiceUtil(isPreviewMode: isPreviewUser(username: username, password: password), client: client)
-        await client.setCledentials(username: username, password: password)
+    private func setCredential(credential: Credential, isSavedOnKeyChain: Bool) async {
+        services = APIServiceUtil(isPreviewMode: true, client: client)
+        await client.setCledentials(credential)
         if isSavedOnKeyChain {
-            _ = await KeychainUtil.shared.savePassword(password, for: username)
+            _ = await KeychainUtil.shared.savePassword(credential)
         }
     }
 
-    func login(username: String, password: String, isSavedOnKeyChain: Bool) async {
-        await setCredential(username: username, password: password, isSavedOnKeyChain: isSavedOnKeyChain)
+    func login(credential: Credential, isSavedOnKeyChain: Bool) async {
+        await setCredential(credential: credential, isSavedOnKeyChain: isSavedOnKeyChain)
         guard let result = await login() else { return }
         loginHandler(result: result)
     }

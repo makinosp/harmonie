@@ -13,10 +13,6 @@ enum Constants {
         static let username = "username"
     }
 
-    enum Values {
-        static let previewUser = "demonstration"
-    }
-
     enum MaxCountInFavoriteList: Int, CustomStringConvertible {
         case friends = 150
         case world = 100

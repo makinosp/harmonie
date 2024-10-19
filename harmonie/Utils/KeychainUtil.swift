@@ -6,17 +6,18 @@
 //
 
 import Foundation
+import VRCKit
 
 actor KeychainUtil: Sendable {
     static let shared = KeychainUtil()
     private init() {}
 
-    func savePassword(_ password: String, for account: String) -> Bool {
+    func savePassword(_ credential: Credential) -> Bool {
         guard let bundleIdentifier = Bundle.main.bundleIdentifier,
-              let passwordData = password.data(using: .utf8) else { return false }
+              let passwordData = credential.password.data(using: .utf8) else { return false }
         let query = [
             kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: account,
+            kSecAttrAccount: credential.username,
             kSecAttrService: bundleIdentifier,
             kSecValueData: passwordData
         ] as CFDictionary

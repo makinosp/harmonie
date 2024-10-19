@@ -112,8 +112,7 @@ struct LoginView: View {
     private var enterButton: some View {
         AsyncButton {
             await appVM.login(
-                username: username,
-                password: password,
+                credential: Credential(username: username, password: password),
                 isSavedOnKeyChain: isSavedOnKeyChain
             )
         } label: {
