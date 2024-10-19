@@ -69,7 +69,7 @@ extension WorldView {
         defer { isRequesting = false }
         do {
             try await favoriteVM.updateFavorite(
-                service: favoriteVM.favoriteService,
+                service: appVM.services.favoriteService,
                 world: world,
                 targetGroup: group
             )

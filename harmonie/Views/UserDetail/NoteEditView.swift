@@ -61,9 +61,9 @@ struct NoteEditView: View {
         isRequesting = true
         do {
             if text.isEmpty {
-                try await appVM.userNoteService.clearUserNote(targetUserId: userId)
+                try await appVM.services.userNoteService.clearUserNote(targetUserId: userId)
             } else {
-                _ = try await appVM.userNoteService.updateUserNote(
+                _ = try await appVM.services.userNoteService.updateUserNote(
                     targetUserId: userId,
                     note: text
                 )

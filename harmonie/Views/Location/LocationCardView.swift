@@ -23,7 +23,7 @@ struct LocationCardView: View {
                 if case let .id(id) = location.location {
                     do {
                         defer { withAnimation { isRequesting = false } }
-                        instance = try await appVM.instanceService.fetchInstance(location: id)
+                        instance = try await appVM.services.instanceService.fetchInstance(location: id)
                     } catch {
                         appVM.handleError(error)
                     }

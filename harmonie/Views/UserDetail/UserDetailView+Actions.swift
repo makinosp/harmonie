@@ -12,7 +12,7 @@ extension UserDetailView {
         do {
             defer { isRequesting = false }
             isRequesting = true
-            instance = try await appVM.instanceService.fetchInstance(location: id)
+            instance = try await appVM.services.instanceService.fetchInstance(location: id)
         } catch {
             appVM.handleError(error)
         }

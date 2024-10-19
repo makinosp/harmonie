@@ -16,7 +16,7 @@ struct ContentView: View {
         case .initializing:
             ProgressScreen()
                 .task {
-                    appVM.step = await appVM.setup(service: appVM.authenticationService)
+                    appVM.step = await appVM.setup(service: appVM.services.authenticationService)
                 }
                 .errorAlert()
         case .loggingIn:
@@ -25,7 +25,7 @@ struct ContentView: View {
         case .done:
             MainTabView()
                 .environment(FriendViewModel(appVM: appVM))
-                .environment(FavoriteViewModel(appVM: appVM))
+                .environment(FavoriteViewModel())
                 .onChange(of: appVM.isRequiredReAuthentication) {
                     if appVM.isRequiredReAuthentication {
                         appVM.step = .loggingIn

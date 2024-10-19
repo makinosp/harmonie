@@ -172,7 +172,7 @@ struct ProfileEditView: View {
         isRequesting = true
         do {
             guard let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
-            try await profileEditVM.saveProfile(service: appVM.userService)
+            try await profileEditVM.saveProfile(service: appVM.services.userService)
             appVM.user = User(user: user, editedUserInfo: profileEditVM.editingUserInfo)
         } catch {
             appVM.handleError(error)

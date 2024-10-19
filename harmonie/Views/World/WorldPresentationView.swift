@@ -33,7 +33,7 @@ struct WorldPresentationView: View {
 
     private func fetchWorld(id: String) async {
         do {
-            world = try await appVM.worldService.fetchWorld(worldId: id)
+            world = try await appVM.services.worldService.fetchWorld(worldId: id)
         } catch {
             appVM.handleError(error)
         }
