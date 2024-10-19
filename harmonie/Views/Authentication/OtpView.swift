@@ -33,10 +33,6 @@ struct OtpView: View {
         .ignoresSafeArea(.keyboard)
     }
 
-    private var explanation: LocalizedStringKey {
-        "Enter the 6-digit two-factor verification code recieved in your \(appVM.verifyType?.description ?? "")."
-    }
-
     private var enterButton: some View {
         AsyncButton {
             await otpAction()
@@ -56,6 +52,14 @@ struct OtpView: View {
         defer { isRequesting = false }
         isRequesting = true
         await appVM.verifyTwoFA(code: code)
+    }
+
+    private var explanation: LocalizedStringKey {
+        "Enter the 6-digit two-factor verification code recieved in your \(verifyTypeDescription)."
+    }
+
+    private var verifyTypeDescription: String {
+        appVM.verifyType?.description ?? ""
     }
 
     private var isDisabledEnterButton: Bool {
