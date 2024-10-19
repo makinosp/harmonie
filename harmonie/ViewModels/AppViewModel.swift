@@ -23,9 +23,18 @@ final class AppViewModel {
     @ObservationIgnored lazy var instanceService = lazyInstanceService
     @ObservationIgnored lazy var userNoteService = lazyUserNoteService
     @ObservationIgnored lazy var userService = lazyUserService
+    @ObservationIgnored lazy var worldService = lazyWorldService
 
     enum Step: Equatable {
         case initializing, loggingIn, done(User)
+    }
+
+    private func resetLazyProperties() {
+        authenticationService = lazyAuthenticationService
+        instanceService = lazyInstanceService
+        userNoteService = lazyUserNoteService
+        userService = lazyUserService
+        worldService = lazyWorldService
     }
 
     private var lazyAuthenticationService: AuthenticationServiceProtocol {
@@ -42,6 +51,10 @@ final class AppViewModel {
 
     private var lazyUserService: UserServiceProtocol {
         isPreviewMode ? UserPreviewService(client: client) : UserService(client: client)
+    }
+
+    private var lazyWorldService: WorldServiceProtocol {
+        isPreviewMode ? WorldPreviewService(client: client) : WorldService(client: client)
     }
 
     /// Check the authentication status of the user,
@@ -72,6 +85,7 @@ final class AppViewModel {
 
     private func setCredential(username: String, password: String, isSavedOnKeyChain: Bool) async {
         isPreviewMode = isPreviewUser(username: username, password: password)
+        resetLazyProperties()
         await client.setCledentials(username: username, password: password)
         if isSavedOnKeyChain {
             _ = await KeychainUtil.shared.savePassword(password, for: username)
@@ -130,6 +144,7 @@ final class AppViewModel {
         step = .initializing
         client = APIClient()
         isPreviewMode = false
+        resetLazyProperties()
     }
 
     func handleError(_ error: Error) {
@@ -156,6 +171,7 @@ extension AppViewModel {
     convenience init(isPreviewMode: Bool) {
         self.init()
         self.isPreviewMode = isPreviewMode
+        resetLazyProperties()
         user = PreviewDataProvider.shared.previewUser
         authenticationService = AuthenticationPreviewService(client: client)
     }
