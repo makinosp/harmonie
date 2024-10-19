@@ -16,18 +16,6 @@ final class FavoriteViewModel {
     var favoriteFriends: [FavoriteFriend] = []
     var favoriteWorlds: [FavoriteWorld] = []
     var segment: FavoriteViewSegment = .all
-    @ObservationIgnored var appVM: AppViewModel
-    @ObservationIgnored lazy var favoriteService = lazyFavoriteService
-
-    init(appVM: AppViewModel) {
-        self.appVM = appVM
-    }
-
-    private var lazyFavoriteService: FavoriteServiceProtocol {
-        appVM.isPreviewMode
-        ? FavoritePreviewService(client: appVM.client)
-        : FavoriteService(client: appVM.client)
-    }
 
     /// Filters and returns the favorite groups of a specific type.
     /// - Parameter type: The `FavoriteType` to filter the favorite groups by.

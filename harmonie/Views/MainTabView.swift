@@ -72,7 +72,7 @@ struct MainTabView: View {
         }
         do {
             try await favoriteVM.fetchFavoriteFriends(
-                service: favoriteVM.favoriteService,
+                service: appVM.services.favoriteService,
                 friendVM: friendVM
             )
         } catch {
@@ -83,9 +83,7 @@ struct MainTabView: View {
     private func fetchFavoritesTask() async {
         do {
             try await favoriteVM.fetchFavoritedWorlds(
-                service: appVM.isPreviewMode
-                ? WorldPreviewService(client: appVM.client)
-                : WorldService(client: appVM.client)
+                service: appVM.services.worldService
             )
         } catch {
             appVM.handleError(error)

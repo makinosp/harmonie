@@ -52,7 +52,7 @@ struct UserDetailToolbarMenu: View {
         Button("Unfriend", role: .destructive) {
             Task {
                 do {
-                    try await friendVM.friendService.unfriend(id: user.id)
+                    try await appVM.services.friendService.unfriend(id: user.id)
                     try await friendVM.fetchAllFriends()
                 } catch {
                     appVM.handleError(error)
@@ -103,7 +103,7 @@ struct UserDetailToolbarMenu: View {
         isRequesting = true
         do {
             try await favoriteVM.updateFavorite(
-                service: favoriteVM.favoriteService,
+                service: appVM.services.favoriteService,
                 friend: friend,
                 targetGroup: group
             )

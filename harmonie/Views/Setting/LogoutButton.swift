@@ -18,7 +18,7 @@ struct LogoutButton: View {
         .alert("Logout", isPresented: $isPresentedAlert) {
             Button("Logout", role: .destructive) {
                 Task {
-                    await appVM.logout(service: appVM.authenticationService)
+                    await appVM.logout(service: appVM.services.authenticationService)
                 }
             }
         } message: {
