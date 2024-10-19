@@ -23,7 +23,7 @@ final class FavoriteViewModel {
         self.appVM = appVM
     }
 
-    var lazyFavoriteService: FavoriteServiceProtocol {
+    private var lazyFavoriteService: FavoriteServiceProtocol {
         appVM.isPreviewMode
         ? FavoritePreviewService(client: appVM.client)
         : FavoriteService(client: appVM.client)

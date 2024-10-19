@@ -25,7 +25,7 @@ final class AppViewModel {
         case initializing, loggingIn, done(User)
     }
 
-    var lazyAuthenticationService: AuthenticationServiceProtocol {
+    private var lazyAuthenticationService: AuthenticationServiceProtocol {
         isPreviewMode ? AuthenticationPreviewService(client: client) : AuthenticationService(client: client)
     }
 
