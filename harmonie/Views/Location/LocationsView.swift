@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresentable {
+struct LocationsView: View {
     @Environment(AppViewModel.self) var appVM
     @Environment(FriendViewModel.self) var friendVM
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
@@ -59,7 +59,7 @@ struct LocationsView: View, FriendServiceRepresentable, InstanceServiceRepresent
         .navigationSplitViewStyle(.balanced)
         .refreshable {
             do {
-                try await friendVM.fetchAllFriends(service: friendService)
+                try await friendVM.fetchAllFriends()
             } catch {
                 appVM.handleError(error)
             }

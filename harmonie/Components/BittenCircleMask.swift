@@ -5,17 +5,16 @@
 //  Created by xili on 2024/09/18.
 //
 
+import MemberwiseInit
 import SwiftUI
 
-struct BittenCircleMask: Shape {
-    private let biteSize: CGSize
-    private let offsetRatio: CGFloat
+@MemberwiseInit
+struct BittenCircleMask {
+    @Init(.internal) private let biteSize: CGSize
+    @Init(.internal, default: 0.65) private let offsetRatio: CGFloat
+}
 
-    init(biteSize: CGSize, offsetRatio: CGFloat = 0.65) {
-        self.biteSize = biteSize
-        self.offsetRatio = offsetRatio
-    }
-
+extension BittenCircleMask: Shape {
     func path(in rect: CGRect) -> Path {
         var path = rectanglePath(rect)
         path.addPath(circlePath(rect))

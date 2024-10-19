@@ -1,22 +1,99 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "msg_help_with_login_safety" : {
+    "About the authentication method of VRChatAPI" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VRChatAPIの認証方式について "
+          }
+        }
+      }
+    },
+    "Communication security" : {
 
     },
-    "msg_help_with_storing_keychain" : {
-      "extractionState" : "manual",
+    "msg_help_with_communication_security" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Using iCloud Keychain to securely store your passwords. iCloud Keychain is built on security technologies provided by Apple, ensuring that your passwords are encrypted and protected from unauthorized access."
+            "value" : "All communications in this app are encrypted by SSL/TLS, which minimizes the risk of interception or tampering by third parties."
           }
         },
         "ja" : {
           "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "このアプリは、すべての通信がSSL/TLSにより暗号化されており、第三者による傍受や改ざんのリスクを最小限に抑えています。"
+          }
+        }
+      }
+    },
+    "msg_help_with_storing_authentication_tokens" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
             "state" : "translated",
-            "value" : "Using iCloud Keychain to securely store your passwords. iCloud Keychain is built on security technologies provided by Apple, ensuring that your passwords are encrypted and protected from unauthorized access."
+            "value" : "This app does not store passwords permanently unless you opt in to the password storage feature described below, and only retains a time-limited authentication token obtained by sending the username and password to the VRChat API. The app preserves the user's authentication token to avoid re-logging in during the validity period. This information is stored only on the console and will not be shared with any third party other than VRChat Web API."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "このアプリでは、後述するパスワード保存機能へオプトインする場合を除いて永続的にパスワードを保存することは無く、ユーザー名とパスワードをVRChat APIに送信することで取得される期限付きの認証トークンのみを保持します。このアプリはユーザーの認証トークンの保持によって有効期間内の再ログインを省略します。これらの情報は本体にのみ保存され、VRChat Web API以外のいかなる第三者とも共有することはありません。"
+          }
+        }
+      }
+    },
+    "msg_help_with_storing_password" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app has the ability to save the password entered when logging in by opt-in. In this feature, passwords are stored encrypted according to Apple's security standards through iCloud Keychain provided by Apple. This feature doesn't send your password to anyone other than iCloud Keychain. Also, passwords are never permanently stored on the device."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "このアプリではオプトインにより、ログイン時に入力されたパスワードを保存する機能を持ちます。この機能においてパスワードはAppleによって提供されるiCloud Keychainを通じてAppleのセキュリティ基準に基づいて暗号化されて保存されます。この機能によってパスワードがiCloud Keychain以外の第三者に送信されることはありません。また、パスワードが本体に永続的に保存されることはありません。"
+          }
+        }
+      }
+    },
+    "msg_help_with_vrchat_api_authentication" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app uses VRChat Web API to get information about friends and update user information. Currently, VRChat Web API does not provide an external authentication and authorization system such as OAuth as an authentication method for access. Therefore, the app authenticates by sending the username and password directly to the VRChat API."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "このアプリはVRChat Web APIを利用してフレンドに関する情報の取得やユーザーの情報の更新を行います。現時点のVRChat Web APIは、アクセスするための認証方式としてOAuthのような外部認証・認可システムを提供しません。そのためこのアプリでは、直接ユーザー名とパスワードをVRChat APIに送信することによって認証を行います。"
+          }
+        }
+      }
+    },
+    "Security in Authentication Token Retention" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "認証トークン保持における安全性"
+          }
+        }
+      }
+    },
+    "Security in password storage" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスワード保存機能における安全性"
           }
         }
       }

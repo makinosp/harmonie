@@ -8,7 +8,7 @@
 import SwiftUI
 import VRCKit
 
-struct UserDetailPresentationView: View, UserServiceRepresentable {
+struct UserDetailPresentationView: View {
     @Environment(AppViewModel.self) var appVM
     @State var userDetail: UserDetail?
     private let id: String
@@ -39,7 +39,7 @@ struct UserDetailPresentationView: View, UserServiceRepresentable {
 
     private func fetchUser(id: String) async {
         do {
-            userDetail = try await userService.fetchUser(userId: id)
+            userDetail = try await appVM.userService.fetchUser(userId: id)
         } catch {
             appVM.handleError(error)
         }

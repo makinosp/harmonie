@@ -20,14 +20,17 @@ struct LocationDetailView: View {
     private var instance: Instance { instanceLocation.instance }
 
     private typealias InformationItem = (title: String, value: String)
-    private var information: [InformationItem] { [
-        (title: String(localized: "Instance Type"), value: instance.typeDescription),
-        (title: String(localized: "Friends"), value: location.friends.count.description),
-        (title: String(localized: "Users"), value: instance.userCount.description),
-        (title: String(localized: "Capacity"), value: instance.capacity.description),
-        (title: String(localized: "Region"), value: instance.region.description),
-        (title: String(localized: "Platform"), value: instance.userPlatforms.map(\.description).joined(separator: ", ")),
-    ] }
+    private var information: [InformationItem] {
+        let platforms = instance.userPlatforms.map(\.description).joined(separator: ", ")
+        return [
+            (title: String(localized: "Instance Type"), value: instance.typeDescription),
+            (title: String(localized: "Friends"), value: location.friends.count.description),
+            (title: String(localized: "Users"), value: instance.userCount.description),
+            (title: String(localized: "Capacity"), value: instance.capacity.description),
+            (title: String(localized: "Region"), value: instance.region.description),
+            (title: String(localized: "Platform"), value: platforms)
+        ]
+    }
 
     var body: some View {
         List(selection: $selection) {

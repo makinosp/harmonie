@@ -11,13 +11,21 @@ import VRCKit
 extension UserDetailView {
     var noteSection: some View {
         GroupBox("Note") {
-            Text(user.note)
-                .font(.body)
+            VStack(alignment: .leading) {
+                if user.note.isEmpty {
+                    Text("No notes")
+                        .foregroundStyle(.gray)
+                } else {
+                    Text(user.note)
+                        .font(.body)
+                }
+                Button("Edit") {
+                    isPresentedNoteEditor = true
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            }
         }
         .groupBoxStyle(.card)
-        .onTapGesture {
-            isPresentedNoteEditor = true
-        }
         .sheet(isPresented: $isPresentedNoteEditor) {
             NoteEditView(initialValue: user.note, userId: user.id) { text in
                 user.note = text

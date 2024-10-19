@@ -9,9 +9,7 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-struct WorldView: View,
-                  FavoriteServiceRepresentable,
-                  InstanceServiceRepresentable {
+struct WorldView: View {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @State var world: World

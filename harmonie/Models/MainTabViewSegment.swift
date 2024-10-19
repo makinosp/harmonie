@@ -15,6 +15,7 @@ extension MainTabViewSegment: CustomStringConvertible {
     var localizedString: LocalizedStringResource {
         LocalizedStringResource(stringLiteral: rawValue.capitalized)
     }
+
     var description: String {
         String(localized: localizedString)
     }

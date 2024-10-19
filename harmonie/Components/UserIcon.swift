@@ -5,17 +5,14 @@
 //  Created by makinosp on 2024/09/20.
 //
 
+import MemberwiseInit
 import SwiftUI
 import VRCKit
 
+@MemberwiseInit
 struct UserIcon<T>: View where T: ProfileElementRepresentable {
-    private let user: T
-    private let size: CGSize
-
-    init(user: T, size: CGSize) {
-        self.user = user
-        self.size = size
-    }
+    @Init(.internal) private let user: T
+    @Init(.internal) private let size: CGSize
 
     var body: some View {
         BittenView {

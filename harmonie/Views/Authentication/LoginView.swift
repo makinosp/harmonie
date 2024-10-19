@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct LoginView: View, AuthenticationServiceRepresentable {
+struct LoginView: View {
     @AppStorage(Constants.Keys.isSavedOnKeyChain) private var isSavedOnKeyChain = false
     @AppStorage(Constants.Keys.username) private var username = ""
     @Environment(AppViewModel.self) var appVM
@@ -77,17 +77,19 @@ struct LoginView: View, AuthenticationServiceRepresentable {
                 }
                 .font(.footnote)
                 .popover(isPresented: $isPresentedSecurityPopover) {
-                    annotation(
-                        title: "Is this secure?",
-                        text: Constants.Messages.helpWithLoginSafety,
-                        isPresented: $isPresentedSecurityPopover
-                    )
+                    let contents: [Constants.Messages] = [
+                        .helpWithVRChatAPIAuthencication,
+                        .helpWithStoringAuthenticationTokens,
+                        .helpWithStoringPassword,
+                        .helpWithCommunicationSecurity
+                    ]
+                    HelpView(title: "Is this secure?", contents: contents)
                 }
             }
         }
     }
 
-    private var keychainToggle: some View {
+    private var keychainToggle: Toggle<some View> {
         Toggle(isOn: $isSavedOnKeyChain) {
             LabeledContent {
                 Button {
@@ -96,40 +98,14 @@ struct LoginView: View, AuthenticationServiceRepresentable {
                     Image(systemName: "questionmark.circle")
                 }
                 .popover(isPresented: $isPresentedSavingPasswordPopover) {
-                    annotation(
-                        title: "In What Way?",
-                        text: Constants.Messages.helpWithStoringKeychain,
-                        isPresented: $isPresentedSavingPasswordPopover
-                    )
+                    HelpView(title: "In What Way?", contents: [.helpWithStoringPassword])
+                        .presentationDetents([.medium])
                 }
             } label: {
                 Label("Save Password", systemImage: IconSet.key.systemName)
                     .foregroundStyle(Color(.systemGray))
             }
             .font(.callout)
-        }
-    }
-
-    private func annotation(
-        title: LocalizedStringKey,
-        text: String,
-        isPresented: Binding<Bool>
-    ) -> some View {
-        NavigationStack {
-            Text(text)
-                .frame(maxHeight: .infinity, alignment: .top)
-                .navigationTitle(title)
-                .navigationBarTitleDisplayMode(.inline)
-                .foregroundStyle(Color(.systemGray))
-                .padding()
-                .presentationDetents([.medium])
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Close") {
-                            isPresented.wrappedValue.toggle()
-                        }
-                    }
-                }
         }
     }
 

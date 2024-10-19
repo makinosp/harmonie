@@ -24,9 +24,7 @@ extension PreviewContainer: View {
             .environment(favoriteVM)
             .task {
                 do {
-                    try await friendVM.fetchAllFriends(
-                        service: FriendPreviewService(client: appVM.client)
-                    )
+                    try await friendVM.fetchAllFriends()
                     try await favoriteVM.fetchFavoriteFriends(
                         service: FavoritePreviewService(client: appVM.client),
                         friendVM: friendVM
@@ -43,7 +41,7 @@ extension PreviewContainer {
         self.content = content()
         appVM = AppViewModel(isPreviewMode: true)
         friendVM = FriendViewModel(appVM: appVM)
-        favoriteVM = FavoriteViewModel()
+        favoriteVM = FavoriteViewModel(appVM: appVM)
     }
 
     init(@ViewBuilder content: (_ user: UserDetail) -> Content) {

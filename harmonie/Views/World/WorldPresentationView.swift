@@ -10,7 +10,7 @@ import SwiftUI
 import VRCKit
 
 @MemberwiseInit
-struct WorldPresentationView: View, WorldServiceRepresentable {
+struct WorldPresentationView: View {
     @Environment(AppViewModel.self) var appVM
     @State var world: World?
     @Init(.internal) private let id: String
@@ -33,7 +33,7 @@ struct WorldPresentationView: View, WorldServiceRepresentable {
 
     private func fetchWorld(id: String) async {
         do {
-            world = try await worldService.fetchWorld(worldId: id)
+            world = try await appVM.worldService.fetchWorld(worldId: id)
         } catch {
             appVM.handleError(error)
         }

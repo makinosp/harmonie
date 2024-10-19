@@ -25,20 +25,12 @@ struct URLEditorView: View {
                 TextField("https://", text: $urlString)
                     .textInputAutocapitalization(.never)
                     .onChange(of: urlString, initial: true) {
-                        isInvalid = !isValidURLFormat(urlString)
+                        isInvalid = !urlString.isValidURLFormat
                     }
             }
             .navigationTitle("Enter URL")
             .toolbarTitleDisplayMode(.inline)
             .toolbar { toolbarContents }
-        }
-    }
-
-    private func isValidURLFormat(_ string: String) -> Bool {
-        if let url = URL(string: string), UIApplication.shared.canOpenURL(url) {
-            return true
-        } else {
-            return false
         }
     }
 
@@ -59,6 +51,12 @@ struct URLEditorView: View {
             }
             .disabled(isInvalid)
         }
+    }
+}
+
+fileprivate extension String {
+    @MainActor var isValidURLFormat: Bool {
+        if let url = URL(string: self), UIApplication.shared.canOpenURL(url) { true } else { false }
     }
 }
 

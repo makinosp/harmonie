@@ -8,7 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct ContentView: View, AuthenticationServiceRepresentable, FriendServiceRepresentable {
+struct ContentView: View {
     @Environment(AppViewModel.self) var appVM
 
     var body: some View {
@@ -16,7 +16,7 @@ struct ContentView: View, AuthenticationServiceRepresentable, FriendServiceRepre
         case .initializing:
             ProgressScreen()
                 .task {
-                    appVM.step = await appVM.setup(service: authenticationService)
+                    appVM.step = await appVM.setup(service: appVM.authenticationService)
                 }
                 .errorAlert()
         case .loggingIn:
@@ -25,7 +25,7 @@ struct ContentView: View, AuthenticationServiceRepresentable, FriendServiceRepre
         case .done:
             MainTabView()
                 .environment(FriendViewModel(appVM: appVM))
-                .environment(FavoriteViewModel())
+                .environment(FavoriteViewModel(appVM: appVM))
                 .onChange(of: appVM.isRequiredReAuthentication) {
                     if appVM.isRequiredReAuthentication {
                         appVM.step = .loggingIn

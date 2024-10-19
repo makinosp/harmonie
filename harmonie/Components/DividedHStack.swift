@@ -5,28 +5,48 @@
 //  Created by makinosp on 2024/09/30.
 //
 
-import MemberwiseInit
 import SwiftUI
 
 struct DividedHStack<Content> where Content: View {
-    @Init(escaping: true) @ViewBuilder private let content: () -> Content
+    private let alignment: VerticalAlignment
+    private let spacing: CGFloat?
+    private let content: Content
 
-    private struct ViewRoot: _VariadicView_ViewRoot {
-        @ViewBuilder func body(children: _VariadicView.Children) -> some View {
-            HStack {
-                ForEach(children) { child in
-                    child
-                    if child.id != children.last?.id {
-                        Divider()
-                    }
-                }
-            }
-        }
+    init(
+        alignment: VerticalAlignment = .center,
+        spacing: CGFloat? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.alignment = alignment
+        self.spacing = spacing
+        self.content = content()
     }
 }
 
 extension DividedHStack: View {
     var body: some View {
-        _VariadicView.Tree(ViewRoot(), content: content)
+        let viewRoot = ViewRoot(alignment: alignment, spacing: spacing)
+        _VariadicView.Tree(viewRoot) { content }
+    }
+}
+
+extension DividedHStack {
+    struct ViewRoot: _VariadicView_ViewRoot {
+        let alignment: VerticalAlignment
+        let spacing: CGFloat?
+    }
+}
+
+extension DividedHStack.ViewRoot: _VariadicView_Root {
+    @ViewBuilder
+    func body(children: _VariadicView.Children) -> HStack<some View> {
+        HStack(alignment: alignment, spacing: spacing) {
+            ForEach(children) { child in
+                child
+                if child.id != children.last?.id {
+                    Divider()
+                }
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/09/27.
 //
 
-import SwiftUI
+import SwiftUICore
 import VRCKit
 
 extension TrustRank: ColorRepresentable {

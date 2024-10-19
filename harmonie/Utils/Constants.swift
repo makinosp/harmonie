@@ -30,7 +30,37 @@ enum Constants {
     }
 
     enum Messages {
-        static let helpWithStoringKeychain = String(localized: "msg_help_with_storing_keychain", table: "Message")
-        static let helpWithLoginSafety = String(localized: "msg_help_with_login_safety", table: "Message")
+        case helpWithVRChatAPIAuthencication
+        case helpWithStoringAuthenticationTokens
+        case helpWithStoringPassword
+        case helpWithCommunicationSecurity
+    }
+}
+
+extension Constants.Messages {
+    var title: String {
+        switch self {
+        case .helpWithVRChatAPIAuthencication:
+            String(localized: "About the authentication method of VRChatAPI", table: "Message")
+        case .helpWithStoringAuthenticationTokens:
+            String(localized: "Security in Authentication Token Retention", table: "Message")
+        case .helpWithStoringPassword:
+            String(localized: "Security in password storage", table: "Message")
+        case .helpWithCommunicationSecurity:
+            String(localized: "Communication security", table: "Message")
+        }
+    }
+
+    var text: String {
+        switch self {
+        case .helpWithVRChatAPIAuthencication:
+            String(localized: "msg_help_with_vrchat_api_authentication", table: "Message")
+        case .helpWithStoringAuthenticationTokens:
+            String(localized: "msg_help_with_storing_authentication_tokens", table: "Message")
+        case .helpWithStoringPassword:
+            String(localized: "msg_help_with_storing_password", table: "Message")
+        case .helpWithCommunicationSecurity:
+            String(localized: "msg_help_with_communication_security", table: "Message")
+        }
     }
 }

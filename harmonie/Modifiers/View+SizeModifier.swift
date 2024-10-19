@@ -13,10 +13,12 @@ extension View {
     }
 }
 
-private struct SizeModifier: ViewModifier {
+private struct SizeModifier {
     let size: CGSize
     let alignment: Alignment
+}
 
+extension SizeModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(width: size.width, height: size.height, alignment: alignment)

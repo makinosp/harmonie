@@ -16,6 +16,18 @@ final class FavoriteViewModel {
     var favoriteFriends: [FavoriteFriend] = []
     var favoriteWorlds: [FavoriteWorld] = []
     var segment: FavoriteViewSegment = .all
+    @ObservationIgnored var appVM: AppViewModel
+    @ObservationIgnored lazy var favoriteService = lazyFavoriteService
+
+    init(appVM: AppViewModel) {
+        self.appVM = appVM
+    }
+
+    private var lazyFavoriteService: FavoriteServiceProtocol {
+        appVM.isPreviewMode
+        ? FavoritePreviewService(client: appVM.client)
+        : FavoriteService(client: appVM.client)
+    }
 
     /// Filters and returns the favorite groups of a specific type.
     /// - Parameter type: The `FavoriteType` to filter the favorite groups by.
@@ -46,6 +58,10 @@ final class FavoriteViewModel {
 
     func getFavoriteGroup(id: FavoriteGroup.ID) -> FavoriteGroup? {
         favoriteGroups.first { $0.id == id }
+    }
+
+    func favoriteGroup(tag: String) -> FavoriteGroup? {
+        favoriteGroups.first { $0.name == tag }
     }
 
     func updateFavoriteGroup(
@@ -210,12 +226,11 @@ final class FavoriteViewModel {
         world: World,
         targetGroup: FavoriteGroup
     ) async throws {
-        let source = favoriteWorlds.first { $0.id == world.id }
-        if let sourceId = source?.favoriteId,
-           let sourceGroup = getFavoriteGroup(id: sourceId) {
-            _ = try await service.removeFavorite(favoriteId: world.id)
+        if let source = favoriteWorlds.first(where: { $0.id == world.id }),
+           let sourceGroup = favoriteGroup(tag: source.favoriteGroup) {
+            _ = try await service.removeFavorite(favoriteId: source.favoriteId)
             removeWorldFromFavorite(worldId: world.id)
-            guard sourceGroup.id == targetGroup.id else { return }
+            if sourceGroup.id == targetGroup.id { return }
         }
         let addedFaovorite = try await service.addFavorite(
             type: .world,

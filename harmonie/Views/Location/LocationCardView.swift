@@ -9,7 +9,7 @@ import NukeUI
 import SwiftUI
 import VRCKit
 
-struct LocationCardView: View, InstanceServiceRepresentable {
+struct LocationCardView: View {
     @Environment(AppViewModel.self) var appVM
     @Binding var selected: InstanceLocation?
     @State private var instance: Instance?
@@ -23,7 +23,7 @@ struct LocationCardView: View, InstanceServiceRepresentable {
                 if case let .id(id) = location.location {
                     do {
                         defer { withAnimation { isRequesting = false } }
-                        instance = try await instanceService.fetchInstance(location: id)
+                        instance = try await appVM.instanceService.fetchInstance(location: id)
                     } catch {
                         appVM.handleError(error)
                     }

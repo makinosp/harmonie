@@ -9,9 +9,7 @@ import AsyncSwiftUI
 import NukeUI
 import VRCKit
 
-struct UserDetailView: View,
-                       FavoriteServiceRepresentable,
-                       InstanceServiceRepresentable {
+struct UserDetailView: View {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @Environment(FriendViewModel.self) var friendVM
@@ -69,7 +67,7 @@ struct UserDetailView: View,
             }
             let urls = user.bioLinks.wrappedValue
             if !urls.isEmpty {
-                bioLinksSection(urls)
+                socialLinksSection(urls)
             }
             activitySection
         }

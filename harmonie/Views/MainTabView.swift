@@ -29,7 +29,7 @@ extension MainTabViewSegment {
     }
 }
 
-struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentable {
+struct MainTabView: View {
     @Environment(\.scenePhase) var scenePhase
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
@@ -66,13 +66,13 @@ struct MainTabView: View, FriendServiceRepresentable, FavoriteServiceRepresentab
     private func fetchFriendsTask() async {
         do {
             defer { friendVM.isRequesting = false }
-            try await friendVM.fetchAllFriends(service: friendService)
+            try await friendVM.fetchAllFriends()
         } catch {
             appVM.handleError(error)
         }
         do {
             try await favoriteVM.fetchFavoriteFriends(
-                service: favoriteService,
+                service: favoriteVM.favoriteService,
                 friendVM: friendVM
             )
         } catch {
