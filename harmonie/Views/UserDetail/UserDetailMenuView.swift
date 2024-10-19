@@ -8,8 +8,7 @@
 import AsyncSwiftUI
 import VRCKit
 
-struct UserDetailToolbarMenu: View,
-                              FriendServiceRepresentable {
+struct UserDetailToolbarMenu: View {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @Environment(FriendViewModel.self) var friendVM
@@ -53,8 +52,8 @@ struct UserDetailToolbarMenu: View,
         Button("Unfriend", role: .destructive) {
             Task {
                 do {
-                    try await friendService.unfriend(id: user.id)
-                    try await friendVM.fetchAllFriends(service: friendService)
+                    try await friendVM.friendService.unfriend(id: user.id)
+                    try await friendVM.fetchAllFriends()
                 } catch {
                     appVM.handleError(error)
                 }

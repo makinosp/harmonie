@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FriendsListView: View, FriendServiceRepresentable {
+struct FriendsListView: View {
     @Environment(\.isSearching) private var isSearching
     @Environment(AppViewModel.self) var appVM
     @Environment(FriendViewModel.self) var friendVM
@@ -61,7 +61,7 @@ struct FriendsListView: View, FriendServiceRepresentable {
 
     private func refreshAction() async {
         do {
-            try await friendVM.fetchAllFriends(service: friendService)
+            try await friendVM.fetchAllFriends()
         } catch {
             appVM.handleError(error)
         }

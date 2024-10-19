@@ -22,9 +22,16 @@ final class FriendViewModel {
     var isProcessingFilter = false
     @ObservationIgnored let appVM: AppViewModel
     @ObservationIgnored var favoriteFriends: [FavoriteFriend] = []
+    @ObservationIgnored lazy var friendService = lazyFriendService
 
     init(appVM: AppViewModel) {
         self.appVM = appVM
+    }
+
+    private var lazyFriendService: FriendServiceProtocol {
+        appVM.isPreviewMode
+        ? FriendPreviewService(client: appVM.client)
+        : FriendService(client: appVM.client)
     }
 
     var allFriends: [Friend] {
@@ -50,19 +57,19 @@ final class FriendViewModel {
     }
 
     /// Fetch friends from API
-    func fetchAllFriends(service: FriendServiceProtocol & Sendable) async throws {
+    func fetchAllFriends() async throws {
         guard let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
-        async let onlineFriendsTask = service.fetchFriends(
+        async let onlineFriendsTask = friendService.fetchFriends(
             count: user.onlineFriends.count + user.activeFriends.count,
             offline: false
         )
-        async let offlineFriendsTask = service.fetchFriends(
+        async let offlineFriendsTask = friendService.fetchFriends(
             count: user.offlineFriends.count,
             offline: true
         )
         onlineFriends = try await onlineFriendsTask
         offlineFriends = try await offlineFriendsTask
-        friendsLocations = await service.friendsGroupedByLocation(onlineFriends)
+        friendsLocations = await friendService.friendsGroupedByLocation(onlineFriends)
         applyFilters()
     }
 }
