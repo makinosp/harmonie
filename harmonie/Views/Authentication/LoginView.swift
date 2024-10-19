@@ -12,13 +12,13 @@ struct LoginView: View {
     @AppStorage(Constants.Keys.isSavedOnKeyChain) private var isSavedOnKeyChain = false
     @AppStorage(Constants.Keys.username) private var username = ""
     @Environment(AppViewModel.self) var appVM
-    @State private var verifyType: VerifyType?
     @State private var password = ""
     @State private var isPresentedSecurityPopover = false
     @State private var isPresentedSavingPasswordPopover = false
     private let titleFont = "Avenir Next"
 
     var body: some View {
+        @Bindable var appVM = appVM
         NavigationStack {
             VStack(spacing: 32) {
                 title
@@ -30,8 +30,8 @@ struct LoginView: View {
             }
             .frame(maxWidth: 560)
             .padding(.horizontal, 32)
-            .navigationDestination(item: $verifyType) { verifyType in
-                OtpView(verifyType: verifyType)
+            .navigationDestination(item: $appVM.verifyType) { verifyType in
+                OtpView()
                     .navigationBarBackButtonHidden()
             }
         }
@@ -111,7 +111,11 @@ struct LoginView: View {
 
     private var enterButton: some View {
         AsyncButton {
-            await loginAction()
+            await appVM.login(
+                username: username,
+                password: password,
+                isSavedOnKeyChain: isSavedOnKeyChain
+            )
         } label: {
             if appVM.isLoggingIn {
                 ProgressView()
@@ -122,14 +126,6 @@ struct LoginView: View {
         .buttonStyle(.bordered)
         .buttonBorderShape(.capsule)
         .disabled(isDisabledEnterButton)
-    }
-
-    private func loginAction() async {
-        verifyType = await appVM.login(
-            username: username,
-            password: password,
-            isSavedOnKeyChain: isSavedOnKeyChain
-        )
     }
 
     private var isDisabledEnterButton: Bool {

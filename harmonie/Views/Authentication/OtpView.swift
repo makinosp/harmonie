@@ -12,11 +12,6 @@ struct OtpView: View {
     @Environment(AppViewModel.self) var appVM
     @State private var code: String = ""
     @State private var isRequesting = false
-    private let verifyType: VerifyType
-
-    init(verifyType: VerifyType) {
-        self.verifyType = verifyType
-    }
 
     var body: some View {
         VStack(spacing: 16) {
@@ -39,7 +34,7 @@ struct OtpView: View {
     }
 
     private var explanation: LocalizedStringKey {
-        "Enter the 6-digit two-factor verification code recieved in your \(verifyType.description)."
+        "Enter the 6-digit two-factor verification code recieved in your \(appVM.verifyType?.description ?? "")."
     }
 
     private var enterButton: some View {
@@ -60,7 +55,7 @@ struct OtpView: View {
     private func otpAction() async {
         defer { isRequesting = false }
         isRequesting = true
-        await appVM.verifyTwoFA(verifyType: verifyType, code: code)
+        await appVM.verifyTwoFA(code: code)
     }
 
     private var isDisabledEnterButton: Bool {
@@ -80,6 +75,6 @@ extension VerifyType: @retroactive CustomStringConvertible {
 }
 
 #Preview {
-    OtpView(verifyType: .totp)
+    OtpView()
         .environment(AppViewModel())
 }

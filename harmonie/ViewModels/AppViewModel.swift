@@ -18,6 +18,7 @@ final class AppViewModel {
     var isLoggingIn = false
     var isRequiredReAuthentication = false
     var services: APIServiceUtil
+    var verifyType: VerifyType?
     @ObservationIgnored var client: APIClient
 
     init() {
@@ -63,30 +64,40 @@ final class AppViewModel {
         }
     }
 
-    func login(username: String, password: String, isSavedOnKeyChain: Bool) async -> VerifyType? {
+    func login(username: String, password: String, isSavedOnKeyChain: Bool) async {
         await setCredential(username: username, password: password, isSavedOnKeyChain: isSavedOnKeyChain)
-        return await login()
+        guard let result = await login() else { return }
+        loginHandler(result: result)
     }
 
-    func login() async -> VerifyType? {
+    private func loginHandler(result: Either<User, VerifyType>) {
+        switch result {
+        case .left(let user):
+            setUser(user)
+        case .right(let verifyType):
+            self.verifyType = verifyType
+        }
+    }
+
+    private func setUser(_ user: User) {
+        self.user = user
+        step = .done(user)
+    }
+
+    func login() async -> Either<User, VerifyType>? {
         defer { isLoggingIn = false }
+        var result: Either<User, VerifyType>?
         isLoggingIn = true
         do {
-            switch try await services.authenticationService.loginUserInfo() {
-            case let verifyType as VerifyType:
-                return verifyType
-            case let user as User:
-                self.user = user
-                step = .done(user)
-            default: break
-            }
+            result = try await services.authenticationService.loginUserInfo()
         } catch {
             handleError(error)
         }
-        return nil
+        return result
     }
 
-    func verifyTwoFA(verifyType: VerifyType, code: String) async {
+    func verifyTwoFA(code: String) async {
+        guard let verifyType = verifyType else { return }
         do {
             defer { reset() }
             guard try await services.authenticationService.verify2FA(
