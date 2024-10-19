@@ -573,6 +573,16 @@
         }
       }
     },
+    "No notes" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノートがありません"
+          }
+        }
+      }
+    },
     "Note" : {
       "localizations" : {
         "ja" : {
