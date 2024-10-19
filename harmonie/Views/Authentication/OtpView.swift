@@ -27,7 +27,7 @@ struct OtpView: View {
                     .keyboardType(.decimalPad)
                     .textFieldStyle(.roundedBorder)
                     .frame(maxWidth: 120)
-                Text("Enter the 6-digit two-factor verification code recieved in your \(verifyType.method).")
+                Text(explanation)
                     .foregroundStyle(.gray)
                     .font(.caption2)
             }
@@ -36,6 +36,10 @@ struct OtpView: View {
         }
         .padding(32)
         .ignoresSafeArea(.keyboard)
+    }
+
+    private var explanation: LocalizedStringKey {
+        "Enter the 6-digit two-factor verification code recieved in your \(verifyType.description)."
     }
 
     private var enterButton: some View {
@@ -64,8 +68,8 @@ struct OtpView: View {
     }
 }
 
-extension VerifyType {
-    var method: String {
+extension VerifyType: @retroactive CustomStringConvertible {
+    public var description: String {
         switch self {
         case .emailOtp:
             String(localized: "email")

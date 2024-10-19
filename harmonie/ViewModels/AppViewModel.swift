@@ -34,22 +34,19 @@ final class AppViewModel {
     /// fetch the user information, and perform the initialization process.
     /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
     func setup(service: AuthenticationServiceProtocol) async -> Step {
+        let backward: Step = .loggingIn
         // check local data
-        guard await !client.cookieManager.cookies.isEmpty else {
-            return .loggingIn
-        }
+        guard await client.cookieManager.cookieExists else { return backward }
         do {
             // verify auth token and fetch user data
-            guard try await service.verifyAuthToken(),
-                  let user = try await service.loginUserInfo() as? User else {
-                return .loggingIn
-            }
+            guard try await service.verifyAuthToken() else { return backward }
+            guard let user = try await service.loginUserInfo() as? User else { return backward }
             self.user = user
             return .done(user)
         } catch {
             handleError(error)
-            return .loggingIn
         }
+        return backward
     }
 
     private func isPreviewUser(username: String, password: String) -> Bool {
@@ -78,9 +75,7 @@ final class AppViewModel {
                 return verifyType
             case let user as User:
                 self.user = user
-                if step != .done(user) {
-                    step = .done(user)
-                }
+                step = .done(user)
             default: break
             }
         } catch {
