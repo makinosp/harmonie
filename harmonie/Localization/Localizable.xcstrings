@@ -552,7 +552,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "フレンドのロケーション"
+            "value" : "フレンドの現在地"
           }
         },
         "zh-Hans" : {
@@ -747,7 +747,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ロケーション"
+            "value" : "現在地"
           }
         },
         "zh-Hans" : {
@@ -939,7 +939,14 @@
       }
     },
     "Opening URL" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URLを開く"
+          }
+        }
+      }
     },
     "Password" : {
       "localizations" : {
@@ -1106,7 +1113,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ロケーションを選択"
+            "value" : "現在地を選択"
           }
         },
         "zh-Hans" : {
@@ -1277,8 +1284,15 @@
         }
       }
     },
-    "The URL below will be opened." : {
-
+    "The URL below will be opened" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下記のURLを開きます"
+          }
+        }
+      }
     },
     "Third Party Licence" : {
       "localizations" : {

@@ -37,7 +37,7 @@ extension SettingsView {
                         Link("OK", destination: sourceCodeUrl)
                     } message: {
                         VStack {
-                            Text("The URL below will be opened.")
+                            Text("The URL below will be opened")
                             Text(sourceCodeUrl.absoluteString)
                         }
                     }
