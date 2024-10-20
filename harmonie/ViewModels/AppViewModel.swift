@@ -127,13 +127,9 @@ final class AppViewModel {
                 return
             }
             vrckError = error
-        } else if !isCancelled(error) {
+        } else if !error.isCancelled {
             vrckError = .unexpected
         }
         isPresentedAlert = vrckError != nil
-    }
-
-    private func isCancelled(_ error: Error) -> Bool {
-        (error as NSError?)?.isCancelled ?? false
     }
 }
