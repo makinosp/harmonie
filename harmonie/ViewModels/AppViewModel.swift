@@ -137,13 +137,3 @@ final class AppViewModel {
         (error as NSError?)?.isCancelled ?? false
     }
 }
-
-extension AppViewModel {
-    /// Initialize as preview mode
-    /// - Parameter isPreviewMode
-    convenience init(isPreviewMode: Bool) {
-        self.init()
-        services = APIServiceUtil(isPreviewMode: true, client: client)
-        user = PreviewDataProvider.shared.previewUser
-    }
-}
