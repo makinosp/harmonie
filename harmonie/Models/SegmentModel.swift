@@ -32,11 +32,11 @@ extension FavoriteViewSegment: CustomStringConvertible {
 }
 
 extension FavoriteViewSegment {
-    @ViewBuilder var icon: some View {
+    var icon: Iconizable {
         switch self {
-        case .all: IconSet.favoriteSquares.icon
-        case .friends: IconSet.friends.icon
-        case .world: IconSet.world.icon
+        case .all: IconSet.favoriteSquares
+        case .friends: IconSet.friends
+        case .world: IconSet.world
         }
     }
 }

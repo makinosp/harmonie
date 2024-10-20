@@ -47,12 +47,8 @@ struct FavoritesView: View {
         @Bindable var favoriteVM = favoriteVM
         Picker("", selection: $favoriteVM.segment) {
             ForEach(FavoriteViewSegment.allCases) { segment in
-                Label {
-                    Text(segment.description)
-                } icon: {
-                    segment.icon
-                }
-                .tag(segment)
+                Label(segment.description, systemImage: segment.icon.systemName)
+                    .tag(segment)
             }
         }
     }
