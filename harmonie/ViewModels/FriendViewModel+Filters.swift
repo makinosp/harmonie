@@ -8,10 +8,6 @@
 import VRCKit
 
 extension FriendViewModel {
-    func setFavoriteFriends(_ favoriteFriends: [FavoriteFriend]) {
-        self.favoriteFriends = favoriteFriends
-    }
-
     func clearFilters() {
         filterUserStatus = []
         filterFavoriteGroups = []

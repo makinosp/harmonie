@@ -65,4 +65,8 @@ final class FriendViewModel {
         friendsLocations = await appVM.services.friendService.friendsGroupedByLocation(onlineFriends)
         applyFilters()
     }
+
+    func setFavoriteFriends(_ favoriteFriends: [FavoriteFriend]) {
+        self.favoriteFriends = favoriteFriends
+    }
 }
