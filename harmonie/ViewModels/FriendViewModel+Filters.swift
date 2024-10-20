@@ -8,10 +8,6 @@
 import VRCKit
 
 extension FriendViewModel {
-    func setFavoriteFriends(_ favoriteFriends: [FavoriteFriend]) {
-        self.favoriteFriends = favoriteFriends
-    }
-
     func clearFilters() {
         filterUserStatus = []
         filterFavoriteGroups = []
@@ -63,52 +59,6 @@ extension FriendViewModel {
                 return true
             }
             return favoriteFriend.friends.contains(friend)
-        }
-    }
-
-    func applyFilterUserStatus(_ listType: FilterUserStatus) {
-        switch listType {
-        case .all:
-            filterUserStatus.removeAll()
-        case .status(let status):
-            if filterUserStatus.contains(status) {
-                filterUserStatus.remove(status)
-            } else {
-                filterUserStatus.insert(status)
-            }
-        }
-        applyFilters()
-    }
-
-    func applyFilterFavoriteGroup(_ type: FilterFavoriteGroups) {
-        switch type {
-        case .all:
-            filterFavoriteGroups.removeAll()
-        case .favoriteGroup(let favoriteGroup):
-            if filterFavoriteGroups.contains(favoriteGroup) {
-                filterFavoriteGroups.remove(favoriteGroup)
-            } else {
-                filterFavoriteGroups.insert(favoriteGroup)
-            }
-        }
-        applyFilters()
-    }
-
-    func isCheckedFilterUserStatus(_ listType: FilterUserStatus) -> Bool {
-        switch listType {
-        case .all:
-            filterUserStatus.isEmpty
-        case .status(let status):
-            filterUserStatus.contains(status)
-        }
-    }
-
-    func isCheckedFilterFavoriteGroups(_ listType: FilterFavoriteGroups) -> Bool {
-        switch listType {
-        case .all:
-            filterFavoriteGroups.isEmpty
-        case .favoriteGroup(let favoriteGroup):
-            filterFavoriteGroups.contains(favoriteGroup)
         }
     }
 }

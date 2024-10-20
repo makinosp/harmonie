@@ -14,21 +14,29 @@ struct LocationCardView: View {
     @Binding var selected: InstanceLocation?
     @State private var instance: Instance?
     @State private var isRequesting = true
+    @State private var isFailure = false
     let location: FriendsLocation
 
     var body: some View {
-        locationCardContent(instance: instance ?? PreviewDataProvider.generateInstance())
-            .redacted(reason: isRequesting ? .placeholder : [])
-            .task {
-                if case let .id(id) = location.location {
-                    do {
-                        defer { withAnimation { isRequesting = false } }
-                        instance = try await appVM.services.instanceService.fetchInstance(location: id)
-                    } catch {
-                        appVM.handleError(error)
-                    }
+        Group {
+            if isFailure {
+                EmptyView()
+            } else {
+                locationCardContent(instance: instance ?? PreviewDataProvider.generateInstance())
+            }
+        }
+        .redacted(reason: isRequesting ? .placeholder : [])
+        .task {
+            if case let .id(id) = location.location {
+                do {
+                    defer { withAnimation { isRequesting = false } }
+                    let service = appVM.services.instanceService
+                    instance = try await service.fetchInstance(location: id)
+                } catch {
+                    isFailure = true
                 }
             }
+        }
     }
 
     private func locationCardContent(instance: Instance) -> some View {

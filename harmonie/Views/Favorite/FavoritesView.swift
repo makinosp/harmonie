@@ -47,12 +47,8 @@ struct FavoritesView: View {
         @Bindable var favoriteVM = favoriteVM
         Picker("", selection: $favoriteVM.segment) {
             ForEach(FavoriteViewSegment.allCases) { segment in
-                Label {
-                    Text(segment.description)
-                } icon: {
-                    segment.icon
-                }
-                .tag(segment)
+                Label(segment.description, systemImage: segment.icon.systemName)
+                    .tag(segment)
             }
         }
     }
@@ -62,8 +58,10 @@ struct FavoritesView: View {
             switch selectedContainer.segment {
             case .friends:
                 UserDetailPresentationView(id: selectedContainer.selected.id)
+                    .id(selectedContainer.id)
             case .world:
                 WorldPresentationView(id: selectedContainer.selected.id)
+                    .id(selectedContainer.id)
             default:
                 EmptyView()
             }

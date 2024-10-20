@@ -19,13 +19,13 @@ extension MainTabViewSegment {
         }
     }
 
-    @ViewBuilder var icon: some View {
-        switch self {
-        case .social: IconSet.social.icon
-        case .friends: IconSet.friends.icon
-        case .favorites: IconSet.favorite.icon
-        case .settings: IconSet.setting.icon
-        }
+    var label: Label<Text, Image> {
+        Label(description, systemImage: icon.systemName)
+    }
+
+    @available(iOS 18, *)
+    var tab: Tab<Never, some View, DefaultTabLabel> {
+        Tab(description, systemImage: icon.systemName) { content }
     }
 }
 
@@ -36,14 +36,11 @@ struct MainTabView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
 
     var body: some View {
-        TabView {
-            ForEach(MainTabViewSegment.allCases) { tabSegment in
-                tabSegment.content
-                    .tag(tabSegment)
-                    .tabItem {
-                        tabSegment.icon
-                        Text(tabSegment.description)
-                    }
+        Group {
+            if #available(iOS 18, *) {
+                tabView
+            } else {
+                tabViewLegacy
             }
         }
         .task { await fetchFriendsTask() }
@@ -61,6 +58,25 @@ struct MainTabView: View {
                 }
             }
         }
+    }
+
+    private var tabViewLegacy: some View {
+        TabView {
+            ForEach(MainTabViewSegment.allCases) { tabSegment in
+                tabSegment.content
+                    .tag(tabSegment)
+                    .tabItem {
+                        tabSegment.label
+                    }
+            }
+        }
+    }
+
+    @available(iOS 18, *) private var tabView: some View {
+        TabView {
+            ForEach(MainTabViewSegment.allCases) { $0.tab }
+        }
+        .tabViewStyle(.sidebarAdaptable)
     }
 
     private func fetchFriendsTask() async {

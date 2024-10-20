@@ -24,3 +24,14 @@ extension MainTabViewSegment: CustomStringConvertible {
 extension MainTabViewSegment: Identifiable {
     var id: Int { hashValue }
 }
+
+extension MainTabViewSegment {
+    var icon: Iconizable {
+        switch self {
+        case .social: IconSet.social
+        case .friends: IconSet.friends
+        case .favorites: IconSet.favorite
+        case .settings: IconSet.setting
+        }
+    }
+}

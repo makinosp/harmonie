@@ -17,9 +17,9 @@ extension SettingsView {
                 } icon: {
                     UserIcon(user: user, size: Constants.IconSize.ll)
                 }
-                .padding(.vertical, 8)
             }
             .tag(Destination.userDetail)
+            .padding(8)
 
             Button {
                 isPresentedForm = true
