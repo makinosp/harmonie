@@ -66,22 +66,6 @@
         }
       }
     },
-    "All" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全て"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全部"
-          }
-        }
-      }
-    },
     "App Name" : {
       "localizations" : {
         "ja" : {
