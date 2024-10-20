@@ -13,9 +13,9 @@ extension Binding where Value: SetAlgebra & Sendable, Value.Element: Sendable {
             get: { wrappedValue.contains(value) },
             set: { newValue in
                 if newValue {
-                    wrappedValue.remove(value)
-                } else {
                     wrappedValue.insert(value)
+                } else {
+                    wrappedValue.remove(value)
                 }
             }
         )
