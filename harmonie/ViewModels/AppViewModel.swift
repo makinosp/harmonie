@@ -16,7 +16,6 @@ final class AppViewModel {
     var isPresentedAlert = false
     var vrckError: VRCKitError?
     var isLoggingIn = false
-    var isRequiredReAuthentication = false
     var services: APIServiceUtil
     var verifyType: VerifyType?
     @ObservationIgnored var client: APIClient
@@ -123,8 +122,8 @@ final class AppViewModel {
 
     func handleError(_ error: Error) {
         if let error = error as? VRCKitError {
-            if error == .unauthorized, step != .loggingIn {
-                isRequiredReAuthentication = true
+            guard error != .unauthorized else {
+                step = .loggingIn
                 return
             }
             vrckError = error
