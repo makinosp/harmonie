@@ -6,29 +6,17 @@
 //
 
 import NukeUI
+import MemberwiseInit
 import SwiftUI
 
+@MemberwiseInit
 struct SquareURLImage: View {
     @State private var isImageLoaded = false
-    private let imageUrl: URL?
-    private let thumbnailImageUrl: URL?
-    private let frameWidth: CGFloat
-    private let cornerRadius: CGFloat
-    private let ratio: CGFloat
-
-    init(
-        imageUrl: URL?,
-        thumbnailImageUrl: URL? = nil,
-        frameWidth: CGFloat = 100,
-        ratio: CGFloat = 3/4,
-        cornerRadius: CGFloat = 4
-    ) {
-        self.imageUrl = imageUrl
-        self.thumbnailImageUrl = thumbnailImageUrl
-        self.frameWidth = frameWidth
-        self.cornerRadius = cornerRadius
-        self.ratio = ratio
-    }
+    @Init(.internal) private let imageUrl: URL?
+    @Init(.internal, default: nil) private let thumbnailImageUrl: URL?
+    @Init(.internal, default: 100) private let frameWidth: CGFloat
+    @Init(.internal, default: 3/4) private let cornerRadius: CGFloat
+    @Init(.internal, default: 4) private let ratio: CGFloat
 
     var rect: some Shape {
         RoundedRectangle(cornerRadius: cornerRadius)
