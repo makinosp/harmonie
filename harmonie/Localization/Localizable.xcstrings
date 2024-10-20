@@ -66,22 +66,6 @@
         }
       }
     },
-    "All" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全て"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全部"
-          }
-        }
-      }
-    },
     "App Name" : {
       "localizations" : {
         "ja" : {
@@ -568,7 +552,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "フレンドのロケーション"
+            "value" : "フレンドの現在地"
           }
         },
         "zh-Hans" : {
@@ -763,7 +747,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ロケーション"
+            "value" : "現在地"
           }
         },
         "zh-Hans" : {
@@ -954,6 +938,16 @@
         }
       }
     },
+    "Opening URL" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URLを開く"
+          }
+        }
+      }
+    },
     "Password" : {
       "localizations" : {
         "ja" : {
@@ -1119,7 +1113,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ロケーションを選択"
+            "value" : "現在地を選択"
           }
         },
         "zh-Hans" : {
@@ -1286,6 +1280,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "状态"
+          }
+        }
+      }
+    },
+    "The URL below will be opened" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下記のURLを開きます"
           }
         }
       }

@@ -15,33 +15,43 @@ struct LoginView: View {
     @State private var password = ""
     @State private var isPresentedSecurityPopover = false
     @State private var isPresentedSavingPasswordPopover = false
+    @State private var isInInitializing = true
     private let titleFont = "Avenir Next"
 
     var body: some View {
         @Bindable var appVM = appVM
         NavigationStack {
-            VStack(spacing: 32) {
-                title
-                VStack(spacing: 16) {
-                    loginFields
-                    keychainToggle
-                    enterButton
+            if isInInitializing {
+                ProgressScreen()
+            } else {
+                VStack(spacing: 32) {
+                    title
+                    VStack(spacing: 16) {
+                        loginFields
+                        keychainToggle
+                        enterButton
+                    }
                 }
-            }
-            .frame(maxWidth: 560)
-            .padding(.horizontal, 32)
-            .navigationDestination(item: $appVM.verifyType) { _ in
-                OtpView()
-                    .navigationBarBackButtonHidden()
+                .frame(maxWidth: 560)
+                .padding(.horizontal, 32)
+                .navigationDestination(item: $appVM.verifyType) { _ in
+                    OtpView()
+                        .navigationBarBackButtonHidden()
+                }
             }
         }
         .ignoresSafeArea(.keyboard)
         .task {
-            guard isSavedOnKeyChain else { return }
-            if let password = await KeychainUtil.shared.getPassword(for: username) {
-                self.password = password
-            }
+            defer { isInInitializing = false }
+            guard isSavedOnKeyChain, !username.isEmpty else { return }
+            guard let password = await KeychainUtil.shared.getPassword(for: username) else { return }
+            self.password = password
+            await appVM.login(credential: cledential, isSavedOnKeyChain: isSavedOnKeyChain)
         }
+    }
+
+    private var cledential: Credential {
+        Credential(username: username, password: password)
     }
 
     private var title: some View {
@@ -111,10 +121,7 @@ struct LoginView: View {
 
     private var enterButton: some View {
         AsyncButton {
-            await appVM.login(
-                credential: Credential(username: username, password: password),
-                isSavedOnKeyChain: isSavedOnKeyChain
-            )
+            await appVM.login(credential: cledential, isSavedOnKeyChain: isSavedOnKeyChain)
         } label: {
             if appVM.isLoggingIn {
                 ProgressView()

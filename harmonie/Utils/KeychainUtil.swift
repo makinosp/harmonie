@@ -8,7 +8,7 @@
 import Foundation
 import VRCKit
 
-actor KeychainUtil: Sendable {
+actor KeychainUtil {
     static let shared = KeychainUtil()
     private init() {}
 

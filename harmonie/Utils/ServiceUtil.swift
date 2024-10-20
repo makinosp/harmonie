@@ -7,7 +7,7 @@
 
 import VRCKit
 
-actor APIServiceUtil: Sendable {
+actor APIServiceUtil {
     let authenticationService: AuthenticationServiceProtocol
     let favoriteService: FavoriteServiceProtocol
     let friendService: FriendServiceProtocol

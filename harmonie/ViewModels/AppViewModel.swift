@@ -16,7 +16,6 @@ final class AppViewModel {
     var isPresentedAlert = false
     var vrckError: VRCKitError?
     var isLoggingIn = false
-    var isRequiredReAuthentication = false
     var services: APIServiceUtil
     var verifyType: VerifyType?
     @ObservationIgnored var client: APIClient
@@ -123,28 +122,14 @@ final class AppViewModel {
 
     func handleError(_ error: Error) {
         if let error = error as? VRCKitError {
-            if error == .unauthorized, step != .loggingIn {
-                isRequiredReAuthentication = true
+            guard error != .unauthorized else {
+                step = .loggingIn
                 return
             }
             vrckError = error
-        } else if !isCancelled(error) {
+        } else if !error.isCancelled {
             vrckError = .unexpected
         }
         isPresentedAlert = vrckError != nil
-    }
-
-    private func isCancelled(_ error: Error) -> Bool {
-        (error as NSError?)?.isCancelled ?? false
-    }
-}
-
-extension AppViewModel {
-    /// Initialize as preview mode
-    /// - Parameter isPreviewMode
-    convenience init(isPreviewMode: Bool) {
-        self.init()
-        services = APIServiceUtil(isPreviewMode: true, client: client)
-        user = PreviewDataProvider.shared.previewUser
     }
 }

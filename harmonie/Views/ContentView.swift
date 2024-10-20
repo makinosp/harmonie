@@ -26,11 +26,6 @@ struct ContentView: View {
             MainTabView()
                 .environment(FriendViewModel(appVM: appVM))
                 .environment(FavoriteViewModel())
-                .onChange(of: appVM.isRequiredReAuthentication) {
-                    if appVM.isRequiredReAuthentication {
-                        appVM.step = .loggingIn
-                    }
-                }
                 .errorAlert()
         }
     }
