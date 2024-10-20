@@ -7,20 +7,20 @@
 
 import UIKit
 
-@MainActor enum WindowUtil {
-    static var window: UIWindowScene? {
+enum WindowUtil {
+    @MainActor static var window: UIWindowScene? {
         UIApplication.shared.connectedScenes.first as? UIWindowScene
     }
 
-    static var bounds: CGRect {
+    @MainActor static var bounds: CGRect {
         window?.screen.bounds ?? .zero
     }
 
-    static var height: CGFloat {
+    @MainActor static var height: CGFloat {
         window?.screen.bounds.height ?? .zero
     }
 
-    static var width: CGFloat {
+    @MainActor static var width: CGFloat {
         window?.screen.bounds.width ?? .zero
     }
 }

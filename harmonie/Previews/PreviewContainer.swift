@@ -9,14 +9,14 @@ import SwiftUI
 import VRCKit
 
 @MainActor
-struct PreviewContainer<Content> where Content: View {
+struct PreviewContainer<Content> {
     private let content: Content
     private let appVM: AppViewModel
     private let friendVM: FriendViewModel
     private let favoriteVM: FavoriteViewModel
 }
 
-extension PreviewContainer: View {
+extension PreviewContainer: View where Content: View {
     var body: some View {
         content
             .environment(appVM)
@@ -36,7 +36,7 @@ extension PreviewContainer: View {
     }
 }
 
-extension PreviewContainer {
+extension PreviewContainer where Content: View {
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
         appVM = AppViewModel(isPreviewMode: true)
