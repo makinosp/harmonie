@@ -62,8 +62,10 @@ struct FavoritesView: View {
             switch selectedContainer.segment {
             case .friends:
                 UserDetailPresentationView(id: selectedContainer.selected.id)
+                    .id(selectedContainer.id)
             case .world:
                 WorldPresentationView(id: selectedContainer.selected.id)
+                    .id(selectedContainer.id)
             default:
                 EmptyView()
             }
