@@ -11,14 +11,10 @@ import VRCKit
 
 struct SettingsView: View {
     @Environment(AppViewModel.self) var appVM
-    @State var destination: Destination? = UIDevice.current.userInterfaceIdiom == .pad ? .userDetail : nil
+    @State var destination: SettingsDestination? = UIDevice.current.userInterfaceIdiom == .pad ? .userDetail : nil
     @State var isPresentedForm = false
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedLibrary: Library?
-
-    enum Destination: Hashable {
-        case userDetail, favoriteGroups, about, license
-    }
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -41,7 +37,7 @@ struct SettingsView: View {
     }
 
     @ViewBuilder
-    private func presentDestination(_ destination: Destination) -> some View {
+    private func presentDestination(_ destination: SettingsDestination) -> some View {
         switch destination {
         case .userDetail:
             if let user = appVM.user {
@@ -71,12 +67,34 @@ struct SettingsView: View {
             }
             Section("Favorite") {
                 Label("Favorite Groups", systemImage: IconSet.favoriteGroup.systemName)
-                    .tag(Destination.favoriteGroups)
+                    .tag(SettingsDestination.favoriteGroups)
             }
-            aboutSection
+            AboutSection()
             Section {
                 LogoutButton()
             }
         }
+    }
+
+    var aboutThisApp: some View {
+        List {
+            LabeledContent {
+                Text(BundleUtil.appName)
+            } label: {
+                Text("App Name")
+            }
+            LabeledContent {
+                Text(BundleUtil.appVersion)
+            } label: {
+                Text("Version")
+            }
+            LabeledContent {
+                Text(BundleUtil.appBuild)
+            } label: {
+                Text("Build")
+            }
+        }
+        .navigationTitle("About This App")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
