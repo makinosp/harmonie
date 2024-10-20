@@ -66,20 +66,6 @@ extension FriendViewModel {
         }
     }
 
-    func applyFilterUserStatus(_ listType: FilterUserStatus) {
-        switch listType {
-        case .all:
-            filterUserStatus.removeAll()
-        case .status(let status):
-            if filterUserStatus.contains(status) {
-                filterUserStatus.remove(status)
-            } else {
-                filterUserStatus.insert(status)
-            }
-        }
-        applyFilters()
-    }
-
     func applyFilterFavoriteGroup(_ type: FilterFavoriteGroups) {
         switch type {
         case .all:
@@ -92,15 +78,6 @@ extension FriendViewModel {
             }
         }
         applyFilters()
-    }
-
-    func isCheckedFilterUserStatus(_ listType: FilterUserStatus) -> Bool {
-        switch listType {
-        case .all:
-            filterUserStatus.isEmpty
-        case .status(let status):
-            filterUserStatus.contains(status)
-        }
     }
 
     func isCheckedFilterFavoriteGroups(_ listType: FilterFavoriteGroups) -> Bool {

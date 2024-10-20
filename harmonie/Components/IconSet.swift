@@ -12,6 +12,9 @@ enum IconSet {
     static var circleFilled: some Iconizable {
         Icon("circle.fill")
     }
+    static var clear: some Iconizable {
+        Icon("clear")
+    }
     static var code: some Iconizable {
         Icon("curlybraces")
     }

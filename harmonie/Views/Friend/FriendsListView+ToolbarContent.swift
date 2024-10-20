@@ -30,7 +30,7 @@ extension FriendsListView {
 
     private var filterMenu: some View {
         Menu("", systemImage: IconSet.filter.systemName) {
-            Button("Clear") {
+            Button("Clear", systemImage: IconSet.clear.systemName) {
                 friendVM.clearFilters()
             }
             filterUserStatusMenu
@@ -40,19 +40,17 @@ extension FriendsListView {
 
     private var filterUserStatusMenu: some View {
         Menu("Statuses") {
-            ForEach(FilterUserStatus.allCases) { filterUserStatus in
-                Button {
-                    friendVM.applyFilterUserStatus(filterUserStatus)
-                } label: {
-                    Label {
-                        Text(filterUserStatus.description)
-                    } icon: {
-                        if friendVM.isCheckedFilterUserStatus(filterUserStatus) {
-                            IconSet.check.icon
-                        }
-                    }
-                }
+            Button("Clear", systemImage: IconSet.clear.systemName) {
+                friendVM.filterUserStatus.removeAll()
             }
+            ForEach(UserStatus.allCases) { userStatus in
+                @Bindable var friendVM = friendVM
+                let isOn = $friendVM.filterUserStatus.containsBinding(for: userStatus)
+                Toggle(userStatus.description, isOn: isOn)
+            }
+        }
+        .onChange(of: friendVM.filterUserStatus) {
+            friendVM.applyFilters()
         }
     }
 
