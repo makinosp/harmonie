@@ -22,6 +22,7 @@ struct FavoriteGroupsListView: View {
                             selected = group
                         } label: {
                             Text(group.displayName)
+                                .foregroundStyle(Color(.label))
                         }
                     }
                 }
