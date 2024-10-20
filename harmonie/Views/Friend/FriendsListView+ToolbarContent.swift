@@ -56,30 +56,17 @@ extension FriendsListView {
 
     private var filterFavoriteGroupsMenu: some View {
         Menu("Favorite Groups") {
-            Button {
-                friendVM.applyFilterFavoriteGroup(.all)
-            } label: {
-                Label {
-                    Text("All")
-                } icon: {
-                    if friendVM.isCheckedFilterFavoriteGroups(.all) {
-                        IconSet.check.icon
-                    }
-                }
+            Button("Clear", systemImage: IconSet.clear.systemName) {
+                friendVM.filterFavoriteGroups.removeAll()
             }
             ForEach(favoriteVM.favoriteGroups(.friend)) { favoriteGroup in
-                Button {
-                    friendVM.applyFilterFavoriteGroup(.favoriteGroup(favoriteGroup))
-                } label: {
-                    Label {
-                        Text(favoriteGroup.displayName)
-                    } icon: {
-                        if friendVM.isCheckedFilterFavoriteGroups(.favoriteGroup(favoriteGroup)) {
-                            IconSet.check.icon
-                        }
-                    }
-                }
+                @Bindable var friendVM = friendVM
+                let isOn = $friendVM.filterFavoriteGroups.containsBinding(for: favoriteGroup)
+                Toggle(favoriteGroup.displayName, isOn: isOn)
             }
+        }
+        .onChange(of: friendVM.filterFavoriteGroups) {
+            friendVM.applyFilters()
         }
     }
 }

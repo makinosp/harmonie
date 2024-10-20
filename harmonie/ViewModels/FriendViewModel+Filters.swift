@@ -65,27 +65,4 @@ extension FriendViewModel {
             return favoriteFriend.friends.contains(friend)
         }
     }
-
-    func applyFilterFavoriteGroup(_ type: FilterFavoriteGroups) {
-        switch type {
-        case .all:
-            filterFavoriteGroups.removeAll()
-        case .favoriteGroup(let favoriteGroup):
-            if filterFavoriteGroups.contains(favoriteGroup) {
-                filterFavoriteGroups.remove(favoriteGroup)
-            } else {
-                filterFavoriteGroups.insert(favoriteGroup)
-            }
-        }
-        applyFilters()
-    }
-
-    func isCheckedFilterFavoriteGroups(_ listType: FilterFavoriteGroups) -> Bool {
-        switch listType {
-        case .all:
-            filterFavoriteGroups.isEmpty
-        case .favoriteGroup(let favoriteGroup):
-            filterFavoriteGroups.contains(favoriteGroup)
-        }
-    }
 }
