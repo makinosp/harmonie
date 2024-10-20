@@ -938,6 +938,9 @@
         }
       }
     },
+    "Opening URL" : {
+
+    },
     "Password" : {
       "localizations" : {
         "ja" : {
@@ -1273,6 +1276,9 @@
           }
         }
       }
+    },
+    "The URL below will be opened." : {
+
     },
     "Third Party Licence" : {
       "localizations" : {
