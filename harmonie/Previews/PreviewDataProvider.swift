@@ -19,7 +19,7 @@ final class PreviewDataProvider: Sendable {
     static let iconImageUrl = URL(string: "https://www.mediafire.com/convkey/f444/fmivuoxwvdvnucx9g.jpg")
 
     private init() {
-        let instance = Self.generateInstance(worldId: UUID(), instanceId: 0)
+        let instance = Self.instance(worldId: UUID(), instanceId: 0)
         let onlineFriendsSet: [FriendSet] = (0..<50).map { count in
             let id = UUID()
             return switch count {
@@ -186,35 +186,5 @@ final class PreviewDataProvider: Sendable {
             lastActivity: Date(),
             platform: .blank
         )
-    }
-
-    static func generateInstance(worldId: UUID, instanceId: Int) -> Instance {
-        Instance(
-            active: true,
-            capacity: 32,
-            full: false,
-            groupAccessType: nil,
-            id: "wrld_\(worldId):\(instanceId)",
-            instanceId: instanceId.description,
-            location: .id("wrld_\(worldId.uuidString)"),
-            name: "DummyInstance_\(instanceId)",
-            ownerId: "usr_\(UUID().uuidString)",
-            permanent: false,
-            platforms: Instance.Platforms(
-                android: 0,
-                ios: 0,
-                standalonewindows: 0
-            ),
-            recommendedCapacity: 32,
-            region: .jp,
-            tags: [],
-            type: .public,
-            userCount: 0,
-            world: generateWorld(worldId: worldId)
-        )
-    }
-
-    static func generateInstance() -> Instance {
-        generateInstance(worldId: UUID(), instanceId: 0)
     }
 }
