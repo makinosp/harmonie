@@ -6,7 +6,7 @@
 //
 
 enum PreviewString {
-    enum name: String {
+    enum name: String, CaseIterable {
         case emma
         case josh
         case clarke
