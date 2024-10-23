@@ -19,11 +19,13 @@ final class AppViewModel {
     var services: APIServiceUtil
     var verifyType: VerifyType?
     @ObservationIgnored var client: APIClient
+    @ObservationIgnored let userDefaults: UserDefaults
 
     init() {
         let client = APIClient()
         self.client = client
         services = APIServiceUtil(client: client)
+        userDefaults = UserDefaults.standard
     }
 
     enum Step: Equatable {
@@ -116,6 +118,8 @@ final class AppViewModel {
     }
 
     private func reset() {
+        userDefaults.removeObject(forKey: Constants.Keys.isSavedOnKeyChain.rawValue)
+        userDefaults.removeObject(forKey: Constants.Keys.username.rawValue)
         step = .initializing
         client = APIClient()
     }
