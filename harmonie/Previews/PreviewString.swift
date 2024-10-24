@@ -6,14 +6,14 @@
 //
 
 enum PreviewString {
-    enum name: String, CaseIterable {
+    enum Name: String, CaseIterable {
         case emma
         case josh
         case clarke
     }
 }
 
-extension PreviewString.name {
+extension PreviewString.Name {
     static var randomValue: String {
         allCases.randomElement()?.rawValue.capitalized ?? ""
     }

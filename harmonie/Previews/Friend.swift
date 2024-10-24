@@ -51,7 +51,7 @@ extension PreviewDataProvider {
 private extension Friend {
     init(
         id: UUID,
-        displayName: String = PreviewString.name.randomValue,
+        displayName: String = PreviewString.Name.randomValue,
         location: Location,
         status: UserStatus
     ) {
