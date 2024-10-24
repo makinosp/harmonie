@@ -28,12 +28,16 @@ struct NoteEditView: View {
             Form {
                 TextField("Enter note", text: $text, axis: .vertical)
                     .lineLimit(5...10)
+                    .focused($isFocusedNoteField)
             }
             .scrollDisabled(true)
             .contentMargins(.vertical, .zero)
             .toolbar { toolbarItems }
             .navigationTitle("Edit Note")
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .task {
+            isFocusedNoteField = true
         }
     }
 

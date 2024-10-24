@@ -30,6 +30,7 @@ extension UserDetailView {
             NoteEditView(initialValue: user.note, userId: user.id) { text in
                 user.note = text
             }
+            .presentationDetents([.small])
         }
     }
 }
