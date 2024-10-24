@@ -22,7 +22,7 @@ struct LocationCardView: View {
             if isFailure {
                 EmptyView()
             } else {
-                locationCardContent(instance: instance ?? PreviewDataProvider.generateInstance())
+                locationCardContent(instance: instance ?? PreviewDataProvider.instance())
             }
         }
         .redacted(reason: isRequesting ? .placeholder : [])
