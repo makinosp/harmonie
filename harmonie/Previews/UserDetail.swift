@@ -34,7 +34,7 @@ private extension UserDetail {
     init(
         id: UUID = UUID(),
         bio: String = "Demo",
-        displayName: String = PreviewString.name.allCases.randomElement()!.rawValue,
+        displayName: String = PreviewString.name.randomValue,
         location: Location,
         state: User.State,
         status: UserStatus,

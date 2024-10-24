@@ -49,13 +49,18 @@ extension PreviewDataProvider {
 }
 
 private extension Friend {
-    init(id: UUID, location: Location, status: UserStatus) {
+    init(
+        id: UUID,
+        displayName: String = PreviewString.name.randomValue,
+        location: Location,
+        status: UserStatus
+    ) {
         self.init(
             bio: "Biography",
             bioLinks: SafeDecodingArray(),
             avatarImageUrl: PreviewDataProvider.iconImageUrl,
             avatarThumbnailUrl: PreviewDataProvider.iconImageUrl,
-            displayName: "User_\(id.uuidString.prefix(8))",
+            displayName: displayName,
             id: "usr_\(id.uuidString)",
             isFriend: true,
             lastLogin: Date(),

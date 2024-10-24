@@ -12,3 +12,9 @@ enum PreviewString {
         case clarke
     }
 }
+
+extension PreviewString.name {
+    static var randomValue: String {
+        allCases.randomElement()?.rawValue.capitalized ?? ""
+    }
+}
