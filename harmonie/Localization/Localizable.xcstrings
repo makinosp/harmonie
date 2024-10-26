@@ -1284,16 +1284,6 @@
         }
       }
     },
-    "The URL below will be opened" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "下記のURLを開きます"
-          }
-        }
-      }
-    },
     "Third Party Licence" : {
       "localizations" : {
         "ja" : {
