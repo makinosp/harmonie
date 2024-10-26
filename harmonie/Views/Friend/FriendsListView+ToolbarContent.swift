@@ -19,7 +19,8 @@ extension FriendsListView {
             @Bindable var friendVM = friendVM
             Picker("", selection: $friendVM.sortType) {
                 ForEach(SortType.allCases) { sortType in
-                    Text(sortType.description).tag(sortType)
+                    Label(sortType.description, systemImage: sortType.icon.systemName)
+                        .tag(sortType)
                 }
             }
             .onChange(of: friendVM.sortType) {
@@ -46,7 +47,12 @@ extension FriendsListView {
             ForEach(UserStatus.allCases) { userStatus in
                 @Bindable var friendVM = friendVM
                 let isOn = $friendVM.filterUserStatus.containsBinding(for: userStatus)
-                Toggle(userStatus.description, isOn: isOn)
+                Toggle(isOn: isOn) {
+                    Text(userStatus.description)
+                    Image(systemName: IconSet.circleFilled.systemName)
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(userStatus.color)
+                }
             }
         }
         .onChange(of: friendVM.filterUserStatus) {

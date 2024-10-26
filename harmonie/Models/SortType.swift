@@ -31,3 +31,14 @@ extension SortType: CustomStringConvertible {
         }
     }
 }
+
+extension SortType {
+    var icon: Iconizable {
+        switch self {
+        case .latest, .oldest: IconSet.stopwatch
+        case .name: IconSet.at
+        case .loginLatest, .loginOldest: IconSet.calendar
+        case .status: IconSet.circleFilled
+        }
+    }
+}
