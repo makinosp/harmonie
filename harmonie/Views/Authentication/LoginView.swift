@@ -44,11 +44,15 @@ struct LoginView: View {
         .ignoresSafeArea(.keyboard)
         .task {
             defer { isReady = true }
-            guard isSavedOnKeyChain, !username.isEmpty else { return }
+            guard isSettedLocalData else { return }
             guard let password = await KeychainUtil.shared.getPassword(for: username) else { return }
             self.password = password
             await appVM.login(credential: cledential, isSavedOnKeyChain: isSavedOnKeyChain)
         }
+    }
+
+    private var isSettedLocalData: Bool {
+        isSavedOnKeyChain && !username.isEmpty
     }
 
     private var cledential: Credential {

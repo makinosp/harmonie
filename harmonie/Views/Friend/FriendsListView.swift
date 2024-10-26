@@ -5,18 +5,17 @@
 //  Created by makinosp on 2024/09/16.
 //
 
+import MemberwiseInit
 import SwiftUI
 
+@MemberwiseInit
 struct FriendsListView: View {
     @Environment(\.isSearching) private var isSearching
     @Environment(AppViewModel.self) var appVM
     @Environment(FriendViewModel.self) var friendVM
     @Environment(FavoriteViewModel.self) var favoriteVM
+    @InitWrapper(.internal, type: Binding<String?>)
     @Binding private var selected: String?
-
-    init(selected: Binding<String?>) {
-        _selected = selected
-    }
 
     var body: some View {
         List(friendVM.filterResultFriends, selection: $selected) { friend in

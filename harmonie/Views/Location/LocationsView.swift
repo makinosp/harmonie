@@ -72,9 +72,7 @@ struct LocationsView: View {
             inPrivateInstance
         }
         .overlay {
-            if friendVM.isRequesting {
-                ProgressScreen()
-            } else if friendVM.friendsLocations.isEmpty {
+            if friendVM.friendsLocations.isEmpty {
                 ContentUnavailableView {
                     Label("No Friend Location", systemImage: IconSet.friends.systemName)
                 }
