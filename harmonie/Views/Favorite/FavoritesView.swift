@@ -26,7 +26,7 @@ struct FavoritesView: View {
                 }
             }
             .overlay {
-                if appVM.isLoggingIn {
+                if appVM.isRequesting {
                     ProgressScreen()
                 } else if favoriteVM.isSelectedEmpty {
                     ContentUnavailableView {

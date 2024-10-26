@@ -15,7 +15,7 @@ final class AppViewModel {
     var step: Step = .initializing
     var isPresentedAlert = false
     var vrckError: VRCKitError?
-    var isLoggingIn = false
+    var isRequesting = false
     var services: APIServiceUtil
     var verifyType: VerifyType?
     @ObservationIgnored var client: APIClient
@@ -82,9 +82,9 @@ final class AppViewModel {
     }
 
     func login() async -> Either<User, VerifyType>? {
-        defer { isLoggingIn = false }
+        defer { isRequesting = false }
         var result: Either<User, VerifyType>?
-        isLoggingIn = true
+        isRequesting = true
         do {
             result = try await services.authenticationService.loginUserInfo()
         } catch {

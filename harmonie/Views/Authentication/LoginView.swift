@@ -15,15 +15,14 @@ struct LoginView: View {
     @State private var password = ""
     @State private var isPresentedSecurityPopover = false
     @State private var isPresentedSavingPasswordPopover = false
-    @State private var isInInitializing = true
+    @State private var isRequesting = false
+    @State private var isReady = false
     private let titleFont = "Avenir Next"
 
     var body: some View {
         @Bindable var appVM = appVM
         NavigationStack {
-            if isInInitializing {
-                ProgressScreen()
-            } else {
+            if isReady {
                 VStack(spacing: 32) {
                     title
                     VStack(spacing: 16) {
@@ -38,11 +37,13 @@ struct LoginView: View {
                     OtpView()
                         .navigationBarBackButtonHidden()
                 }
+            } else {
+                ProgressScreen()
             }
         }
         .ignoresSafeArea(.keyboard)
         .task {
-            defer { isInInitializing = false }
+            defer { isReady = true }
             guard isSavedOnKeyChain, !username.isEmpty else { return }
             guard let password = await KeychainUtil.shared.getPassword(for: username) else { return }
             self.password = password
@@ -121,9 +122,11 @@ struct LoginView: View {
 
     private var enterButton: some View {
         AsyncButton {
+            defer { isRequesting = false }
+            isRequesting = true
             await appVM.login(credential: cledential, isSavedOnKeyChain: isSavedOnKeyChain)
         } label: {
-            if appVM.isLoggingIn {
+            if isRequesting {
                 ProgressView()
             } else {
                 Text("Enter")
@@ -135,7 +138,7 @@ struct LoginView: View {
     }
 
     private var isDisabledEnterButton: Bool {
-        appVM.isLoggingIn || username.count < 4 || password.count < 8
+        isRequesting || username.count < 4 || password.count < 8
     }
 }
 
