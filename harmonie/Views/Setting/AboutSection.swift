@@ -20,7 +20,11 @@ extension SettingsView {
                 }
                 .tag(SettingsDestination.about)
                 if let url = URL(string: "https://github.com/makinosp/harmonie") {
-                    ExternalLink(title: "Source Code", url: url, systemImage: IconSet.code.systemName)
+                    ExternalLink(
+                        title: String(localized: "Source Code"),
+                        url: url,
+                        systemImage: IconSet.code.systemName
+                    )
                 }
                 NavigationLabel {
                     Label {
