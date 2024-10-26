@@ -6,6 +6,12 @@
 //
 
 enum IconSet {
+    static var at: some Iconizable {
+        Icon("at")
+    }
+    static var calendar: some Iconizable {
+        Icon("calendar")
+    }
     static var check: some Iconizable {
         Icon("checkmark")
     }
@@ -80,6 +86,9 @@ enum IconSet {
     }
     static var social: some Iconizable {
         Icon("person.3.fill")
+    }
+    static var stopwatch: some Iconizable {
+        Icon("stopwatch")
     }
     static var unfriend: some Iconizable {
         Icon("person.fill.xmark")
