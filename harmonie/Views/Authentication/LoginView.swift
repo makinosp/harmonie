@@ -22,26 +22,26 @@ struct LoginView: View {
     var body: some View {
         @Bindable var appVM = appVM
         NavigationStack {
-            if isReady {
-                VStack(spacing: 32) {
-                    title
-                    VStack(spacing: 16) {
-                        loginFields
-                        keychainToggle
-                        enterButton
-                    }
+            VStack(spacing: 32) {
+                title
+                VStack(spacing: 16) {
+                    loginFields
+                    keychainToggle
+                    enterButton
                 }
-                .frame(maxWidth: 560)
-                .padding(.horizontal, 32)
-                .navigationDestination(item: $appVM.verifyType) { _ in
-                    OtpView()
-                        .navigationBarBackButtonHidden()
-                }
-            } else {
-                ProgressScreen()
+            }
+            .frame(maxWidth: 560)
+            .padding(.horizontal, 32)
+            .navigationDestination(item: $appVM.verifyType) { _ in
+                OtpView()
             }
         }
         .ignoresSafeArea(.keyboard)
+        .overlay {
+            if !isReady {
+                ProgressScreen()
+            }
+        }
         .task {
             defer { isReady = true }
             guard isSettedLocalData else { return }

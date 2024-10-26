@@ -34,6 +34,8 @@ struct MainTabView: View {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
+    @AppStorage(Constants.Keys.tabSelection.rawValue)
+    private var selection: MainTabViewSegment = .social
 
     var body: some View {
         Group {
@@ -61,7 +63,7 @@ struct MainTabView: View {
     }
 
     private var tabViewLegacy: some View {
-        TabView {
+        TabView(selection: $selection) {
             ForEach(MainTabViewSegment.allCases) { tabSegment in
                 tabSegment.content
                     .tag(tabSegment)
@@ -73,8 +75,8 @@ struct MainTabView: View {
     }
 
     @available(iOS 18, *) private var tabView: some View {
-        TabView {
-            ForEach(MainTabViewSegment.allCases) { $0.tab }
+        TabView(selection: $selection) {
+            return ForEach(MainTabViewSegment.allCases) { $0.tab }
         }
         .tabViewStyle(.sidebarAdaptable)
     }

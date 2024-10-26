@@ -11,6 +11,7 @@ enum Constants {
     enum Keys: String {
         case isSavedOnKeyChain
         case username
+        case tabSelection
     }
 
     enum MaxCountInFavoriteList: Int, CustomStringConvertible {
