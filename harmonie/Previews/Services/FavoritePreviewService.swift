@@ -6,27 +6,27 @@
 //
 
 import Foundation
+import MemberwiseInit
 import VRCKit
 
+@MemberwiseInit
 final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
     let client: APIClient
 
-    init(client: APIClient) {
-        self.client = client
-    }
-
     func listFavoriteGroups() async throws -> [FavoriteGroup] {
-        [
-            FavoriteGroup(
-                id: "fvgrp_\(UUID().uuidString)",
-                displayName: "DemoGroup",
-                name: "group_1",
-                ownerId: PreviewDataProvider.shared.previewUser.id,
-                tags: [],
-                type: .friend,
-                visibility: .private
-            )
-        ]
+        FavoriteType.allCases.flatMap { type in
+            (1...3).map { index in
+                FavoriteGroup(
+                    id: "fvgrp_\(UUID().uuidString)",
+                    displayName: "\(type.rawValue.capitalized) Group \(index)",
+                    name: "group_\(index)",
+                    ownerId: PreviewDataProvider.shared.previewUser.id,
+                    tags: [],
+                    type: type,
+                    visibility: .private
+                )
+            }
+        }
     }
 
     func listFavorites(type: FavoriteType) async throws -> [Favorite] {
@@ -35,8 +35,7 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
             PreviewDataProvider.shared.onlineFriends.prefix(5).map { friend in
                 Favorite(id: UUID().uuidString, favoriteId: friend.id, tags: ["group_1"], type: .friend)
             }
-        default:
-            []
+        default: []
         }
     }
 

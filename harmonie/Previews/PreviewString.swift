@@ -10,6 +10,7 @@ enum PreviewString {
         case emma
         case josh
         case clarke
+        case nathalie
     }
 }
 

@@ -15,7 +15,7 @@ final class PreviewDataProvider: Sendable {
     let userDetails: [UserDetail]
     let instances: [Instance]
 
-    static let iconImageUrl = URL(string: "https://www.mediafire.com/convkey/f444/fmivuoxwvdvnucx9g.jpg")
+    static let iconImageUrl = URL(string: "https://www.mediafire.com/convkey/e2dd/ksfjh96ukjtwhuczg.jpg")
 
     private init() {
         let instance = Self.instance(worldId: UUID(), instanceId: 0)
@@ -52,7 +52,7 @@ final class PreviewDataProvider: Sendable {
             avatarImageUrl: PreviewDataProvider.iconImageUrl,
             avatarThumbnailUrl: PreviewDataProvider.iconImageUrl,
             dateJoined: Date(),
-            displayName: "usr_\(previewUserId.uuidString.prefix(8))",
+            displayName: "Demo User",
             friendKey: "",
             friends: friends.map(\.id),
             homeLocation: "",
@@ -73,17 +73,23 @@ final class PreviewDataProvider: Sendable {
             userIcon: PreviewDataProvider.iconImageUrl,
             userLanguage: nil,
             userLanguageCode: nil,
-            presence: Presence(
-                groups: [],
-                id: UUID().uuidString,
-                instance: "",
-                instanceType: "",
-                platform: .android,
-                status: .active,
-                travelingToInstance: "",
-                travelingToWorld: "",
-                world: ""
-            )
+            presence: Presence()
+        )
+    }
+}
+
+private extension Presence {
+    init() {
+        self.init(
+            groups: [],
+            id: UUID().uuidString,
+            instance: "",
+            instanceType: "",
+            platform: .android,
+            status: .active,
+            travelingToInstance: "",
+            travelingToWorld: "",
+            world: ""
         )
     }
 }
