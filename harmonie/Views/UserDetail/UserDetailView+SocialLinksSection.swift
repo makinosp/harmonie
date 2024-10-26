@@ -12,22 +12,11 @@ extension UserDetailView {
     func socialLinksSection(_ urls: [URL]) -> some View {
         GroupBox("Social Links") {
             DividedVStack(alignment: .leading) {
-                ForEach(urls) { url in socialLink(url) }
+                ForEach(urls) { url in
+                    ExternalLink(title: url.description, url: url, systemImage: IconSet.link.systemName)
+                }
             }
         }
         .groupBoxStyle(.card)
-    }
-
-    private func socialLink(_ url: URL) -> Link<some View> {
-        Link(destination: url) {
-            LabeledContent {
-                IconSet.linkExternal.icon
-                    .imageScale(.small)
-                    .foregroundStyle(Color(.tertiaryLabel))
-            } label: {
-                Label(url.description, systemImage: IconSet.link.systemName)
-                    .lineLimit(1)
-            }
-        }
     }
 }
