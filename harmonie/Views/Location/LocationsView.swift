@@ -17,54 +17,11 @@ struct LocationsView: View {
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
-            locationList
-                .overlay {
-                    if friendVM.isContentUnavailable {
-                        ContentUnavailableView {
-                            Label("No Friend Location", systemImage: IconSet.friends.systemName)
-                        }
-                    }
-                }
-                .navigationTitle("Social")
-                .setColumn()
+            sidebar
         } content: {
-            Group {
-                if let selectedInstance = selectedInstance {
-                    LocationDetailView(
-                        selection: $selection,
-                        instanceLocation: selectedInstance
-                    )
-                } else {
-                    ContentUnavailableView {
-                        Label("Select a location", systemImage: IconSet.location.systemName)
-                    }
-                }
-            }
-            .setColumn()
+            content
         } detail: {
-            Group {
-                if let selection = selection {
-                    Group {
-                        switch selection.segment {
-                        case .friends:
-                            UserDetailPresentationView(selected: selection.selected)
-                        case .world:
-                            WorldPresentationView(id: selection.selected.id)
-                        default:
-                            EmptyView()
-                        }
-                    }
-                    .id(selection.selected.id)
-                }
-            }
-            .overlay {
-                if selection == nil {
-                    ContentUnavailableView {
-                        Label("Select a friend or world", systemImage: IconSet.info.systemName)
-                    }
-                }
-            }
-            .setColumn()
+            detail
         }
         .navigationSplitViewStyle(.balanced)
         .refreshable {
@@ -76,13 +33,67 @@ struct LocationsView: View {
         }
     }
 
-    private var locationList: some View {
+    private var sidebar: some View {
         List(selection: $selectedInstance) {
             friendLocations
             if !friendVM.isFetchingAllFriends {
                 inPrivateInstance
             }
         }
+        .overlay {
+            if friendVM.isContentUnavailable {
+                ContentUnavailableView {
+                    Label("No Friend Location", systemImage: IconSet.friends.systemName)
+                }
+            }
+        }
+        .navigationTitle("Social")
+        .setColumn()
+    }
+
+    private var content: some View {
+        Group {
+            if let selectedInstance = selectedInstance {
+                LocationDetailView(
+                    selection: $selection,
+                    instanceLocation: selectedInstance
+                )
+            }
+        }
+        .overlay {
+            if selectedInstance == nil {
+                ContentUnavailableView {
+                    Label("Select a location", systemImage: IconSet.location.systemName)
+                }
+            }
+        }
+        .setColumn()
+    }
+
+    private var detail: some View {
+        Group {
+            if let selection = selection {
+                Group {
+                    switch selection.segment {
+                    case .friends:
+                        UserDetailPresentationView(selected: selection.selected)
+                    case .world:
+                        WorldPresentationView(id: selection.selected.id)
+                    default:
+                        EmptyView()
+                    }
+                }
+                .id(selection.selected.id)
+            }
+        }
+        .overlay {
+            if selection == nil {
+                ContentUnavailableView {
+                    Label("Select a friend or world", systemImage: IconSet.info.systemName)
+                }
+            }
+        }
+        .setColumn()
     }
 
     @ViewBuilder private var friendLocations: some View {
