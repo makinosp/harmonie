@@ -17,44 +17,11 @@ struct LocationsView: View {
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
-            locationList
-                .navigationTitle("Social")
-                .setColumn()
+            sidebar
         } content: {
-            Group {
-                if let selectedInstance = selectedInstance {
-                    LocationDetailView(
-                        selection: $selection,
-                        instanceLocation: selectedInstance
-                    )
-                } else {
-                    ContentUnavailableView {
-                        Label("Select a location", systemImage: IconSet.location.systemName)
-                    }
-                }
-            }
-            .setColumn()
+            content
         } detail: {
-            Group {
-                if let selection = selection {
-                    Group {
-                        switch selection.segment {
-                        case .friends:
-                            UserDetailPresentationView(selected: selection.selected)
-                        case .world:
-                            WorldPresentationView(id: selection.selected.id)
-                        default:
-                            EmptyView()
-                        }
-                    }
-                    .id(selection.selected.id)
-                } else {
-                    ContentUnavailableView {
-                        Label("Select a friend or world", systemImage: IconSet.info.systemName)
-                    }
-                }
-            }
-            .setColumn()
+            detail
         }
         .navigationSplitViewStyle(.balanced)
         .refreshable {
@@ -66,33 +33,91 @@ struct LocationsView: View {
         }
     }
 
-    private var locationList: some View {
+    private var sidebar: some View {
         List(selection: $selectedInstance) {
             friendLocations
-            inPrivateInstance
+            if !friendVM.isFetchingAllFriends {
+                inPrivateInstance
+            }
         }
         .overlay {
-            if friendVM.friendsLocations.isEmpty {
+            if friendVM.isContentUnavailable {
                 ContentUnavailableView {
                     Label("No Friend Location", systemImage: IconSet.friends.systemName)
                 }
             }
         }
+        .navigationTitle("Social")
+        .setColumn()
+    }
+
+    private var content: some View {
+        Group {
+            if let selectedInstance = selectedInstance {
+                LocationDetailView(
+                    selection: $selection,
+                    instanceLocation: selectedInstance
+                )
+            }
+        }
+        .overlay {
+            if selectedInstance == nil {
+                ContentUnavailableView {
+                    Label("Select a location", systemImage: IconSet.location.systemName)
+                }
+            }
+        }
+        .setColumn()
+    }
+
+    private var detail: some View {
+        Group {
+            if let selection = selection {
+                Group {
+                    switch selection.segment {
+                    case .friends:
+                        UserDetailPresentationView(selected: selection.selected)
+                    case .world:
+                        WorldPresentationView(id: selection.selected.id)
+                    default:
+                        EmptyView()
+                    }
+                }
+                .id(selection.selected.id)
+            }
+        }
+        .overlay {
+            if selection == nil {
+                ContentUnavailableView {
+                    Label("Select a friend or world", systemImage: IconSet.info.systemName)
+                }
+            }
+        }
+        .setColumn()
     }
 
     @ViewBuilder private var friendLocations: some View {
-        let friendsLocations = friendVM.friendsLocations.filter(\.location.isVisible)
         Section {
-            ForEach(friendsLocations) { location in
-                LocationCardView(
-                    selected: $selectedInstance,
-                    location: location
-                )
+            if friendVM.isFetchingAllFriends {
+                ForEach(0...7, id: \.self) { _ in
+                    LocationCardView(
+                        selected: .constant(nil),
+                        location: PreviewDataProvider.friendsLocation
+                    )
+                }
+            } else {
+                ForEach(friendVM.visibleFriendsLocations) { location in
+                    LocationCardView(
+                        selected: $selectedInstance,
+                        location: location
+                    )
+                }
             }
         } header: {
             HStack {
                 Text("Friend Locations")
-                Text("(\(friendsLocations.count.description))")
+                Text(verbatim: "(\(friendVM.visibleFriendsLocations.count))")
+                    .redacted(reason: friendVM.isFetchingAllFriends ? .placeholder : [])
             }
         }
     }
@@ -106,26 +131,18 @@ struct LocationsView: View {
                         VStack(alignment: .leading) {
                             Text("Private Instances")
                                 .font(.body)
+                                .lineLimit(1)
                             Text(friendVM.friendsInPrivate.count.description)
-                                .font(.footnote)
+                                .font(.caption)
                                 .foregroundStyle(Color.gray)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         NavigationLabel()
                     }
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: -8) {
-                            ForEach(friendVM.friendsInPrivate) { friend in
-                                CircleURLImage(
-                                    imageUrl: friend.imageUrl(.x256),
-                                    size: Constants.IconSize.thumbnail
-                                )
-                            }
-                        }
-                    }
+                    HorizontalProfileImages(friendVM.friendsInPrivate)
                 }
+                .padding(.top, 4)
             }
-            .padding(.top, 4)
         }
     }
 }
@@ -146,5 +163,11 @@ fileprivate extension View {
             ideal: WindowUtil.width * 1 / 3,
             max: WindowUtil.width / 2
         )
+    }
+}
+
+#Preview {
+    PreviewContainer {
+        LocationsView()
     }
 }

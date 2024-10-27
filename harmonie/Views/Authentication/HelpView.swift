@@ -20,6 +20,7 @@ struct HelpView: View {
                 VStack(spacing: 32) {
                     ForEach(contents, id: \.hashValue) { content($0) }
                 }
+                .multilineTextAlignment(.leading)
                 .foregroundStyle(Color(.systemGray))
                 .padding()
             }

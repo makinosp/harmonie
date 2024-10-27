@@ -76,11 +76,13 @@ struct LoginView: View {
 
     private var loginFields: some View {
         VStack(alignment: .leading, spacing: 8) {
-            TextField("Username", text: $username)
-                .textInputAutocapitalization(.never)
-                .textFieldStyle(.roundedBorder)
-            SecureField("Password", text: $password)
-                .textFieldStyle(.roundedBorder)
+            Group {
+                TextField("Username", text: $username)
+                SecureField("Password", text: $password)
+            }
+            .textInputAutocapitalization(.never)
+            .textFieldStyle(.roundedBorder)
+            .multilineTextAlignment(.center)
             HStack {
                 Text("Connect your VRChat account.")
                     .font(.footnote)
