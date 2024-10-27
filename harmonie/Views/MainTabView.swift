@@ -24,8 +24,8 @@ extension MainTabViewSegment {
     }
 
     @available(iOS 18, *)
-    var tab: Tab<Never, some View, DefaultTabLabel> {
-        Tab(description, systemImage: icon.systemName) { content }
+    var tab: some TabContent {
+        Tab(description, systemImage: icon.systemName, value: self) { content }
     }
 }
 
@@ -34,8 +34,8 @@ struct MainTabView: View {
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
-    @AppStorage(Constants.Keys.tabSelection.rawValue)
-    private var selection: MainTabViewSegment = .social
+    @AppStorage(Constants.Keys.tabSelection.rawValue) private var selection: MainTabViewSegment = .social
+    @AppStorage(Constants.Keys.userData.rawValue) private var userData = ""
 
     var body: some View {
         Group {
@@ -53,13 +53,27 @@ struct MainTabView: View {
             Task { await fetchFavoritesTask() }
         }
         .onChange(of: scenePhase) {
-            if scenePhase == .active {
-                Task {
-                    if await appVM.login() == nil { return }
-                    appVM.step = .loggingIn
-                }
-            }
+            scenePhaseHandler(scenePhase)
         }
+    }
+
+    private func scenePhaseHandler(_ scenePhase: ScenePhase) {
+        switch scenePhase {
+        case .active:
+            restoreUserData()
+            Task {
+                if await appVM.login() == nil { return }
+            }
+        case .background, .inactive:
+            guard let user = appVM.user else { return }
+            userData = user.rawValue
+        @unknown default: break
+        }
+    }
+
+    private func restoreUserData() {
+        guard let user = User(rawValue: userData) else { return }
+        appVM.user = user
     }
 
     private var tabViewLegacy: some View {
