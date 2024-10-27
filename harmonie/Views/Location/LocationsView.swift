@@ -118,6 +118,7 @@ struct LocationsView: View {
             HStack {
                 Text("Friend Locations")
                 Text("(\(friendsLocations.count.description))")
+                    .redacted(reason: friendVM.isFetchingAllFriends ? .placeholder : [])
             }
         }
     }
@@ -139,16 +140,7 @@ struct LocationsView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         NavigationLabel()
                     }
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: -8) {
-                            ForEach(friendVM.friendsInPrivate) { friend in
-                                CircleURLImage(
-                                    imageUrl: friend.imageUrl(.x256),
-                                    size: Constants.IconSize.thumbnail
-                                )
-                            }
-                        }
-                    }
+                    HorizontalProfileImages(friendVM.friendsInPrivate)
                 }
                 .padding(.top, 4)
             }

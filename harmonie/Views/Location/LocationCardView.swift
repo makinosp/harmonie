@@ -63,19 +63,10 @@ struct LocationCardView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     NavigationLabel()
                 }
-                ScrollView(.horizontal) {
-                    LazyHStack(spacing: -8) {
-                        ForEach(location.friends) { friend in
-                            CircleURLImage(
-                                imageUrl: friend.imageUrl(.x256),
-                                size: Constants.IconSize.thumbnail
-                            )
-                        }
+                HorizontalProfileImages(location.friends)
+                    .onTapGesture {
+                        selected = tag(instance)
                     }
-                }
-                .onTapGesture {
-                    selected = tag(instance)
-                }
             }
             .padding(.top, 4)
         }
