@@ -97,7 +97,6 @@ extension MainTabView {
 
     private func fetchFriendsTask() async {
         do {
-            defer { friendVM.isRequesting = false }
             try await friendVM.fetchAllFriends()
         } catch {
             appVM.handleError(error)

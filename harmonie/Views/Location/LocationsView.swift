@@ -18,6 +18,13 @@ struct LocationsView: View {
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             locationList
+                .overlay {
+                    if friendVM.isContentUnavailable {
+                        ContentUnavailableView {
+                            Label("No Friend Location", systemImage: IconSet.friends.systemName)
+                        }
+                    }
+                }
                 .navigationTitle("Social")
                 .setColumn()
         } content: {
@@ -48,7 +55,10 @@ struct LocationsView: View {
                         }
                     }
                     .id(selection.selected.id)
-                } else {
+                }
+            }
+            .overlay {
+                if selection == nil {
                     ContentUnavailableView {
                         Label("Select a friend or world", systemImage: IconSet.info.systemName)
                     }
@@ -69,13 +79,8 @@ struct LocationsView: View {
     private var locationList: some View {
         List(selection: $selectedInstance) {
             friendLocations
-            inPrivateInstance
-        }
-        .overlay {
-            if friendVM.friendsLocations.isEmpty {
-                ContentUnavailableView {
-                    Label("No Friend Location", systemImage: IconSet.friends.systemName)
-                }
+            if !friendVM.isFetchingAllFriends {
+                inPrivateInstance
             }
         }
     }
@@ -83,11 +88,20 @@ struct LocationsView: View {
     @ViewBuilder private var friendLocations: some View {
         let friendsLocations = friendVM.friendsLocations.filter(\.location.isVisible)
         Section {
-            ForEach(friendsLocations) { location in
-                LocationCardView(
-                    selected: $selectedInstance,
-                    location: location
-                )
+            if friendVM.isFetchingAllFriends {
+                ForEach(0...7, id: \.self) { _ in
+                    LocationCardView(
+                        selected: .constant(nil),
+                        location: PreviewDataProvider.friendsLocation
+                    )
+                }
+            } else {
+                ForEach(friendsLocations) { location in
+                    LocationCardView(
+                        selected: $selectedInstance,
+                        location: location
+                    )
+                }
             }
         } header: {
             HStack {

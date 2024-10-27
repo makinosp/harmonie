@@ -18,7 +18,7 @@ final class FriendViewModel {
     var filterFavoriteGroups: Set<FavoriteGroup> = []
     var filterText: String = ""
     var sortType: SortType = .latest
-    var isRequesting = true
+    var isFetchingAllFriends = true
     var isProcessingFilter = false
     @ObservationIgnored let appVM: AppViewModel
     @ObservationIgnored var favoriteFriends: [FavoriteFriend] = []
@@ -51,6 +51,8 @@ final class FriendViewModel {
 
     /// Fetch friends from API
     func fetchAllFriends() async throws {
+        defer { isFetchingAllFriends = false }
+        isFetchingAllFriends = true
         guard let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
         async let onlineFriendsTask = appVM.services.friendService.fetchFriends(
             count: user.onlineFriends.count + user.activeFriends.count,
@@ -68,5 +70,9 @@ final class FriendViewModel {
 
     func setFavoriteFriends(_ favoriteFriends: [FavoriteFriend]) {
         self.favoriteFriends = favoriteFriends
+    }
+
+    var isContentUnavailable: Bool {
+        friendsLocations.isEmpty && !isFetchingAllFriends
     }
 }
