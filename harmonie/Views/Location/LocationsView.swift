@@ -106,8 +106,9 @@ struct LocationsView: View {
                         VStack(alignment: .leading) {
                             Text("Private Instances")
                                 .font(.body)
+                                .lineLimit(1)
                             Text(friendVM.friendsInPrivate.count.description)
-                                .font(.footnote)
+                                .font(.caption)
                                 .foregroundStyle(Color.gray)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -124,8 +125,8 @@ struct LocationsView: View {
                         }
                     }
                 }
+                .padding(.top, 4)
             }
-            .padding(.top, 4)
         }
     }
 }
@@ -146,5 +147,11 @@ fileprivate extension View {
             ideal: WindowUtil.width * 1 / 3,
             max: WindowUtil.width / 2
         )
+    }
+}
+
+#Preview {
+    PreviewContainer {
+        LocationsView()
     }
 }
