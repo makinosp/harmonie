@@ -61,9 +61,6 @@ struct MainTabView: View {
         switch scenePhase {
         case .active:
             restoreUserData()
-            Task {
-                if await appVM.login() == nil { return }
-            }
         case .background, .inactive:
             guard let user = appVM.user else { return }
             userData = user.rawValue
