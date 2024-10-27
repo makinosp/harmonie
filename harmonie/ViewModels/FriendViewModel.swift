@@ -49,6 +49,10 @@ final class FriendViewModel {
         }
     }
 
+    var visibleFriendsLocations: [FriendsLocation] {
+        friendsLocations.filter(\.location.isVisible)
+    }
+
     /// Fetch friends from API
     func fetchAllFriends() async throws {
         defer { isFetchingAllFriends = false }

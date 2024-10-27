@@ -97,7 +97,6 @@ struct LocationsView: View {
     }
 
     @ViewBuilder private var friendLocations: some View {
-        let friendsLocations = friendVM.friendsLocations.filter(\.location.isVisible)
         Section {
             if friendVM.isFetchingAllFriends {
                 ForEach(0...7, id: \.self) { _ in
@@ -107,7 +106,7 @@ struct LocationsView: View {
                     )
                 }
             } else {
-                ForEach(friendsLocations) { location in
+                ForEach(friendVM.visibleFriendsLocations) { location in
                     LocationCardView(
                         selected: $selectedInstance,
                         location: location
@@ -117,7 +116,7 @@ struct LocationsView: View {
         } header: {
             HStack {
                 Text("Friend Locations")
-                Text("(\(friendsLocations.count.description))")
+                Text(verbatim: "(\(friendVM.visibleFriendsLocations.count))")
                     .redacted(reason: friendVM.isFetchingAllFriends ? .placeholder : [])
             }
         }
