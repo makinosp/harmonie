@@ -19,9 +19,9 @@ struct OtpView: View {
                 .font(.headline)
             VStack {
                 TextField("Code", text: $code)
+                    .multilineTextAlignment(TextAlignment.center)
                     .keyboardType(.decimalPad)
                     .textFieldStyle(.roundedBorder)
-                    .frame(maxWidth: 120)
                 Text(explanation)
                     .foregroundStyle(.gray)
                     .font(.caption2)
@@ -29,6 +29,7 @@ struct OtpView: View {
             .padding(.horizontal, 8)
             enterButton
         }
+        .frame(maxWidth: 560)
         .padding(32)
         .ignoresSafeArea(.keyboard)
     }
