@@ -8,27 +8,6 @@
 import SwiftUI
 import VRCKit
 
-@MainActor
-extension MainTabViewSegment {
-    @ViewBuilder var content: some View {
-        switch self {
-        case .social: LocationsView()
-        case .friends: FriendsView()
-        case .favorites: FavoritesView()
-        case .settings: SettingsView()
-        }
-    }
-
-    var label: Label<Text, Image> {
-        Label(description, systemImage: icon.systemName)
-    }
-
-    @available(iOS 18, *)
-    var tab: some TabContent {
-        Tab(description, systemImage: icon.systemName, value: self) { content }
-    }
-}
-
 struct MainTabView: View {
     @Environment(\.scenePhase) var scenePhase
     @Environment(AppViewModel.self) var appVM: AppViewModel
@@ -56,7 +35,31 @@ struct MainTabView: View {
             scenePhaseHandler(scenePhase)
         }
     }
+}
 
+@MainActor
+extension MainTabViewSegment {
+    @ViewBuilder var content: some View {
+        switch self {
+        case .social: LocationsView()
+        case .friends: FriendsView()
+        case .favorites: FavoritesView()
+        case .settings: SettingsView()
+        }
+    }
+
+    var label: Label<Text, Image> {
+        Label(description, systemImage: icon.systemName)
+    }
+
+    @available(iOS 18, *)
+    var tab: some TabContent {
+        Tab(description, systemImage: icon.systemName, value: self) { content }
+    }
+}
+
+@MainActor
+extension MainTabView {
     private func scenePhaseHandler(_ scenePhase: ScenePhase) {
         switch scenePhase {
         case .active:
