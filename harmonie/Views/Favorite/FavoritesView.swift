@@ -26,9 +26,7 @@ struct FavoritesView: View {
                 }
             }
             .overlay {
-                if appVM.isLoggingIn {
-                    ProgressScreen()
-                } else if favoriteVM.isSelectedEmpty {
+                if favoriteVM.isSelectedEmpty {
                     ContentUnavailableView {
                         Label("No Favorites", systemImage: IconSet.favorite.systemName)
                     }
