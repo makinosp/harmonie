@@ -22,7 +22,7 @@ extension MainTabViewSegment: CustomStringConvertible {
 }
 
 extension MainTabViewSegment: Identifiable {
-    var id: Int { hashValue }
+    var id: String { rawValue }
 }
 
 extension MainTabViewSegment {
