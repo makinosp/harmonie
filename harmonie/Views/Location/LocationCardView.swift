@@ -18,24 +18,22 @@ struct LocationCardView: View {
     let location: FriendsLocation
 
     var body: some View {
-        Group {
-            if isFailure {
-                EmptyView()
-            } else {
-                locationCardContent(instance: instance ?? PreviewDataProvider.instance())
-            }
-        }
-        .redacted(reason: isRequesting ? .placeholder : [])
-        .task {
-            if case let .id(id) = location.location {
-                do {
-                    defer { withAnimation { isRequesting = false } }
-                    let service = appVM.services.instanceService
-                    instance = try await service.fetchInstance(location: id)
-                } catch {
-                    isFailure = true
+        if isFailure {
+            EmptyView()
+        } else {
+            locationCardContent(instance: instance ?? PreviewDataProvider.instance())
+                .redacted(reason: isRequesting ? .placeholder : [])
+                .task {
+                    if case let .id(id) = location.location {
+                        do {
+                            defer { withAnimation { isRequesting = false } }
+                            let service = appVM.services.instanceService
+                            instance = try await service.fetchInstance(location: id)
+                        } catch {
+                            isFailure = true
+                        }
+                    }
                 }
-            }
         }
     }
 

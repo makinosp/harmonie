@@ -96,7 +96,7 @@ struct LocationsView: View {
         .setColumn()
     }
 
-    @ViewBuilder private var friendLocations: some View {
+    private var friendLocations: some View {
         Section {
             if friendVM.isFetchingAllFriends {
                 ForEach(0...7, id: \.self) { _ in
