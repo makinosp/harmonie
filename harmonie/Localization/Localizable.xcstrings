@@ -223,22 +223,6 @@
         }
       }
     },
-    "Code" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "コード"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "代码"
-          }
-        }
-      }
-    },
     "Confirm" : {
       "localizations" : {
         "ja" : {
