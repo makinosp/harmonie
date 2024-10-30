@@ -9,9 +9,17 @@ import VRCKit
 
 struct InstanceLocation: Hashable {
     let location: FriendsLocation
-    let instance: Instance
+    let instance: Instance?
 }
 
 extension InstanceLocation: Identifiable {
     var id: Int { hashValue }
+}
+
+extension InstanceLocation {
+    /// Initialize as private instance
+    init(friends: [Friend]) {
+        let location = FriendsLocation(location: .private, friends: friends)
+        self.init(location: location, instance: nil)
+    }
 }

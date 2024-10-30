@@ -16,7 +16,7 @@ struct FavoriteGroupsListView: View {
         List {
             let types: [FavoriteType] = [.friend, .world]
             ForEach(types, id: \.hashValue) { type in
-                Section(type.rawValue) {
+                Section(type.localizedStringKey) {
                     ForEach(favoriteVM.favoriteGroups(type)) { group in
                         Button {
                             selected = group
@@ -30,6 +30,7 @@ struct FavoriteGroupsListView: View {
         }
         .sheet(item: $selected) { group in
             FavoriteGroupsEditView(favoriteGroup: group)
+                .presentationDetents([.small])
         }
         .navigationTitle("Edit favorite groups")
         .navigationBarTitleDisplayMode(.inline)

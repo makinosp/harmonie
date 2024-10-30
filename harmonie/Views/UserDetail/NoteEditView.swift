@@ -11,7 +11,7 @@ import VRCKit
 struct NoteEditView: View {
     @Environment(AppViewModel.self) var appVM
     @Environment(\.dismiss) private var dismiss
-    @FocusState var isFocusedNoteField
+    @FocusState var isFocusedTextField
     @State private var text: String
     @State private var isRequesting = false
     private let userId: String
@@ -28,7 +28,7 @@ struct NoteEditView: View {
             Form {
                 TextField("Enter note", text: $text, axis: .vertical)
                     .lineLimit(5...10)
-                    .focused($isFocusedNoteField)
+                    .focused($isFocusedTextField)
             }
             .scrollDisabled(true)
             .contentMargins(.vertical, .zero)
@@ -37,7 +37,7 @@ struct NoteEditView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .task {
-            isFocusedNoteField = true
+            isFocusedTextField = true
         }
     }
 

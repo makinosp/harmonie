@@ -13,6 +13,7 @@ struct LocationsView: View {
     @Environment(FriendViewModel.self) var friendVM
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedInstance: InstanceLocation?
+    @State private var isSelectedPrivate = false
     @State private var selection: SegmentIdSelection?
 
     var body: some View {
@@ -53,11 +54,11 @@ struct LocationsView: View {
 
     private var content: some View {
         Group {
-            if let selectedInstance = selectedInstance {
-                LocationDetailView(
-                    selection: $selection,
-                    instanceLocation: selectedInstance
-                )
+            if let location = selectedInstance?.location,
+               let instance = selectedInstance?.instance {
+                LocationDetailView($selection, location: location, instance: instance)
+            } else if let instance = selectedInstance, instance.location.location == .private {
+                PrivateLocationView($selection, friends: instance.location.friends)
             }
         }
         .overlay {
@@ -96,7 +97,7 @@ struct LocationsView: View {
         .setColumn()
     }
 
-    @ViewBuilder private var friendLocations: some View {
+    private var friendLocations: some View {
         Section {
             if friendVM.isFetchingAllFriends {
                 ForEach(0...7, id: \.self) { _ in
@@ -143,6 +144,7 @@ struct LocationsView: View {
                 }
                 .padding(.top, 4)
             }
+            .tag(InstanceLocation(friends: friendVM.friendsInPrivate))
         }
     }
 }

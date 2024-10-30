@@ -18,7 +18,7 @@ struct OtpView: View {
             Text("Two-step verification")
                 .font(.headline)
             VStack {
-                TextField("Code", text: $code)
+                TextField(text: $code) { Text(verbatim: "000000") }
                     .multilineTextAlignment(TextAlignment.center)
                     .keyboardType(.decimalPad)
                     .textFieldStyle(.roundedBorder)
