@@ -56,7 +56,7 @@ struct LocationsView: View {
         Group {
             if let location = selectedInstance?.location,
                let instance = selectedInstance?.instance {
-                LocationDetailView(selection: $selection, location: location, instance: instance)
+                LocationDetailView($selection, location: location, instance: instance)
             } else if let instance = selectedInstance, instance.location.location == .private {
                 PrivateLocationView($selection, friends: instance.location.friends)
             }

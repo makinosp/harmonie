@@ -12,7 +12,7 @@ import VRCKit
 
 @MemberwiseInit
 struct LocationDetailView: View {
-    @InitWrapper(.internal, type: Binding<SegmentIdSelection?>)
+    @InitWrapper(.internal, label: "_", type: Binding<SegmentIdSelection?>)
     @Binding private var selection: SegmentIdSelection?
     @Init(.internal) private let location: FriendsLocation
     @Init(.internal) private let instance: Instance
