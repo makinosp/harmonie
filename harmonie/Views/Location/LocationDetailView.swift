@@ -12,12 +12,10 @@ import VRCKit
 
 @MemberwiseInit
 struct LocationDetailView: View {
-    @InitWrapper(.internal, type: Binding<SegmentIdSelection?>)
+    @InitWrapper(.internal, label: "_", type: Binding<SegmentIdSelection?>)
     @Binding private var selection: SegmentIdSelection?
-    @Init(.internal) private let instanceLocation: InstanceLocation
-
-    private var location: FriendsLocation { instanceLocation.location }
-    private var instance: Instance { instanceLocation.instance }
+    @Init(.internal) private let location: FriendsLocation
+    @Init(.internal) private let instance: Instance
 
     private typealias InformationItem = (title: String, value: String)
     private var information: [InformationItem] {
@@ -60,17 +58,6 @@ struct LocationDetailView: View {
         .listStyle(.insetGrouped)
         .navigationTitle(instance.world.name)
         .navigationBarTitleDisplayMode(.inline)
-    }
-
-    private var bottomBar: some View {
-        VStack(alignment: .leading) {
-            Text(instance.world.name)
-                .font(.headline)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
-        .foregroundStyle(Color.white)
     }
 
     private var friendList: ForEach<[Friend], Friend.ID, some View> {
