@@ -14,10 +14,8 @@ import VRCKit
 struct LocationDetailView: View {
     @InitWrapper(.internal, type: Binding<SegmentIdSelection?>)
     @Binding private var selection: SegmentIdSelection?
-    @Init(.internal) private let instanceLocation: InstanceLocation
-
-    private var location: FriendsLocation { instanceLocation.location }
-    private var instance: Instance { instanceLocation.instance }
+    @Init(.internal) private let location: FriendsLocation
+    @Init(.internal) private let instance: Instance
 
     private typealias InformationItem = (title: String, value: String)
     private var information: [InformationItem] {
