@@ -62,17 +62,6 @@ struct LocationDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    private var bottomBar: some View {
-        VStack(alignment: .leading) {
-            Text(instance.world.name)
-                .font(.headline)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
-        .foregroundStyle(Color.white)
-    }
-
     private var friendList: ForEach<[Friend], Friend.ID, some View> {
         ForEach(location.friends) { friend in
             NavigationLabel {
