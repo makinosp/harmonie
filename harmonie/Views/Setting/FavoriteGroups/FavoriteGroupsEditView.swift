@@ -12,6 +12,7 @@ struct FavoriteGroupsEditView: View {
     @Environment(AppViewModel.self) var appVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @Environment(\.dismiss) private var dismiss
+    @FocusState var isFocusedTextField
     @State private var displayName: String
     @State private var visibility: FavoriteGroup.Visibility
     @State private var isRequesting = false
@@ -28,9 +29,13 @@ struct FavoriteGroupsEditView: View {
             Form {
                 Section("Display Name") {
                     TextField("", text: $displayName)
+                        .focused($isFocusedTextField)
                 }
             }
             .toolbar { toolbarItems }
+        }
+        .task {
+            isFocusedTextField = true
         }
     }
 
