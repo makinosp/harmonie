@@ -22,3 +22,9 @@ struct ApplicationError: LocalizedError {
         ApplicationError(text: "User is not set")
     }
 }
+
+extension ApplicationError {
+    init(_ error: Error) {
+        text = error.localizedDescription
+    }
+}

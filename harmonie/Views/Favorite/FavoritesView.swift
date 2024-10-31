@@ -155,7 +155,7 @@ struct FavoritesView: View {
         _ title: any StringProtocol,
         count: Int,
         max: Constants.MaxCountInFavoriteList
-    ) -> some View {
+    ) -> LabeledContent<some View, some View> {
         LabeledContent {
             Text("\(count.description) / \(max.description)")
         } label: {

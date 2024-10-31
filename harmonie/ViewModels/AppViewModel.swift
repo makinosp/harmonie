@@ -13,8 +13,8 @@ import VRCKit
 final class AppViewModel {
     var user: User?
     var step: Step = .initializing
-    var isPresentedAlert = false
     var vrckError: VRCKitError?
+    var applicationError: ApplicationError?
     var services: APIServiceUtil
     var verifyType: VerifyType?
     @ObservationIgnored var client: APIClient
@@ -128,9 +128,10 @@ final class AppViewModel {
                 return
             }
             vrckError = error
+        } else if let error = error as? ApplicationError {
+            applicationError = error
         } else if !error.isCancelled {
-            vrckError = .unexpected
+            applicationError = ApplicationError(error)
         }
-        isPresentedAlert = vrckError != nil
     }
 }
