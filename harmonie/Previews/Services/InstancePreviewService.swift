@@ -5,14 +5,12 @@
 //  Created by makinosp on 2024/07/09.
 //
 
+import MemberwiseInit
 import VRCKit
 
+@MemberwiseInit
 final actor InstancePreviewService: APIService, InstanceServiceProtocol {
     let client: APIClient
-
-    init(client: APIClient) {
-        self.client = client
-    }
 
     func fetchInstance(location: String) async throws -> Instance {
         PreviewDataProvider.shared.instances[0]

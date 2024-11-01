@@ -6,17 +6,15 @@
 //
 
 import Foundation
+import MemberwiseInit
 import VRCKit
 
+@MemberwiseInit
 final actor WorldPreviewService: APIService, WorldServiceProtocol {
     let client: APIClient
 
-    init(client: APIClient) {
-        self.client = client
-    }
-
     func fetchWorld(worldId: String) async throws -> World {
-        PreviewDataProvider.world
+        PreviewDataProvider.bar
     }
 
     func fetchFavoritedWorlds() async throws -> [FavoriteWorld] {

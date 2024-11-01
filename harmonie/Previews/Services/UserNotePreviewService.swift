@@ -6,14 +6,12 @@
 //
 
 import Foundation
+import MemberwiseInit
 import VRCKit
 
+@MemberwiseInit
 final actor UserNotePreviewService: APIService, UserNoteServiceProtocol {
     let client: APIClient
-
-    init(client: APIClient) {
-        self.client = client
-    }
 
     func updateUserNote(
         targetUserId: String,

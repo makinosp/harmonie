@@ -5,14 +5,12 @@
 //  Created by makinosp on 2024/07/14.
 //
 
+import MemberwiseInit
 import VRCKit
 
+@MemberwiseInit
 final actor UserPreviewService: APIService, UserServiceProtocol {
     let client: APIClient
-
-    init(client: APIClient) {
-        self.client = client
-    }
 
     func fetchUser(userId: String) async throws -> UserDetail {
         PreviewDataProvider.shared.userDetails.first { $0.id == userId }!
