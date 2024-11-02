@@ -13,34 +13,36 @@ final class PreviewDataProvider: Sendable {
     private let previewUserId = UUID()
     let friends: [Friend]
     let userDetails: [UserDetail]
-    let instances: [Instance]
 
     static let imageBaseURL = "https://images2.imgbox.com"
     static let iconImageUrl = URL(string: "\(imageBaseURL)/44/8f/IQToHkKa_o.jpg")
 
     private init() {
-        let instance = Self.instance1
         let onlineFriendsSet: [FriendSet] = (0..<50).map { count in
             let id = UUID()
             return switch count {
+            case ..<5:
+                FriendSet(id: id, location: .id(Self.instance1.id), status: .active)
             case ..<10:
-                FriendSet(id: id, location: .id(instance.id), status: .active)
+                FriendSet(id: id, location: .id(Self.instance2.id), status: .active)
+            case ..<15:
+                FriendSet(id: id, location: .id(Self.instance2.id), status: .joinMe)
             case ..<20:
                 FriendSet(id: id, location: .private, status: .askMe)
+            case ..<25:
+                FriendSet(id: id, location: .id(Self.instance1.id), status: .joinMe)
             case ..<30:
-                FriendSet(id: id, location: .id(instance.id), status: .joinMe)
-            case ..<40:
                 FriendSet(id: id, location: .private, status: .busy)
             default:
                 FriendSet(id: id, location: .offline, status: .offline)
             }
         }
+
         var userDetails = onlineFriendsSet.map(\.userDetail)
-        userDetails.append(PreviewDataProvider.previewUserDetail(id: previewUserId, instance: instance))
+        userDetails.append(PreviewDataProvider.previewUserDetail(id: previewUserId, instance: Self.instance1))
 
         self.userDetails = userDetails
         self.friends = onlineFriendsSet.map(\.friend)
-        self.instances = [instance]
     }
 
     var previewUser: User {

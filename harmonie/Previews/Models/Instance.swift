@@ -18,6 +18,7 @@ extension PreviewDataProvider {
     }
 
     static let instance1 = Instance(world: bar)
+    static let instance2 = Instance(world: casino)
 }
 
 private extension Instance {
