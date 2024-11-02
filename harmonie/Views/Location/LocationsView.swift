@@ -80,8 +80,6 @@ struct LocationsView: View {
                         UserDetailPresentationView(selected: selection.selected)
                     case .world:
                         WorldPresentationView(id: selection.selected.id)
-                    default:
-                        EmptyView()
                     }
                 }
                 .id(selection.selected.id)

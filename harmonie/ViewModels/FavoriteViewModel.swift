@@ -15,24 +15,12 @@ final class FavoriteViewModel {
     var favoriteGroups: [FavoriteGroup] = []
     var favoriteFriends: [FavoriteFriend] = []
     var favoriteWorlds: [FavoriteWorld] = []
-    var segment: FavoriteViewSegment = .all
 
     /// Filters and returns the favorite groups of a specific type.
     /// - Parameter type: The `FavoriteType` to filter the favorite groups by.
     /// - Returns: An array of `FavoriteGroup` that matches the specified type.
     func favoriteGroups(_ type: FavoriteType) -> [FavoriteGroup] {
         favoriteGroups.filter { $0.type == type }
-    }
-
-    var isSelectedEmpty: Bool {
-        switch segment {
-        case .all:
-            favoriteGroups(.friend).isEmpty && favoriteWorldGroups.isEmpty
-        case .friends:
-            favoriteGroups(.friend).isEmpty
-        case .world:
-            favoriteWorldGroups.isEmpty
-        }
     }
 
     /// Filters the favorite groups by the given set of favorite types,

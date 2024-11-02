@@ -10,23 +10,25 @@ import VRCKit
 
 struct FavoritesView: View {
     @Environment(AppViewModel.self) var appVM
+    @Environment(FriendViewModel.self) var friendVM
     @Environment(FavoriteViewModel.self) var favoriteVM
     @State private var selected: SegmentIdSelection?
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
+    @State private var segment: FavoriteViewSegment?
 
     var body: some View {
         @Bindable var favoriteVM = favoriteVM
         NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $selected) {
-                if favoriteVM.segment != .world {
+                if segment != .world {
                     favoriteFriends
                 }
-                if favoriteVM.segment != .friends {
+                if segment != .friends {
                     favoriteWorlds
                 }
             }
             .overlay {
-                if favoriteVM.isSelectedEmpty {
+                if isSelectedEmpty {
                     ContentUnavailableView {
                         Label("No Favorites", systemImage: IconSet.favorite.systemName)
                     }
@@ -34,16 +36,21 @@ struct FavoritesView: View {
                 }
             }
             .contentMargins(.top, 8)
-            .navigationTitle(favoriteVM.segment.description)
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Favorites")
+            .navigationBarTitleDisplayMode(.automatic)
             .toolbarTitleMenu { toolbarTitleMenu }
         } detail: { detail }
         .navigationSplitViewStyle(.balanced)
+        .refreshable {
+            segment = .none
+            await fetchFavoriteAction()
+        }
     }
 
     @ViewBuilder private var toolbarTitleMenu: some View {
-        @Bindable var favoriteVM = favoriteVM
-        Picker("", selection: $favoriteVM.segment) {
+        Picker("", selection: $segment) {
+            Label("All", systemImage: IconSet.favoriteSquares.systemName)
+                .tag(Optional<FavoriteViewSegment>.none)
             ForEach(FavoriteViewSegment.allCases) { segment in
                 Label(segment.description, systemImage: segment.icon.systemName)
                     .tag(segment)
@@ -60,8 +67,6 @@ struct FavoritesView: View {
             case .world:
                 WorldPresentationView(id: selectedContainer.selected.id)
                     .id(selectedContainer.id)
-            default:
-                EmptyView()
             }
         } else {
             ContentUnavailableView {
@@ -107,7 +112,7 @@ struct FavoritesView: View {
         }
     }
 
-    var favoriteWorlds: some View {
+    private var favoriteWorlds: some View {
         Section("World") {
             ForEach(favoriteVM.favoriteWorldGroups) { favoriteWorlds in
                 if let group = favoriteWorlds.group {
@@ -160,6 +165,28 @@ struct FavoritesView: View {
             Text("\(count.description) / \(max.description)")
         } label: {
             Text(title)
+        }
+    }
+
+    private var isSelectedEmpty: Bool {
+        switch segment {
+        case .friends:
+            favoriteVM.favoriteGroups(.friend).isEmpty
+        case .world:
+            favoriteVM.favoriteWorldGroups.isEmpty
+        case .none:
+            favoriteVM.favoriteGroups(.friend).isEmpty && favoriteVM.favoriteWorldGroups.isEmpty
+        }
+    }
+
+    private func fetchFavoriteAction() async {
+        do {
+            try await favoriteVM.fetchFavoriteFriends(
+                service: appVM.services.favoriteService,
+                friendVM: friendVM
+            )
+        } catch {
+            appVM.handleError(error)
         }
     }
 }
