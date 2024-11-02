@@ -15,23 +15,24 @@ final class PreviewDataProvider: Sendable {
     let userDetails: [UserDetail]
     let instances: [Instance]
 
-    static let iconImageUrl = URL(string: "https://www.mediafire.com/convkey/e2dd/ksfjh96ukjtwhuczg.jpg")
+    static let imageBaseURL = "https://images2.imgbox.com"
+    static let iconImageUrl = URL(string: "\(imageBaseURL)/44/8f/IQToHkKa_o.jpg")
 
     private init() {
-        let instance = Self.instance(worldId: UUID(), instanceId: 0)
+        let instance = Self.instance1
         let onlineFriendsSet: [FriendSet] = (0..<50).map { count in
             let id = UUID()
             return switch count {
             case ..<10:
-                Self.friendSet(id: id, location: .id(instance.id), status: .active)
+                FriendSet(id: id, location: .id(instance.id), status: .active)
             case ..<20:
-                Self.friendSet(id: id, location: .private, status: .askMe)
+                FriendSet(id: id, location: .private, status: .askMe)
             case ..<30:
-                Self.friendSet(id: id, location: .id(instance.id), status: .joinMe)
+                FriendSet(id: id, location: .id(instance.id), status: .joinMe)
             case ..<40:
-                Self.friendSet(id: id, location: .private, status: .busy)
+                FriendSet(id: id, location: .private, status: .busy)
             default:
-                Self.friendSet(id: id, location: .offline, status: .offline)
+                FriendSet(id: id, location: .offline, status: .offline)
             }
         }
         var userDetails = onlineFriendsSet.map(\.userDetail)

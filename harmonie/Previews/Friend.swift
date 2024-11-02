@@ -9,7 +9,10 @@ import Foundation
 import VRCKit
 
 extension PreviewDataProvider {
-    typealias FriendSet = (friend: Friend, userDetail: UserDetail)
+    struct FriendSet {
+        let friend: Friend
+        let userDetail: UserDetail
+    }
 
     var onlineFriends: [Friend] {
         friends.filter { $0.status != .offline }
@@ -19,26 +22,24 @@ extension PreviewDataProvider {
         friends.filter { $0.status == .offline }
     }
 
-    static func friend(id: UUID, location: Location, status: UserStatus) -> Friend {
-        Friend(id: id, location: location, status: status)
-    }
-
     static var friend: Friend {
         Friend(id: UUID(), location: .offline, status: .offline)
     }
+}
 
-    static func friendSet(
+extension PreviewDataProvider.FriendSet {
+    init(
         id: UUID,
         location: Location,
         status: UserStatus
-    ) -> FriendSet {
-        (
-            Friend(
+    ) {
+        self.init(
+            friend: Friend(
                 id: id,
                 location: location,
                 status: status
             ),
-            PreviewDataProvider.userDetail(
+            userDetail: PreviewDataProvider.userDetail(
                 id: id,
                 location: location,
                 state: status == .offline ? .offline : .active,
@@ -51,6 +52,7 @@ extension PreviewDataProvider {
 private extension Friend {
     init(
         id: UUID,
+        avatarImageUrl: URL? = PreviewDataProvider.iconImageUrl,
         displayName: String = PreviewString.Name.randomValue,
         location: Location,
         status: UserStatus
@@ -58,19 +60,19 @@ private extension Friend {
         self.init(
             bio: "Biography",
             bioLinks: SafeDecodingArray(),
-            avatarImageUrl: PreviewDataProvider.iconImageUrl,
-            avatarThumbnailUrl: PreviewDataProvider.iconImageUrl,
+            avatarImageUrl: avatarImageUrl,
+            avatarThumbnailUrl: avatarImageUrl,
             displayName: displayName,
             id: "usr_\(id.uuidString)",
             isFriend: true,
             lastLogin: Date(),
             lastPlatform: "standalonewindows",
             platform: .blank,
-            profilePicOverride: PreviewDataProvider.iconImageUrl,
+            profilePicOverride: nil,
             status: status,
             statusDescription: "",
             tags: UserTags(),
-            userIcon: PreviewDataProvider.iconImageUrl,
+            userIcon: nil,
             location: location,
             friendKey: ""
         )

@@ -10,25 +10,27 @@ import VRCKit
 
 extension PreviewDataProvider {
     static func instance(worldId: UUID, instanceId: Int) -> Instance {
-        Instance(worldId: worldId, instanceId: instanceId)
+        Instance(world: bar)
     }
 
     static func instance() -> Instance {
-        Instance(worldId: UUID(), instanceId: 0)
+        Instance(world: bar)
     }
+
+    static let instance1 = Instance(world: bar)
 }
 
 private extension Instance {
-    init(worldId: UUID, instanceId: Int) {
+    init(world: World, instanceId: Int = 0) {
         self.init(
             active: true,
             capacity: 32,
             full: false,
             groupAccessType: nil,
-            id: "wrld_\(worldId):\(instanceId)",
+            id: "\(world.id):\(instanceId)",
             instanceId: instanceId.description,
-            location: .id("wrld_\(worldId.uuidString)"),
-            name: "DummyInstance_\(instanceId)",
+            location: .id(world.id),
+            name: world.name,
             ownerId: "usr_\(UUID().uuidString)",
             permanent: false,
             platforms: Platforms(),
@@ -37,7 +39,7 @@ private extension Instance {
             tags: [],
             type: [.public, .friends].randomElement() ?? .public,
             userCount: 0,
-            world: PreviewDataProvider.generateWorld(worldId: worldId)
+            world: world
         )
     }
 }
