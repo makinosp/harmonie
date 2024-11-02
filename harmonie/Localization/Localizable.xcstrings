@@ -63,6 +63,16 @@
         }
       }
     },
+    "All" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全て"
+          }
+        }
+      }
+    },
     "App Name" : {
       "localizations" : {
         "ja" : {

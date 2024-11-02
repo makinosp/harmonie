@@ -59,15 +59,13 @@ struct LocationsView: View {
                 LocationDetailView($selection, location: location, instance: instance)
             } else if let instance = selectedInstance, instance.location.location == .private {
                 PrivateLocationView($selection, friends: instance.location.friends)
-            }
-        }
-        .overlay {
-            if selectedInstance == nil {
+            } else {
                 ContentUnavailableView {
                     Label("Select a location", systemImage: IconSet.location.systemName)
                 }
             }
         }
+        .background(Color(.systemGroupedBackground))
         .setColumn()
     }
 
@@ -80,20 +78,16 @@ struct LocationsView: View {
                         UserDetailPresentationView(selected: selection.selected)
                     case .world:
                         WorldPresentationView(id: selection.selected.id)
-                    default:
-                        EmptyView()
                     }
                 }
                 .id(selection.selected.id)
-            }
-        }
-        .overlay {
-            if selection == nil {
+            } else {
                 ContentUnavailableView {
                     Label("Select a friend or world", systemImage: IconSet.info.systemName)
                 }
             }
         }
+        .background(Color(.systemGroupedBackground))
         .setColumn()
     }
 
@@ -158,9 +152,9 @@ extension Location {
     }
 }
 
-fileprivate extension View {
+private extension View {
     func setColumn() -> some View {
-        self.navigationSplitViewColumnWidth(
+        navigationSplitViewColumnWidth(
             min: WindowUtil.width * 1 / 3,
             ideal: WindowUtil.width * 1 / 3,
             max: WindowUtil.width / 2

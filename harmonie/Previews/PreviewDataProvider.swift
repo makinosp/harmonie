@@ -13,33 +13,36 @@ final class PreviewDataProvider: Sendable {
     private let previewUserId = UUID()
     let friends: [Friend]
     let userDetails: [UserDetail]
-    let instances: [Instance]
 
-    static let iconImageUrl = URL(string: "https://www.mediafire.com/convkey/e2dd/ksfjh96ukjtwhuczg.jpg")
+    static let imageBaseURL = "https://images2.imgbox.com"
+    static let iconImageUrl = URL(string: "\(imageBaseURL)/44/8f/IQToHkKa_o.jpg")
 
     private init() {
-        let instance = Self.instance(worldId: UUID(), instanceId: 0)
         let onlineFriendsSet: [FriendSet] = (0..<50).map { count in
             let id = UUID()
             return switch count {
+            case ..<5:
+                FriendSet(id: id, location: .id(Self.instance1.id), status: .active)
             case ..<10:
-                Self.friendSet(id: id, location: .id(instance.id), status: .active)
+                FriendSet(id: id, location: .id(Self.instance2.id), status: .active)
+            case ..<15:
+                FriendSet(id: id, location: .id(Self.instance2.id), status: .joinMe)
             case ..<20:
-                Self.friendSet(id: id, location: .private, status: .askMe)
+                FriendSet(id: id, location: .private, status: .askMe)
+            case ..<25:
+                FriendSet(id: id, location: .id(Self.instance1.id), status: .joinMe)
             case ..<30:
-                Self.friendSet(id: id, location: .id(instance.id), status: .joinMe)
-            case ..<40:
-                Self.friendSet(id: id, location: .private, status: .busy)
+                FriendSet(id: id, location: .private, status: .busy)
             default:
-                Self.friendSet(id: id, location: .offline, status: .offline)
+                FriendSet(id: id, location: .offline, status: .offline)
             }
         }
+
         var userDetails = onlineFriendsSet.map(\.userDetail)
-        userDetails.append(PreviewDataProvider.previewUserDetail(id: previewUserId, instance: instance))
+        userDetails.append(PreviewDataProvider.previewUserDetail(id: previewUserId, instance: Self.instance1))
 
         self.userDetails = userDetails
         self.friends = onlineFriendsSet.map(\.friend)
-        self.instances = [instance]
     }
 
     var previewUser: User {

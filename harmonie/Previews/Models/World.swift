@@ -9,24 +9,31 @@ import Foundation
 import VRCKit
 
 extension PreviewDataProvider {
-    static var world: World {
-        generateWorld(worldId: UUID())
-    }
+    static let bar = World(
+        id: UUID(),
+        name: "Bar",
+        description: "Bar",
+        imageUrl: URL(string: "\(imageBaseURL)/7a/95/kLHkm3Ez_o.jpg"),
+        thumbnailImageUrl: URL(string: "\(imageBaseURL)/7a/95/kLHkm3Ez_o.jpg"),
+        organization: "",
+        favorites: 50,
+        visits: 100,
+        popularity: 10,
+        heat: 4
+    )
 
-    static func generateWorld(worldId: UUID) -> World {
-        World(
-            id: worldId,
-            name: "Dummy World",
-            description: "Dummy World",
-            imageUrl: Const.privateWorldImageUrl,
-            thumbnailImageUrl: Const.privateWorldImageUrl,
-            organization: "",
-            favorites: 1,
-            visits: 1,
-            popularity: 1,
-            heat: 1
-        )
-    }
+    static let casino = World(
+        id: UUID(),
+        name: "Casino",
+        description: "Casino",
+        imageUrl: URL(string: "\(imageBaseURL)/83/48/NtBOJpF1_o.jpg"),
+        thumbnailImageUrl: URL(string: "\(imageBaseURL)/83/48/NtBOJpF1_o.jpg"),
+        organization: "",
+        favorites: 50,
+        visits: 75,
+        popularity: 5,
+        heat: 3
+    )
 }
 
 extension World {
