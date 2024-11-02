@@ -14,7 +14,14 @@ final actor WorldPreviewService: APIService, WorldServiceProtocol {
     let client: APIClient
 
     func fetchWorld(worldId: String) async throws -> World {
-        PreviewDataProvider.bar
+        switch worldId {
+        case PreviewDataProvider.bar.id:
+            PreviewDataProvider.bar
+        case PreviewDataProvider.casino.id:
+            PreviewDataProvider.casino
+        default:
+            PreviewDataProvider.bar
+        }
     }
 
     func fetchFavoritedWorlds() async throws -> [FavoriteWorld] {
@@ -25,5 +32,10 @@ final actor WorldPreviewService: APIService, WorldServiceProtocol {
                 favoriteGroup: number.description
             )
         }
+    }
+
+    func fetchFavoritedWorlds(n: Int, offset: Int) async throws -> [FavoriteWorld] {
+        // No implementation required
+        []
     }
 }

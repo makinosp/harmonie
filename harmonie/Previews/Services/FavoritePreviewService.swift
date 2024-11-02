@@ -39,6 +39,10 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
         }
     }
 
+    func listFavorites(n: Int, offset: Int, type: FavoriteType, tag: String?) async throws -> [Favorite] {
+        []
+    }
+
     func fetchFavoriteList(favoriteGroups: [FavoriteGroup], type: FavoriteType) async throws -> [FavoriteList] {
         []
     }
