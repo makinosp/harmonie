@@ -30,17 +30,20 @@ extension PreviewData {
 extension PreviewData.FriendSet {
     init(
         id: UUID,
+        profile: PreviewData.Profile? = PreviewData.Profile.random,
         location: Location,
         status: UserStatus
     ) {
         self.init(
             friend: Friend(
                 id: id,
+                profile: profile,
                 location: location,
                 status: status
             ),
             userDetail: PreviewData.userDetail(
                 id: id,
+                profile: profile,
                 location: location,
                 state: status == .offline ? .offline : .active,
                 status: status
@@ -52,16 +55,16 @@ extension PreviewData.FriendSet {
 private extension Friend {
     init(
         id: UUID,
+        profile: PreviewData.Profile? = PreviewData.Profile.random,
         avatarImageUrl: URL? = PreviewData.iconImageUrl,
         location: Location,
         status: UserStatus
     ) {
-        let profile = PreviewData.Profile.random
         self.init(
             bio: "Biography",
             bioLinks: SafeDecodingArray(),
-            avatarImageUrl: avatarImageUrl,
-            avatarThumbnailUrl: avatarImageUrl,
+            avatarImageUrl: profile?.imageUrl(),
+            avatarThumbnailUrl: profile?.imageUrl(),
             displayName: profile?.name ?? "",
             id: "usr_\(id.uuidString)",
             isFriend: true,

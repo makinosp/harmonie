@@ -39,7 +39,7 @@ final class PreviewData: Sendable {
         }
 
         var userDetails = onlineFriendsSet.map(\.userDetail)
-        userDetails.append(PreviewData.previewUserDetail(id: previewUserId, instance: Self.instance1))
+        userDetails.append(PreviewData.userDetail(id: previewUserId, instance: Self.instance1))
 
         self.userDetails = userDetails
         self.friends = onlineFriendsSet.map(\.friend)

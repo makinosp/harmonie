@@ -9,30 +9,33 @@ import Foundation
 import VRCKit
 
 extension PreviewData {
-    static func previewUserDetail(id: UUID, instance: Instance) -> UserDetail {
-        UserDetail(
-            id: id,
-            location: .id(instance.id),
-            state: .active,
-            status: .active,
-            isFriend: false
-        )
+    static func userDetail(id: UUID, instance: Instance) -> UserDetail {
+        UserDetail(id: id, location: .id(instance.id), state: .active, status: .active, isFriend: false)
     }
 
     static func userDetail(
         id: UUID,
+        profile: Profile? = nil,
         location: Location,
         state: User.State,
         status: UserStatus,
         isFriend: Bool = true
     ) -> UserDetail {
-        UserDetail(id: id, location: location, state: state, status: status, isFriend: isFriend)
+        UserDetail(
+            id: id,
+            profile: profile,
+            location: location,
+            state: state,
+            status: status,
+            isFriend: isFriend
+        )
     }
 }
 
 private extension UserDetail {
     init(
         id: UUID = UUID(),
+        profile: PreviewData.Profile? = PreviewData.Profile.random,
         bio: String = "Demo",
         location: Location,
         state: User.State,
@@ -42,7 +45,6 @@ private extension UserDetail {
         dateJoined: Date = Date(),
         lastActivity: Date = Date()
     ) {
-        let profile = PreviewData.Profile.random
         self.init(
             bio: bio,
             bioLinks: SafeDecodingArray(),
