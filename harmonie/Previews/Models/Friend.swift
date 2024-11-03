@@ -53,16 +53,16 @@ private extension Friend {
     init(
         id: UUID,
         avatarImageUrl: URL? = PreviewDataProvider.iconImageUrl,
-        displayName: String = PreviewString.Name.randomValue,
         location: Location,
         status: UserStatus
     ) {
+        let profile = PreviewProfile.random
         self.init(
             bio: "Biography",
             bioLinks: SafeDecodingArray(),
             avatarImageUrl: avatarImageUrl,
             avatarThumbnailUrl: avatarImageUrl,
-            displayName: displayName,
+            displayName: profile?.name ?? "",
             id: "usr_\(id.uuidString)",
             isFriend: true,
             lastLogin: Date(),

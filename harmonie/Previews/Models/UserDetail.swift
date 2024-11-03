@@ -34,7 +34,6 @@ private extension UserDetail {
     init(
         id: UUID = UUID(),
         bio: String = "Demo",
-        displayName: String = PreviewString.Name.randomValue,
         location: Location,
         state: User.State,
         status: UserStatus,
@@ -43,22 +42,23 @@ private extension UserDetail {
         dateJoined: Date = Date(),
         lastActivity: Date = Date()
     ) {
+        let profile = PreviewProfile.random
         self.init(
             bio: bio,
             bioLinks: SafeDecodingArray(),
-            avatarImageUrl: PreviewDataProvider.iconImageUrl,
-            avatarThumbnailUrl: PreviewDataProvider.iconImageUrl,
-            displayName: displayName,
+            avatarImageUrl: profile?.imageUrl(),
+            avatarThumbnailUrl: profile?.imageUrl(),
+            displayName: profile?.name ?? "",
             id: "usr_\(id.uuidString)",
             isFriend: isFriend,
             lastLogin: Date(),
             lastPlatform: "standalonewindows",
-            profilePicOverride: PreviewDataProvider.iconImageUrl,
+            profilePicOverride: profile?.imageUrl(),
             state: state,
             status: status,
             statusDescription: statusDescription,
             tags: UserTags(),
-            userIcon: PreviewDataProvider.iconImageUrl,
+            userIcon: profile?.imageUrl(),
             location: location,
             friendKey: "",
             dateJoined: dateJoined,
