@@ -97,7 +97,7 @@ struct LocationsView: View {
                 ForEach(0...7, id: \.self) { _ in
                     LocationCardView(
                         selected: .constant(nil),
-                        location: PreviewDataProvider.friendsLocation
+                        location: PreviewData.friendsLocation
                     )
                 }
             } else {

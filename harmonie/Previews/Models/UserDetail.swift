@@ -8,7 +8,7 @@
 import Foundation
 import VRCKit
 
-extension PreviewDataProvider {
+extension PreviewData {
     static func previewUserDetail(id: UUID, instance: Instance) -> UserDetail {
         UserDetail(
             id: id,
@@ -42,7 +42,7 @@ private extension UserDetail {
         dateJoined: Date = Date(),
         lastActivity: Date = Date()
     ) {
-        let profile = PreviewProfile.random
+        let profile = PreviewData.Profile.random
         self.init(
             bio: bio,
             bioLinks: SafeDecodingArray(),

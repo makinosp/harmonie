@@ -13,7 +13,7 @@ final actor UserPreviewService: APIService, UserServiceProtocol {
     let client: APIClient
 
     func fetchUser(userId: String) async throws -> UserDetail {
-        PreviewDataProvider.shared.userDetails.first { $0.id == userId }!
+        PreviewData.shared.userDetails.first { $0.id == userId }!
     }
 
     func updateUser(id: String, editedInfo: EditableUserInfo) async throws {}

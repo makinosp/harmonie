@@ -8,7 +8,7 @@
 import Foundation
 import VRCKit
 
-extension PreviewDataProvider {
+extension PreviewData {
     static let bar = World(
         id: UUID(),
         name: "Bar",

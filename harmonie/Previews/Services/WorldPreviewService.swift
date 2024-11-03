@@ -15,19 +15,19 @@ final actor WorldPreviewService: APIService, WorldServiceProtocol {
 
     func fetchWorld(worldId: String) async throws -> World {
         switch worldId {
-        case PreviewDataProvider.bar.id:
-            PreviewDataProvider.bar
-        case PreviewDataProvider.casino.id:
-            PreviewDataProvider.casino
+        case PreviewData.bar.id:
+            PreviewData.bar
+        case PreviewData.casino.id:
+            PreviewData.casino
         default:
-            PreviewDataProvider.bar
+            PreviewData.bar
         }
     }
 
     func fetchFavoritedWorlds() async throws -> [FavoriteWorld] {
         (0..<100).map { number in
             FavoriteWorld(
-                world: PreviewDataProvider.casino,
+                world: PreviewData.casino,
                 favoriteId: "fvrt_\(UUID())",
                 favoriteGroup: number.description
             )

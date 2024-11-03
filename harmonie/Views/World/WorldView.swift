@@ -178,7 +178,7 @@ struct WorldView: View {
 #Preview {
     PreviewContainer {
         NavigationStack {
-            WorldView(world: PreviewDataProvider.casino)
+            WorldView(world: PreviewData.casino)
         }
     }
 }

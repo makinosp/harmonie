@@ -20,7 +20,7 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
                     id: "fvgrp_\(UUID().uuidString)",
                     displayName: "\(type.rawValue.capitalized) Group \(index)",
                     name: "group_\(index)",
-                    ownerId: PreviewDataProvider.shared.previewUser.id,
+                    ownerId: PreviewData.shared.previewUser.id,
                     tags: [],
                     type: type,
                     visibility: .private
@@ -32,7 +32,7 @@ final actor FavoritePreviewService: APIService, FavoriteServiceProtocol {
     func listFavorites(type: FavoriteType) async throws -> [Favorite] {
         switch type {
         case .friend:
-            PreviewDataProvider.shared.onlineFriends.prefix(5).map { friend in
+            PreviewData.shared.onlineFriends.prefix(5).map { friend in
                 Favorite(id: UUID().uuidString, favoriteId: friend.id, tags: ["group_1"], type: .friend)
             }
         default: []

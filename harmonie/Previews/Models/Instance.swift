@@ -8,7 +8,7 @@
 import Foundation
 import VRCKit
 
-extension PreviewDataProvider {
+extension PreviewData {
     static func instance(worldId: UUID, instanceId: Int) -> Instance {
         Instance(world: bar)
     }

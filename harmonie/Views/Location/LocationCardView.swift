@@ -21,7 +21,7 @@ struct LocationCardView: View {
         if isFailure {
             EmptyView()
         } else {
-            locationCardContent(instance: instance ?? PreviewDataProvider.instance())
+            locationCardContent(instance: instance ?? PreviewData.instance())
                 .redacted(reason: isRequesting ? .placeholder : [])
                 .task {
                     if case let .id(id) = location.location {

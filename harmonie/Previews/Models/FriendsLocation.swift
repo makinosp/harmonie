@@ -7,7 +7,7 @@
 
 import VRCKit
 
-extension PreviewDataProvider {
+extension PreviewData {
     static var friendsLocation: FriendsLocation {
         FriendsLocation(
             location: .offline,

@@ -14,23 +14,23 @@ final actor InstancePreviewService: APIService, InstanceServiceProtocol {
 
     func fetchInstance(location: String) async throws -> Instance {
         switch location {
-        case PreviewDataProvider.instance1.id:
-            PreviewDataProvider.instance1
-        case PreviewDataProvider.instance2.id:
-            PreviewDataProvider.instance2
+        case PreviewData.instance1.id:
+            PreviewData.instance1
+        case PreviewData.instance2.id:
+            PreviewData.instance2
         default:
-            PreviewDataProvider.instance1
+            PreviewData.instance1
         }
     }
 
     func fetchInstance(worldId: String, instanceId: String) async throws -> Instance {
         switch instanceId {
-        case PreviewDataProvider.instance1.instanceId:
-            PreviewDataProvider.instance1
-        case PreviewDataProvider.instance2.instanceId:
-            PreviewDataProvider.instance2
+        case PreviewData.instance1.instanceId:
+            PreviewData.instance1
+        case PreviewData.instance2.instanceId:
+            PreviewData.instance2
         default:
-            PreviewDataProvider.instance1
+            PreviewData.instance1
         }
     }
 }

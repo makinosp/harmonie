@@ -8,8 +8,8 @@
 import Foundation
 import VRCKit
 
-final class PreviewDataProvider: Sendable {
-    static let shared = PreviewDataProvider()
+final class PreviewData: Sendable {
+    static let shared = PreviewData()
     private let previewUserId = UUID()
     let friends: [Friend]
     let userDetails: [UserDetail]
@@ -39,7 +39,7 @@ final class PreviewDataProvider: Sendable {
         }
 
         var userDetails = onlineFriendsSet.map(\.userDetail)
-        userDetails.append(PreviewDataProvider.previewUserDetail(id: previewUserId, instance: Self.instance1))
+        userDetails.append(PreviewData.previewUserDetail(id: previewUserId, instance: Self.instance1))
 
         self.userDetails = userDetails
         self.friends = onlineFriendsSet.map(\.friend)
@@ -52,8 +52,8 @@ final class PreviewDataProvider: Sendable {
             bio: "This is the demo user.",
             bioLinks: SafeDecodingArray(),
             currentAvatar: "",
-            avatarImageUrl: PreviewDataProvider.iconImageUrl,
-            avatarThumbnailUrl: PreviewDataProvider.iconImageUrl,
+            avatarImageUrl: PreviewData.iconImageUrl,
+            avatarThumbnailUrl: PreviewData.iconImageUrl,
             dateJoined: Date(),
             displayName: "Demo User",
             friendKey: "",
@@ -67,13 +67,13 @@ final class PreviewDataProvider: Sendable {
             offlineFriends: offlineFriends.map(\.id),
             onlineFriends: onlineFriends.map(\.id),
             pastDisplayNames: [],
-            profilePicOverride: PreviewDataProvider.iconImageUrl,
+            profilePicOverride: PreviewData.iconImageUrl,
             state: .active,
             status: .active,
             statusDescription: "status",
             tags: UserTags(),
             twoFactorAuthEnabled: true,
-            userIcon: PreviewDataProvider.iconImageUrl,
+            userIcon: PreviewData.iconImageUrl,
             userLanguage: nil,
             userLanguageCode: nil,
             presence: Presence()

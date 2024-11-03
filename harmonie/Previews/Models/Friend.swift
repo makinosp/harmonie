@@ -8,7 +8,7 @@
 import Foundation
 import VRCKit
 
-extension PreviewDataProvider {
+extension PreviewData {
     struct FriendSet {
         let friend: Friend
         let userDetail: UserDetail
@@ -27,7 +27,7 @@ extension PreviewDataProvider {
     }
 }
 
-extension PreviewDataProvider.FriendSet {
+extension PreviewData.FriendSet {
     init(
         id: UUID,
         location: Location,
@@ -39,7 +39,7 @@ extension PreviewDataProvider.FriendSet {
                 location: location,
                 status: status
             ),
-            userDetail: PreviewDataProvider.userDetail(
+            userDetail: PreviewData.userDetail(
                 id: id,
                 location: location,
                 state: status == .offline ? .offline : .active,
@@ -52,11 +52,11 @@ extension PreviewDataProvider.FriendSet {
 private extension Friend {
     init(
         id: UUID,
-        avatarImageUrl: URL? = PreviewDataProvider.iconImageUrl,
+        avatarImageUrl: URL? = PreviewData.iconImageUrl,
         location: Location,
         status: UserStatus
     ) {
-        let profile = PreviewProfile.random
+        let profile = PreviewData.Profile.random
         self.init(
             bio: "Biography",
             bioLinks: SafeDecodingArray(),

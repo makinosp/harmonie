@@ -1,5 +1,5 @@
 //
-//  PreviewString.swift
+//  PreviewProfile.swift
 //  Harmonie
 //
 //  Created by makinosp on 2024/10/20.
@@ -8,16 +8,18 @@
 import Foundation
 import VRCKit
 
-enum PreviewProfile: String, CaseIterable {
-    case emma
-    case josh
-    case clarke
-    case nathalie
-    case meihua
-    case stella
+extension PreviewData {
+    enum Profile: String, CaseIterable {
+        case emma
+        case josh
+        case clarke
+        case nathalie
+        case meihua
+        case stella
+    }
 }
 
-extension PreviewProfile {
+extension PreviewData.Profile {
     var name: String {
         rawValue.capitalized
     }
@@ -35,7 +37,7 @@ extension PreviewProfile {
     }
 }
 
-extension PreviewProfile: ImageUrlRepresentable {
+extension PreviewData.Profile: ImageUrlRepresentable {
     func imageUrl(_ resolution: ImageResolution = .origin) -> URL? {
         let path: String
         switch self {
@@ -52,6 +54,6 @@ extension PreviewProfile: ImageUrlRepresentable {
         case .stella:
             path = "/2f/73/4L6Bn9x9_o.jpg"
         }
-        return URL(string: PreviewDataProvider.imageBaseURL + path)
+        return URL(string: PreviewData.imageBaseURL + path)
     }
 }
