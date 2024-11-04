@@ -11,6 +11,6 @@ extension AppViewModel {
     convenience init(isPreviewMode: Bool) {
         self.init()
         services = APIServiceUtil(isPreviewMode: true, client: client)
-        user = PreviewDataProvider.shared.previewUser
+        user = PreviewData.shared.previewUser
     }
 }

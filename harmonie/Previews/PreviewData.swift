@@ -8,8 +8,8 @@
 import Foundation
 import VRCKit
 
-final class PreviewDataProvider: Sendable {
-    static let shared = PreviewDataProvider()
+final class PreviewData: Sendable {
+    static let shared = PreviewData()
     private let previewUserId = UUID()
     let friends: [Friend]
     let userDetails: [UserDetail]
@@ -18,28 +18,17 @@ final class PreviewDataProvider: Sendable {
     static let iconImageUrl = URL(string: "\(imageBaseURL)/44/8f/IQToHkKa_o.jpg")
 
     private init() {
-        let onlineFriendsSet: [FriendSet] = (0..<50).map { count in
-            let id = UUID()
-            return switch count {
-            case ..<5:
-                FriendSet(id: id, location: .id(Self.instance1.id), status: .active)
-            case ..<10:
-                FriendSet(id: id, location: .id(Self.instance2.id), status: .active)
-            case ..<15:
-                FriendSet(id: id, location: .id(Self.instance2.id), status: .joinMe)
-            case ..<20:
-                FriendSet(id: id, location: .private, status: .askMe)
-            case ..<25:
-                FriendSet(id: id, location: .id(Self.instance1.id), status: .joinMe)
-            case ..<30:
-                FriendSet(id: id, location: .private, status: .busy)
-            default:
-                FriendSet(id: id, location: .offline, status: .offline)
-            }
-        }
+        let onlineFriendsSet: [FriendSet] = [
+            (0..<10).map { _ in FriendSet(world: Self.bar, status: .joinMe) },
+            (0..<5).map { _ in FriendSet(world: Self.casino, status: .active) },
+            (0..<3).map { _ in FriendSet(world: Self.fuji, status: .joinMe) },
+            (0..<2).map { _ in FriendSet(world: Self.chinatown, status: .active) },
+            [FriendSet(world: Self.nightCity, status: .joinMe)],
+            (0..<25).map { _ in FriendSet(location: .private, status: .busy) }
+        ].flatMap { $0 }
 
         var userDetails = onlineFriendsSet.map(\.userDetail)
-        userDetails.append(PreviewDataProvider.previewUserDetail(id: previewUserId, instance: Self.instance1))
+        userDetails.append(PreviewData.userDetail(id: previewUserId, instance: Self.instance))
 
         self.userDetails = userDetails
         self.friends = onlineFriendsSet.map(\.friend)
@@ -52,8 +41,8 @@ final class PreviewDataProvider: Sendable {
             bio: "This is the demo user.",
             bioLinks: SafeDecodingArray(),
             currentAvatar: "",
-            avatarImageUrl: PreviewDataProvider.iconImageUrl,
-            avatarThumbnailUrl: PreviewDataProvider.iconImageUrl,
+            avatarImageUrl: PreviewData.iconImageUrl,
+            avatarThumbnailUrl: PreviewData.iconImageUrl,
             dateJoined: Date(),
             displayName: "Demo User",
             friendKey: "",
@@ -67,13 +56,13 @@ final class PreviewDataProvider: Sendable {
             offlineFriends: offlineFriends.map(\.id),
             onlineFriends: onlineFriends.map(\.id),
             pastDisplayNames: [],
-            profilePicOverride: PreviewDataProvider.iconImageUrl,
+            profilePicOverride: PreviewData.iconImageUrl,
             state: .active,
             status: .active,
             statusDescription: "status",
             tags: UserTags(),
             twoFactorAuthEnabled: true,
-            userIcon: PreviewDataProvider.iconImageUrl,
+            userIcon: PreviewData.iconImageUrl,
             userLanguage: nil,
             userLanguageCode: nil,
             presence: Presence()

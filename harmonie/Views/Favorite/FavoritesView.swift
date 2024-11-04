@@ -83,11 +83,8 @@ struct FavoritesView: View {
         Section("Friends") {
             let groups = favoriteVM.favoriteGroups(.friend)
             ForEach(groups) { group in
-                if let friends = favoriteVM.getFavoriteFriends(group.id) {
-                    friendsDisclosureGroup(group.displayName, friends: friends)
-                } else {
-                    groupLabel(group.displayName, count: .zero, max: .friends)
-                }
+                let friends = favoriteVM.getFavoriteFriends(group.id)
+                friendsDisclosureGroup(group.displayName, friends: friends ?? [])
             }
         }
     }

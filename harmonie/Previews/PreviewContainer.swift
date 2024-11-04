@@ -45,7 +45,7 @@ extension PreviewContainer where Content: View {
     }
 
     init(@ViewBuilder content: (_ user: UserDetail) -> Content) {
-        let userDetail = PreviewDataProvider.userDetail(
+        let userDetail = PreviewData.userDetail(
             id: UUID(),
             location: .private,
             state: .active,

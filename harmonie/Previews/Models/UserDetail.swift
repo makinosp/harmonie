@@ -8,33 +8,35 @@
 import Foundation
 import VRCKit
 
-extension PreviewDataProvider {
-    static func previewUserDetail(id: UUID, instance: Instance) -> UserDetail {
-        UserDetail(
-            id: id,
-            location: .id(instance.id),
-            state: .active,
-            status: .active,
-            isFriend: false
-        )
+extension PreviewData {
+    static func userDetail(id: UUID, instance: Instance) -> UserDetail {
+        UserDetail(id: id, location: .id(instance.id), state: .active, status: .active, isFriend: false)
     }
 
     static func userDetail(
         id: UUID,
+        profile: Profile? = nil,
         location: Location,
         state: User.State,
         status: UserStatus,
         isFriend: Bool = true
     ) -> UserDetail {
-        UserDetail(id: id, location: location, state: state, status: status, isFriend: isFriend)
+        UserDetail(
+            id: id,
+            profile: profile,
+            location: location,
+            state: state,
+            status: status,
+            isFriend: isFriend
+        )
     }
 }
 
 private extension UserDetail {
     init(
         id: UUID = UUID(),
+        profile: PreviewData.Profile? = PreviewData.Profile.random,
         bio: String = "Demo",
-        displayName: String = PreviewString.Name.randomValue,
         location: Location,
         state: User.State,
         status: UserStatus,
@@ -46,19 +48,19 @@ private extension UserDetail {
         self.init(
             bio: bio,
             bioLinks: SafeDecodingArray(),
-            avatarImageUrl: PreviewDataProvider.iconImageUrl,
-            avatarThumbnailUrl: PreviewDataProvider.iconImageUrl,
-            displayName: displayName,
+            avatarImageUrl: profile?.imageUrl(),
+            avatarThumbnailUrl: profile?.imageUrl(),
+            displayName: profile?.name ?? "",
             id: "usr_\(id.uuidString)",
             isFriend: isFriend,
             lastLogin: Date(),
             lastPlatform: "standalonewindows",
-            profilePicOverride: PreviewDataProvider.iconImageUrl,
+            profilePicOverride: profile?.imageUrl(),
             state: state,
             status: status,
             statusDescription: statusDescription,
             tags: UserTags(),
-            userIcon: PreviewDataProvider.iconImageUrl,
+            userIcon: profile?.imageUrl(),
             location: location,
             friendKey: "",
             dateJoined: dateJoined,

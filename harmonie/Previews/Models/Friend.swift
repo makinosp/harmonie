@@ -8,7 +8,7 @@
 import Foundation
 import VRCKit
 
-extension PreviewDataProvider {
+extension PreviewData {
     struct FriendSet {
         let friend: Friend
         let userDetail: UserDetail
@@ -27,20 +27,51 @@ extension PreviewDataProvider {
     }
 }
 
-extension PreviewDataProvider.FriendSet {
+extension PreviewData.FriendSet {
+    /// Initialize from world information
     init(
-        id: UUID,
+        id: UUID = UUID(),
+        profile: PreviewData.Profile? = PreviewData.Profile.random,
+        world: World,
+        status: UserStatus
+    ) {
+        let location: Location = .id(PreviewData.instanceId(world))
+        self.init(
+            friend: Friend(
+                id: id,
+                profile: profile,
+                location: location,
+                status: status
+            ),
+            userDetail: PreviewData.userDetail(
+                id: id,
+                profile: profile,
+                location: location,
+                state: status == .offline ? .offline : .active,
+                status: status
+            )
+        )
+    }
+}
+
+extension PreviewData.FriendSet {
+    /// Initialize from world information
+    init(
+        id: UUID = UUID(),
+        profile: PreviewData.Profile? = PreviewData.Profile.random,
         location: Location,
         status: UserStatus
     ) {
         self.init(
             friend: Friend(
                 id: id,
+                profile: profile,
                 location: location,
                 status: status
             ),
-            userDetail: PreviewDataProvider.userDetail(
+            userDetail: PreviewData.userDetail(
                 id: id,
+                profile: profile,
                 location: location,
                 state: status == .offline ? .offline : .active,
                 status: status
@@ -52,17 +83,17 @@ extension PreviewDataProvider.FriendSet {
 private extension Friend {
     init(
         id: UUID,
-        avatarImageUrl: URL? = PreviewDataProvider.iconImageUrl,
-        displayName: String = PreviewString.Name.randomValue,
+        profile: PreviewData.Profile? = PreviewData.Profile.random,
+        avatarImageUrl: URL? = PreviewData.iconImageUrl,
         location: Location,
         status: UserStatus
     ) {
         self.init(
             bio: "Biography",
             bioLinks: SafeDecodingArray(),
-            avatarImageUrl: avatarImageUrl,
-            avatarThumbnailUrl: avatarImageUrl,
-            displayName: displayName,
+            avatarImageUrl: profile?.imageUrl(),
+            avatarThumbnailUrl: profile?.imageUrl(),
+            displayName: profile?.name ?? "",
             id: "usr_\(id.uuidString)",
             isFriend: true,
             lastLogin: Date(),

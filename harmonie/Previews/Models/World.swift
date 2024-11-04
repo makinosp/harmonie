@@ -8,14 +8,11 @@
 import Foundation
 import VRCKit
 
-extension PreviewDataProvider {
+extension PreviewData {
     static let bar = World(
-        id: UUID(),
         name: "Bar",
         description: "Bar",
         imageUrl: URL(string: "\(imageBaseURL)/7a/95/kLHkm3Ez_o.jpg"),
-        thumbnailImageUrl: URL(string: "\(imageBaseURL)/7a/95/kLHkm3Ez_o.jpg"),
-        organization: "",
         favorites: 50,
         visits: 100,
         popularity: 10,
@@ -23,27 +20,55 @@ extension PreviewDataProvider {
     )
 
     static let casino = World(
-        id: UUID(),
         name: "Casino",
         description: "Casino",
         imageUrl: URL(string: "\(imageBaseURL)/83/48/NtBOJpF1_o.jpg"),
-        thumbnailImageUrl: URL(string: "\(imageBaseURL)/83/48/NtBOJpF1_o.jpg"),
-        organization: "",
         favorites: 50,
         visits: 75,
         popularity: 5,
         heat: 3
     )
+
+    static let fuji = World(
+        name: "Mt. Fuji",
+        description: "Mt. Fuji",
+        imageUrl: URL(string: "\(imageBaseURL)/81/2f/MOoiKQgL_o.jpg"),
+        favorites: 50,
+        visits: 75,
+        popularity: 5,
+        heat: 3
+    )
+
+    static let chinatown = World(
+        name: "Chinatown",
+        description: "Chinatown",
+        imageUrl: URL(string: "\(imageBaseURL)/08/64/vu7gTsyJ_o.jpg"),
+        favorites: 50,
+        visits: 75,
+        popularity: 5,
+        heat: 3
+    )
+
+    static let nightCity = World(
+        name: "Night City",
+        description: "Night City",
+        imageUrl: URL(string: "\(imageBaseURL)/db/22/kolgI25s_o.jpg"),
+        favorites: 50,
+        visits: 75,
+        popularity: 5,
+        heat: 3
+    )
+
+    static let worldList = [ bar, casino, fuji, chinatown, nightCity ]
 }
 
 extension World {
     init(
-        id: UUID,
+        id: UUID = UUID(),
         name: String,
         description: String,
         imageUrl: URL?,
-        thumbnailImageUrl: URL?,
-        organization: String,
+        organization: String = "",
         favorites: Int,
         visits: Int,
         popularity: Int,
@@ -60,7 +85,7 @@ extension World {
             tags: [],
             releaseStatus: .public,
             imageUrl: imageUrl,
-            thumbnailImageUrl: thumbnailImageUrl,
+            thumbnailImageUrl: imageUrl,
             namespace: nil,
             organization: "",
             previewYoutubeId: nil,

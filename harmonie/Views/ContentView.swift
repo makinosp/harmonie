@@ -12,21 +12,35 @@ struct ContentView: View {
     @Environment(AppViewModel.self) var appVM
 
     var body: some View {
-        switch appVM.step {
-        case .initializing:
-            ProgressScreen()
-                .task {
-                    appVM.step = await appVM.setup(service: appVM.services.authenticationService)
+        GeometryReader { geometry in
+            Group {
+                switch appVM.step {
+                case .initializing:
+                    ProgressScreen()
+                        .task {
+                            appVM.step = await appVM.setup(service: appVM.services.authenticationService)
+                        }
+                        .errorAlert()
+                case .loggingIn:
+                    LoginView()
+                        .errorAlert()
+                case .done:
+                    MainTabView()
+                        .environment(FriendViewModel(appVM: appVM))
+                        .environment(FavoriteViewModel())
+                        .errorAlert()
                 }
-                .errorAlert()
-        case .loggingIn:
-            LoginView()
-                .errorAlert()
-        case .done:
-            MainTabView()
-                .environment(FriendViewModel(appVM: appVM))
-                .environment(FavoriteViewModel())
-                .errorAlert()
+            }
+            .onChange(of: geometry) {
+                setScreenSize(geometry)
+            }
+            .onAppear {
+                setScreenSize(geometry)
+            }
         }
+    }
+
+    private func setScreenSize(_ geometry: GeometryProxy) {
+        appVM.screenSize = geometry.size
     }
 }
