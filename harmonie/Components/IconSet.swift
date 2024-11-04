@@ -72,6 +72,9 @@ enum IconSet {
     static var logout: some Iconizable {
         Icon("rectangle.portrait.and.arrow.forward")
     }
+    static var platform: some Iconizable {
+        Icon("square.stack.3d.up")
+    }
     static var plusCircleFilled: some Iconizable {
         Icon("plus.circle.fill")
     }
