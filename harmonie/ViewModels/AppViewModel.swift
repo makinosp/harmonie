@@ -17,6 +17,7 @@ final class AppViewModel {
     var applicationError: ApplicationError?
     var services: APIServiceUtil
     var verifyType: VerifyType?
+    var screenSize: CGSize = .zero
     @ObservationIgnored var client: APIClient
     @ObservationIgnored let userDefaults: UserDefaults
 

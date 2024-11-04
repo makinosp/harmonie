@@ -49,7 +49,7 @@ struct LocationsView: View {
             }
         }
         .navigationTitle("Social")
-        .setColumn()
+        .setColumn(appVM.screenSize)
     }
 
     private var content: some View {
@@ -66,7 +66,7 @@ struct LocationsView: View {
             }
         }
         .background(Color(.systemGroupedBackground))
-        .setColumn()
+        .setColumn(appVM.screenSize)
     }
 
     private var detail: some View {
@@ -88,7 +88,7 @@ struct LocationsView: View {
             }
         }
         .background(Color(.systemGroupedBackground))
-        .setColumn()
+        .setColumn(appVM.screenSize)
     }
 
     private var friendLocations: some View {
@@ -153,11 +153,11 @@ extension Location {
 }
 
 private extension View {
-    func setColumn() -> some View {
+    func setColumn(_ screenSize: CGSize) -> some View {
         navigationSplitViewColumnWidth(
-            min: WindowUtil.width * 1 / 3,
-            ideal: WindowUtil.width * 1 / 3,
-            max: WindowUtil.width / 2
+            min: screenSize.width * 1 / 3,
+            ideal: screenSize.width * 1 / 3,
+            max: screenSize.width / 2
         )
     }
 }
