@@ -31,6 +31,7 @@ struct UserDetailView: View {
                     imageUrl: user.imageUrl(.x1024),
                     thumbnailImageUrl: user.imageUrl(.x256),
                     height: 250,
+                    maxWidth: appVM.screenSize.width,
                     topContent: { topOverlay },
                     bottomContent: { bottomOverlay }
                 )
