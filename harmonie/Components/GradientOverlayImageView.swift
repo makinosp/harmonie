@@ -14,7 +14,7 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
     @Init(.internal) private let imageUrl: URL?
     @Init(.internal, default: nil) private let thumbnailImageUrl: URL?
     @Init(.internal) private let height: CGFloat
-    @Init(.internal, default: WindowUtil.width) private let maxWidth: CGFloat
+    @Init(.internal) private let maxWidth: CGFloat
     @Init(.internal, default: Gradient(colors: [.black.opacity(0.5), .clear])) private let gradient: Gradient
     @Init(.internal, default: { EmptyView() }, escaping: true) private let topContent: () -> TopContent
     @Init(.internal, default: { EmptyView() }, escaping: true) private let bottomContent: () -> BottomContent

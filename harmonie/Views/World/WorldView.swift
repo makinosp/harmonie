@@ -22,6 +22,7 @@ struct WorldView: View {
                     imageUrl: world.imageUrl(.x1024),
                     thumbnailImageUrl: world.imageUrl(.x256),
                     height: 250,
+                    maxWidth: appVM.screenSize.width,
                     topContent: { topOverlay },
                     bottomContent: { bottomOverlay }
                 )
