@@ -32,8 +32,15 @@ struct ContentView: View {
                 }
             }
             .onChange(of: geometry) {
-                appVM.screenSize = geometry.size
+                setScreenSize(geometry)
+            }
+            .onAppear {
+                setScreenSize(geometry)
             }
         }
+    }
+
+    private func setScreenSize(_ geometry: GeometryProxy) {
+        appVM.screenSize = geometry.size
     }
 }
