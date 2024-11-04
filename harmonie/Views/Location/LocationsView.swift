@@ -41,6 +41,7 @@ struct LocationsView: View {
                 inPrivateInstance
             }
         }
+        .environment(\.defaultMinListRowHeight, 80)
         .overlay {
             if friendVM.isContentUnavailable {
                 ContentUnavailableView {

@@ -66,7 +66,6 @@ struct LocationCardView: View {
                         selected = tag(instance)
                     }
             }
-            .padding(.top, 4)
         }
         .tag(tag(instance))
     }
