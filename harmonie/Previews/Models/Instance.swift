@@ -13,19 +13,28 @@ extension PreviewData {
         Instance(world: bar)
     }
 
-    static func instance() -> Instance {
+    static var instance: Instance {
         Instance(world: bar)
     }
 
-    static let instance1 = Instance(world: bar)
-    static let instance2 = Instance(world: casino)
+    static func instanceId(_ world: World) -> Instance.ID {
+        "\(world.id):0"
+    }
+
+    static let instanceMap: [Instance.ID: Instance] = [
+        instanceId(bar): Instance(world: bar, userCount: 25),
+        instanceId(casino): Instance(world: casino, userCount: 25),
+        instanceId(fuji): Instance(world: fuji, userCount: 25),
+        instanceId(chinatown): Instance(world: chinatown, userCount: 25),
+        instanceId(nightCity): Instance(world: nightCity, userCount: 25),
+    ]
 }
 
 private extension Instance {
-    init(world: World, instanceId: Int = 0) {
+    init(world: World, instanceId: Int = 0, capacity: Int = 32, userCount: Int = 0) {
         self.init(
             active: true,
-            capacity: 32,
+            capacity: capacity,
             full: false,
             groupAccessType: nil,
             id: "\(world.id):\(instanceId)",
@@ -35,11 +44,11 @@ private extension Instance {
             ownerId: "usr_\(UUID().uuidString)",
             permanent: false,
             platforms: Platforms(),
-            recommendedCapacity: 32,
+            recommendedCapacity: capacity,
             region: Region.allCases.randomElement() ?? .us,
             tags: [],
             type: [.public, .friends].randomElement() ?? .public,
-            userCount: 0,
+            userCount: userCount,
             world: world
         )
     }

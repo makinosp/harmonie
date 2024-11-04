@@ -28,8 +28,36 @@ extension PreviewData {
 }
 
 extension PreviewData.FriendSet {
+    /// Initialize from world information
     init(
-        id: UUID,
+        id: UUID = UUID(),
+        profile: PreviewData.Profile? = PreviewData.Profile.random,
+        world: World,
+        status: UserStatus
+    ) {
+        let location: Location = .id(PreviewData.instanceId(world))
+        self.init(
+            friend: Friend(
+                id: id,
+                profile: profile,
+                location: location,
+                status: status
+            ),
+            userDetail: PreviewData.userDetail(
+                id: id,
+                profile: profile,
+                location: location,
+                state: status == .offline ? .offline : .active,
+                status: status
+            )
+        )
+    }
+}
+
+extension PreviewData.FriendSet {
+    /// Initialize from world information
+    init(
+        id: UUID = UUID(),
         profile: PreviewData.Profile? = PreviewData.Profile.random,
         location: Location,
         status: UserStatus
