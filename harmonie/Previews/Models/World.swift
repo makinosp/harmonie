@@ -58,6 +58,8 @@ extension PreviewData {
         popularity: 5,
         heat: 3
     )
+
+    static let worldList = [ bar, casino, fuji, chinatown, nightCity ]
 }
 
 extension World {
