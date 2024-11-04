@@ -36,20 +36,16 @@ struct WorldView: View {
     }
 
     private var topOverlay: some View {
-        Label {
-            Text(world.platform.description)
-        } icon: {
-            Image(systemName: "vision.pro.fill")
-        }
-        .font(.footnote.bold())
-        .padding(.horizontal, 12)
-        .padding(.vertical, 4)
-        .background(.thinMaterial)
-        .cornerRadius(8)
-        .foregroundStyle(.white)
-        .frame(maxWidth: .infinity, alignment: .trailing)
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
+        Label(world.platform.description, systemImage: IconSet.platform.systemName)
+            .font(.footnote.bold())
+            .padding(.horizontal, 12)
+            .padding(.vertical, 4)
+            .background(.thinMaterial)
+            .cornerRadius(8)
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
     }
 
     private var bottomOverlay: some View {

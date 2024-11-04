@@ -43,7 +43,7 @@ private extension Instance {
             name: world.name,
             ownerId: "usr_\(UUID().uuidString)",
             permanent: false,
-            platforms: Platforms(),
+            platforms: Platforms([.android, .standalonewindows]),
             recommendedCapacity: capacity,
             region: Region.allCases.randomElement() ?? .us,
             tags: [],
