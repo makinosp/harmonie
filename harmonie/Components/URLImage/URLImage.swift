@@ -14,7 +14,7 @@ struct URLImage<S>: View where S: Shape {
     @State private var isImageLoaded = false
     @Init(.internal) private let imageUrl: URL?
     @Init(.internal, default: nil) private let thumbnailImageUrl: URL?
-    @Init(.internal) private let shape: S
+    @Init(.internal, default: Rectangle()) private let shape: S
     @Init(.internal) private let size: CGSize
     private let color = Color(.systemFill)
 

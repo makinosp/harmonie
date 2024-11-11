@@ -13,18 +13,17 @@ import SwiftUI
 struct GradientOverlayImageView<TopContent, BottomContent>: View where TopContent: View, BottomContent: View {
     @Init(.internal) private let imageUrl: URL?
     @Init(.internal, default: nil) private let thumbnailImageUrl: URL?
-    @Init(.internal) private let height: CGFloat
-    @Init(.internal) private let maxWidth: CGFloat
+    @Init(.internal) private let size: CGSize
     @Init(.internal, default: Gradient(colors: [.black.opacity(0.5), .clear])) private let gradient: Gradient
     @Init(.internal, default: { EmptyView() }, escaping: true) private let topContent: () -> TopContent
     @Init(.internal, default: { EmptyView() }, escaping: true) private let bottomContent: () -> BottomContent
 
     var body: some View {
-        lazyImage(url: imageUrl) {
-            lazyImage(url: thumbnailImageUrl) {
-                Color(.systemFill)
-            }
-        }
+        URLImage(
+            imageUrl: imageUrl,
+            thumbnailImageUrl: thumbnailImageUrl,
+            size: size
+        )
         .overlay {
             overlaidGradient(.top, TopContent.self != EmptyView.self)
         }
@@ -37,23 +36,6 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
         .overlay(alignment: .bottom) {
             overlaidContent(bottomContent)
         }
-    }
-
-    private func lazyImage(url: URL?, placeholder: @escaping () -> some View) -> some View {
-        LazyImage(url: url) { state in
-            if let image = state.image {
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            } else if state.error != nil {
-                IconSet.exclamation.icon
-            } else {
-                placeholder()
-            }
-        }
-        .frame(height: height)
-        .frame(maxWidth: maxWidth)
-        .clipped()
     }
 
     @ViewBuilder

@@ -21,8 +21,7 @@ struct WorldView: View {
                 GradientOverlayImageView(
                     imageUrl: world.imageUrl(.x1024),
                     thumbnailImageUrl: world.imageUrl(.x256),
-                    height: 250,
-                    maxWidth: appVM.screenSize.width,
+                    size: CGSize(width: appVM.screenSize.width, height: 250),
                     topContent: { topOverlay },
                     bottomContent: { bottomOverlay }
                 )
