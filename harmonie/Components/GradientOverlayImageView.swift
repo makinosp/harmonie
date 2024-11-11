@@ -10,13 +10,13 @@ import NukeUI
 import SwiftUI
 
 @MemberwiseInit
-struct GradientOverlayImageView<TopContent, BottomContent>: View where TopContent: View, BottomContent: View {
+struct GradientOverlayImageView<T, B>: View where T: View, B: View {
     @Init(.internal) private let imageUrl: URL?
     @Init(.internal, default: nil) private let thumbnailImageUrl: URL?
     @Init(.internal) private let size: CGSize
     @Init(.internal, default: Gradient(colors: [.black.opacity(0.5), .clear])) private let gradient: Gradient
-    @Init(.internal, default: { EmptyView() }, escaping: true) private let topContent: () -> TopContent
-    @Init(.internal, default: { EmptyView() }, escaping: true) private let bottomContent: () -> BottomContent
+    @Init(.internal, default: { EmptyView() }, escaping: true) private let topContent: () -> T
+    @Init(.internal, default: { EmptyView() }, escaping: true) private let bottomContent: () -> B
 
     var body: some View {
         URLImage(
@@ -25,10 +25,10 @@ struct GradientOverlayImageView<TopContent, BottomContent>: View where TopConten
             size: size
         )
         .overlay {
-            overlaidGradient(.top, TopContent.self != EmptyView.self)
+            overlaidGradient(.top, T.self != EmptyView.self)
         }
         .overlay {
-            overlaidGradient(.bottom, BottomContent.self != EmptyView.self)
+            overlaidGradient(.bottom, B.self != EmptyView.self)
         }
         .overlay(alignment: .top) {
             overlaidContent(topContent)
