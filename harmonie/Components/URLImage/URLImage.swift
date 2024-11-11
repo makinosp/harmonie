@@ -28,15 +28,20 @@ struct URLImage<S>: View where S: Shape {
 
     private func lazyImage(url: URL?, placeholder: @escaping () -> some View) -> some View {
         LazyImage(url: url) { state in
-            if let image = state.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-            } else if url != nil && state.error != nil {
-                placeholder()
-                    .overlay(IconSet.photo.icon)
-            } else {
-                placeholder()
+            Group {
+                if let image = state.image {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    placeholder()
+                }
+            }
+            .overlay {
+                if url != nil && state.error != nil {
+                    IconSet.photo.icon
+                        .foregroundStyle(.gray)
+                }
             }
         }
         .onCompletion { _ in
