@@ -64,10 +64,12 @@ extension MainTabView {
         switch scenePhase {
         case .active:
             restoreUserData()
+            Task { await fetchFriendsTask() }
+            Task { await fetchFavoritesTask() }
         case .background, .inactive:
             guard let user = appVM.user else { return }
             userData = user.rawValue
-        @unknown default: break
+        default: break
         }
     }
 
