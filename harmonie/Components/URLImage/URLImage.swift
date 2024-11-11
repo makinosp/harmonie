@@ -21,22 +21,22 @@ struct URLImage<S>: View where S: Shape {
     var body: some View {
         lazyImage(url: imageUrl) {
             lazyImage(url: thumbnailImageUrl) {
-                placeholder
+                emptyPlaceholder
             }
         }
     }
 
-    private func lazyImage(url: URL?) -> some View {
+    private func lazyImage(url: URL?, placeholder: @escaping () -> some View) -> some View {
         LazyImage(url: url) { state in
             if let image = state.image {
                 image
                     .resizable()
                     .scaledToFill()
             } else if url != nil && state.error != nil {
-                placeholder
+                placeholder()
                     .overlay(IconSet.photo.icon)
             } else {
-                placeholder
+                placeholder()
             }
         }
         .onCompletion { _ in
@@ -47,7 +47,7 @@ struct URLImage<S>: View where S: Shape {
         .clipShape(shape)
     }
 
-    private var placeholder: some View {
+    private var emptyPlaceholder: some View {
         shape
             .fill(color)
             .frame(size: size)
