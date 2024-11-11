@@ -1,43 +1,40 @@
 //
-//  SquareURLImage.swift
+//  URLImage.swift
 //  Harmonie
 //
-//  Created by makinosp on 2024/09/07.
+//  Created by makinosp on 2024/11/11.
 //
 
-import NukeUI
 import MemberwiseInit
+import NukeUI
 import SwiftUI
 
 @MemberwiseInit
-struct SquareURLImage: View {
+struct URLImage<S>: View where S: Shape {
     @State private var isImageLoaded = false
     @Init(.internal) private let imageUrl: URL?
     @Init(.internal, default: nil) private let thumbnailImageUrl: URL?
-    @Init(.internal, default: 100) private let frameWidth: CGFloat
-    @Init(.internal, default: 4) private let cornerRadius: CGFloat
-    @Init(.internal, default: 3/4) private let ratio: CGFloat
-
-    var rect: some Shape {
-        RoundedRectangle(cornerRadius: cornerRadius)
-    }
+    @Init(.internal, default: Rectangle()) private let shape: S
+    @Init(.internal) private let size: CGSize
+    private let color = Color(.systemFill)
 
     var body: some View {
         lazyImage(url: imageUrl) {
             lazyImage(url: thumbnailImageUrl) {
-                rect.fill(Color(.systemFill))
+                emptyPlaceholder
             }
         }
     }
 
-    func lazyImage(url: URL?, placeholder: @escaping () -> some View) -> some View {
+    private func lazyImage(url: URL?, placeholder: @escaping () -> some View) -> some View {
         LazyImage(url: url) { state in
             if let image = state.image {
                 image
                     .resizable()
                     .scaledToFill()
             } else if url != nil && state.error != nil {
-                IconSet.exclamation.icon
+                placeholder()
+                    .overlay(IconSet.photo.icon)
             } else {
                 placeholder()
             }
@@ -46,7 +43,13 @@ struct SquareURLImage: View {
             isImageLoaded = true
         }
         .animation(.default, value: isImageLoaded)
-        .frame(width: frameWidth, height: frameWidth * ratio)
-        .clipShape(rect)
+        .frame(size: size)
+        .clipShape(shape)
+    }
+
+    private var emptyPlaceholder: some View {
+        shape
+            .fill(color)
+            .frame(size: size)
     }
 }

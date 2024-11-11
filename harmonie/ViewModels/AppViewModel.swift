@@ -94,7 +94,7 @@ final class AppViewModel {
     func verifyTwoFA(code: String) async {
         guard let verifyType = verifyType else { return }
         do {
-            defer { reset() }
+            defer { dispose() }
             guard try await services.authenticationService.verify2FA(
                 verifyType: verifyType,
                 code: code
@@ -109,13 +109,13 @@ final class AppViewModel {
     func logout() async {
         do {
             try await services.authenticationService.logout()
-            reset()
+            dispose()
         } catch {
             handleError(error)
         }
     }
 
-    private func reset() {
+    private func dispose() {
         userDefaults.removeObject(forKey: Constants.Keys.isSavedOnKeyChain.rawValue)
         userDefaults.removeObject(forKey: Constants.Keys.username.rawValue)
         step = .initializing

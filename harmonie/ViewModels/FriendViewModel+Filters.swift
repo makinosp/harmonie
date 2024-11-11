@@ -32,8 +32,8 @@ extension FriendViewModel {
                 case .latest: false
                 case .oldest: true
                 case .name: $0.displayName < $1.displayName
-                case .loginLatest: $0.lastLogin < $1.lastLogin
-                case .loginOldest: $0.lastLogin > $1.lastLogin
+                case .loginLatest: $0.lastLogin > $1.lastLogin
+                case .loginOldest: $0.lastLogin < $1.lastLogin
                 case .status: $0.status.rawValue < $1.status.rawValue
                 }
             }
