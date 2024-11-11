@@ -18,16 +18,30 @@ struct SquareURLImage: View {
     @Init(.internal, default: 4) private let cornerRadius: CGFloat
     @Init(.internal, default: 3/4) private let ratio: CGFloat
 
-    var rect: some Shape {
+    var shape: some Shape {
         RoundedRectangle(cornerRadius: cornerRadius)
     }
 
     var body: some View {
         lazyImage(url: imageUrl) {
             lazyImage(url: thumbnailImageUrl) {
-                rect.fill(Color(.systemFill))
+                shape.fill(color)
             }
         }
+    }
+
+    private var defaultPlaceholder: some View {
+        shape
+            .fill(color)
+            .frame(size: size)
+    }
+
+    private var size: CGSize {
+        CGSize(width: frameWidth, height: frameWidth * ratio)
+    }
+
+    private var color: some ShapeStyle {
+        Color(.systemFill)
     }
 
     func lazyImage(url: URL?, placeholder: @escaping () -> some View) -> some View {
@@ -37,7 +51,7 @@ struct SquareURLImage: View {
                     .resizable()
                     .scaledToFill()
             } else if url != nil && state.error != nil {
-                IconSet.exclamation.icon
+                IconSet.photo.icon
             } else {
                 placeholder()
             }
@@ -46,7 +60,7 @@ struct SquareURLImage: View {
             isImageLoaded = true
         }
         .animation(.default, value: isImageLoaded)
-        .frame(width: frameWidth, height: frameWidth * ratio)
-        .clipShape(rect)
+        .frame(size: size)
+        .clipShape(shape)
     }
 }
