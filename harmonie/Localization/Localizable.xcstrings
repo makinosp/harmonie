@@ -1324,7 +1324,14 @@
       }
     },
     "Try again later" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "もう一度お試しください"
+          }
+        }
+      }
     },
     "Two-step verification" : {
       "localizations" : {
