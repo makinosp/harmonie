@@ -26,7 +26,7 @@ extension PreviewData {
         instanceId(casino): Instance(world: casino, userCount: 25),
         instanceId(fuji): Instance(world: fuji, userCount: 25),
         instanceId(chinatown): Instance(world: chinatown, userCount: 25),
-        instanceId(nightCity): Instance(world: nightCity, userCount: 25),
+        instanceId(nightCity): Instance(world: nightCity, userCount: 25)
     ]
 }
 
