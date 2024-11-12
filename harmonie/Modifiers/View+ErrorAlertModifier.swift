@@ -36,25 +36,28 @@ extension ErrorAlertModifier: ViewModifier {
     func body(content: Content) -> some View {
         @Bindable var appVM = appVM
         content
-            .alert(
-                isPresented: isThrownError(\.vrckError),
-                error: appVM.vrckError
-            ) { _ in
-                Button("OK") {
-                    action()
-                }
-            } message: { error in
-                Text(error.failureReason ?? "Try again later.")
-            }
-            .alert(
-                isPresented: isThrownError(\.applicationError),
-                error: appVM.applicationError
-            ) { _ in
-                Button("OK") {
-                    action()
-                }
-            } message: { error in
-                Text(error.failureReason ?? "Try again later.")
-            }
+            .errorAlert(isThrownError(\.vrckError), appVM.vrckError, action)
+            .errorAlert(isThrownError(\.applicationError), appVM.applicationError, action)
+    }
+}
+
+private extension View {
+    func errorAlert<E>(
+        _ isPresented: Binding<Bool>,
+        _ error: E?,
+        _ action: @escaping () -> Void
+    ) -> some View where E: LocalizedError {
+        alert(
+            isPresented: isPresented,
+            error: error
+        ) { _ in
+            Button("OK", action: action)
+        } message: { error in
+            errorText(error)
+        }
+    }
+
+    private func errorText<E>(_ error: E) -> Text where E: LocalizedError {
+        Text(verbatim: error.failureReason ?? String(localized: "Try again later"))
     }
 }
