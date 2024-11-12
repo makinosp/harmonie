@@ -58,25 +58,28 @@ struct FavoritesView: View {
         }
     }
 
-    @ViewBuilder private var detail: some View {
-        if let selectedContainer = selected {
-            switch selectedContainer.segment {
-            case .friends:
-                UserDetailPresentationView(id: selectedContainer.selected.id)
-                    .id(selectedContainer.id)
-            case .world:
-                WorldPresentationView(id: selectedContainer.selected.id)
-                    .id(selectedContainer.id)
-            }
-        } else {
-            ContentUnavailableView {
-                Label {
-                    Text("Select an item")
-                } icon: {
-                    IconSet.favorite.icon
+    private var detail: some View {
+        Group {
+            if let selectedContainer = selected {
+                switch selectedContainer.segment {
+                case .friends:
+                    UserDetailPresentationView(id: selectedContainer.selected.id)
+                        .id(selectedContainer.id)
+                case .world:
+                    WorldPresentationView(id: selectedContainer.selected.id)
+                        .id(selectedContainer.id)
+                }
+            } else {
+                ContentUnavailableView {
+                    Label {
+                        Text("Select an item")
+                    } icon: {
+                        IconSet.favorite.icon
+                    }
                 }
             }
         }
+        .background(Color(.systemGroupedBackground))
     }
 
     var favoriteFriends: some View {

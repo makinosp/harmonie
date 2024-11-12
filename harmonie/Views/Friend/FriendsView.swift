@@ -19,7 +19,22 @@ struct FriendsView: View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             FriendsListView(selected: $selected)
                 .navigationTitle("Friends")
-        } detail: {
+        } detail: { detail }
+        .navigationSplitViewStyle(.balanced)
+        .searchable(
+            text: $friendVM.filterText,
+            placement: .navigationBarDrawer(displayMode: .always)
+        )
+        .onSubmit(of: .search) {
+            friendVM.applyFilters()
+        }
+        .task {
+            friendVM.setFavoriteFriends(favoriteVM.favoriteFriends)
+        }
+    }
+
+    private var detail: some View {
+        Group {
             if let selected = selected {
                 UserDetailPresentationView(id: selected)
                     .id(selected)
@@ -33,17 +48,7 @@ struct FriendsView: View {
                 }
             }
         }
-        .navigationSplitViewStyle(.balanced)
-        .searchable(
-            text: $friendVM.filterText,
-            placement: .navigationBarDrawer(displayMode: .always)
-        )
-        .onSubmit(of: .search) {
-            friendVM.applyFilters()
-        }
-        .task {
-            friendVM.setFavoriteFriends(favoriteVM.favoriteFriends)
-        }
+        .background(Color(.systemGroupedBackground))
     }
 }
 
