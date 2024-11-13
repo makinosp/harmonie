@@ -23,11 +23,12 @@ struct WorldView: View {
                     GradientOverlayImageView(
                         imageUrl: world.imageUrl(.x1024),
                         thumbnailImageUrl: world.imageUrl(.x256),
-                        size: CGSize(width: geometry.size.width, height: 250),
+                        size: CGSize(width: geometry.size.width, height: headerHeight),
                         topContent: { topOverlay },
                         bottomContent: { bottomOverlay }
                     )
                 }
+                .frame(height: headerHeight)
                 contentStacks
             }
         }
