@@ -14,6 +14,6 @@ struct ProgressScreen: View {
             ProgressView()
                 .controlSize(.large)
         }
-        .ignoresSafeArea()
+        .ignoresSafeArea(.container)
     }
 }

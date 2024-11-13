@@ -19,6 +19,7 @@ struct UserDetailView: View {
     @State var isRequesting = false
     @State var lastActivity = ""
     @State var isPresentedNoteEditor = false
+    private let headerHeight: CGFloat = 250
 
     init(user: UserDetail) {
         self.user = user
@@ -27,13 +28,16 @@ struct UserDetailView: View {
     var body: some View {
         ScrollView {
             VStack {
-                GradientOverlayImageView(
-                    imageUrl: user.imageUrl(.x1024),
-                    thumbnailImageUrl: user.imageUrl(.x256),
-                    size: CGSize(width: appVM.screenSize.width, height: 250),
-                    topContent: { topOverlay },
-                    bottomContent: { bottomOverlay }
-                )
+                GeometryReader { geometry in
+                    GradientOverlayImageView(
+                        imageUrl: user.imageUrl(.x1024),
+                        thumbnailImageUrl: user.imageUrl(.x256),
+                        size: CGSize(width: geometry.size.width, height: headerHeight),
+                        topContent: { topOverlay },
+                        bottomContent: { bottomOverlay }
+                    )
+                }
+                .frame(height: headerHeight)
                 contentStacks
             }
         }

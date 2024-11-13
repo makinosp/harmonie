@@ -21,10 +21,8 @@ extension SettingsView {
             .tag(SettingsDestination.userDetail)
             .padding(8)
 
-            Button {
-                isPresentedForm = true
-            } label: {
-                Label("Edit", systemImage: "pencil")
+            Button("Edit", systemImage: IconSet.edit.systemName) {
+                isPresentedForm.toggle()
             }
         }
         .textCase(nil)
