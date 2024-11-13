@@ -14,17 +14,20 @@ struct WorldView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM
     @State var world: World
     @State var isRequesting = false
+    private let headerHeight: CGFloat = 250
 
     var body: some View {
         ScrollView {
             VStack {
-                GradientOverlayImageView(
-                    imageUrl: world.imageUrl(.x1024),
-                    thumbnailImageUrl: world.imageUrl(.x256),
-                    size: CGSize(width: appVM.screenSize.width, height: 250),
-                    topContent: { topOverlay },
-                    bottomContent: { bottomOverlay }
-                )
+                GeometryReader { geometry in
+                    GradientOverlayImageView(
+                        imageUrl: world.imageUrl(.x1024),
+                        thumbnailImageUrl: world.imageUrl(.x256),
+                        size: CGSize(width: geometry.size.width, height: 250),
+                        topContent: { topOverlay },
+                        bottomContent: { bottomOverlay }
+                    )
+                }
                 contentStacks
             }
         }
