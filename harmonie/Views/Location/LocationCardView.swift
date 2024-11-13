@@ -67,6 +67,7 @@ struct LocationCardView: View {
                     }
             }
         }
+        .disabled(isRequesting)
         .tag(tag(instance))
     }
 
