@@ -49,15 +49,6 @@ extension MainTabViewSegment {
         case .settings: SettingsView()
         }
     }
-
-    var label: Label<Text, Image> {
-        Label(description, systemImage: icon.systemName)
-    }
-
-    @available(iOS 18, *)
-    var tab: some TabContent {
-        Tab(description, systemImage: icon.systemName, value: self) { content }
-    }
 }
 
 @MainActor
@@ -86,7 +77,10 @@ extension MainTabView {
                 tabSegment.content
                     .tag(tabSegment)
                     .tabItem {
-                        tabSegment.label
+                        Label(
+                            tabSegment.description,
+                            systemImage: tabSegment.icon.systemName
+                        )
                     }
             }
         }
