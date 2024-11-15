@@ -10,6 +10,7 @@ import VRCKit
 
 struct MainTabView: View {
     @Environment(\.scenePhase) var scenePhase
+    @Environment(\.horizontalSizeClass) var defaultHorizontalSizeClass
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
@@ -93,9 +94,14 @@ extension MainTabView {
 
     @available(iOS 18, *) private var tabView: some View {
         TabView(selection: $selection) {
-            return ForEach(MainTabViewSegment.allCases) { $0.tab }
+            ForEach(MainTabViewSegment.allCases) { segment in
+                Tab(segment.description, systemImage: segment.icon.systemName, value: segment) {
+                    segment.content.environment(\.horizontalSizeClass, defaultHorizontalSizeClass)
+                }
+            }
         }
         .tabViewStyle(.sidebarAdaptable)
+        .environment(\.horizontalSizeClass, .compact)
     }
 
     private func fetchFriendsTask() async {
