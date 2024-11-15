@@ -86,60 +86,64 @@ struct ProfileEditView: View {
         }
     }
 
-    @ViewBuilder private var languageSection: some View {
-        Section("Language") {
-            ForEach(profileEditVM.editingUserInfo.tags.languageTags) { tag in
-                Text(tag.description)
+    private var languageSection: some View {
+        Group {
+            Section("Language") {
+                ForEach(profileEditVM.editingUserInfo.tags.languageTags) { tag in
+                    Text(tag.description)
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                profileEditVM.removeTag(tag)
+                            } label: {
+                                Text("Delete")
+                            }
+                        }
+                }
+            }
+            Section {
+                Button {
+                    isPresentedLanguagePicker = true
+                } label: {
+                    Label {
+                        Text("Add")
+                    } icon: {
+                        IconSet.plusCircleFilled.icon.symbolRenderingMode(.multicolor)
+                    }
+                }
+            }
+            .listSectionSpacing(.compact)
+        }
+    }
+
+    private var bioLinksSection: some View {
+        Group {
+            Section("Social Links") {
+                ForEach(profileEditVM.editingUserInfo.bioLinks) { url in
+                    Link(destination: url) {
+                        Label(url.description, systemImage: IconSet.link.systemName)
+                    }
                     .swipeActions {
                         Button(role: .destructive) {
-                            profileEditVM.removeTag(tag)
+                            profileEditVM.removeUrl(url)
                         } label: {
                             Text("Delete")
                         }
                     }
-            }
-        }
-        Section {
-            Button {
-                isPresentedLanguagePicker = true
-            } label: {
-                Label {
-                    Text("Add")
-                } icon: {
-                    IconSet.plusCircleFilled.icon.symbolRenderingMode(.multicolor)
                 }
             }
-        }
-        .listSectionSpacing(.compact)
-    }
-
-    @ViewBuilder private var bioLinksSection: some View {
-        Section("Social Links") {
-            ForEach(profileEditVM.editingUserInfo.bioLinks) { url in
-                Link(destination: url) {
-                    Label(url.description, systemImage: IconSet.link.systemName)
-                }
-                .swipeActions {
-                    Button(role: .destructive) {
-                        profileEditVM.removeUrl(url)
-                    } label: {
-                        Text("Delete")
+            Section {
+                Button {
+                    isPresentedURLEditor = true
+                } label: {
+                    Label {
+                        Text("Add")
+                    } icon: {
+                        IconSet.plusCircleFilled.icon.symbolRenderingMode(.multicolor)
                     }
                 }
             }
+            .listSectionSpacing(.compact)
         }
-        Section {
-            Button {
-                isPresentedURLEditor = true
-            } label: {
-                Label {
-                    Text("Add")
-                } icon: {
-                    IconSet.plusCircleFilled.icon.symbolRenderingMode(.multicolor)
-                }
-            }
-        }
-        .listSectionSpacing(.compact)
     }
 
     @ToolbarContentBuilder private var toolbarContents: some ToolbarContent {

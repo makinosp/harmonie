@@ -47,7 +47,7 @@ extension UserDetailView {
         }
     }
 
-    var status: some View {
+    private var status: some View {
         Label {
             Text(statusDescription)
         } icon: {
@@ -61,7 +61,7 @@ extension UserDetailView {
         .font(.subheadline)
     }
 
-    var trustRankLabel: some View {
+    private var trustRankLabel: some View {
         Label {
             Text(user.trustRank.description)
         } icon: {

@@ -55,7 +55,7 @@ struct UserDetailView: View {
         }
     }
 
-    @ToolbarContentBuilder var toolbar: some ToolbarContent {
+    @ToolbarContentBuilder private var toolbar: some ToolbarContent {
         ToolbarItem { UserDetailToolbarMenu(user: user) }
     }
 
@@ -74,6 +74,17 @@ struct UserDetailView: View {
                 socialLinksSection(urls)
             }
             activitySection
+        }
+    }
+
+    private func fetchInstance(id: String) async {
+        do {
+            defer { isRequesting = false }
+            isRequesting = true
+            let service = appVM.services.instanceService
+            instance = try await service.fetchInstance(location: id)
+        } catch {
+            appVM.handleError(error)
         }
     }
 }
