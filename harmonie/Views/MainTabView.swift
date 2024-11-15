@@ -105,9 +105,10 @@ extension MainTabView {
         }
         do {
             try await favoriteVM.fetchFavoriteFriends(
-                service: appVM.services.favoriteService,
-                friendVM: friendVM
-            )
+                service: appVM.services.favoriteService
+            ) { favorite in
+                friendVM.getFriend(id: favorite.favoriteId)
+            }
         } catch {
             appVM.handleError(error)
         }

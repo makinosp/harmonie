@@ -26,9 +26,10 @@ extension PreviewContainer: View where Content: View {
                 do {
                     try await friendVM.fetchAllFriends()
                     try await favoriteVM.fetchFavoriteFriends(
-                        service: FavoritePreviewService(client: appVM.client),
-                        friendVM: friendVM
-                    )
+                        service: FavoritePreviewService(client: appVM.client)
+                    ) { favorite in
+                        friendVM.getFriend(id: favorite.favoriteId)
+                    }
                 } catch {
                     appVM.handleError(error)
                 }
