@@ -30,8 +30,8 @@ struct MainTabView: View {
             Task { await fetchFriendsTask() }
             Task { await fetchFavoritesTask() }
         }
-        .onChange(of: scenePhase) {
-            scenePhaseHandler(scenePhase)
+        .onChange(of: scenePhase) { before, after in
+            changedScenePhaseHandler(before, after)
         }
         .onChange(of: favoriteVM.favoriteFriends) {
             friendVM.favoriteFriends = favoriteVM.favoriteFriends
@@ -51,15 +51,15 @@ extension MainTabViewSegment {
     }
 }
 
-@MainActor
 extension MainTabView {
-    private func scenePhaseHandler(_ scenePhase: ScenePhase) {
-        switch scenePhase {
-        case .active:
+    private func changedScenePhaseHandler(_ before: ScenePhase, _ after: ScenePhase) {
+        switch (before, after) {
+        case (.background, .inactive):
+            print("Restoring Data")
             restoreUserData()
             Task { await fetchFriendsTask() }
             Task { await fetchFavoritesTask() }
-        case .background, .inactive:
+        case (.active, .inactive):
             guard let user = appVM.user else { return }
             userData = user.rawValue
         default: break
@@ -70,7 +70,10 @@ extension MainTabView {
         guard let user = User(rawValue: userData) else { return }
         appVM.user = user
     }
+}
 
+@MainActor
+extension MainTabView {
     private var tabViewLegacy: some View {
         TabView(selection: $selection) {
             ForEach(MainTabViewSegment.allCases) { tabSegment in
