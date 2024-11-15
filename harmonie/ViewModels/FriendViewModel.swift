@@ -20,10 +20,10 @@ final class FriendViewModel {
     var sortType: SortType = .latest
     var isFetchingAllFriends = true
     var isProcessingFilter = false
-    @ObservationIgnored let appVM: AppViewModel
+    @ObservationIgnored private var appVM: AppViewModel?
     @ObservationIgnored var favoriteFriends: [FavoriteFriend] = []
 
-    init(appVM: AppViewModel) {
+    func setAppVM(_ appVM: AppViewModel) {
         self.appVM = appVM
     }
 
@@ -43,7 +43,7 @@ final class FriendViewModel {
     /// for each id of reversed order friend list.
     /// - Returns a list of recentry friends
     var recentlyFriends: [Friend] {
-        guard let user = appVM.user else { return [] }
+        guard let appVM = appVM, let user = appVM.user else { return [] }
         return user.friends.reversed().compactMap { id in
             onlineFriends.first { $0.id == id } ?? offlineFriends.first { $0.id == id }
         }
@@ -57,7 +57,7 @@ final class FriendViewModel {
     func fetchAllFriends() async throws {
         defer { isFetchingAllFriends = false }
         isFetchingAllFriends = true
-        guard let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
+        guard let appVM = appVM, let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
         async let onlineFriendsTask = appVM.services.friendService.fetchFriends(
             count: user.onlineFriends.count + user.activeFriends.count,
             offline: false
@@ -78,5 +78,12 @@ final class FriendViewModel {
 
     var isContentUnavailable: Bool {
         friendsLocations.isEmpty && !isFetchingAllFriends
+    }
+}
+
+extension FriendViewModel {
+    convenience init(appVM: AppViewModel) {
+        self.init()
+        setAppVM(appVM)
     }
 }
