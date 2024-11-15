@@ -18,20 +18,20 @@ struct ContentView: View {
             switch appVM.step {
             case .initializing:
                 ProgressScreen()
-                    .task {
-                        appVM.step = await appVM.setup(service: appVM.services.authenticationService)
-                    }
-                    .errorAlert()
+                    .task { await setUpTask() }
             case .loggingIn:
                 LoginView()
-                    .errorAlert()
             case .done:
                 MainTabView()
-                    .errorAlert()
             }
         } action: { geometry in
             setScreenSize(geometry)
         }
+        .errorAlert()
+    }
+
+    private func setUpTask() async {
+        appVM.step = await appVM.setup(service: appVM.services.authenticationService)
     }
 
     private func setScreenSize(_ geometry: GeometryProxy) {
