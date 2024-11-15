@@ -70,7 +70,7 @@ final class FriendViewModel {
             return
         }
         do {
-            guard let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
+            guard let user = appVM.user else { throw ApplicationError.userIsNotSetError }
             async let onlineFriendsTask = appVM.services.friendService.fetchFriends(
                 count: user.onlineFriends.count + user.activeFriends.count,
                 offline: false
