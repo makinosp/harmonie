@@ -10,6 +10,8 @@ import VRCKit
 
 struct ContentView: View {
     @Environment(AppViewModel.self) var appVM
+    @Environment(FriendViewModel.self) var friendVM: FriendViewModel
+    @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
 
     var body: some View {
         GeometryReader { geometry in
@@ -26,8 +28,6 @@ struct ContentView: View {
                         .errorAlert()
                 case .done:
                     MainTabView()
-                        .environment(FriendViewModel(appVM: appVM))
-                        .environment(FavoriteViewModel())
                         .errorAlert()
                 }
             }
@@ -37,6 +37,9 @@ struct ContentView: View {
             .onAppear {
                 setScreenSize(geometry)
             }
+        }
+        .onAppear {
+            friendVM.setAppVM(appVM)
         }
     }
 
