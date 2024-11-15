@@ -38,9 +38,6 @@ struct ContentView: View {
                 setScreenSize(geometry)
             }
         }
-        .onAppear {
-            friendVM.setAppVM(appVM)
-        }
     }
 
     private func setScreenSize(_ geometry: GeometryProxy) {

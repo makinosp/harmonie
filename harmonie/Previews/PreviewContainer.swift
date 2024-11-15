@@ -24,7 +24,7 @@ extension PreviewContainer: View where Content: View {
             .environment(favoriteVM)
             .task {
                 do {
-                    try await friendVM.fetchAllFriends()
+                    await friendVM.fetchAllFriends { _ in }
                     try await favoriteVM.fetchFavoriteFriends(
                         service: FavoritePreviewService(client: appVM.client)
                     ) { favorite in

@@ -54,26 +54,31 @@ final class FriendViewModel {
     }
 
     /// Fetch friends from API
-    func fetchAllFriends() async throws {
+    func fetchAllFriends(errorHandler: @escaping (_ error: any Error) -> Void) async {
         defer { isFetchingAllFriends = false }
         isFetchingAllFriends = true
-        guard let appVM = appVM, let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
-        async let onlineFriendsTask = appVM.services.friendService.fetchFriends(
-            count: user.onlineFriends.count + user.activeFriends.count,
-            offline: false
-        )
-        async let offlineFriendsTask = appVM.services.friendService.fetchFriends(
-            count: user.offlineFriends.count,
-            offline: true
-        )
-        onlineFriends = try await onlineFriendsTask
-        offlineFriends = try await offlineFriendsTask
+        guard let appVM = appVM else {
+            errorHandler(ApplicationError.appVMIsNotSetError)
+            return
+        }
+        do {
+            guard let user = appVM.user else { throw ApplicationError.UserIsNotSetError }
+            async let onlineFriendsTask = appVM.services.friendService.fetchFriends(
+                count: user.onlineFriends.count + user.activeFriends.count,
+                offline: false
+            )
+            async let offlineFriendsTask = appVM.services.friendService.fetchFriends(
+                count: user.offlineFriends.count,
+                offline: true
+            )
+            onlineFriends = try await onlineFriendsTask
+            offlineFriends = try await offlineFriendsTask
+        } catch {
+            errorHandler(error)
+            return
+        }
         friendsLocations = await appVM.services.friendService.friendsGroupedByLocation(onlineFriends)
         applyFilters()
-    }
-
-    func setFavoriteFriends(_ favoriteFriends: [FavoriteFriend]) {
-        self.favoriteFriends = favoriteFriends
     }
 
     var isContentUnavailable: Bool {

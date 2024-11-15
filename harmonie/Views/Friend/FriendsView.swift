@@ -28,9 +28,6 @@ struct FriendsView: View {
         .onSubmit(of: .search) {
             friendVM.applyFilters()
         }
-        .task {
-            friendVM.setFavoriteFriends(favoriteVM.favoriteFriends)
-        }
     }
 
     private var detail: some View {

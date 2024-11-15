@@ -24,15 +24,16 @@ struct MainTabView: View {
                 tabViewLegacy
             }
         }
-        .task { await fetchFriendsTask() }
-        .task { await fetchFavoritesTask() }
-        .onChange(of: appVM.user) { before, after in
-            guard before != after else { return }
+        .onAppear {
+            friendVM.setAppVM(appVM)
             Task { await fetchFriendsTask() }
             Task { await fetchFavoritesTask() }
         }
         .onChange(of: scenePhase) {
             scenePhaseHandler(scenePhase)
+        }
+        .onChange(of: favoriteVM.favoriteFriends) {
+            friendVM.favoriteFriends = favoriteVM.favoriteFriends
         }
     }
 }
@@ -98,9 +99,7 @@ extension MainTabView {
     }
 
     private func fetchFriendsTask() async {
-        do {
-            try await friendVM.fetchAllFriends()
-        } catch {
+        await friendVM.fetchAllFriends { error in
             appVM.handleError(error)
         }
         do {
