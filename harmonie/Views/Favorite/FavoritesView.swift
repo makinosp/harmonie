@@ -28,7 +28,9 @@ struct FavoritesView: View {
                 }
             }
             .overlay {
-                if isSelectedEmpty {
+                if isFetching {
+                    ProgressView()
+                } else if isSelectedEmpty {
                     ContentUnavailableView {
                         Label("No Favorites", systemImage: IconSet.favorite.systemName)
                     }
@@ -45,6 +47,10 @@ struct FavoritesView: View {
             segment = .none
             await fetchFavoriteAction()
         }
+    }
+
+    private var isFetching: Bool {
+        friendVM.isFetchingAllFriends || favoriteVM.isFetchingFavoriteFriends
     }
 
     @ViewBuilder private var toolbarTitleMenu: some View {
