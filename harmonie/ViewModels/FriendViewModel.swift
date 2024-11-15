@@ -53,7 +53,15 @@ final class FriendViewModel {
         friendsLocations.filter(\.location.isVisible)
     }
 
-    /// Fetch friends from API
+    /// Fetches all friends and updates the relevant data properties.
+    ///
+    /// This function asynchronously retrieves online and offline friends
+    /// using the `FriendService`, updates their locations, and applies filters
+    /// to the retrieved data. If an error occurs during any part of the process,
+    /// the provided error handler is invoked. The function manages a loading state
+    /// using the `isFetchingAllFriends` property.
+    /// - Parameters errorHandler: A closure that is called with an error if one occurs
+    ///              during the fetch operation.
     func fetchAllFriends(errorHandler: @escaping (_ error: any Error) -> Void) async {
         defer { isFetchingAllFriends = false }
         isFetchingAllFriends = true
