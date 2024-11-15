@@ -60,7 +60,7 @@ struct NoteEditView: View {
         }
     }
 
-    func saveAction() async {
+    private func saveAction() async {
         defer { isRequesting = false }
         isRequesting = true
         do {

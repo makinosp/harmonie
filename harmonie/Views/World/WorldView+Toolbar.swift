@@ -64,7 +64,7 @@ extension WorldView {
         }
     }
 
-    func updateFavoriteAction(world: World, group: FavoriteGroup) async {
+    private func updateFavoriteAction(world: World, group: FavoriteGroup) async {
         isRequesting = true
         defer { isRequesting = false }
         do {
