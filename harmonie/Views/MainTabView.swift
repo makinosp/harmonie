@@ -10,6 +10,7 @@ import VRCKit
 
 struct MainTabView: View {
     @Environment(\.scenePhase) var scenePhase
+    @Environment(\.horizontalSizeClass) var defaultHorizontalSizeClass
     @Environment(AppViewModel.self) var appVM: AppViewModel
     @Environment(FriendViewModel.self) var friendVM: FriendViewModel
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
@@ -48,15 +49,6 @@ extension MainTabViewSegment {
         case .settings: SettingsView()
         }
     }
-
-    var label: Label<Text, Image> {
-        Label(description, systemImage: icon.systemName)
-    }
-
-    @available(iOS 18, *)
-    var tab: some TabContent {
-        Tab(description, systemImage: icon.systemName, value: self) { content }
-    }
 }
 
 @MainActor
@@ -85,7 +77,10 @@ extension MainTabView {
                 tabSegment.content
                     .tag(tabSegment)
                     .tabItem {
-                        tabSegment.label
+                        Label(
+                            tabSegment.description,
+                            systemImage: tabSegment.icon.systemName
+                        )
                     }
             }
         }
@@ -93,9 +88,14 @@ extension MainTabView {
 
     @available(iOS 18, *) private var tabView: some View {
         TabView(selection: $selection) {
-            return ForEach(MainTabViewSegment.allCases) { $0.tab }
+            ForEach(MainTabViewSegment.allCases) { segment in
+                Tab(segment.description, systemImage: segment.icon.systemName, value: segment) {
+                    segment.content.environment(\.horizontalSizeClass, defaultHorizontalSizeClass)
+                }
+            }
         }
         .tabViewStyle(.sidebarAdaptable)
+        .environment(\.horizontalSizeClass, .compact)
     }
 
     private func fetchFriendsTask() async {

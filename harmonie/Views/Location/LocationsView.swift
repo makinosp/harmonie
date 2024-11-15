@@ -86,6 +86,7 @@ struct LocationsView: View {
                 }
             }
         }
+        .safeAreaPadding(.top, 20)
         .background(Color(.systemGroupedBackground))
         .setColumn(appVM.screenSize)
     }
