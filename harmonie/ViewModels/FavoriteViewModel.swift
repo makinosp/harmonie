@@ -61,18 +61,18 @@ final class FavoriteViewModel {
 
     /// Asynchronously fetches and updates the favorite groups and their details.
     /// - Parameters:
-    ///   - service: Any `FavoriteServiceProtocol` service.
-    ///   - friendVM: The `FriendViewModel` view model.
-    func fetchFavoriteFriends(service: FavoriteServiceProtocol, friendVM: FriendViewModel) async throws {
+    ///   - service: The service that provides access to favorite groups and lists.
+    ///   - friendFinder: A closure that takes a `Favorite` instance and returns an optional `Friend`
+    ///     if a corresponding friend is found; returns `nil` otherwise.
+    /// - Throws: An error if the service encounters an issue while fetching favorite groups or favorite details.
+    func fetchFavoriteFriends(service: FavoriteServiceProtocol, friendFinder: (Favorite) -> Friend?) async throws {
         favoriteGroups = try await service.listFavoriteGroups()
         let favoriteDetails = try await service.fetchFavoriteList(favoriteGroups: favoriteGroups, type: .friend)
         let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
         favoriteFriends = favoriteDetailsOfFriends.map { favoriteDetail in
             FavoriteFriend(
                 favoriteGroupId: favoriteDetail.id,
-                friends: favoriteDetail.favorites.compactMap { favorite in
-                    friendVM.getFriend(id: favorite.favoriteId)
-                }
+                friends: favoriteDetail.favorites.compactMap(friendFinder)
             )
         }
     }

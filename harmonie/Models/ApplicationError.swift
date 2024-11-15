@@ -18,7 +18,11 @@ struct ApplicationError: LocalizedError {
         String(localized: localizedString)
     }
 
-    static var UserIsNotSetError: ApplicationError {
+    static var appVMIsNotSetError: ApplicationError {
+        ApplicationError(text: "App ViewModel is not set")
+    }
+
+    static var userIsNotSetError: ApplicationError {
         ApplicationError(text: "User is not set")
     }
 }

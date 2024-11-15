@@ -53,8 +53,10 @@ struct UserDetailToolbarMenu: View {
             Task {
                 do {
                     try await appVM.services.friendService.unfriend(id: user.id)
-                    try await friendVM.fetchAllFriends()
                 } catch {
+                    appVM.handleError(error)
+                }
+                await friendVM.fetchAllFriends { error in
                     appVM.handleError(error)
                 }
                 dismiss()
