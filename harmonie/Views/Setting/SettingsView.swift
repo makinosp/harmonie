@@ -76,7 +76,7 @@ struct SettingsView: View {
         }
     }
 
-    var aboutThisApp: some View {
+    private var aboutThisApp: some View {
         List {
             LabeledContent {
                 Text(BundleUtil.appName)

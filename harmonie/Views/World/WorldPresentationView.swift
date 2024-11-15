@@ -12,7 +12,7 @@ import VRCKit
 @MemberwiseInit
 struct WorldPresentationView: View {
     @Environment(AppViewModel.self) var appVM
-    @State var world: World?
+    @State private var world: World?
     @Init(.internal) private let id: String
 
     var body: some View {

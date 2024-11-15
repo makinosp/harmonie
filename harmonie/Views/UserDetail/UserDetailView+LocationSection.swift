@@ -10,6 +10,18 @@ import SwiftUI
 import VRCKit
 
 extension UserDetailView {
+    var locationSection: some View {
+        GroupBox("Location") {
+            HStack {
+                SquareURLImage(imageUrl: locationImageUrl)
+                Text(locationDescription)
+                    .font(.headline)
+            }
+            .redacted(reason: isRequesting ? .placeholder : [])
+        }
+        .groupBoxStyle(.card)
+    }
+
     private var locationDescription: String {
         if let instance = instance {
             instance.world.name
@@ -35,17 +47,5 @@ extension UserDetailView {
         case .offline:
             Const.offlineImageUrl
         }
-    }
-
-    var locationSection: some View {
-        GroupBox("Location") {
-            HStack {
-                SquareURLImage(imageUrl: locationImageUrl)
-                Text(locationDescription)
-                    .font(.headline)
-            }
-            .redacted(reason: isRequesting ? .placeholder : [])
-        }
-        .groupBoxStyle(.card)
     }
 }
