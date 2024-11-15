@@ -39,7 +39,6 @@ struct LocationsView: View {
                 inPrivateInstance
             }
         }
-        .environment(\.defaultMinListRowHeight, 80)
         .overlay {
             if friendVM.isContentUnavailable {
                 ContentUnavailableView {
@@ -86,7 +85,6 @@ struct LocationsView: View {
                 }
             }
         }
-        .safeAreaPadding(.top, 20)
         .background(Color(.systemGroupedBackground))
         .setColumn(appVM.screenSize)
     }
