@@ -14,29 +14,23 @@ struct ContentView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM: FavoriteViewModel
 
     var body: some View {
-        GeometryReader { geometry in
-            Group {
-                switch appVM.step {
-                case .initializing:
-                    ProgressScreen()
-                        .task {
-                            appVM.step = await appVM.setup(service: appVM.services.authenticationService)
-                        }
-                        .errorAlert()
-                case .loggingIn:
-                    LoginView()
-                        .errorAlert()
-                case .done:
-                    MainTabView()
-                        .errorAlert()
-                }
+        GeometricScreen {
+            switch appVM.step {
+            case .initializing:
+                ProgressScreen()
+                    .task {
+                        appVM.step = await appVM.setup(service: appVM.services.authenticationService)
+                    }
+                    .errorAlert()
+            case .loggingIn:
+                LoginView()
+                    .errorAlert()
+            case .done:
+                MainTabView()
+                    .errorAlert()
             }
-            .onChange(of: geometry) {
-                setScreenSize(geometry)
-            }
-            .onAppear {
-                setScreenSize(geometry)
-            }
+        } action: { geometry in
+            setScreenSize(geometry)
         }
     }
 
