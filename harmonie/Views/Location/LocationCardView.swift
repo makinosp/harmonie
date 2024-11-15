@@ -18,23 +18,20 @@ struct LocationCardView: View {
     let location: FriendsLocation
 
     var body: some View {
-        if isFailure {
-            EmptyView()
-        } else {
-            locationCardContent(instance: instance ?? PreviewData.instance)
-                .redacted(reason: isRequesting ? .placeholder : [])
-                .task {
-                    if case let .id(id) = location.location {
-                        do {
-                            defer { withAnimation { isRequesting = false } }
-                            let service = appVM.services.instanceService
-                            instance = try await service.fetchInstance(location: id)
-                        } catch {
-                            isFailure = true
-                        }
+        locationCardContent(instance: instance ?? PreviewData.instance)
+            .redacted(reason: instance == nil ? .placeholder : [])
+            .task {
+                if case let .id(id) = location.location {
+                    do {
+                        defer { withAnimation { isRequesting = false } }
+                        let service = appVM.services.instanceService
+                        instance = try await service.fetchInstance(location: id)
+                    } catch {
+                        print(error)
+                        isFailure = true
                     }
                 }
-        }
+            }
     }
 
     private func locationCardContent(instance: Instance) -> some View {
@@ -43,6 +40,12 @@ struct LocationCardView: View {
                 imageUrl: instance.world.imageUrl(.x512),
                 thumbnailImageUrl: instance.world.imageUrl(.x256)
             )
+            .overlay {
+                if isRequesting {
+                    ProgressView()
+                        .controlSize(.small)
+                }
+            }
             VStack(spacing: .zero) {
                 HStack {
                     VStack(alignment: .leading) {
