@@ -43,7 +43,7 @@ struct FriendsListView: View {
     }
 
     @ViewBuilder private var overlayView: some View {
-        if friendVM.isProcessingFilter {
+        if isProcessing {
             ProgressView()
         } else if friendVM.filterResultFriends.isEmpty {
             if friendVM.isEmptyAllFilters {
@@ -58,5 +58,9 @@ struct FriendsListView: View {
                 ContentUnavailableView.search
             }
         }
+    }
+
+    private var isProcessing: Bool {
+        friendVM.isProcessingFilter || friendVM.isFetchingAllFriends
     }
 }

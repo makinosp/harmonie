@@ -15,6 +15,7 @@ final class FavoriteViewModel {
     var favoriteGroups: [FavoriteGroup] = []
     var favoriteFriends: [FavoriteFriend] = []
     var favoriteWorlds: [FavoriteWorld] = []
+    var isFetchingFavoriteFriends = true
 
     /// Filters and returns the favorite groups of a specific type.
     /// - Parameter type: The `FavoriteType` to filter the favorite groups by.
@@ -66,6 +67,8 @@ final class FavoriteViewModel {
     ///     if a corresponding friend is found; returns `nil` otherwise.
     /// - Throws: An error if the service encounters an issue while fetching favorite groups or favorite details.
     func fetchFavoriteFriends(service: FavoriteServiceProtocol, friendFinder: (Favorite) -> Friend?) async throws {
+        defer { isFetchingFavoriteFriends = false }
+        isFetchingFavoriteFriends = true
         favoriteGroups = try await service.listFavoriteGroups()
         let favoriteDetails = try await service.fetchFavoriteList(favoriteGroups: favoriteGroups, type: .friend)
         let favoriteDetailsOfFriends = favoriteDetails.filter { $0.allFavoritesAre(.friend) }
