@@ -13,6 +13,8 @@ struct HarmonieApp: App {
         WindowGroup {
             ContentView()
                 .environment(AppViewModel())
+                .environment(FriendViewModel())
+                .environment(FavoriteViewModel())
         }
     }
 }

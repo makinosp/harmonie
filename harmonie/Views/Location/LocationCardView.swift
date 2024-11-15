@@ -63,11 +63,13 @@ struct LocationCardView: View {
                 }
                 HorizontalProfileImages(location.friends)
                     .onTapGesture {
-                        selected = tag(instance)
+                        if !isRequesting {
+                            selected = tag(instance)
+                        }
                     }
             }
         }
-        .disabled(isRequesting)
+        .selectionDisabled(isRequesting)
         .tag(tag(instance))
     }
 

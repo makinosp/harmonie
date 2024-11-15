@@ -30,7 +30,9 @@ struct FriendsListView: View {
         .overlay { overlayView }
         .toolbar { toolbarContent }
         .refreshable {
-            await refreshAction()
+            await friendVM.fetchAllFriends { error in
+                appVM.handleError(error)
+            }
         }
         .onChange(of: isSearching) {
             if !isSearching {
@@ -55,14 +57,6 @@ struct FriendsListView: View {
             } else {
                 ContentUnavailableView.search
             }
-        }
-    }
-
-    private func refreshAction() async {
-        do {
-            try await friendVM.fetchAllFriends()
-        } catch {
-            appVM.handleError(error)
         }
     }
 }

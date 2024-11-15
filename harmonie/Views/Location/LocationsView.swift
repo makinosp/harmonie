@@ -26,9 +26,7 @@ struct LocationsView: View {
         }
         .navigationSplitViewStyle(.balanced)
         .refreshable {
-            do {
-                try await friendVM.fetchAllFriends()
-            } catch {
+            await friendVM.fetchAllFriends { error in
                 appVM.handleError(error)
             }
         }
