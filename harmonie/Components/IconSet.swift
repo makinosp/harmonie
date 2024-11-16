@@ -33,9 +33,6 @@ enum IconSet {
     static var edit: some Iconizable {
         Icon("pencil")
     }
-    static var exclamation: some Iconizable {
-        Icon("exclamationmark")
-    }
     static var favorite: some Iconizable {
         Icon("star")
     }
