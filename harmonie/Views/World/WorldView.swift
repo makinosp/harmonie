@@ -76,82 +76,29 @@ struct WorldView: View {
         }
     }
 
-    private func detailItem(
-        value: String,
-        systemName: String,
-        caption: String,
-        fontSize: Font = .body
-    ) -> some View {
+    private func detailItem(_ item: LabelItem) -> some View {
         VStack {
             VStack(spacing: 2) {
-                Image(systemName: systemName)
-                Text(caption)
+                Image(systemName: item.systemName)
+                Text(item.caption)
                     .font(.caption)
             }
             .foregroundStyle(Color.accentColor)
-            Text(value)
-                .font(fontSize)
+            Text(item.value)
+                .font(item.fontSize)
         }
         .frame(maxWidth: .infinity)
     }
 
     private var detailsSection: some View {
         GroupBox("Details") {
-            VStack(spacing: 12) {
-                HStack(alignment: .bottom) {
-                    detailItem(
-                        value: world.visits.description,
-                        systemName: "eye",
-                        caption: "Visits"
-                    )
-                    Divider()
-                    detailItem(
-                        value: world.favorites?.description ?? "0",
-                        systemName: "star.fill",
-                        caption: "Favorites"
-                    )
-                    Divider()
-                    detailItem(
-                        value: world.popularity.description,
-                        systemName: "heart.fill",
-                        caption: "Popularity"
-                    )
-                }
-                Divider()
-                HStack(alignment: .bottom) {
-                    detailItem(
-                        value: world.capacity.description,
-                        systemName: "person.3.fill",
-                        caption: "Capacity"
-                    )
-                    Divider()
-                    detailItem(
-                        value: world.occupants?.description ?? "0",
-                        systemName: "person.fill",
-                        caption: "Public"
-                    )
-                    Divider()
-                    detailItem(
-                        value: world.privateOccupants?.description ?? "0",
-                        systemName: "hat.widebrim.fill",
-                        caption: "Private"
-                    )
-                }
-                Divider()
-                HStack(alignment: .bottom) {
-                    detailItem(
-                        value: world.publicationDate.date?.formatted(date: .numeric, time: .omitted) ?? "Unknown",
-                        systemName: "megaphone.fill",
-                        caption: "Published",
-                        fontSize: .footnote
-                    )
-                    Divider()
-                    detailItem(
-                        value: world.updatedAt.date?.formatted(date: .numeric, time: .omitted) ?? "Unknown",
-                        systemName: "icloud.and.arrow.up",
-                        caption: "Updated",
-                        fontSize: .footnote
-                    )
+            DividedVStack(spacing: 12) {
+                ForEach(world.labelItemStacks) { labelItems in
+                    DividedHStack(alignment: .bottom) {
+                        ForEach(labelItems.items) { item in
+                            detailItem(item)
+                        }
+                    }
                 }
             }
         }
