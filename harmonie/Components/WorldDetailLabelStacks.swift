@@ -10,14 +10,14 @@ import VRCKit
 extension World {
     var labelItemStacks: [LabelItems] {[
         LabelItems([
-            LabelItem(visits.description, caption: "Visits", icon: IconSet.eye),
+            LabelItem(visits.description, caption: "Visits", icon: IconSet.walk),
             LabelItem(favorites.text, caption: "Favorites", icon: IconSet.favoriteFilled),
             LabelItem(popularity.description, caption: "Popularity", icon: IconSet.heart)
         ]),
         LabelItems([
-            LabelItem(capacity.description, caption: "Capacity", icon: IconSet.eye),
-            LabelItem(occupants.text, caption: "Public", icon: IconSet.social),
-            LabelItem(privateOccupants.text, caption: "Private", icon: IconSet.widebrim)
+            LabelItem(capacity.description, caption: "Capacity", icon: IconSet.friendsFilled),
+            LabelItem(occupants.text, caption: "Public", icon: IconSet.socialFilled),
+            LabelItem(privateOccupants.text, caption: "Private", icon: IconSet.private)
         ]),
         LabelItems([
             LabelItem(publicationDate.formatted, caption: "Published", icon: IconSet.megaphone, fontSize: .footnote),
