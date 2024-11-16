@@ -58,6 +58,11 @@ final class AppViewModel {
         return next
     }
 
+    /// Sets the user's credentials and configures the necessary services.
+    /// - Parameters:
+    ///   - credential: The `Credential` object containing user authentication information.
+    ///   - isSavedOnKeyChain: A Boolean indicating whether the credential should
+    ///                        be saved in the Keychain for future use.
     private func setCredential(_ credential: Credential, isSavedOnKeyChain: Bool) async {
         services = APIServiceUtil(isPreviewMode: credential.isPreviewUser, client: client)
         await client.setCledentials(credential)
@@ -66,6 +71,11 @@ final class AppViewModel {
         }
     }
 
+    /// Logs in the user with the provided credentials and handles the login result.
+    /// - Parameters:
+    ///   - credential: The `Credential` object containing user authentication information.
+    ///   - isSavedOnKeyChain: A Boolean indicating whether the credential should
+    ///                        be saved in the Keychain for future use.
     func login(credential: Credential, isSavedOnKeyChain: Bool) async {
         await setCredential(credential, isSavedOnKeyChain: isSavedOnKeyChain)
         guard let result = await login() else { return }
@@ -86,6 +96,9 @@ final class AppViewModel {
         step = .done(user)
     }
 
+    /// Attempts to log in the user and returns the result of the authentication process.
+    /// - Returns: An `Either<User, VerifyType>` value representing the authenticated user
+    ///            or a verification type, or `nil` if an error occurs during the process.
     func login() async -> Either<User, VerifyType>? {
         var result: Either<User, VerifyType>?
         do {
@@ -120,6 +133,11 @@ final class AppViewModel {
         }
     }
 
+    /// Resets the application's state and clears user-related data.
+    ///
+    /// This function removes stored user data from `UserDefaults`, including the
+    /// Keychain save preference and username, resets the current authentication step
+    /// to `.initializing`, and reinitializes the API client to a default state.
     private func dispose() {
         userDefaults.removeObject(forKey: Constants.Keys.isSavedOnKeyChain.rawValue)
         userDefaults.removeObject(forKey: Constants.Keys.username.rawValue)
