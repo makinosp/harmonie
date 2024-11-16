@@ -33,9 +33,6 @@ enum IconSet {
     static var edit: some Iconizable {
         Icon("pencil")
     }
-    static var eye: some Iconizable {
-        Icon("eye")
-    }
     static var favorite: some Iconizable {
         Icon("star")
     }
@@ -56,6 +53,9 @@ enum IconSet {
     }
     static var friends: some Iconizable {
         Icon("person.2")
+    }
+    static var friendsFilled: some Iconizable {
+        Icon("person.2.fill")
     }
     static var heart: some Iconizable {
         Icon("heart.fill")
@@ -93,6 +93,9 @@ enum IconSet {
     static var plusCircleFilled: some Iconizable {
         Icon("plus.circle.fill")
     }
+    static var `private`: some Iconizable {
+        Icon("person.fill.questionmark")
+    }
     static var setting: some Iconizable {
         Icon("gear")
     }
@@ -103,6 +106,9 @@ enum IconSet {
         Icon("arrow.up.arrow.down")
     }
     static var social: some Iconizable {
+        Icon("person.3")
+    }
+    static var socialFilled: some Iconizable {
         Icon("person.3.fill")
     }
     static var stopwatch: some Iconizable {
@@ -115,10 +121,10 @@ enum IconSet {
         Icon("arrow.up")
     }
     static var upload: some Iconizable {
-        Icon("square.and.arrow.up")
+        Icon("square.and.arrow.up.fill")
     }
-    static var widebrim: some Iconizable {
-        Icon("hat.widebrim.fill")
+    static var walk: some Iconizable {
+        Icon("figure.walk")
     }
     static var world: some Iconizable {
         Icon("globe.desk")

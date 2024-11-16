@@ -40,7 +40,7 @@ struct MainTabView: View {
 }
 
 @MainActor
-extension MainTabViewSegment {
+private extension MainTabViewSegment {
     @ViewBuilder var content: some View {
         switch self {
         case .social: LocationsView()
@@ -51,7 +51,7 @@ extension MainTabViewSegment {
     }
 }
 
-extension MainTabView {
+private extension MainTabView {
     private func changedScenePhaseHandler(_ before: ScenePhase, _ after: ScenePhase) {
         switch (before, after) {
         case (.background, .inactive):
@@ -73,7 +73,7 @@ extension MainTabView {
 }
 
 @MainActor
-extension MainTabView {
+private extension MainTabView {
     private var tabViewLegacy: some View {
         TabView(selection: $selection) {
             ForEach(MainTabViewSegment.allCases) { tabSegment in
