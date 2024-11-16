@@ -9,15 +9,12 @@ import MemberwiseInit
 import SwiftUICore
 
 @MemberwiseInit
-struct LabelItem {
+struct LabelItem: Identifiable {
     @Init(label: "_") let value: String
     @Init let caption: String
     @Init let systemName: String
     @Init(default: Font.body) let fontSize: Font
-}
-
-extension LabelItem: Identifiable {
-    var id: UUID { UUID() }
+    @Init(default: UUID()) let id: UUID
 }
 
 extension LabelItem {
@@ -27,12 +24,9 @@ extension LabelItem {
 }
 
 @MemberwiseInit
-struct LabelItems {
+struct LabelItems: Identifiable {
     @Init(label: "_") let items: [LabelItem]
-}
-
-extension LabelItems: Identifiable {
-    var id: UUID { UUID() }
+    @Init(default: UUID()) let id: UUID
 }
 
 extension LabelItem: View {
