@@ -131,21 +131,16 @@ struct WorldView: View {
         }
     }
 
-    private func detailItem(
-        value: String,
-        systemName: String,
-        caption: String,
-        fontSize: Font = .body
-    ) -> some View {
+    private func detailItem(_ item: LabelItem) -> some View {
         VStack {
             VStack(spacing: 2) {
-                Image(systemName: systemName)
-                Text(caption)
+                Image(systemName: item.systemName)
+                Text(item.caption)
                     .font(.caption)
             }
             .foregroundStyle(Color.accentColor)
-            Text(value)
-                .font(fontSize)
+            Text(item.value)
+                .font(item.fontSize)
         }
         .frame(maxWidth: .infinity)
     }
@@ -155,19 +150,19 @@ struct WorldView: View {
             VStack(spacing: 12) {
                 DividedHStack(alignment: .bottom) {
                     ForEach(topItems) { item in
-                        detailItem(value: item.value, systemName: item.systemName, caption: item.caption)
+                        detailItem(item)
                     }
                 }
                 Divider()
                 DividedHStack(alignment: .bottom) {
                     ForEach(middleItems) { item in
-                        detailItem(value: item.value, systemName: item.systemName, caption: item.caption)
+                        detailItem(item)
                     }
                 }
                 Divider()
                 DividedHStack(alignment: .bottom) {
                     ForEach(bottomItems) { item in
-                        detailItem(value: item.value, systemName: item.systemName, caption: item.caption, fontSize: item.fontSize)
+                        detailItem(item)
                     }
                 }
             }
