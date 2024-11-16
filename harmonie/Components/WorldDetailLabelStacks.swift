@@ -33,6 +33,6 @@ private extension OptionalISO8601Date {
 }
 
 private extension Optional<Int> {
-    var unwrappedValue: Int { self ?? 0 }
+    private var unwrappedValue: Int { self ?? 0 }
     var text: String { unwrappedValue.description }
 }
