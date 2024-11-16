@@ -32,9 +32,14 @@ final class AppViewModel {
         case initializing, loggingIn, done(User)
     }
 
-    /// Check the authentication status of the user,
-    /// fetch the user information, and perform the initialization process.
-    /// - Returns: Depending on the status, either `loggingIn` or `done` is returned.
+    /// Checks the user's authentication status, fetches user information,
+    /// and performs the initialization process.
+    ///
+    /// - Parameter service: An instance conforming to `AuthenticationServiceProtocol`
+    ///                      used to verify the authentication token and fetch user information.
+    /// - Returns: A `Step` value indicating the next step:
+    ///            `.loggingIn` if the user is not authenticated, or `.done(user)`
+    ///            if the authentication and user data retrieval are successful.
     func setup(service: AuthenticationServiceProtocol) async -> Step {
         var next: Step = .loggingIn
         // check local data
