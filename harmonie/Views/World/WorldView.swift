@@ -125,7 +125,7 @@ struct WorldView: View {
 #Preview {
     PreviewContainer {
         NavigationStack {
-            WorldView(world: PreviewData.casino)
+            WorldView(world: PreviewData.chillRoom)
         }
     }
 }

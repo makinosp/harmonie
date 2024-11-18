@@ -19,10 +19,10 @@ extension PreviewData {
         heat: 4
     )
 
-    static let casino = World(
-        name: "Casino",
-        description: "Casino",
-        imageUrl: URL(string: "\(imageBaseURL)/83/48/NtBOJpF1_o.jpg"),
+    static let chillRoom = World(
+        name: "Chill Room",
+        description: "Chill Room",
+        imageUrl: URL(string: "\(imageBaseURL)/08/e0/LQFzWXox_o.jpeg"),
         favorites: 50,
         visits: 75,
         popularity: 5,
@@ -59,7 +59,7 @@ extension PreviewData {
         heat: 3
     )
 
-    static let worldList = [ bar, casino, fuji, chinatown, nightCity ]
+    static let worldList = [ bar, chillRoom, fuji, chinatown, nightCity ]
 }
 
 extension World {
