@@ -18,7 +18,7 @@ final actor WorldPreviewService: APIService, WorldServiceProtocol {
     }
 
     func fetchFavoritedWorlds() async throws -> [FavoriteWorld] {
-        [PreviewData.casino, PreviewData.nightCity, PreviewData.chinatown].map { world in
+        [PreviewData.chillRoom, PreviewData.nightCity, PreviewData.chinatown].map { world in
             FavoriteWorld(
                 world: world,
                 favoriteId: "fvrt_\(UUID())",

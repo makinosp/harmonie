@@ -20,7 +20,7 @@ final class PreviewData: Sendable {
     private init() {
         let onlineFriendsSet: [FriendSet] = [
             (0..<10).map { _ in FriendSet(world: Self.bar, status: .joinMe) },
-            (0..<5).map { _ in FriendSet(world: Self.casino, status: .active) },
+            (0..<5).map { _ in FriendSet(world: Self.chillRoom, status: .active) },
             (0..<3).map { _ in FriendSet(world: Self.fuji, status: .joinMe) },
             (0..<2).map { _ in FriendSet(world: Self.chinatown, status: .active) },
             [FriendSet(world: Self.nightCity, status: .joinMe)],
