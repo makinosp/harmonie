@@ -70,6 +70,12 @@
             "state" : "translated",
             "value" : "全て"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有"
+          }
         }
       }
     },
@@ -968,6 +974,12 @@
             "state" : "translated",
             "value" : "URLを開く"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开 URL"
+          }
         }
       }
     },
@@ -1329,6 +1341,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "もう一度お試しください"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请稍后重试"
           }
         }
       }
