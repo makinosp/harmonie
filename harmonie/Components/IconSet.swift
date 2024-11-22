@@ -6,6 +6,9 @@
 //
 
 enum IconSet {
+    static var account: some Iconizable {
+        Icon("person.text.rectangle")
+    }
     static var at: some Iconizable {
         Icon("at")
     }
