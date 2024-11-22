@@ -31,6 +31,22 @@
         }
       }
     },
+    "Account Settings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アカウント設定"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号设置"
+          }
+        }
+      }
+    },
     "Activity" : {
       "localizations" : {
         "ja" : {
