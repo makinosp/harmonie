@@ -23,6 +23,12 @@
 This is an unofficial VRChat social navigator application for iOS, built entirely with Swift/SwiftUI for a smooth and native experience.
 The app allows users to manage friends, view friends' locations, and organize favorites. Please note that this app is not affiliated with or endorsed by VRChat.
 
+## Installation
+
+Available on the App Store or in beta test on [TestFlight](https://testflight.apple.com/join/AYN1dYJk)
+
+[![Download_on_the_App_Store_Badge](https://github.com/user-attachments/assets/c3f860ad-0c35-4554-9096-2f6b0e41e1cf)](https://apps.apple.com/us/app/harmonie-for-vrchat/id6670462445)
+
 ## Features
 
 ### Location Tracking
