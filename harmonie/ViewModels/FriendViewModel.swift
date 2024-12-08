@@ -5,6 +5,7 @@
 //  Created by makinosp on 2024/06/09.
 //
 
+import Foundation
 import Observation
 import VRCKit
 
@@ -22,6 +23,21 @@ final class FriendViewModel {
     var isProcessingFilter = false
     @ObservationIgnored private var appVM: AppViewModel?
     @ObservationIgnored var favoriteFriends: [FavoriteFriend] = []
+
+    init() {
+        restoreFilter()
+    }
+
+    func restoreFilter() {
+        let filterUserStatus = UserDefaults.standard.object(forKey: "filterUserStatus")
+        let filterFavoriteGroups = UserDefaults.standard.object(forKey: "filterFavoriteGroups")
+        if let filterUserStatus = filterUserStatus as? Set<UserStatus> {
+            self.filterUserStatus = filterUserStatus
+        }
+        if let filterFavoriteGroups = filterFavoriteGroups as? Set<FavoriteGroup> {
+            self.filterFavoriteGroups = filterFavoriteGroups
+        }
+    }
 
     func setAppVM(_ appVM: AppViewModel) {
         self.appVM = appVM
