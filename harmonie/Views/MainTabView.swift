@@ -60,6 +60,10 @@ private extension MainTabView {
             Task { await fetchFriendsTask() }
             Task { await fetchFavoritesTask() }
         case (.active, .inactive):
+            let filterUserStatusStrings = Array(friendVM.filterUserStatus.map(\.rawValue))
+            UserDefaults.standard.set(filterUserStatusStrings, forKey: "filterUserStatus")
+            let favoriteGroupsIds = Array(friendVM.filterFavoriteGroups.map(\.id))
+            UserDefaults.standard.set(favoriteGroupsIds, forKey: "filterFavoriteGroups")
             guard let user = appVM.user else { return }
             userData = user.rawValue
         default: break
