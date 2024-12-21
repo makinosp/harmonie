@@ -64,6 +64,7 @@ private extension MainTabView {
             UserDefaults.standard.set(filterUserStatusStrings, forKey: "filterUserStatus")
             let favoriteGroupsIds = Array(friendVM.filterFavoriteGroups.map(\.id))
             UserDefaults.standard.set(favoriteGroupsIds, forKey: "filterFavoriteGroups")
+            UserDefaults.standard.set(friendVM.sortType.rawValue, forKey: "sortType")
             guard let user = appVM.user else { return }
             userData = user.rawValue
         default: break

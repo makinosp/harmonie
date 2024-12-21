@@ -38,6 +38,9 @@ final class FriendViewModel {
             let filterFavoriteGroups = set.map { FavoriteGroup(id: $0, displayName: "", name: "", ownerId: "", tags: [], type: .friend, visibility: .private) }
             self.filterFavoriteGroups = Set(filterFavoriteGroups)
         }
+        if let sortType = UserDefaults.standard.string(forKey: "sortType"), let unwrapped = SortType(rawValue: sortType) {
+            self.sortType = unwrapped
+        }
     }
 
     func setAppVM(_ appVM: AppViewModel) {
