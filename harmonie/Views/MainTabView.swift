@@ -62,7 +62,7 @@ private extension MainTabView {
         case (.active, .inactive):
             let filterUserStatusStrings = Array(friendVM.filterUserStatus.map(\.rawValue))
             UserDefaults.standard.set(filterUserStatusStrings, forKey: "filterUserStatus")
-            let favoriteGroupsIds = Array(friendVM.filterFavoriteGroups.map(\.id))
+            let favoriteGroupsIds = Array(friendVM.filterFavoriteGroups)
             UserDefaults.standard.set(favoriteGroupsIds, forKey: "filterFavoriteGroups")
             UserDefaults.standard.set(friendVM.sortType.rawValue, forKey: "sortType")
             guard let user = appVM.user else { return }

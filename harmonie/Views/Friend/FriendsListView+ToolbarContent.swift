@@ -67,7 +67,7 @@ extension FriendsListView {
             }
             ForEach(favoriteVM.favoriteGroups(.friend)) { favoriteGroup in
                 @Bindable var friendVM = friendVM
-                let isOn = $friendVM.filterFavoriteGroups.containsBinding(for: favoriteGroup)
+                let isOn = $friendVM.filterFavoriteGroups.containsBinding(for: favoriteGroup.id)
                 Toggle(favoriteGroup.displayName, isOn: isOn)
             }
         }

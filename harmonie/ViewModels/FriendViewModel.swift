@@ -16,7 +16,7 @@ final class FriendViewModel {
     var filterResultFriends: [Friend] = []
     var friendsLocations: [FriendsLocation] = []
     var filterUserStatus: Set<UserStatus> = []
-    var filterFavoriteGroups: Set<FavoriteGroup> = []
+    var filterFavoriteGroups: Set<FavoriteGroup.ID> = []
     var filterText: String = ""
     var sortType: SortType = .latest
     var isFetchingAllFriends = true
@@ -34,8 +34,6 @@ final class FriendViewModel {
             self.filterUserStatus = Set(stored)
         }
         if let filterFavoriteGroups = UserDefaults.standard.array(forKey: "filterFavoriteGroups") as? [FavoriteGroup.ID] {
-            let set = Set(filterFavoriteGroups)
-            let filterFavoriteGroups = set.map { FavoriteGroup(id: $0, displayName: "", name: "", ownerId: "", tags: [], type: .friend, visibility: .private) }
             self.filterFavoriteGroups = Set(filterFavoriteGroups)
         }
         if let sortType = UserDefaults.standard.string(forKey: "sortType"), let unwrapped = SortType(rawValue: sortType) {

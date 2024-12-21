@@ -52,9 +52,9 @@ extension FriendViewModel {
     }
 
     private func isFriendContainedInFilterFavoriteGroups(friend: Friend) -> Bool {
-        filterFavoriteGroups.contains { favoriteGroup in
+        filterFavoriteGroups.contains { favoriteGroupId in
             guard let favoriteFriend = favoriteFriends.first(where: { favoriteFriend in
-                favoriteFriend.favoriteGroupId == favoriteGroup.id
+                favoriteFriend.favoriteGroupId == favoriteGroupId
             }) else {
                 return true
             }
