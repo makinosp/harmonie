@@ -29,14 +29,19 @@ final class FriendViewModel {
     }
 
     func restoreFilter() {
-        if let filterUserStatus = UserDefaults.standard.array(forKey: "filterUserStatus") as? [String] {
-            let stored = filterUserStatus.map({ UserStatus(rawValue: $0)}).compactMap(\.self)
-            self.filterUserStatus = Set(stored)
+        if let filterUserStatus = UserDefaults.standard.array(
+            forKey: Constants.Keys.filterUserStatus.rawValue
+        ) as? [String] {
+            let statuses = filterUserStatus.map({ UserStatus(rawValue: $0)}).compactMap(\.self)
+            self.filterUserStatus = Set(statuses)
         }
-        if let filterFavoriteGroups = UserDefaults.standard.array(forKey: "filterFavoriteGroups") as? [FavoriteGroup.ID] {
+        if let filterFavoriteGroups = UserDefaults.standard.array(
+            forKey: Constants.Keys.filterFavoriteGroups.rawValue
+        ) as? [FavoriteGroup.ID] {
             self.filterFavoriteGroups = Set(filterFavoriteGroups)
         }
-        if let sortType = UserDefaults.standard.string(forKey: "sortType"), let unwrapped = SortType(rawValue: sortType) {
+        if let sortType = UserDefaults.standard.string(forKey: Constants.Keys.sortType.rawValue),
+           let unwrapped = SortType(rawValue: sortType) {
             self.sortType = unwrapped
         }
     }
