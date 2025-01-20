@@ -55,15 +55,23 @@ private extension MainTabView {
     private func changedScenePhaseHandler(_ before: ScenePhase, _ after: ScenePhase) {
         switch (before, after) {
         case (.background, .inactive):
-            print("Restoring Data")
             restoreUserData()
             Task { await fetchFriendsTask() }
             Task { await fetchFavoritesTask() }
         case (.active, .inactive):
+            storeUserDefaults()
             guard let user = appVM.user else { return }
             userData = user.rawValue
         default: break
         }
+    }
+
+    private func storeUserDefaults() {
+        let filterUserStatusStrings = Array(friendVM.filterUserStatus.map(\.rawValue))
+        UserDefaults.standard.set(filterUserStatusStrings, forKey: Constants.Keys.filterUserStatus.rawValue)
+        let favoriteGroupsIds = Array(friendVM.filterFavoriteGroups)
+        UserDefaults.standard.set(favoriteGroupsIds, forKey: Constants.Keys.filterFavoriteGroups.rawValue)
+        UserDefaults.standard.set(friendVM.sortType.rawValue, forKey: Constants.Keys.sortType.rawValue)
     }
 
     private func restoreUserData() {
