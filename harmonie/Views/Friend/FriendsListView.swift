@@ -16,6 +16,7 @@ struct FriendsListView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM
     @InitWrapper(.internal, type: Binding<String?>)
     @Binding private var selected: String?
+    @State var isPresentedSheet = false
 
     var body: some View {
         List(friendVM.filterResultFriends, selection: $selected) { friend in
@@ -26,6 +27,10 @@ struct FriendsListView: View {
             } icon: {
                 UserIcon(user: friend, size: Constants.IconSize.thumbnail)
             }
+        }
+        .sheet(isPresented: $isPresentedSheet) {
+            FriendsListSheetView()
+                .presentationDetents([.medium])
         }
         .overlay { overlayView }
         .toolbar { toolbarContent }
