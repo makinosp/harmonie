@@ -18,7 +18,7 @@ final class FriendViewModel {
     var filterUserStatus: Set<UserStatus> = []
     var filterFavoriteGroups: Set<FavoriteGroup.ID> = []
     var filterText: String = ""
-    var sortType: SortType = .latest
+    var sortType: SortType = .name
     var isFetchingAllFriends = true
     var isProcessingFilter = false
     @ObservationIgnored private var appVM: AppViewModel?
