@@ -8,7 +8,32 @@
 import SwiftUI
 
 struct FriendsListSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
-        Text("Friends List Sheet View")
+        NavigationStack {
+            VStack {
+                ScrollView(.horizontal) {
+                    HStack {
+                        Text("X")
+                        Text("X")
+                        Text("X")
+                        Text("X")
+                        Text("X")
+                        Text("X")
+                        Text("X")
+                    }
+                }
+            }
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        dismiss()
+                    } label: {
+                        ExitButton()
+                    }
+                }
+            }
+        }
     }
 }
