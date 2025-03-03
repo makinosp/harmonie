@@ -9,6 +9,12 @@
             "value" : "VRChatAPIの認証方式について "
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VRChat API 인증 방식 안내"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23,6 +29,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通信の安全性"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "통신에 대한 안전성"
           }
         },
         "zh-Hans" : {
@@ -47,6 +59,12 @@
             "value" : "このアプリは、すべての通信がSSL/TLSにより暗号化されており、第三者による傍受や改ざんのリスクを最小限に抑えています。"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱은 모든 통신이 SSL/TLS에 의해 암호화되어 있으며, 제3자에 의한 감청이나 변조의 위험을 최소화하고 있습니다."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -67,6 +85,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "このアプリでは、後述するパスワード保存機能へオプトインする場合を除いて永続的にパスワードを保存することは無く、ユーザー名とパスワードをVRChat APIに送信することで取得される期限付きの認証トークンのみを保持します。このアプリはユーザーの認証トークンの保持によって有効期間内の再ログインを省略します。これらの情報は本体にのみ保存され、VRChat Web API以外のいかなる第三者とも共有することはありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱은 아래에 설명된 비밀번호 저장 기능에 옵트인하는 경우를 제외하고 비밀번호를 영구적으로 저장하지 않으며, 사용자 이름과 비밀번호를 VRChat API로 전송하여 얻은 제한된 시간을 가지는 인증 토큰만 보관합니다. 이 앱은 토큰 유효 기간 동안 다시 로그인하지 않고도 사용할 수 있도록 사용자의 인증 토큰을 보관합니다. 이 정보는 이 기기에만 저장되며 VRChat Web API 외의 제3자와 공유되지 않습니다."
           }
         },
         "zh-Hans" : {
@@ -91,6 +115,12 @@
             "value" : "このアプリではオプトインにより、ログイン時に入力されたパスワードを保存する機能を持ちます。この機能においてパスワードはAppleによって提供されるiCloud Keychainを通じてAppleのセキュリティ基準に基づいて暗号化されて保存されます。この機能によってパスワードがiCloud Keychain以外の第三者に送信されることはありません。また、パスワードが本体に永続的に保存されることはありません。"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱에서는 옵트인을 통해 로그인 시 입력된 비밀번호를 저장하는 기능이 있습니다. 이 기능에서 비밀번호는 Apple에 의해 제공되는 iCloud 키체인을 통해 Apple의 보안 기준에 따라 암호화되어 저장됩니다. 이 기능은 iCloud 키체인 외의 제3자에게 비밀번호를 전송하지 않으며, 비밀번호를 기기에 영구적으로 저장하지 않습니다."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -113,6 +143,12 @@
             "value" : "このアプリはVRChat Web APIを利用してフレンドに関する情報の取得やユーザーの情報の更新を行います。現時点のVRChat Web APIは、アクセスするための認証方式としてOAuthのような外部認証・認可システムを提供しません。そのためこのアプリでは、直接ユーザー名とパスワードをVRChat APIに送信することによって認証を行います。"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱은 VRChat Web API를 이용하여 친구에 대한 정보를 얻고 사용자의 정보를 업데이트합니다. VRChat Web API는 이러한 정보에 접근하기 위한 인증 방식으로, OAuth와 같은 외부 인증 및 권한 부여 시스템을 제공하지 않습니다. 따라서 이 앱에서는 사용자 이름과 비밀번호를 VRChat API로 직접 전송하여 인증합니다."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -129,6 +165,12 @@
             "value" : "認証トークン保持における安全性"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인증 토큰 보관에 대한 안전성"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -143,6 +185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "パスワード保存機能における安全性"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "비밀번호 저장에 대한 안전성"
           }
         },
         "zh-Hans" : {
