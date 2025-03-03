@@ -11,66 +11,11 @@ import VRCKit
 extension FriendsListView {
     @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigation) { presentSheetButton }
-        ToolbarItem { sortMenu }
-        ToolbarItem { filterMenu }
     }
 
     private var presentSheetButton: some View {
         Button("Sheet", systemImage: "sidebar.leading") {
             isPresentedSheet.toggle()
-        }
-    }
-
-    private var sortMenu: some View {
-        Menu("", systemImage: IconSet.sort.systemName) {
-            @Bindable var friendVM = friendVM
-            Picker("", selection: $friendVM.sortType) {
-                ForEach(SortType.allCases) { sortType in
-                    Label(sortType.description, systemImage: sortType.icon.systemName)
-                        .tag(sortType)
-                }
-            }
-        }
-    }
-
-    private var filterMenu: some View {
-        Menu("", systemImage: IconSet.filter.systemName) {
-            Button("Clear", systemImage: IconSet.clear.systemName) {
-                friendVM.clearFilters()
-            }
-            filterUserStatusMenu
-            filterFavoriteGroupsMenu
-        }
-    }
-
-    private var filterUserStatusMenu: some View {
-        Menu("Statuses") {
-            Button("Clear", systemImage: IconSet.clear.systemName) {
-                friendVM.filterUserStatus.removeAll()
-            }
-            ForEach(UserStatus.allCases) { userStatus in
-                @Bindable var friendVM = friendVM
-                let isOn = $friendVM.filterUserStatus.containsBinding(for: userStatus)
-                Toggle(isOn: isOn) {
-                    Text(userStatus.description)
-                    Image(systemName: IconSet.circleFilled.systemName)
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(userStatus.color)
-                }
-            }
-        }
-    }
-
-    private var filterFavoriteGroupsMenu: some View {
-        Menu("Favorite Groups") {
-            Button("Clear", systemImage: IconSet.clear.systemName) {
-                friendVM.filterFavoriteGroups.removeAll()
-            }
-            ForEach(favoriteVM.favoriteGroups(.friend)) { favoriteGroup in
-                @Bindable var friendVM = friendVM
-                let isOn = $friendVM.filterFavoriteGroups.containsBinding(for: favoriteGroup.id)
-                Toggle(favoriteGroup.displayName, isOn: isOn)
-            }
         }
     }
 }
