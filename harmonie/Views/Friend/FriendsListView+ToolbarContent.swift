@@ -30,9 +30,6 @@ extension FriendsListView {
                         .tag(sortType)
                 }
             }
-            .onChange(of: friendVM.sortType) {
-                friendVM.applyFilters()
-            }
         }
     }
 
@@ -62,9 +59,6 @@ extension FriendsListView {
                 }
             }
         }
-        .onChange(of: friendVM.filterUserStatus) {
-            friendVM.applyFilters()
-        }
     }
 
     private var filterFavoriteGroupsMenu: some View {
@@ -77,9 +71,6 @@ extension FriendsListView {
                 let isOn = $friendVM.filterFavoriteGroups.containsBinding(for: favoriteGroup.id)
                 Toggle(favoriteGroup.displayName, isOn: isOn)
             }
-        }
-        .onChange(of: friendVM.filterFavoriteGroups) {
-            friendVM.applyFilters()
         }
     }
 }
