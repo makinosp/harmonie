@@ -5,6 +5,7 @@
 //  Created by makinosp on 2024/06/09.
 //
 
+import Foundation
 import Observation
 import VRCKit
 
@@ -15,13 +16,35 @@ final class FriendViewModel {
     var filterResultFriends: [Friend] = []
     var friendsLocations: [FriendsLocation] = []
     var filterUserStatus: Set<UserStatus> = []
-    var filterFavoriteGroups: Set<FavoriteGroup> = []
+    var filterFavoriteGroups: Set<FavoriteGroup.ID> = []
     var filterText: String = ""
     var sortType: SortType = .latest
     var isFetchingAllFriends = true
     var isProcessingFilter = false
     @ObservationIgnored private var appVM: AppViewModel?
     @ObservationIgnored var favoriteFriends: [FavoriteFriend] = []
+
+    init() {
+        restoreFilter()
+    }
+
+    func restoreFilter() {
+        if let filterUserStatus = UserDefaults.standard.array(
+            forKey: Constants.Keys.filterUserStatus.rawValue
+        ) as? [String] {
+            let statuses = filterUserStatus.map({ UserStatus(rawValue: $0)}).compactMap(\.self)
+            self.filterUserStatus = Set(statuses)
+        }
+        if let filterFavoriteGroups = UserDefaults.standard.array(
+            forKey: Constants.Keys.filterFavoriteGroups.rawValue
+        ) as? [FavoriteGroup.ID] {
+            self.filterFavoriteGroups = Set(filterFavoriteGroups)
+        }
+        if let sortType = UserDefaults.standard.string(forKey: Constants.Keys.sortType.rawValue),
+           let unwrapped = SortType(rawValue: sortType) {
+            self.sortType = unwrapped
+        }
+    }
 
     func setAppVM(_ appVM: AppViewModel) {
         self.appVM = appVM
