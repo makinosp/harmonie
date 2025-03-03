@@ -16,6 +16,7 @@ struct FriendsListView: View {
     @Environment(FavoriteViewModel.self) var favoriteVM
     @InitWrapper(.internal, type: Binding<String?>)
     @Binding private var selected: String?
+    @State var isPresentedSheet = false
 
     var body: some View {
         List(friendVM.filterResultFriends, selection: $selected) { friend in
@@ -26,6 +27,10 @@ struct FriendsListView: View {
             } icon: {
                 UserIcon(user: friend, size: Constants.IconSize.thumbnail)
             }
+        }
+        .sheet(isPresented: $isPresentedSheet) {
+            FriendsListSheetView()
+                .presentationDetents([.medium])
         }
         .overlay { overlayView }
         .toolbar { toolbarContent }
@@ -40,11 +45,22 @@ struct FriendsListView: View {
                 friendVM.applyFilters()
             }
         }
+        .onChange(of: friendVM.sortType) {
+            friendVM.applyFilters()
+        }
+        .onChange(of: friendVM.filterUserStatus) {
+            friendVM.applyFilters()
+        }
+        .onChange(of: friendVM.filterFavoriteGroups) {
+            friendVM.applyFilters()
+        }
     }
 
     @ViewBuilder private var overlayView: some View {
         if isProcessing {
             ProgressView()
+                .padding(32)
+                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
         } else if friendVM.filterResultFriends.isEmpty {
             if friendVM.isEmptyAllFilters {
                 ContentUnavailableView {
