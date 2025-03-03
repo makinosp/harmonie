@@ -14,7 +14,7 @@ extension FriendsListView {
     }
 
     private var presentSheetButton: some View {
-        Button("Sheet", systemImage: "sidebar.leading") {
+        Button("", systemImage: "sidebar.leading") {
             isPresentedSheet.toggle()
         }
     }

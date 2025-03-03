@@ -44,7 +44,7 @@ struct FriendsListSheetView: View {
                     }
                 } header: {
                     HStack {
-                        Text("Status")
+                        Text("Statuses")
                         Spacer()
                         Button("Clear") {
                             friendVM.filterUserStatus.removeAll()
