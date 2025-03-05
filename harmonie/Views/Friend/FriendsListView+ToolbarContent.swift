@@ -10,11 +10,11 @@ import VRCKit
 
 extension FriendsListView {
     @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .navigation) { presentSheetButton }
+        ToolbarItem(placement: .navigationBarTrailing) { presentSheetButton }
     }
 
     private var presentSheetButton: some View {
-        Button("", systemImage: "sidebar.leading") {
+        Button("", systemImage: IconSet.dots.systemName) {
             isPresentedSheet.toggle()
         }
     }
