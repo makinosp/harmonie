@@ -647,7 +647,7 @@
 			repositoryURL = "https://github.com/cybozu/LicenseList.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.7.0;
+				minimumVersion = 2.0.1;
 			};
 		};
 		20592B012C45640D00E1C8B8 /* XCRemoteSwiftPackageReference "async-swift-ui" */ = {
