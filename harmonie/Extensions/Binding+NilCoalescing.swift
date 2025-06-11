@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/06/17.
 //
 
-import SwiftUICore
+import SwiftUI
 
 extension Binding where Value: Sendable {
     static func ?? <T>(optional: Self, defaultValue: T) -> Binding<T> where Value == T? {

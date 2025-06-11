@@ -6,7 +6,7 @@
 //
 
 import MemberwiseInit
-import SwiftUICore
+import SwiftUI
 
 @MemberwiseInit
 struct LabelItem: Identifiable {

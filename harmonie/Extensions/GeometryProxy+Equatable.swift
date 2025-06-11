@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/11/04.
 //
 
-import SwiftUICore
+import SwiftUI
 
 extension GeometryProxy: @retroactive Equatable {
     public static func == (lhs: GeometryProxy, rhs: GeometryProxy) -> Bool {

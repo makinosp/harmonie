@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/10/20.
 //
 
-import SwiftUICore
+import SwiftUI
 
 extension Binding where Value: SetAlgebra & Sendable, Value.Element: Sendable {
     func containsBinding(for value: Value.Element) -> Binding<Bool> {
