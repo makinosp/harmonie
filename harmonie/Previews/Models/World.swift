@@ -101,6 +101,7 @@ extension World {
             unityPackages: [
                 UnityPackage(
                     id: UUID().uuidString,
+                    assetUrl: SafeDecoding(),
                     assetVersion: 1,
                     createdAt: OptionalISO8601Date(),
                     platform: .standalonewindows,

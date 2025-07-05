@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/cybozu/LicenseList.git",
       "state" : {
-        "revision" : "4801461b9ca8eee843c19ab8fe88a590ce064e15",
-        "version" : "2.0.1"
+        "revision" : "0f83f934ee437461b87870b62871108b882a143a",
+        "version" : "2.0.3"
       }
     },
     {
@@ -52,7 +52,7 @@
       "location" : "https://github.com/makinosp/vrckit",
       "state" : {
         "branch" : "develop",
-        "revision" : "b0a4a930fd396a602d0ebd35e75185f132dcf381"
+        "revision" : "d83f6537f6286d9cc7453bf3d31ca119b68d74a5"
       }
     }
   ],
