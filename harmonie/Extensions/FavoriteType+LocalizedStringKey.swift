@@ -6,7 +6,7 @@
 //
 
 import VRCKit
-import SwiftUICore
+import SwiftUI
 
 extension FavoriteType {
     var localizedStringKey: LocalizedStringKey {

@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/09/27.
 //
 
-import SwiftUICore
+import SwiftUI
 
 protocol ColorRepresentable {
     var color: Color { get }

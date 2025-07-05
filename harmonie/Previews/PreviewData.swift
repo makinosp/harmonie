@@ -37,6 +37,8 @@ final class PreviewData: Sendable {
     var previewUser: User {
         User(
             activeFriends: [],
+            ageVerificationStatus: .hidden,
+            ageVerified: false,
             allowAvatarCopying: false,
             bio: "This is the demo user.",
             bioLinks: SafeDecodingArray(),
@@ -65,7 +67,7 @@ final class PreviewData: Sendable {
             userIcon: PreviewData.iconImageUrl,
             userLanguage: nil,
             userLanguageCode: nil,
-            presence: Presence()
+            presence: Presence(),
         )
     }
 }

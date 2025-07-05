@@ -5,7 +5,7 @@
 //  Created by makinosp on 2024/11/15.
 //
 
-import SwiftUICore
+import SwiftUI
 
 struct GeometricScreen<Content>: View where Content: View {
     private let content: () -> Content

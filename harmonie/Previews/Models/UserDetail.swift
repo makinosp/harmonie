@@ -46,6 +46,8 @@ private extension UserDetail {
         lastActivity: Date = Date()
     ) {
         self.init(
+            ageVerificationStatus: .hidden,
+            ageVerified: false,
             bio: bio,
             bioLinks: SafeDecodingArray(),
             avatarImageUrl: profile?.imageUrl(),
